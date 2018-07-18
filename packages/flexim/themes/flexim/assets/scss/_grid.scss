@@ -30,6 +30,10 @@ $no-gutter-grid: (
   @include grid-visual;
 }
 
+.grid__collapse {
+  @include grid-collapse;
+}
+
 @for $i from 1 through 12 {
   .grid__col--#{$i} {
     @include grid-column($i of 12, $neat-grid);

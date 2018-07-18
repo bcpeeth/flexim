@@ -68,9 +68,9 @@ $fs6: 2.25rem;
 
 html {
   background-color: $color-white;
-  color: $color-black;
+  color: $color-grey;
   font-family: 'Hind-Regular', sans-serif;
-  font-size: 15px;
+  font-size: 14px;
 
   a {
     color: inherit;
@@ -83,7 +83,7 @@ html {
 
 @media screen and (min-width: $breakpoint-max-xl){
   html{
-    font-size: 18px;
+    font-size: 15px;
   }
 }
 

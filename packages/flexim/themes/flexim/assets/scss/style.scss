@@ -1,7 +1,7 @@
 $color-white: #FFFFFF;
 $color-black: #000000;
 $color-yellow: #F6A800;
-$color-grey: #707070;
+$color-grey: rgb(92, 90, 88);;
 $color-lightgrey: #F8F8F8;
 $color-darkblue: #2D4059;
 $color-orange: #F6A800;
@@ -38,6 +38,8 @@ $breakpoint-max-xl: 1499px;
 @import "owl";
 @import "header";
 @import "hero";
+@import "intro";
+@import "lists";
 
 
 .bg-yellow {
@@ -50,4 +52,8 @@ $breakpoint-max-xl: 1499px;
 
 .bg-lightgrey {
   background-color: $color-lightgrey;
+}
+
+.bg-red {
+  background: linear-gradient(180deg,#c32519 10px,#da291c);
 }
