@@ -4,8 +4,8 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 
 const path = require('path');
 
-const root = path.join(__dirname, 'packages/veganific/themes/veganific');
-const public = '/packages/veganific/themes/veganific';
+const root = path.join(__dirname, 'packages/flexim/themes/flexim');
+const public = '/packages/flexim/themes/flexim';
 
 module.exports = {
   entry: {

@@ -1,12 +1,12 @@
 <?php 
 /* Cachekey: cache/stash_default/doctrine/[concrete\core\entity\attribute\key\settings\settings@[annot]][1]/ */
 /* Type: array */
-/* Expiration: 2018-07-21T06:36:20+02:00 */
+/* Expiration: 2018-07-22T18:19:38+02:00 */
 
 
 
 $loaded = true;
-$expiration = 1532147780;
+$expiration = 1532276378;
 
 $data = array();
 
@@ -14,4 +14,4 @@ $data = array();
 $data['return'] = unserialize(base64_decode('YToxOntpOjA7TzozNzoiRG9jdHJpbmVcT1JNXE1hcHBpbmdcTWFwcGVkU3VwZXJjbGFzcyI6MTp7czoxNToicmVwb3NpdG9yeUNsYXNzIjtOO319'));
 
 /* Child Type: integer */
-$data['createdOn'] = 1531752944;
+$data['createdOn'] = 1531865146;

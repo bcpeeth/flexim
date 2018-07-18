@@ -1,12 +1,12 @@
 <?php 
 /* Cachekey: cache/stash_default/doctrine/[concrete\core\entity\attribute\value\value\selectvalueusedoption@[annot]][1]/ */
 /* Type: array */
-/* Expiration: 2018-07-21T10:30:35+02:00 */
+/* Expiration: 2018-07-22T09:34:57+02:00 */
 
 
 
 $loaded = true;
-$expiration = 1532161835;
+$expiration = 1532244897;
 
 $data = array();
 
@@ -14,4 +14,4 @@ $data = array();
 $data['return'] = unserialize(base64_decode('YTowOnt9'));
 
 /* Child Type: integer */
-$data['createdOn'] = 1531752944;
+$data['createdOn'] = 1531865146;
