@@ -10,13 +10,13 @@ $view = View::getInstance();
 
     <script type="text/javascript">
         (function () {
-            var my_url = '<?php echo $view->action(''); ?>';
+            var my_url = '<?= $view->action(''); ?>';
             $(function () {
                 $('div#ccm-flat-sitemap-container').concreteSitemap({
                     displayNodePagination: true,
-                    cParentID: '<?php echo $nodeID?>',
+                    cParentID: '<?=$nodeID?>',
                     displaySingleLevel: true,
-                    includeSystemPages: <?php echo $includeSystemPages ? 'true' : 'false'; ?>,
+                    includeSystemPages: <?= $includeSystemPages ? 'true' : 'false'; ?>,
                     persist: false,
                     onDisplaySingleLevel: function (node) {
                         if (window && window.history && window.history.pushState) {
@@ -41,7 +41,7 @@ $view = View::getInstance();
         }());
     </script>
 
-<?php echo Loader::helper('concrete/dashboard')->getDashboardPaneHeaderWrapper(
+<?= Loader::helper('concrete/dashboard')->getDashboardPaneHeaderWrapper(
     t('Sitemap'),
     t(
         'Sitemap flat view lets you page through particular long lists of pages.'),
@@ -57,7 +57,7 @@ $view = View::getInstance();
         <?php 
 } else {
     ?>
-            <p><?php echo t('You do not have access to the dashboard sitemap.') ?></p>
+            <p><?= t('You do not have access to the dashboard sitemap.') ?></p>
         <?php 
 } ?>
 
@@ -66,4 +66,4 @@ $view = View::getInstance();
 
     </div>
 
-<?php echo Loader::helper('concrete/dashboard')->getDashboardPaneFooterWrapper(false);
+<?= Loader::helper('concrete/dashboard')->getDashboardPaneFooterWrapper(false);

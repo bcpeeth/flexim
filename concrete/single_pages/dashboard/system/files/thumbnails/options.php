@@ -17,6 +17,8 @@ defined('C5_EXECUTE') or die('Access Denied.');
 /* @var Concrete\Core\Page\Page $c */
 /* @var Concrete\Theme\Dashboard\PageTheme $theme */
 
+/* @var array $thumbnail_generation_strategies */
+/* @var string $thumbnail_generation_strategy */
 /* @var array $thumbnail_formats */
 /* @var string $thumbnail_format */
 /* @var int $jpeg_compression */
@@ -25,19 +27,35 @@ defined('C5_EXECUTE') or die('Access Denied.');
 /* @var string $manipulation_library */
 
 ?>
-<form method="post" action="<?php echo $view->action('submit')?>">
+<form method="post" action="<?=$view->action('submit')?>">
 
     <?php $token->output('thumbnails-options') ?>
 
     <div class="form-group">
-        <?php echo $form->label('thumbnail_format', t('Thumbnails Format')) ?>
+        <?= $form->label('thumbnail_generation_strategy', t('Thumbnail Generation Strategy')) ?>
+        <?php
+        foreach ($thumbnail_generation_strategies as $id => $name) {
+            ?>
+            <div class="radio">
+                <label>
+                    <?= $form->radio('thumbnail_generation_strategy', $id, $id === $thumbnail_generation_strategy, ['required' => 'required']) ?>
+                    <?= h($name) ?>
+                </label>
+            </div>
+            <?php
+        }
+        ?>
+    </div>
+
+    <div class="form-group">
+        <?= $form->label('thumbnail_format', t('Thumbnails Format')) ?>
         <?php
         foreach ($thumbnail_formats as $id => $name) {
             ?>
             <div class="radio">
                 <label>
-                    <?php echo $form->radio('thumbnail_format', $id, $id === $thumbnail_format, ['required' => 'required']) ?>
-                    <?php echo h($name) ?>
+                    <?= $form->radio('thumbnail_format', $id, $id === $thumbnail_format, ['required' => 'required']) ?>
+                    <?= h($name) ?>
                 </label>
             </div>
             <?php
@@ -46,15 +64,15 @@ defined('C5_EXECUTE') or die('Access Denied.');
     </div>
 
     <div class="form-group">
-        <?php echo $form->label('manipulation_library', t('Image Manipulation Library')) ?>
+        <?= $form->label('manipulation_library', t('Image Manipulation Library')) ?>
         <?php
         foreach ($manipulation_libraries as $id => $name) {
             ?>
             <div class="radio">
                 <label>
-                    <?php echo $form->radio('manipulation_library', $id, $id === $manipulation_library, ['required' => 'required']) ?>
-                    <?php echo h($name) ?>
-                    <?php echo t('(currently working: %s)', '<span class="ccm-check-manipulation-library" data-check-src="' . h($view->action('test_manipulation_library', $id, $token->generate('thumbnail-check-library-' . $id))) . '"><i class="fa fa-spinner fa-spin"></i></span>')?>
+                    <?= $form->radio('manipulation_library', $id, $id === $manipulation_library, ['required' => 'required']) ?>
+                    <?= h($name) ?>
+                    <?= t('(currently working: %s)', '<span class="ccm-check-manipulation-library" data-check-src="' . h($view->action('test_manipulation_library', $id, $token->generate('thumbnail-check-library-' . $id))) . '"><i class="fa fa-spinner fa-spin"></i></span>')?>
                 </label>
             </div>
             <?php
@@ -62,21 +80,31 @@ defined('C5_EXECUTE') or die('Access Denied.');
         ?>
     </div>
 
+    <div class="form-group">
+        <?= $form->label('create_high_dpi_thumbnails', t('Create high DPI thumbnails')) ?>
+        <div class="checkbox">
+            <label>
+                <?= $form->checkbox('create_high_dpi_thumbnails', 1, $create_high_dpi_thumbnails) ?>
+                <?= t('Create high DPI thumbnails') ?>
+            </label>
+        </div>
+    </div>
+
 	<div class="form-group">
-		<?php echo $form->label('jpeg_compression', t('JPEG compression level'), ['class' => 'launch-tooltip control-label', 'title' => t('JPEG compression level ranges from 0 (worst quality, smaller file) to 100 (best quality, biggest file)')]) ?>
-    	<?php echo $form->number('jpeg_compression', $jpeg_compression, ['required' => 'required', 'min' => '0', 'max' => '100']) ?>
+		<?= $form->label('jpeg_compression', t('JPEG compression level'), ['class' => 'launch-tooltip control-label', 'title' => t('JPEG compression level ranges from 0 (worst quality, smaller file) to 100 (best quality, biggest file)')]) ?>
+    	<?= $form->number('jpeg_compression', $jpeg_compression, ['required' => 'required', 'min' => '0', 'max' => '100']) ?>
 	</div>
 
     <div class="form-group">
-        <?php echo $form->label('png_compression', t('PNG compression quality'), ['class' => 'launch-tooltip control-label', 'title' => t('PNG compression quality ranges from 0 (no compression) to 9 (maximum compression)')]) ?>
-        <?php echo $form->number('png_compression', $png_compression, ['required' => 'required', 'min' => '0', 'max' => '9']) ?>
+        <?= $form->label('png_compression', t('PNG compression quality'), ['class' => 'launch-tooltip control-label', 'title' => t('PNG compression quality ranges from 0 (no compression) to 9 (maximum compression)')]) ?>
+        <?= $form->number('png_compression', $png_compression, ['required' => 'required', 'min' => '0', 'max' => '9']) ?>
     </div>
 
 
     <div class="ccm-dashboard-form-actions-wrapper">
         <div class="ccm-dashboard-form-actions">
-            <a href="<?php echo URL::to('/dashboard/system/files/thumbnails')?>" class="btn btn-default"><?php echo t('Cancel')?></a>
-            <button class="pull-right btn btn-primary" type="submit"><?php echo t('Save')?></button>
+            <a href="<?=URL::to('/dashboard/system/files/thumbnails')?>" class="btn btn-default"><?=t('Cancel')?></a>
+            <button class="pull-right btn btn-primary" type="submit"><?=t('Save')?></button>
         </div>
     </div>
 

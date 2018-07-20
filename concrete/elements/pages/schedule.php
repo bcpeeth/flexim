@@ -14,15 +14,15 @@ $timezone = $dateService->getTimezoneDisplayName($timezone);
 ?>
 
 <div class="form-group form-group-last">
-    <label class="control-label"><?php echo t('Date/Time')?></label>
-    <?php echo $datetime->datetime('check-in-scheduler', $publishDate, false, true,
+    <label class="control-label"><?=t('Date/Time')?></label>
+    <?= $datetime->datetime('check-in-scheduler', $publishDate, false, true,
         'dark-panel-calendar'); ?>
-    <span class="help-block" style="display: block"><?php echo t('Time Zone: %s', $timezone)?></span>
+    <span class="help-block" style="display: block"><?=t('Time Zone: %s', $timezone)?></span>
 </div>
 <div class="dialog-buttons">
     <button type="submit" name="action" value="schedule"
             class="btn btn-primary ccm-check-in-schedule">
-        <?php echo t('Schedule')?>
+        <?=t('Schedule')?>
     </button>
 </div>
 

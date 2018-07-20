@@ -358,10 +358,11 @@ class Controller extends BlockController
         if ($qsID == 0) {
             throw new Exception(t("Oops, something is wrong with the form you posted (it doesn't have a question set id)."));
         }
+        $errors = [];
 
         $token = Core::make('token');
         if (!$token->validate('form_block_submit_qs_' . $qsID)) {
-            throw new Exception(t('Invalid Request'));
+            $errors[] = $token->getErrorMessage();
         }
 
         //get all questions for this question set
@@ -515,6 +516,19 @@ class Controller extends BlockController
                     } else {
                         $answerDisplay = t('No file specified');
                     }
+                } else if ($row['inputType'] == 'datetime') {
+
+                    $formPage = $this->getCollectionObject();
+                    $answer = $txt->sanitize($_POST['Question' . $row['msqID']]);
+                    if ($formPage) {
+                        $site = $formPage->getSite();
+                        $timezone = $site->getTimezone();
+                        $date = $this->app->make('date');
+                        $answerDisplay = $date->formatDateTime($txt->sanitize($_POST['Question' . $row['msqID']]), false, false, $timezone);
+                    } else {
+                        $answerDisplay = $txt->sanitize($_POST['Question' . $row['msqID']]);
+                    }
+
                 } elseif ($row['inputType'] == 'url') {
                     $answerLong = '';
                     $answer = $txt->sanitize($_POST['Question' . $row['msqID']]);
@@ -600,9 +614,7 @@ class Controller extends BlockController
 
             if (!$this->noSubmitFormRedirect) {
                 $targetPage = null;
-                if ($this->redirectCID == HOME_CID) {
-                    $targetPage = Page::getByID(HOME_CID);
-                } elseif ($this->redirectCID > 0) {
+                if ($this->redirectCID > 0) {
                     $pg = Page::getByID($this->redirectCID);
                     if (is_object($pg) && $pg->cID) {
                         $targetPage = $pg;

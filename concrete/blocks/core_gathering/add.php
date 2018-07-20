@@ -2,7 +2,7 @@
 defined('C5_EXECUTE') or die("Access Denied.");
 ?>
 
-<?php echo Loader::helper('concrete/ui')->tabs(array(
+<?=Loader::helper('concrete/ui')->tabs(array(
     array('sources', t('Data Sources'), true),
     array('output', t('Output')),
     array('posting', t('Posting')),

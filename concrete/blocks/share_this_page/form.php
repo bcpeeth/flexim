@@ -2,8 +2,8 @@
 
 <fieldset>
     <legend>
-        <button class="btn btn-xs pull-right btn-default" type="button" id="ccm-block-share-this-page-add-service"><?php echo t('Add Service')?></button>
-        <?php echo t('Services')?>
+        <button class="btn btn-xs pull-right btn-default" type="button" id="ccm-block-share-this-page-add-service"><?=t('Add Service')?></button>
+        <?=t('Services')?>
     </legend>
     <div id="ccm-block-share-this-page-service-wrapper">
 
@@ -15,11 +15,11 @@
 <div class="form-group">
     <a href="#" data-remove="service" class="pull-right"><i class="fa fa-minus-circle"></i></a>
     <label class="control-label">
-    <?php echo t('Choose Sharing Service')?></label>
+    <?=t('Choose Sharing Service')?></label>
     <select name="service[]" class="form-control">
         <?php foreach ($services as $service) {
     ?>
-            <option value="<?php echo $service->getHandle()?>" <% if (service == '<?php echo $service->getHandle()?>') { %>selected<% } %>><?php echo $service->getDisplayName()?></option>
+            <option value="<?=$service->getHandle()?>" <% if (service == '<?=$service->getHandle()?>') { %>selected<% } %>><?=$service->getDisplayName()?></option>
         <?php 
 } ?>
     </select>
@@ -28,7 +28,7 @@
 
 <script type="text/javascript">
 $(function() {
-    var selectedServices = <?php echo $selected?>;
+    var selectedServices = <?=$selected?>;
     var _template = _.template(
         $('script.service-template').html()
     );

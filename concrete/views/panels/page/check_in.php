@@ -5,9 +5,9 @@ $require_version_comments = (bool) Config::get('concrete.misc.require_version_co
 
 <div class="ccm-panel-content-inner">
 
-<form method="post" id="ccm-check-in" action="<?php echo $controller->action('submit')?>">
+<form method="post" id="ccm-check-in" action="<?=$controller->action('submit')?>">
 
-<h5><?php echo t('Version Comments')?></h5>
+<h5><?=t('Version Comments')?></h5>
 
 <div class="ccm-panel-check-in-comments"><textarea name="comments" id="ccm-check-in-comments"<?php echo $require_version_comments ? ' required="required"' : ''; ?>></textarea></div>
 
@@ -21,10 +21,10 @@ $require_version_comments = (bool) Config::get('concrete.misc.require_version_co
     <?php $publishAction = (is_object($publishErrors) && $publishErrors->has()) ? false : true ?>
     <div class="btn-group">
         <button id="ccm-check-in-publish" type="submit" name="action" value="publish"
-                class="btn btn-primary" <?php echo $publishAction ?: 'disabled' ?>>
-            <?php echo $publishTitle?>
+                class="btn btn-primary" <?=$publishAction ?: 'disabled' ?>>
+            <?=$publishTitle?>
         </button>
-        <button id="ccm-check-in-schedule" type="button" class="btn btn-primary" <?php echo $publishAction ?: 'disabled' ?>>
+        <button id="ccm-check-in-schedule" type="button" class="btn btn-primary" <?= $publishAction ?: 'disabled' ?>>
             <i class="fa fa-clock-o"></i>
         </button>
     </div>
@@ -36,7 +36,7 @@ $require_version_comments = (bool) Config::get('concrete.misc.require_version_co
         <?php if (count($publishErrors->getList())) { ?>
             <div class="small">
             <?php foreach ($publishErrors->getList() as $error): ?>
-                <div class="text-warning"><strong><i class="fa fa-warning"></i> <?php echo $error?></strong></div>
+                <div class="text-warning"><strong><i class="fa fa-warning"></i> <?=$error?></strong></div>
                 <br/>
             <?php endforeach; ?>
             </div>
@@ -48,7 +48,7 @@ $require_version_comments = (bool) Config::get('concrete.misc.require_version_co
                 <div class="text-info">
                     <strong>
                         <i class="fa fa-question-circle"></i>
-                        <?php echo t('You can specify page name, page location and attributes from the ' .
+                        <?=t('You can specify page name, page location and attributes from the ' .
                              '<a href="#" data-launch-panel-detail="page-composer" data-panel-detail-url="%s" ' .
                              'data-panel-transition="fade">Page Compose interface</a>.',
                              URL::to('/ccm/system/panels/details/page/composer')); ?>
@@ -63,15 +63,15 @@ $require_version_comments = (bool) Config::get('concrete.misc.require_version_co
 <?php
 } ?>
 
-	<button id="ccm-check-in-preview" type="submit" name="action" value="save" class="btn-block btn-success btn"><?php echo t('Save Changes')?></button>
+	<button id="ccm-check-in-preview" type="submit" name="action" value="save" class="btn-block btn-success btn"><?=t('Save Changes')?></button>
 
     <?php if ($c->isPageDraft() && $cp->canDeletePage()) {
     ?>
-		<button id="ccm-check-in-discard" type="submit" name="action" value="discard" class="btn-block btn-danger btn"><?php echo t('Discard Draft')?></button>
+		<button id="ccm-check-in-discard" type="submit" name="action" value="discard" class="btn-block btn-danger btn"><?=t('Discard Draft')?></button>
 	<?php
 } elseif ($v->canDiscard()) {
     ?>
-		<button id="ccm-check-in-discard" type="submit" name="action" value="discard" class="btn-block btn-danger btn"><?php echo t('Discard Changes')?></button>
+		<button id="ccm-check-in-discard" type="submit" name="action" value="discard" class="btn-block btn-danger btn"><?=t('Discard Changes')?></button>
 	<?php
 } ?>
 	<input type="hidden" name="approve" value="PREVIEW" id="ccm-approve-field" />
@@ -85,7 +85,7 @@ $(function() {
     <?php if ($c->isPageDraft() && $cp->canDeletePage()) {
     ?>
     $('button#ccm-check-in-discard').on('click', function () {
-        return confirm('<?php echo t('This will remove this draft and it cannot be undone. Are you sure?')?>');
+        return confirm('<?=t('This will remove this draft and it cannot be undone. Are you sure?')?>');
     });
 	<?php
 } ?>
@@ -94,7 +94,7 @@ $(function() {
         $("#ccm-check-in-schedule-wrapper").toggle();
         $("#ccm-check-in-publish").prop('disabled', !$("#ccm-check-in-publish").prop('disabled'));
     },
-        isScheduled = <?php echo json_encode($publishDate) ?>;
+        isScheduled = <?= json_encode($publishDate) ?>;
 
     if (isScheduled) {
         toggleScheduler();

@@ -1,13 +1,74 @@
 <?php
+
 namespace Concrete\Core\Updater\Migrations;
 
 use Concrete\Core\Block\BlockType\BlockType;
 use Concrete\Core\Database\DatabaseStructureManager;
+use Concrete\Core\Support\Facade\Facade;
 use Doctrine\DBAL\Migrations\AbstractMigration as DoctrineAbstractMigration;
+use Doctrine\DBAL\Migrations\Version;
+use Doctrine\DBAL\Schema\Schema;
 use Doctrine\ORM\Tools\SchemaTool;
 
 abstract class AbstractMigration extends DoctrineAbstractMigration
 {
+    protected $app;
+
+    public function __construct(Version $version)
+    {
+        parent::__construct($version);
+        $app = Facade::getFacadeApplication();
+        $this->app = $app;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Doctrine\DBAL\Migrations\AbstractMigration::up()
+     */
+    final public function up(Schema $schema)
+    {
+        if ($this instanceof ManagedSchemaUpgraderInterface) {
+            $this->upgradeSchema($schema);
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Doctrine\DBAL\Migrations\AbstractMigration::postUp()
+     */
+    final public function postUp(Schema $schema)
+    {
+        if ($this instanceof DirectSchemaUpgraderInterface) {
+            $this->upgradeDatabase();
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Doctrine\DBAL\Migrations\AbstractMigration::down()
+     */
+    final public function down(Schema $schema)
+    {
+        if ($this instanceof ManagedSchemaDowngraderInterface) {
+            $this->downgradeSchema($schema);
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Doctrine\DBAL\Migrations\AbstractMigration::postDown()
+     */
+    final public function postDown(Schema $schema)
+    {
+        if ($this instanceof DirectSchemaDowngraderInterface) {
+            $this->downgradeDatabase();
+        }
+    }
+
     protected function output($message)
     {
         $this->version->getConfiguration()->getOutputWriter()->write($message);

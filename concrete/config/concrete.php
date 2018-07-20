@@ -6,9 +6,9 @@ return [
      *
      * @var string
      */
-    'version' => '8.2.1',
-    'version_installed' => '8.2.1',
-    'version_db' => '20170802000000', // the key of the latest database migration
+    'version' => '8.3.2',
+    'version_installed' => '8.3.2',
+    'version_db' => '20180122213656', // the key of the latest database migration
 
     /*
      * Installation status
@@ -219,7 +219,7 @@ return [
                     'core_filesystem' => [
                         'class' => \Concrete\Core\Cache\Driver\FileSystemStashDriver::class,
                         'options' => [
-                            'path' => DIR_FILES_UPLOADED_STANDARD . '/cache',
+                            'path' => DIR_FILES_UPLOADED_STANDARD . '/cache/overrides',
                             'dirPermissions' => DIRECTORY_PERMISSIONS_MODE_COMPUTED,
                             'filePermissions' => FILE_PERMISSIONS_MODE_COMPUTED,
                         ],
@@ -236,7 +236,7 @@ return [
                     'core_filesystem' => [
                         'class' => \Concrete\Core\Cache\Driver\FileSystemStashDriver::class,
                         'options' => [
-                            'path' => DIR_FILES_UPLOADED_STANDARD . '/cache',
+                            'path' => DIR_FILES_UPLOADED_STANDARD . '/cache/expensive',
                             'dirPermissions' => DIRECTORY_PERMISSIONS_MODE_COMPUTED,
                             'filePermissions' => FILE_PERMISSIONS_MODE_COMPUTED,
                         ],
@@ -340,6 +340,10 @@ return [
             'name' => null,
         ],
         'validate_registration' => [
+            'address' => null,
+            'name' => null,
+        ],
+        'workflow_notification' => [
             'address' => null,
             'name' => null,
         ],
@@ -492,6 +496,7 @@ return [
         'file_manager_detail' => [
             'handle' => 'file_manager_detail',
             'width' => 400,
+            'height' => 400,
         ],
         'user_avatar' => [
             'width' => 80,
@@ -504,6 +509,7 @@ return [
         'images' => [
             'use_exif_data_to_rotate_images' => false,
             'manipulation_library' => 'gd',
+            'create_high_dpi_thumbnails' => true,
         ],
         'results' => 10,
     ],
@@ -602,7 +608,7 @@ return [
                 'connect_success' => '/marketplace/connect/-/connected',
                 'connect_validate' => '/marketplace/connect/-/validate',
                 'connect_new_token' => '/marketplace/connect/-/generate_token',
-                'checkout' => '/cart/-/add/',
+                'checkout' => '/cart/-/add',
                 'purchases' => '/marketplace/connect/-/get_available_licenses',
                 'item_information' => '/marketplace/connect/-/get_item_information',
                 'item_free_license' => '/marketplace/connect/-/enable_free_license',
@@ -699,6 +705,11 @@ return [
             'display_username_field' => true,
 
             /*
+             * Determines whether the confirm password field is displayed when registering
+             */
+            'display_confirm_password_field' => true,
+
+            /*
              * Validate emails during registration
              *
              * @var bool
@@ -768,6 +779,21 @@ return [
          * @var string
          */
         'notify_email' => '',
+    ],
+
+    /*
+     * ------------------------------------------------------------------------
+     * Calendar
+     * ------------------------------------------------------------------------
+     */
+    'calendar' => [
+
+        'colors' => [
+
+            'text' => '#ffffff',
+            'background' => '#3A87AD',
+
+        ],
     ],
 
     /*

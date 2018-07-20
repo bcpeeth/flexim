@@ -11,7 +11,7 @@ if ($btHandle == BLOCK_HANDLE_SCRAPBOOK_PROXY) {
 if (is_object($set)) {
     ?>
     <script type="text/javascript">
-        $('head').append('<style type="text/css"><?php echo addslashes($styleHeader)?></style>');
+        $('head').append('<style type="text/css"><?=addslashes($styleHeader)?></style>');
     </script>
 <?php
 
@@ -38,19 +38,31 @@ if ($pt->supportsGridFramework() && $b->overrideBlockTypeContainerSettings()) {
 
 $gf = $pt->getThemeGridFrameworkObject();
 
-Loader::element("custom_style", array(
-    'saveAction' => $controller->action('submit'),
-    'resetAction' => $controller->action('reset'),
-    'style' => $b->getCustomStyle(true),
-    'bFilename' => $bFilename,
-    'bName' => $b->getBlockName(),
-    'displayBlockContainerSettings' => $pt->supportsGridFramework(),
-    'enableBlockContainer' => $enableBlockContainer,
-    'gf' => $gf,
-    'templates' => $templates,
-    'customClasses' => $customClasses,
-    'canEditCustomTemplate' => $canEditCustomTemplate,
-));
+if (Config::get('concrete.design.enable_custom')) {
+    Loader::element('custom_style', array(
+        'saveAction' => $controller->action('submit'),
+        'resetAction' => $controller->action('reset'),
+        'style' => $b->getCustomStyle(true),
+        'bFilename' => $bFilename,
+        'bName' => $b->getBlockName(),
+        'displayBlockContainerSettings' => $pt->supportsGridFramework(),
+        'enableBlockContainer' => $enableBlockContainer,
+        'gf' => $gf,
+        'templates' => $templates,
+        'customClasses' => $customClasses,
+        'canEditCustomTemplate' => $canEditCustomTemplate,
+    ));
+}
+else {
+    Loader::element('custom_block_template', array(
+        'saveAction' => $controller->action('submit'),
+        'resetAction' => $controller->action('reset'),
+        'style' => $b->getCustomStyle(true),
+        'bFilename' => $bFilename,
+        'templates' => $templates,
+    ));
+}
+
 
 $pt->registerAssets();
 $bv->render('view');

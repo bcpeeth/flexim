@@ -7,12 +7,12 @@
         array('columns', t('Customize Results'))
     ));?>
 
-    <form class="ccm-search-fields ccm-search-fields-none" data-form="advanced-search" method="post" action="<?php echo $controller->getSubmitAction()?>">
+    <form class="ccm-search-fields ccm-search-fields-none" data-form="advanced-search" method="post" action="<?=$controller->getSubmitAction()?>">
 
     <div class="ccm-tab-content" id="ccm-tab-content-fields">
 
             <div class="form-group">
-                <button class="btn btn-primary" type="button" data-button-action="add-field"><?php echo t('Add Field')?></button>
+                <button class="btn btn-primary" type="button" data-button-action="add-field"><?=t('Add Field')?></button>
             </div>
             <!-- <hr/> -->
             <div data-container="search-fields" class="ccm-search-fields-advanced">
@@ -29,10 +29,10 @@
 
 
     <div class="dialog-buttons">
-        <button class="btn btn-default pull-left" data-dialog-action="cancel"><?php echo t('Cancel')?></button>
-        <button type="button" onclick="$('form[data-form=advanced-search]').trigger('submit')" class="btn btn-primary pull-right"><?php echo t('Search')?></button>
+        <button class="btn btn-default pull-left" data-dialog-action="cancel"><?=t('Cancel')?></button>
+        <button type="button" onclick="$('form[data-form=advanced-search]').trigger('submit')" class="btn btn-primary pull-right"><?=t('Search')?></button>
         <?php if ($supportsSavedSearch) { ?>
-            <button type="button" data-button-action="save-search-preset" class="btn btn-success pull-right"><?php echo t('Save as Search Preset')?></button>
+            <button type="button" data-button-action="save-search-preset" class="btn btn-success pull-right"><?=t('Save as Search Preset')?></button>
         <?php } ?>
     </div>
 
@@ -42,16 +42,16 @@
 <?php if ($supportsSavedSearch) { ?>
 <div style="display: none">
     <div data-dialog="save-search-preset" class="ccm-ui">
-        <form data-form="save-preset" action="<?php echo $controller->action('save_preset')?>" method="post">
+        <form data-form="save-preset" action="<?=$controller->action('save_preset')?>" method="post">
             <div class="form-group">
                 <?php $form = Core::make('helper/form'); ?>
-                <?php echo $form->label('presetName', t('Name'))?>
-                <?php echo $form->text('presetName')?>
+                <?=$form->label('presetName', t('Name'))?>
+                <?=$form->text('presetName')?>
             </div>
         </form>
         <div class="dialog-buttons">
-            <button class="btn btn-default pull-left" onclick="jQuery.fn.dialog.closeTop()"><?php echo t('Cancel')?></button>
-            <button class="btn btn-primary pull-right" data-button-action="save-search-preset-submit"><?php echo t('Save Preset')?></button>
+            <button class="btn btn-default pull-left" onclick="jQuery.fn.dialog.closeTop()"><?=t('Cancel')?></button>
+            <button class="btn btn-primary pull-right" data-button-action="save-search-preset-submit"><?=t('Save Preset')?></button>
         </div>
     </div>
 </div>
@@ -59,12 +59,12 @@
 
 <script type="text/template" data-template="search-field-row">
     <div class="ccm-search-fields-row">
-        <select data-action="<?php echo $controller->getAddFieldAction()?>" name="field[]" class="ccm-search-choose-field form-control">
-            <option value=""><?php echo t('** Select Field')?></option>
+        <select data-action="<?=$controller->getAddFieldAction()?>" name="field[]" class="ccm-search-choose-field form-control">
+            <option value=""><?=t('** Select Field')?></option>
             <?php foreach($manager->getGroups() as $group) { ?>
-                <optgroup label="<?php echo $group->getName()?>">
+                <optgroup label="<?=$group->getName()?>">
                     <?php foreach($group->getFields() as $field) { ?>
-                        <option value="<?php echo $field->getKey()?>" <% if (typeof(field) != 'undefined' && field.key == '<?php echo $field->getKey()?>') { %> selected <% } %>><?php echo $field->getDisplayName()?></option>
+                        <option value="<?=$field->getKey()?>" <% if (typeof(field) != 'undefined' && field.key == '<?=$field->getKey()?>') { %> selected <% } %>><?=$field->getDisplayName()?></option>
                     <?php } ?>
                 </optgroup>
             <?php } ?>
@@ -75,5 +75,5 @@
 </script>
 
 <script type="text/json" data-template="default-query">
-    <?php echo $defaultQuery?>
+    <?=$defaultQuery?>
 </script>

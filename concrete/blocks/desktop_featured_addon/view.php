@@ -4,12 +4,12 @@
 <div class="ccm-block-desktop-featured-addon">
 	<div class="ccm-block-desktop-featured-addon-inner">
 
-	<h6><?php echo t('Featured Add-On')?></h6/>
+	<h6><?=t('Featured Add-On')?></h6/>
 
-	<img src="<?php echo $remoteItem->getRemoteIconURL()?>" width="80" height="80" />
-	<h3><?php echo $remoteItem->getName()?></h3>
-	<p><?php echo $remoteItem->getDescription()?></p>
-	<a href="<?php echo $remoteItem->getRemoteURL()?>" class="btn btn-default btn-lg"><?php echo t('Learn More')?></a>
+	<img src="<?=$remoteItem->getRemoteIconURL()?>" width="80" height="80" />
+	<h3><?=$remoteItem->getName()?></h3>
+	<p><?=$remoteItem->getDescription()?></p>
+	<a href="<?=$remoteItem->getRemoteURL()?>" class="btn btn-default btn-lg"><?=t('Learn More')?></a>
 
 	</div>
 </div>

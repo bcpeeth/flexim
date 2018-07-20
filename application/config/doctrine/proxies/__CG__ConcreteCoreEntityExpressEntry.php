@@ -451,12 +451,12 @@ class Entry extends \Concrete\Core\Entity\Express\Entry implements \Doctrine\ORM
     /**
      * {@inheritDoc}
      */
-    public function getAttribute($ak, $mode = false)
+    public function getExporter()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getAttribute', [$ak, $mode]);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getExporter', []);
 
-        return parent::getAttribute($ak, $mode);
+        return parent::getExporter();
     }
 
     /**
@@ -468,6 +468,17 @@ class Entry extends \Concrete\Core\Entity\Express\Entry implements \Doctrine\ORM
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getAttributeValue', [$ak]);
 
         return parent::getAttributeValue($ak);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getAttribute($ak, $mode = false)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getAttribute', [$ak, $mode]);
+
+        return parent::getAttribute($ak, $mode);
     }
 
     /**

@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="<?php echo $this->getThemePath()?>/main.css" />
+    <link rel="stylesheet" type="text/css" href="<?=$this->getThemePath()?>/main.css" />
     <?php
 $view->requireAsset('css', 'bootstrap');
 $view->requireAsset('css', 'font-awesome');
@@ -53,26 +53,26 @@ $config = $site->getConfigRepository();
     ?>
 <div id="ccm-toolbar">
     <ul>
-        <li class="ccm-logo pull-left"><span><?php echo Loader::helper('concrete/ui')->getToolbarLogoSRC()?></span></li>
+        <li class="ccm-logo pull-left"><span><?=Loader::helper('concrete/ui')->getToolbarLogoSRC()?></span></li>
         <?php if ($showAccount) {
     ?>
         <li class="pull-right">
-            <a href="<?php echo URL::to('/login', 'do_logout', Loader::helper('validation/token')->generate('do_logout'))?>" title="<?php echo t('Sign Out')?>"><i class="fa fa-sign-out"></i>
+            <a href="<?=URL::to('/login', 'do_logout', Loader::helper('validation/token')->generate('do_logout'))?>" title="<?=t('Sign Out')?>"><i class="fa fa-sign-out"></i>
             <span class="ccm-toolbar-accessibility-title ccm-toolbar-accessibility-title-site-settings">
-                <?php echo tc('toolbar', 'Sign Out') ?>
+                <?= tc('toolbar', 'Sign Out') ?>
             </span>
             </a>
         </li>
         <li class="pull-right">
-            <a href="<?php echo URL::to('/')?>">
-                <i class="fa fa-home"></i><span class="ccm-toolbar-accessibility-title ccm-toolbar-accessibility-title-site-settings"><?php echo tc('toolbar', 'Return to Website') ?></span>
+            <a href="<?=URL::to('/')?>">
+                <i class="fa fa-home"></i><span class="ccm-toolbar-accessibility-title ccm-toolbar-accessibility-title-site-settings"><?=tc('toolbar', 'Return to Website') ?></span>
             </a>
         </li>
         <li class="pull-right">
-            <a href="<?php echo URL::to('/account')?>">
+            <a href="<?=URL::to('/account')?>">
                 <i class="fa fa-user"></i>
                 <span class="ccm-toolbar-accessibility-title ccm-toolbar-accessibility-title-site-settings">
-                    <?php echo t('My Account') ?>
+                    <?=t('My Account') ?>
                 </span>
             </a>
         </li>

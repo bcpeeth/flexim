@@ -1,14 +1,14 @@
 <?php
 namespace Concrete\Core\Job;
 
-use Concrete\Core\Foundation\Object;
+use Concrete\Core\Foundation\ConcreteObject;
 use Loader;
 use Concrete\Core\Package\PackageList;
 use Config;
 use Core;
 use Events;
 
-abstract class Job extends Object
+abstract class Job extends ConcreteObject
 {
     const JOB_SUCCESS = 0;
     const JOB_ERROR_EXCEPTION_GENERAL = 1;
@@ -252,7 +252,7 @@ abstract class Job extends Object
                 if (class_exists($className, true)) {
                     $j = Core::make($className);
                     $j->jHandle = $jHandle;
-                    if (intval($jobData['jID']) > 0) {
+                    if (isset($jobData['jID']) && (int) $jobData['jID'] > 0) {
                         $j->setPropertiesFromArray($jobData);
                     }
     

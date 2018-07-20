@@ -130,9 +130,25 @@ class StandardSitemapProvider implements ProviderInterface
     public function getRequestedSiteTree()
     {
         if ($this->request->query->has('siteTreeID') && $this->request->query->get('siteTreeID') > 0) {
+            $this->cookieJar->set('ConcreteSitemapTreeID', $this->request->query->get('siteTreeID'));
             return $this->siteService->getSiteTreeByID($this->request->query->get('siteTreeID'));
+        } else if ($this->cookieJar->has('ConcreteSitemapTreeID')) {
+            return $this->siteService->getSiteTreeByID($this->cookieJar->get('ConcreteSitemapTreeID'));
         } else {
-            return $this->siteService->getActiveSiteForEditing()->getSiteTreeObject();
+            $site = $this->siteService->getActiveSiteForEditing();
+            $locale = $site->getDefaultLocale();
+            if ($locale && $this->checkPermissions($locale)) {
+                return $locale->getSiteTreeObject();
+            }
+
+            // This means we don't have permission to view the default locale.
+            // So instead we just grab the first we can find that we DO have permission
+            // to view.
+            foreach($site->getLocales() as $locale) {
+                if ($this->checkPermissions($locale)) {
+                    return $locale->getSiteTreeObject();
+                }
+            }
         }
     }
 

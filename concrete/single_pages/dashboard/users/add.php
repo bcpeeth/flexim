@@ -3,7 +3,7 @@ $ih = Loader::helper('concrete/ui');
 ?>
 
 <form method="post" action="<?php echo $view->action('submit'); ?>">
-    <?php echo $form->getAutocompletionDisabler() ?>
+    <?= $form->getAutocompletionDisabler() ?>
 	<fieldset>
 		<legend><?php echo t('Basic Details'); ?></legend>
 		<div class="form-group">

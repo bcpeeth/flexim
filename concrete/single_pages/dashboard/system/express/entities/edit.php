@@ -14,82 +14,82 @@
     <?php View::element('dashboard/express/detail_navigation', array('entity' => $entity))?>
     <div class="col-md-8">
 
-        <form method="post" action="<?php echo $view->action('update', $entity->getID())?>">
-            <?php echo $token->output('update_entity')?>
+        <form method="post" action="<?=$view->action('update', $entity->getID())?>">
+            <?=$token->output('update_entity')?>
 
             <fieldset>
-                <legend><?php echo t("Basics")?></legend>
+                <legend><?=t("Basics")?></legend>
                 <div class="form-group">
-                    <label for="name" class="control-label"><?php echo t('Name')?></label>
+                    <label for="name" class="control-label"><?=t('Name')?></label>
                     <div class="input-group">
-                        <?php echo $form->text('name', $entity->getName())?>
+                        <?=$form->text('name', $entity->getName())?>
                         <span class="input-group-addon"><i class="fa fa-asterisk"></i></span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="name" class="control-label"><?php echo t('Handle')?></label>
+                    <label for="name" class="control-label"><?=t('Handle')?></label>
                     <div class="input-group">
-                        <?php echo $form->text('handle', $entity->getHandle())?>
+                        <?=$form->text('handle', $entity->getHandle())?>
                         <span class="input-group-addon"><i class="fa fa-asterisk"></i></span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="name" class="control-label"><?php echo t('Plural Handle')?></label>
+                    <label for="name" class="control-label"><?=t('Plural Handle')?></label>
                     <div class="input-group">
-                        <?php echo $form->text('plural_handle', $entity->getPluralHandle())?>
+                        <?=$form->text('plural_handle', $entity->getPluralHandle())?>
                         <span class="input-group-addon"><i class="fa fa-asterisk"></i></span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="name" class="control-label"><?php echo t('Name Mask') ?></label>
-                    <?php echo $form->text('label_mask', $entity->getLabelMask()) ?>
-                    <p class="help-block"><?php echo t('Example <code>Entry %name%</code> or <code>Complaint %date% at %hotel%</code>') ?></p>
+                    <label for="name" class="control-label"><?= t('Name Mask') ?></label>
+                    <?= $form->text('label_mask', $entity->getLabelMask()) ?>
+                    <p class="help-block"><?= t('Example <code>Entry %name%</code> or <code>Complaint %date% at %hotel%</code>') ?></p>
                 </div>
                 <div class="form-group">
-                    <label for="name" class="control-label"><?php echo t('Description')?></label>
-                    <?php echo $form->textarea('description', $entity->getEntityDisplayDescription(), array('rows' => 5))?>
+                    <label for="name" class="control-label"><?=t('Description')?></label>
+                    <?=$form->textarea('description', $entity->getEntityDisplayDescription(), array('rows' => 5))?>
                 </div>
             </fieldset>
 
             <fieldset>
-                <legend><?php echo t('Advanced')?></legend>
+                <legend><?=t('Advanced')?></legend>
                 <div class="form-group">
-                    <label for="name" class="control-label"><?php echo t('Custom Display Order') ?></label>
+                    <label for="name" class="control-label"><?= t('Custom Display Order') ?></label>
                     <div class="checkbox"><label>
-                            <?php echo $form->checkbox('supports_custom_display_order', 1, $entity->supportsCustomDisplayOrder()) ?>
-                            <?php echo t('This entity supports custom display ordering via Dashboard interfaces.') ?>
+                            <?= $form->checkbox('supports_custom_display_order', 1, $entity->supportsCustomDisplayOrder()) ?>
+                            <?= t('This entity supports custom display ordering via Dashboard interfaces.') ?>
                         </label></div>
                 </div>
             </fieldset>
             <fieldset>
-                <legend><?php echo t('Views')?></legend>
+                <legend><?=t('Views')?></legend>
                 <div class="form-group">
-                    <label for="name" class="control-label"><?php echo t('Default Edit Form')?></label>
-                    <?php echo $form->select('default_edit_form_id', $forms, $defaultEditFormID)?>
+                    <label for="name" class="control-label"><?=t('Default Edit Form')?></label>
+                    <?=$form->select('default_edit_form_id', $forms, $defaultEditFormID)?>
                 </div>
                 <div class="form-group">
-                    <label for="name" class="control-label"><?php echo t('Default View Form')?></label>
-                    <?php echo $form->select('default_view_form_id', $forms, $defaultViewFormID)?>
+                    <label for="name" class="control-label"><?=t('Default View Form')?></label>
+                    <?=$form->select('default_view_form_id', $forms, $defaultViewFormID)?>
                 </div>
 
             </fieldset>
             <fieldset>
-                <legend><?php echo t('Results Folder Location')?></legend>
-                <input type="hidden" name="entity_results_node_id" value="<?php echo $folder->getTreeNodeID()?>">
+                <legend><?=t('Results Folder Location')?></legend>
+                <input type="hidden" name="entity_results_node_id" value="<?=$folder->getTreeNodeID()?>">
 
-                <div data-tree="<?php echo $tree->getTreeID()?>">
+                <div data-tree="<?=$tree->getTreeID()?>">
                 </div>
 
                 <script type="text/javascript">
                     $(function() {
 
                         $('[data-tree]').concreteTree({
-                            treeID: '<?php echo $tree->getTreeID()?>',
+                            treeID: '<?=$tree->getTreeID()?>',
                             ajaxData: {
                                 displayOnly: 'express_entry_category'
                             },
                             <?php if (is_object($folder)) { ?>
-                                selectNodesByKey: [<?php echo $folder->getTreeNodeID()?>],
+                                selectNodesByKey: [<?=$folder->getTreeNodeID()?>],
                                 onSelect : function(nodes) {
                                     if (nodes.length) {
                                         $('input[name=entity_results_node_id]').val(nodes[0]);
@@ -124,8 +124,8 @@
             </fieldset>
             <div class="ccm-dashboard-form-actions-wrapper">
                 <div class="ccm-dashboard-form-actions">
-                    <button type="button" data-dialog="delete-entity" class="pull-left btn btn-danger"><?php echo t('Delete')?></button>
-                    <button class="pull-right btn btn-primary" type="submit" ><?php echo t('Save')?></button>
+                    <button type="button" data-dialog="delete-entity" class="pull-left btn btn-danger"><?=t('Delete')?></button>
+                    <button class="pull-right btn btn-primary" type="submit" ><?=t('Save')?></button>
                 </div>
             </div>
         </form>
@@ -135,13 +135,13 @@
 
 <div style="display: none">
     <div id="ccm-dialog-delete-entity" class="ccm-ui">
-        <form method="post" action="<?php echo $view->action('delete')?>">
-            <?php echo Core::make("token")->output('delete_entity')?>
-            <input type="hidden" name="entity_id" value="<?php echo $entity->getID()?>">
-            <p><?php echo t('Are you sure you want to delete this entity? All data entries and all its associations to other entities will be removed. This cannot be undone.')?></p>
+        <form method="post" action="<?=$view->action('delete')?>">
+            <?=Core::make("token")->output('delete_entity')?>
+            <input type="hidden" name="entity_id" value="<?=$entity->getID()?>">
+            <p><?=t('Are you sure you want to delete this entity? All data entries and all its associations to other entities will be removed. This cannot be undone.')?></p>
             <div class="dialog-buttons">
-                <button class="btn btn-default pull-left" onclick="jQuery.fn.dialog.closeTop()"><?php echo t('Cancel')?></button>
-                <button class="btn btn-danger pull-right" onclick="$('#ccm-dialog-delete-entity form').submit()"><?php echo t('Delete Entity')?></button>
+                <button class="btn btn-default pull-left" onclick="jQuery.fn.dialog.closeTop()"><?=t('Cancel')?></button>
+                <button class="btn btn-danger pull-right" onclick="$('#ccm-dialog-delete-entity form').submit()"><?=t('Delete Entity')?></button>
             </div>
         </form>
     </div>

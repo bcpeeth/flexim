@@ -4,7 +4,7 @@
     $mi = Marketplace::getInstance();
     if ($mi->hasConnectionError() && $mi->getConnectionError() == Marketplace::E_MARKETPLACE_SUPPORT_MANUALLY_DISABLED) {
         ?>
-		<p><?php echo t("External marketplace support has been disabled for this website.")?></p>
+		<p><?=t("External marketplace support has been disabled for this website.")?></p>
 	<?php 
     } else {
         ?>

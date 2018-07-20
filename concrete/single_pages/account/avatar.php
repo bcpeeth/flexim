@@ -6,7 +6,7 @@ $save_url = $save_url->setQuery(array(
 ));
 ?>
 
-<h2><?php echo $c->getCollectionName()?></h2>
+<h2><?=$c->getCollectionName()?></h2>
 
 	<p><?php echo t('Change the picture attached to my posts.')?></p>
 
@@ -17,7 +17,7 @@ $save_url = $save_url->setQuery(array(
 		</div>
 		<?php if ($profile->hasAvatar()) { ?>
 			<form method="post" action="<?php echo $view->action('delete')?>">
-				<?php echo Core::make('token')->output('delete_avatar')?>
+				<?=Core::make('token')->output('delete_avatar')?>
 				<button type="submit" class="btn btn-danger"><?php echo t('Remove your user avatar')?> <i class="fa fa-trash icon-white"></i></button>
 			</form>
 		<?php } ?>
@@ -65,6 +65,6 @@ $save_url = $save_url->setQuery(array(
 
     <div class="ccm-dashboard-form-actions-wrapper">
         <div class="ccm-dashboard-form-actions">
-            <a href="<?php echo URL::to('/account')?>" class="btn btn-default" /><?php echo t('Back to Account')?></a>
+            <a href="<?=URL::to('/account')?>" class="btn btn-default" /><?=t('Back to Account')?></a>
         </div>
     </div>

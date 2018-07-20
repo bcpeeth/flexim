@@ -21,32 +21,32 @@ $userGroup = $u->getUserGroups();
 
 <div class="ccm-ui">
 
-    <h3><?php echo t('Basic Details')?></h3>
+    <h3><?=t('Basic Details')?></h3>
     <br>
 
     <div class="row">
         <div class="col-md-8">
-            <p><strong><?php echo t(Username)?></strong></p>
+            <p><strong><?=t(Username)?></strong></p>
         </div>
 
         <div class="col-md-4">
-            <p><?php echo $uName?></p>
+            <p><?=$uName?></p>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-8">
-            <p><strong><?php echo t(Email)?></strong></p>
+            <p><strong><?=t(Email)?></strong></p>
         </div>
 
         <div class="col-md-4">
-            <p><a href="mailto:<?php echo $uEmail?>"><?php echo $uEmail?></a></p>
+            <p><a href="mailto:<?=$uEmail?>"><?=$uEmail?></a></p>
         </div>
     </div>
 
     <!-- user group starts -->
     <?php 	if(count($userGroups) > 0) { ?>
-        <h3><?php echo t('Groups')?></h3>
+        <h3><?=t('Groups')?></h3>
         <br>
     <?php } ?>
     <!-- user group ends -->
@@ -91,7 +91,7 @@ $userGroup = $u->getUserGroups();
 
     <div class="dialog-buttons">
         <?php $ih = Core::make('helper/concrete/ui'); ?>
-        <?php echo $ih->button_js(t('Close'), 'jQuery.fn.dialog.closeTop()', 'left', 'btn')?>
-        <?php echo $ih->button(t('Edit'), URL::to('/dashboard/users/search/view', $u->getUserID()), 'right', 'btn btn-primary')?>
+        <?=$ih->button_js(t('Close'), 'jQuery.fn.dialog.closeTop()', 'left', 'btn')?>
+        <?=$ih->button(t('Edit'), URL::to('/dashboard/users/search/view', $u->getUserID()), 'right', 'btn btn-primary')?>
     </div>
 </div><!-- // div ccm-ui end -->

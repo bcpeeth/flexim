@@ -4,17 +4,17 @@
 
 ?>
 <div class="form-group">
-    <?php echo $form->label('url', t('Feed URL')) ?>
-    <input name="url" class="form-control" placeholder="<?php echo h(t('Feed URL')) ?>" value="<?php echo h($rssObj->url) ?>" type="text" required="required" />
+    <?= $form->label('url', t('Feed URL')) ?>
+    <input name="url" class="form-control" placeholder="<?= h(t('Feed URL')) ?>" value="<?= h($rssObj->url) ?>" type="text" required="required" />
 </div>
 <div class="form-group">
     <label for="title" class="control-label">
-        <?php echo t('Feed Title') ?>
+        <?= t('Feed Title') ?>
     </label>
-    <input name="title" class="form-control" placeholder="<?php echo h(t('Feed Title')) ?>" value="<?php echo h($rssObj->title) ?>"/>
+    <input name="title" class="form-control" placeholder="<?= h(t('Feed Title')) ?>" value="<?= h($rssObj->title) ?>"/>
 </div>
 <div class="form-group">
-    <?php echo $form->label('standardDateFormat', t('Date Format')) ?>
+    <?= $form->label('standardDateFormat', t('Date Format')) ?>
     <?php
     $dateFormats = $rssObj->getDefaultDateTimeFormats();
     $dateFormats[':custom:'] = t('Custom date/time format');
@@ -45,14 +45,14 @@ $(document).ready(function() {
 });
 </script>
 <div class="form-group">
-    <?php echo $form->label('itemsToDisplay', t('Items to Show')) ?>
-    <input name="itemsToDisplay" class="form-control" placeholder="10" value="<?php echo h($rssObj->itemsToDisplay) ?>"/>
+    <?= $form->label('itemsToDisplay', t('Items to Show')) ?>
+    <input name="itemsToDisplay" class="form-control" placeholder="10" value="<?= h($rssObj->itemsToDisplay) ?>"/>
 </div>
 <div class="form-group">
     <div class="checkbox">
         <label>
-            <input type="checkbox" value="1" name="showSummary"<?php echo ((bool) $rssObj->showSummary ? ' checked' : '') ?> />
-            <?php echo t('Include Summary') ?>
+            <input type="checkbox" value="1" name="showSummary"<?= ((bool) $rssObj->showSummary ? ' checked' : '') ?> />
+            <?= t('Include Summary') ?>
         </label>
     </div>
 </div>
@@ -60,8 +60,8 @@ $(document).ready(function() {
     <div class="checkbox">
         <label>
             <input type="checkbox" value="1"
-               name="launchInNewWindow"<?php echo ((bool) $rssObj->launchInNewWindow ? ' checked' : '') ?> />
-            <?php echo t('Open links in a new window') ?>
+               name="launchInNewWindow"<?= ((bool) $rssObj->launchInNewWindow ? ' checked' : '') ?> />
+            <?= t('Open links in a new window') ?>
         </label>
     </div>
 </div>

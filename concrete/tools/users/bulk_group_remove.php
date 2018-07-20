@@ -69,7 +69,7 @@ if (!isset($_REQUEST['reload'])) {
             }
             ?>
 			<div class="clearfix">
-				<?php echo $form->label('groupIDs', t('Remove the users below from Group(s)'))?>
+				<?=$form->label('groupIDs', t('Remove the users below from Group(s)'))?>
 				<div class="input">
 					<select multiple name="groupIDs[]" class="selectize-select" data-placeholder="<?php echo t('Select Group(s)');?>" >
 						<?php foreach ($g1 as $gRow) {
@@ -77,10 +77,10 @@ if (!isset($_REQUEST['reload'])) {
     $gp = new Permissions($g);
     if ($gp->canAssignGroup()) {
         ?>
-							<option value="<?php echo $g->getGroupID()?>"  <?php if (is_array($_REQUEST['groupIDs']) && in_array($g->getGroupID(), $_REQUEST['groupIDs'])) {
+							<option value="<?=$g->getGroupID()?>"  <?php if (is_array($_REQUEST['groupIDs']) && in_array($g->getGroupID(), $_REQUEST['groupIDs'])) {
     ?> selected="selected" <?php
 }
-        ?>><?php echo $g->getGroupDisplayName()?></option>
+        ?>><?=$g->getGroupDisplayName()?></option>
 						<?php
     }
 }?>
@@ -96,8 +96,8 @@ if (!isset($_REQUEST['reload'])) {
 
 	</div>
 	<div class="dialog-buttons">
-		<?php echo $ih->button_js(t('Cancel'), 'jQuery.fn.dialog.closeTop()', 'left', 'btn')?>
-		<?php echo $ih->button_js(t('Save'), 'ccm_userBulkGroupRemove()', 'right', 'btn primary')?>
+		<?=$ih->button_js(t('Cancel'), 'jQuery.fn.dialog.closeTop()', 'left', 'btn')?>
+		<?=$ih->button_js(t('Save'), 'ccm_userBulkGroupRemove()', 'right', 'btn primary')?>
 	</div>
 <?php
 if (!isset($_REQUEST['reload'])) {
@@ -112,14 +112,14 @@ ccm_userBulkGroupRemove = function() {
 	$("#ccm-user-bulk-group-remove").ajaxSubmit(function(resp) {
 		jQuery.fn.dialog.closeTop();
 		jQuery.fn.dialog.hideLoader();
-		ccm_deactivateSearchResults('<?php echo $searchInstance?>');
+		ccm_deactivateSearchResults('<?=$searchInstance?>');
 		ConcreteAlert.notify({
 		'message': ccmi18n.saveUserSettingsMsg,
 		'title': ccmi18n.user_group_remove
 		});
 
-		$("#ccm-<?php echo $searchInstance?>-advanced-search").ajaxSubmit(function(r) {
-		       ccm_parseAdvancedSearchResponse(r, '<?php echo $searchInstance?>');
+		$("#ccm-<?=$searchInstance?>-advanced-search").ajaxSubmit(function(r) {
+		       ccm_parseAdvancedSearchResponse(r, '<?=$searchInstance?>');
 		});
 	});
 };

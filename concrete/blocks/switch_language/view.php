@@ -3,8 +3,8 @@
 <div class="ccm-block-switch-language">
 
     <form method="post" class="form-inline">
-        <?php echo $label ?>
-        <?php echo $form->select(
+        <?= $label ?>
+        <?= $form->select(
             'language',
             $languages,
             $activeLanguage,

@@ -17,7 +17,7 @@ if ($fp->canAddFile() || $fp->canSearchFiles()) { ?>
     <?php
 } else {
     ?>
-	<p><?php echo t("You do not have access to the file manager.");
+	<p><?=t("You do not have access to the file manager.");
     ?></p>
 <?php
 } ?>

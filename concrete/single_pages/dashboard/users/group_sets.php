@@ -3,7 +3,7 @@
 <?php if (in_array($this->controller->getTask(), array('update_set', 'update_set_groups', 'edit', 'delete_set'))) { ?>
 
     <div class="ccm-dashboard-header-buttons">
-        <button class="btn btn-danger" data-launch-dialog="delete-set"><?php echo t("Delete Group Set")?></button>
+        <button class="btn btn-danger" data-launch-dialog="delete-set"><?=t("Delete Group Set")?></button>
     </div>
 
     <form method="post" action="<?php echo $view->action('update_set'); ?>">
@@ -37,8 +37,8 @@
         </div>
         <div class="ccm-dashboard-form-actions-wrapper">
             <div class="ccm-dashboard-form-actions">
-                <a href="<?php echo URL::to('/dashboard/users/group_sets')?>" class="btn pull-left btn-default"><?php echo t('Cancel')?></a>
-                <button type="submit" class="btn btn-primary pull-right"><?php echo t('Update Set')?></button>
+                <a href="<?=URL::to('/dashboard/users/group_sets')?>" class="btn pull-left btn-default"><?=t('Cancel')?></a>
+                <button type="submit" class="btn btn-primary pull-right"><?=t('Update Set')?></button>
             </div>
         </div>
 
@@ -50,10 +50,10 @@
             <form method="post" action="<?php echo $view->action('delete_set'); ?>">
                 <?php echo Loader::helper('validation/token')->output('delete_set'); ?>
                 <input type="hidden" name="gsID" value="<?php echo $set->getGroupSetID(); ?>">
-                <p><?php echo t('Are you sure you want to delete this group set? This cannot be undone.')?></p>
+                <p><?=t('Are you sure you want to delete this group set? This cannot be undone.')?></p>
                 <div class="dialog-buttons">
-                    <button class="btn btn-default pull-left" onclick="jQuery.fn.dialog.closeTop()"><?php echo t('Cancel')?></button>
-                    <button class="btn btn-danger pull-right" onclick="$('div[data-dialog=delete-set] form').submit()"><?php echo t('Delete Set')?></button>
+                    <button class="btn btn-default pull-left" onclick="jQuery.fn.dialog.closeTop()"><?=t('Cancel')?></button>
+                    <button class="btn btn-danger pull-right" onclick="$('div[data-dialog=delete-set] form').submit()"><?=t('Delete Set')?></button>
                 </div>
             </form>
         </div>
@@ -67,7 +67,7 @@
     <?php if (Config::get('concrete.permissions.model') == 'advanced') { ?>
 
         <div class="ccm-dashboard-header-buttons">
-            <button class="btn btn-primary" data-launch-dialog="add-set"><?php echo t("Add Group Set")?></button>
+            <button class="btn btn-primary" data-launch-dialog="add-set"><?=t("Add Group Set")?></button>
         </div>
         <?php if (count($groupSets) > 0) { ?>
         <ul class="item-select-list" id="ccm-group-list">

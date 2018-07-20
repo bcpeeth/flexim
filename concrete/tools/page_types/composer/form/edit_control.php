@@ -38,37 +38,37 @@ if ($cp->canViewPage()) {
     ?>
 
 	<div class="ccm-ui">
-		<form data-edit-set-form-control="<?php echo $control->getPageTypeComposerFormLayoutSetControlID()?>" action="#" method="post">
+		<form data-edit-set-form-control="<?=$control->getPageTypeComposerFormLayoutSetControlID()?>" action="#" method="post">
 		<div class="form-group">
-			<?php echo $form->label('ptComposerFormLayoutSetControlCustomLabel', t('Custom Label'))?>
-			<?php echo $form->text('ptComposerFormLayoutSetControlCustomLabel', $control->getPageTypeComposerFormLayoutSetControlCustomLabel())?>
+			<?=$form->label('ptComposerFormLayoutSetControlCustomLabel', t('Custom Label'))?>
+			<?=$form->text('ptComposerFormLayoutSetControlCustomLabel', $control->getPageTypeComposerFormLayoutSetControlCustomLabel())?>
 		</div>
 		<div class="form-group">
-			<?php echo $form->label('ptComposerFormLayoutSetControlCustomTemplate', t('Custom Template'))?>
-			<?php echo $form->select('ptComposerFormLayoutSetControlCustomTemplate', $templates, $control->getPageTypeComposerFormLayoutSetControlCustomTemplate())?>
+			<?=$form->label('ptComposerFormLayoutSetControlCustomTemplate', t('Custom Template'))?>
+			<?=$form->select('ptComposerFormLayoutSetControlCustomTemplate', $templates, $control->getPageTypeComposerFormLayoutSetControlCustomTemplate())?>
 		</div>
 		<div class="form-group">
-			<?php echo $form->label('ptComposerFormLayoutSetControlDescription', t('Description'))?>
-			<?php echo $form->text('ptComposerFormLayoutSetControlDescription', $control->getPageTypeComposerFormLayoutSetControlDescription())?>
+			<?=$form->label('ptComposerFormLayoutSetControlDescription', t('Description'))?>
+			<?=$form->text('ptComposerFormLayoutSetControlDescription', $control->getPageTypeComposerFormLayoutSetControlDescription())?>
 		</div>
 
 		<?php if ($object->pageTypeComposerFormControlSupportsValidation()) {
     ?>
 		<div class="form-group">
-			<?php echo $form->label('ptComposerFormLayoutSetControlRequired', t('Required'))?>
+			<?=$form->label('ptComposerFormLayoutSetControlRequired', t('Required'))?>
 			<div class="checkbox">
-			<label><?php echo $form->checkbox('ptComposerFormLayoutSetControlRequired', 1, $control->isPageTypeComposerFormLayoutSetControlRequired())?> <?php echo t('Yes, require this form element')?></label>
+			<label><?=$form->checkbox('ptComposerFormLayoutSetControlRequired', 1, $control->isPageTypeComposerFormLayoutSetControlRequired())?> <?=t('Yes, require this form element')?></label>
 			</div>
 		</div>
 		<?php 
 }
     ?>
 
-		<?php echo Loader::helper('validation/token')->output('update_set_control')?>
+		<?=Loader::helper('validation/token')->output('update_set_control')?>
 		</form>
 		<div class="dialog-buttons">
-			<button class="btn btn-default" onclick="jQuery.fn.dialog.closeTop()"><?php echo t('Cancel')?></button>
-			<button class="btn btn-primary pull-right" data-submit-set-form="<?php echo $control->getPageTypeComposerFormLayoutSetControlID()?>"><?php echo t('Save')?></button>
+			<button class="btn btn-default" onclick="jQuery.fn.dialog.closeTop()"><?=t('Cancel')?></button>
+			<button class="btn btn-primary pull-right" data-submit-set-form="<?=$control->getPageTypeComposerFormLayoutSetControlID()?>"><?=t('Save')?></button>
 		</div>
 
 	</div>
@@ -90,12 +90,12 @@ $(function() {
 		$.ajax({
 			type: 'post',
 			data: formData,
-			url: '<?php echo REL_DIR_FILES_TOOLS_REQUIRED?>/page_types/composer/form/edit_control',
+			url: '<?=REL_DIR_FILES_TOOLS_REQUIRED?>/page_types/composer/form/edit_control',
 			success: function(html) {
 				jQuery.fn.dialog.hideLoader();
 				jQuery.fn.dialog.closeTop();
 				var data = $(html).html();
-				$('tr[data-page-type-composer-form-layout-control-set-control-id=<?php echo $control->getPageTypeComposerFormLayoutSetControlID()?>]').html(data);
+				$('tr[data-page-type-composer-form-layout-control-set-control-id=<?=$control->getPageTypeComposerFormLayoutSetControlID()?>]').html(data);
 				$('a[data-command=edit-form-set-control]').dialog();
 			}
 		});		

@@ -4,7 +4,8 @@
 
 ?>
 
-<input type="hidden" name="arLayoutID" value="<?php echo $controller->arLayout->getAreaLayoutID()?>" />
+<input type="hidden" name="arLayoutID" value="<?=$controller->arLayout->getAreaLayoutID()?>" />
+<input type="hidden" name="arLayoutEdit" value="1" />
 
 	<div id="ccm-layouts-edit-mode" class="ccm-layouts-edit-mode-edit">
 

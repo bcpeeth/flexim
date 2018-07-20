@@ -1,7 +1,7 @@
 <?php
 namespace Concrete\Core\Tree\Node;
 
-use Concrete\Core\Foundation\Object;
+use Concrete\Core\Foundation\ConcreteObject;
 use Concrete\Core\Permission\Access\Access;
 use Concrete\Core\Permission\Access\Entity\GroupCombinationEntity;
 use Concrete\Core\Permission\Access\Entity\GroupEntity;
@@ -23,7 +23,7 @@ use stdClass;
 use Gettext\Translations;
 use Concrete\Core\Tree\Node\Exception\MoveException;
 
-abstract class Node extends Object implements \Concrete\Core\Permission\ObjectInterface, AssignableObjectInterface
+abstract class Node extends ConcreteObject implements \Concrete\Core\Permission\ObjectInterface, AssignableObjectInterface
 {
 
     use AssignableObjectTrait;
@@ -482,11 +482,23 @@ abstract class Node extends Object implements \Concrete\Core\Permission\ObjectIn
             $oldParent = $this->getTreeNodeParentObject();
             if (is_object($oldParent)) {
                 $oldParent->rescanChildrenDisplayOrder();
+                $oldParent->updateDateModified();
             }
             $newParent->rescanChildrenDisplayOrder();
+            $newParent->updateDateModified();
             $this->treeNodeParentID = $newParent->getTreeNodeID();
             $this->treeNodeDisplayOrder = $treeNodeDisplayOrder;
         }
+    }
+
+    /**
+     * Update the Date Modified to the current time
+     *
+     */
+    public function updateDateModified(){
+            $dateModified = Core::make('date')->toDB();
+            $db = Database::connection();
+            $db->update('TreeNodes', ['dateModified'=>$dateModified],['treeNodeID'=>$this->getTreeNodeID()]);
     }
 
     protected function rescanChildrenDisplayOrder()
@@ -525,6 +537,7 @@ abstract class Node extends Object implements \Concrete\Core\Permission\ObjectIn
             $treeID = $parent->getTreeID();
             $inheritPermissionsFromTreeNodeID = $parent->getTreeNodePermissionsNodeID();
             $treeNodeDisplayOrder = (int) $db->fetchColumn('select count(treeNodeDisplayOrder) from TreeNodes where treeNodeParentID = ?', [$treeNodeParentID]);
+            $parent->updateDateModified();
         }
 
         $treeNodeTypeHandle = uncamelcase(strrchr(get_called_class(), '\\'));
@@ -623,6 +636,11 @@ abstract class Node extends Object implements \Concrete\Core\Permission\ObjectIn
             $db->executeQuery('update TreeNodes set inheritPermissionsFromTreeNodeID = ? where treeNodeID = ?', [$parentNode->getTreeNodePermissionsNodeID(), $node->getTreeNodeID()]);
         }
         $r->closeCursor();
+
+        $parent = $this->getTreeNodeParentObject();
+        if (is_object($parent)){
+            $parent->updateDateModified();
+        }
 
         if (!$this->childNodesLoaded) {
             $this->populateChildren();

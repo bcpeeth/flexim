@@ -7,10 +7,10 @@ $dh = Core::make('helper/date'); /* @var $dh \Concrete\Core\Localization\Service
 
     <table class="ccm-results-list table table-condensed" id="ccm-workflow-waiting-for-me">
         <tr>
-            <th class="<?php echo $list->getSearchResultsClass('Request Type')?>"><?php echo t('Request Type')?></a></th>
-            <th class="<?php echo $list->getSearchResultsClass('uName')?>"><a href="<?php echo $list->getSortByURL('uName', 'asc')?>"><?php echo t('Username')?></a></th>
-            <th class="<?php echo $list->getSearchResultsClass('wpDateLastAction')?>"><a href="<?php echo $list->getSortByURL('wpDateLastAction', 'desc')?>"><?php echo t('Last Action')?></a></th>
-            <th class="<?php echo $list->getSearchResultsClass('wpCurrentStatus')?>"><a href="<?php echo $list->getSortByURL('wpCurrentStatus', 'desc')?>"><?php echo t('Current Status')?></a></th>
+            <th class="<?=$list->getSearchResultsClass('Request Type')?>"><?=t('Request Type')?></a></th>
+            <th class="<?=$list->getSearchResultsClass('uName')?>"><a href="<?=$list->getSortByURL('uName', 'asc')?>"><?=t('Username')?></a></th>
+            <th class="<?=$list->getSearchResultsClass('wpDateLastAction')?>"><a href="<?=$list->getSortByURL('wpDateLastAction', 'desc')?>"><?=t('Last Action')?></a></th>
+            <th class="<?=$list->getSearchResultsClass('wpCurrentStatus')?>"><a href="<?=$list->getSortByURL('wpCurrentStatus', 'desc')?>"><?=t('Current Status')?></a></th>
             <th>&nbsp;</th>
         </tr>
         <?php
@@ -24,15 +24,15 @@ $dh = Core::make('helper/date'); /* @var $dh \Concrete\Core\Localization\Service
             if ($wf->canApproveWorkflowProgressObject($wp)) {
                 $noitems = false;
                 ?>
-                <tr class="ccm-workflow-waiting-for-me-row<?php echo $wp->getWorkflowProgressID()?>">
-                    <td><?php echo method_exists($wfr, 'getRequestActionText') ? $wfr->getRequestActionText() : '';?></td>
-                    <td><?php echo $u->getUserName();?></td>
+                <tr class="ccm-workflow-waiting-for-me-row<?=$wp->getWorkflowProgressID()?>">
+                    <td><?=method_exists($wfr, 'getRequestActionText') ? $wfr->getRequestActionText() : '';?></td>
+                    <td><?=$u->getUserName();?></td>
                     <td>
-                        <?php echo $dh->formatDateTime($wp->getWorkflowProgressDateLastAction(), true)?>
+                        <?= $dh->formatDateTime($wp->getWorkflowProgressDateLastAction(), true)?>
                     </td>
-                    <td><a href="javascript:void(0)" title="<?php echo t('Click for history.')?>" onclick="$(this).parentsUntil('tr').parent().next().show()"><?php echo $wf->getWorkflowProgressStatusDescription($wp)?></a></td>
+                    <td><a href="javascript:void(0)" title="<?=t('Click for history.')?>" onclick="$(this).parentsUntil('tr').parent().next().show()"><?=$wf->getWorkflowProgressStatusDescription($wp)?></a></td>
                     <td class="ccm-workflow-progress-actions">
-                        <form action="<?php echo $wp->getWorkflowProgressFormAction()?>" method="post">
+                        <form action="<?=$wp->getWorkflowProgressFormAction()?>" method="post">
 
                             <?php $actions = $wp->getWorkflowProgressActions(); ?>
                             <?php foreach($actions as $act) {
@@ -66,5 +66,5 @@ $dh = Core::make('helper/date'); /* @var $dh \Concrete\Core\Localization\Service
 
     </table>
 <?php } else { ?>
-    <p><?php echo t('None.')?></p>
+    <p><?=t('None.')?></p>
 <?php } ?>

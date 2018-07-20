@@ -13,8 +13,8 @@ $delConfirmJS = t('Are you sure you want to remove this workflow?');
 
 <script type="text/javascript">
     deleteWorkflow = function() {
-        if (confirm('<?php echo $delConfirmJS?>')) {
-            location.href = "<?php echo $view->action('delete', $workflow->getWorkflowID(), $valt->generate('delete_workflow'))?>";
+        if (confirm('<?=$delConfirmJS?>')) {
+            location.href = "<?=$view->action('delete', $workflow->getWorkflowID(), $valt->generate('delete_workflow'))?>";
         }
     }
 </script>
@@ -32,11 +32,11 @@ $delConfirmJS = t('Are you sure you want to remove this workflow?');
         if ($type->getPackageID() > 0) {
             Loader::packageElement('workflow/types/' . $type->getWorkflowTypeHandle() . '/type_form_buttons', $type->getPackageHandle(), array('type' => $type, 'workflow' => $workflow));
         } ?>
-        <a href="<?php echo $view->action('edit_details', $workflow->getWorkflowID())?>" class="btn btn-primary"><?php echo t('Edit Details')?></a>
+        <a href="<?=$view->action('edit_details', $workflow->getWorkflowID())?>" class="btn btn-primary"><?=t('Edit Details')?></a>
 </div>
-<input type="hidden" name="wfID" value="<?php echo $workflow->getWorkflowID()?>" />
+<input type="hidden" name="wfID" value="<?=$workflow->getWorkflowID()?>" />
 
-<h3><?php echo $workflow->getWorkflowDisplayName()?> <small><?php echo $type->getWorkflowTypeName()?></small></h3>
+<h3><?=$workflow->getWorkflowDisplayName()?> <small><?=$type->getWorkflowTypeName()?></small></h3>
 
 <?php
 if ($type->getPackageID() > 0) {
@@ -48,7 +48,7 @@ if ($type->getPackageID() > 0) {
 
 <div class="ccm-dashboard-form-actions-wrapper">
     <div class="ccm-dashboard-form-actions">
-        <a href="<?php echo URL::to('/dashboard/system/permissions/workflows')?>" class="btn btn-default pull-left"><?php echo t('Back to List')?></a>
+        <a href="<?=URL::to('/dashboard/system/permissions/workflows')?>" class="btn btn-default pull-left"><?=t('Back to List')?></a>
 
     </div>
 </div>

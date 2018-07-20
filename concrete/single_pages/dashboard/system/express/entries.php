@@ -5,14 +5,14 @@ $jh = Core::make('helper/json');
 
 <?php if (is_object($tree)) {
     ?>
-	<div data-tree="<?php echo $tree->getTreeID()?>">
+	<div data-tree="<?=$tree->getTreeID()?>">
 	</div>
 
 	<script type="text/javascript">
 	$(function() {
 
 		$('[data-tree]').concreteTree({
-			'treeID': '<?php echo $tree->getTreeID()?>'
+			'treeID': '<?=$tree->getTreeID()?>'
 		});
 
 	});

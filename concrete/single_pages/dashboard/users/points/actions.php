@@ -5,8 +5,8 @@
 
 <?php if ($showForm) {
     ?>
-<form method="post" action="<?php echo $view->action('save')?>" id="ccm-community-points-action">
-    <?php echo \Core::make('helper/validation/token')->output('add_action');
+<form method="post" action="<?=$view->action('save')?>" id="ccm-community-points-action">
+    <?= \Core::make('helper/validation/token')->output('add_action');
     ?>
     <div class="row">
         <div class="col-md-12">
@@ -17,12 +17,12 @@
 
         	<div class="checkbox">
                 <label>
-                    <?php echo $form->checkbox('upaIsActive', 1, ($upaIsActive == 1 || (!$upaID)))?> <?php echo t('Enabled')?>
+                    <?=$form->checkbox('upaIsActive', 1, ($upaIsActive == 1 || (!$upaID)))?> <?=t('Enabled')?>
                 </label>
             </div>
 
         	<div class="form-group">
-        	    <?php echo $form->label('upaHandle', t('Action Handle'));
+        	    <?=$form->label('upaHandle', t('Action Handle'));
     ?>
         		<div class="input">
             		<?php
@@ -37,7 +37,7 @@
         	</div>
 
         	<div class="form-group">
-        	    <?php echo $form->label('upaName', t('Action Name'));
+        	    <?=$form->label('upaName', t('Action Name'));
     ?>
         		<div class="input">
         		    <?php echo $form->text('upaName', $upaName);
@@ -46,7 +46,7 @@
         	</div>
 
         	<div class="form-group">
-                <?php echo $form->label('upaDefaultPoints', t('Default Points'));
+                <?=$form->label('upaDefaultPoints', t('Default Points'));
     ?>
         		<div class="input">
         		    <?php echo $form->number('upaDefaultPoints', $upaDefaultPoints);
@@ -55,11 +55,11 @@
         	</div>
 
         	<div class="form-group">
-        	    <?php echo $form->label('gBadgeID', t('Badge Associated'));
+        	    <?=$form->label('gBadgeID', t('Badge Associated'));
     ?>
         		<div class="input">
-        			<?php echo $form->select('gBadgeID', $badges, $gBadgeID)?>
-        			<i class="icon-question-sign launch-tooltip" title="<?php echo t('If a badge is assigned to this action, the first time this user performs this action they will be granted the badge.')?>"></i>
+        			<?=$form->select('gBadgeID', $badges, $gBadgeID)?>
+        			<i class="icon-question-sign launch-tooltip" title="<?=t('If a badge is assigned to this action, the first time this user performs this action they will be granted the badge.')?>"></i>
         		</div>
         	</div>
 
@@ -72,8 +72,8 @@
 
             <div class="ccm-dashboard-form-actions-wrapper">
                 <div class="ccm-dashboard-form-actions">
-                    <a href="<?php echo $view->url('/dashboard/users/points/actions')?>" class="btn btn-default pull-left"><?php echo t('Back to List')?></a>
-                    <button class="btn btn-primary pull-right" type="submit"><?php echo $label?></button>
+                    <a href="<?=$view->url('/dashboard/users/points/actions')?>" class="btn btn-default pull-left"><?=t('Back to List')?></a>
+                    <button class="btn btn-primary pull-right" type="submit"><?=$label?></button>
                 </div>
             </div>
         </div>
@@ -83,7 +83,7 @@
 } else {
     ?>
 	<div class="ccm-dashboard-header-buttons">
-	    <a href="<?php echo $view->action('add')?>" class="btn btn-primary"><?php echo t('Add Action')?></a>
+	    <a href="<?=$view->action('add')?>" class="btn btn-primary"><?=t('Add Action')?></a>
 	</div>
 
 	<?php
@@ -98,11 +98,11 @@
         <div class="table-responsive">
 			<table class="ccm-search-results-table compact-results">
     			<thead>
-    				<th><span><?php echo t("Active")?></span></th>
-    				<th class="<?php echo $actionList->getSearchResultsClass('upaName')?>"><a href="<?php echo $actionList->getSortByURL('upaName', 'asc')?>"><?php echo t('Action Name')?></a></th>
-    				<th class="<?php echo $actionList->getSearchResultsClass('upaHandle')?>"><a href="<?php echo $actionList->getSortByURL('upaHandle', 'asc')?>"><?php echo t('Action Handle')?></a></th>
-    				<th class="<?php echo $actionList->getSearchResultsClass('upaDefaultPoints')?>"><a href="<?php echo $actionList->getSortByURL('upaDefaultPoints', 'asc')?>"><?php echo t('Default Points')?></a></th>
-    				<th class="<?php echo $actionList->getSearchResultsClass('upaBadgeGroupID')?>"><a href="<?php echo $actionList->getSortByURL('upaBadgeGroupID', 'asc')?>"><?php echo t('Group')?></a></th>
+    				<th><span><?=t("Active")?></span></th>
+    				<th class="<?=$actionList->getSearchResultsClass('upaName')?>"><a href="<?=$actionList->getSortByURL('upaName', 'asc')?>"><?=t('Action Name')?></a></th>
+    				<th class="<?=$actionList->getSearchResultsClass('upaHandle')?>"><a href="<?=$actionList->getSortByURL('upaHandle', 'asc')?>"><?=t('Action Handle')?></a></th>
+    				<th class="<?=$actionList->getSearchResultsClass('upaDefaultPoints')?>"><a href="<?=$actionList->getSortByURL('upaDefaultPoints', 'asc')?>"><?=t('Default Points')?></a></th>
+    				<th class="<?=$actionList->getSearchResultsClass('upaBadgeGroupID')?>"><a href="<?=$actionList->getSortByURL('upaBadgeGroupID', 'asc')?>"><?=t('Group')?></a></th>
     				<th></th>
     			</thead>
 
@@ -115,9 +115,9 @@
         ?><i class="fa fa-check"></i><?php
     }
                         ?></td>
-            			<td><?php echo h($upa['upaName'])?></td>
-            			<td><?php echo h($upa['upaHandle'])?></td>
-            			<td><?php echo number_format($upa['upaDefaultPoints'])?></td>
+            			<td><?=h($upa['upaName'])?></td>
+            			<td><?=h($upa['upaHandle'])?></td>
+            			<td><?=number_format($upa['upaDefaultPoints'])?></td>
             			<td><?php echo h($upa['gName']);
                         ?></td>
             			<td style="text-align: right">
@@ -127,8 +127,8 @@
                                 'ccm_token' => \Core::make('helper/validation/token')->generate('delete_action'),
                             ));
                         ?>
-            			    <a href="<?php echo $view->action($upa['upaID'])?>" class="btn btn-sm btn-default"><?php echo t('Edit')?></a>
-            			    <a href="<?php echo $delete_url?>" class="btn btn-sm btn-danger"><?php echo t('Delete')?></a>
+            			    <a href="<?=$view->action($upa['upaID'])?>" class="btn btn-sm btn-default"><?=t('Edit')?></a>
+            			    <a href="<?=$delete_url?>" class="btn btn-sm btn-danger"><?=t('Delete')?></a>
             			</td>
             		</tr>
             		<?php
@@ -140,14 +140,14 @@
 		<?php
     } else {
         ?>
-			<p><?php echo t('No Actions found.')?></p>
+			<p><?=t('No Actions found.')?></p>
 		<?php
     }
     ?>
 	
-<?php echo $actionList->displayPagingV2();?>
+<?=$actionList->displayPagingV2();?>
 
 <?php
 } ?>
 
-<?php echo Loader::helper('concrete/dashboard')->getDashboardPaneFooterWrapper(false)?>
+<?=Loader::helper('concrete/dashboard')->getDashboardPaneFooterWrapper(false)?>

@@ -3,12 +3,12 @@
 $dh = Core::make('helper/date'); /* @var $dh \Concrete\Core\Localization\Service\Date */
 ?>
 
-<h2><?php echo $c->getCollectionName()?></h2>
+<h2><?=$c->getCollectionName()?></h2>
 
 	<?php switch ($this->controller->getTask()) {
 		case 'view_message': ?>
 
-		<?php echo Loader::helper('concrete/ui')->tabs(array(
+		<?=Loader::helper('concrete/ui')->tabs(array(
 			array($view->action('view_mailbox', 'inbox'), t('Inbox'), $box == 'inbox'),
 			array($view->action('view_mailbox', 'sent'), t('Sent'), $box == 'sent'),
 		), false)?>
@@ -18,13 +18,13 @@ $dh = Core::make('helper/date'); /* @var $dh \Concrete\Core\Localization\Service
 		$profileURL = $msg->getMessageRelevantUserObject()->getUserPublicProfileURL();
 		if ($profileURL) {
 			?>
-			<a href=""><?php echo $msg->getMessageRelevantUserObject()->getUserAvatar()->output()?></a>
-			<a href="<?php echo $profileURL?>"><?php echo $msg->getMessageRelevantUserName()?></a>
+			<a href=""><?=$msg->getMessageRelevantUserObject()->getUserAvatar()->output()?></a>
+			<a href="<?=$profileURL?>"><?=$msg->getMessageRelevantUserName()?></a>
 		<?php
 		} else {
 			?>
-			<?php echo $msg->getMessageRelevantUserObject()->getUserAvatar()->output()?>
-			<?php echo $msg->getMessageRelevantUserName()?>
+			<?=$msg->getMessageRelevantUserObject()->getUserAvatar()->output()?>
+			<?=$msg->getMessageRelevantUserName()?>
 		<?php
 		} ?>
 
@@ -33,12 +33,12 @@ $dh = Core::make('helper/date'); /* @var $dh \Concrete\Core\Localization\Service
 			<div class="btn-toolbar">
 
 			<div class="btn-group">
-			<a href="<?php echo $backURL?>" class="btn btn-small"><i class="icon-arrow-left"></i> <?php echo t('Back to Messages')?></a>
+			<a href="<?=$backURL?>" class="btn btn-small"><i class="icon-arrow-left"></i> <?=t('Back to Messages')?></a>
 			</div>
 
 			<div class="btn-group">
 			<a class="btn btn-small dropdown-toggle" data-toggle="dropdown" href="#">
-			<i class="icon-cog"></i> <?php echo t('Action')?>
+			<i class="icon-cog"></i> <?=t('Action')?>
 			&nbsp;
 			<span class="caret"></span>
 			</a>
@@ -51,7 +51,7 @@ $dh = Core::make('helper/date'); /* @var $dh \Concrete\Core\Localization\Service
 if (is_object($mui)) {
 	if ($mui->getUserProfilePrivateMessagesEnabled()) {
 		?>
-						<li><a href="<?php echo $view->action('reply', $box, $msg->getMessageID())?>"><?php echo t('Reply')?></a>
+						<li><a href="<?=$view->action('reply', $box, $msg->getMessageID())?>"><?=t('Reply')?></a>
 						<li class="divider"></li>
 					<?php
 	}
@@ -59,7 +59,7 @@ if (is_object($mui)) {
 ?>
 			<?php
 } ?>
-			<li><a href="javascript:void(0)" onclick="if(confirm('<?php echo t('Delete this message?')?>')) { window.location.href='<?php echo $deleteURL?>'}; return false"><?php echo t('Delete')?></a>
+			<li><a href="javascript:void(0)" onclick="if(confirm('<?=t('Delete this message?')?>')) { window.location.href='<?=$deleteURL?>'}; return false"><?=t('Delete')?></a>
 			</ul>
 			</div>
 			</div>
@@ -67,13 +67,13 @@ if (is_object($mui)) {
 			</div>
 
 			<div id="ccm-private-message-subject-time">
-				<strong><?php echo $subject?></strong>
-				<time><?php echo $dateAdded?></time>
+				<strong><?=$subject?></strong>
+				<time><?=$dateAdded?></time>
 			</div>
 			<br/>
 
 			<div>
-			<?php echo $msg->getFormattedMessageBody()?>
+			<?=$msg->getFormattedMessageBody()?>
 			</div>
 		</div>
 
@@ -82,7 +82,7 @@ if (is_object($mui)) {
 			break;
 		case 'view_mailbox': ?>
 
-			<?php echo Loader::helper('concrete/ui')->tabs(array(
+			<?=Loader::helper('concrete/ui')->tabs(array(
 			array($view->action('view_mailbox', 'inbox'), t('Inbox'), $mailbox == 'inbox'),
 			array($view->action('view_mailbox', 'sent'), t('Sent'), $mailbox == 'sent'),
 		), false)?>
@@ -92,13 +92,13 @@ if (is_object($mui)) {
 		<thead>
 		<tr>
 			<th><?php if ($mailbox == 'sent') {
-?><?php echo t('To')?><?php
+?><?=t('To')?><?php
 } else {
-?><?php echo t('From')?><?php
+?><?=t('From')?><?php
 } ?></th>
-			<th><?php echo t('Subject')?></th>
-			<th><?php echo t('Sent At')?></th>
-			<th><?php echo t('Status')?></th>
+			<th><?=t('Subject')?></th>
+			<th><?=t('Sent At')?></th>
+			<th><?=t('Status')?></th>
 		</tr>
 		</thead>
 		<tbody>
@@ -115,23 +115,23 @@ if (is_object($mui)) {
 						<?php if ($profileURL) {
 ?>
 
-							<a href="<?php echo $profileURL?>"><?php echo $msg->getMessageRelevantUserObject()->getUserAvatar()->output()?></a>
-							<a href="<?php echo $profileURL?>"><?php echo $msg->getMessageRelevantUserName()?></a>
+							<a href="<?=$profileURL?>"><?=$msg->getMessageRelevantUserObject()->getUserAvatar()->output()?></a>
+							<a href="<?=$profileURL?>"><?=$msg->getMessageRelevantUserName()?></a>
 
 						<?php
 } else {
 ?>
 
-							<div><?php echo $msg->getMessageRelevantUserObject()->getUserAvatar()->output()?></div>
-							<div><?php echo $msg->getMessageRelevantUserName()?></div>
+							<div><?=$msg->getMessageRelevantUserObject()->getUserAvatar()->output()?></div>
+							<div><?=$msg->getMessageRelevantUserName()?></div>
 
 						<?php
 }
 					?>
 					</td>
-					<td class="ccm-profile-messages-item-name"><a href="<?php echo $view->url('/account/messages', 'view_message', $mailbox, $msg->getMessageID())?>"><?php echo $msg->getFormattedMessageSubject()?></a></td>
-					<td style="white-space: nowrap"><?php echo $dh->formatDateTime($msg->getMessageDateAdded(), true)?></td>
-					<td><?php echo $msg->getMessageStatus()?></td>
+					<td class="ccm-profile-messages-item-name"><a href="<?=$view->url('/account/messages', 'view_message', $mailbox, $msg->getMessageID())?>"><?=$msg->getFormattedMessageSubject()?></a></td>
+					<td style="white-space: nowrap"><?=$dh->formatDateTime($msg->getMessageDateAdded(), true)?></td>
+					<td><?=$msg->getMessageStatus()?></td>
 				</tr>
 
 
@@ -143,7 +143,7 @@ if (is_object($mui)) {
 			} else {
 				?>
 			<tr>
-				<Td colspan="4"><?php echo t('No messages found.')?></td>
+				<Td colspan="4"><?=t('No messages found.')?></td>
 			</tr>
 		<?php
 			} ?>
@@ -152,7 +152,7 @@ if (is_object($mui)) {
 
 		<div class="ccm-dashboard-form-actions-wrapper">
 		    <div class="ccm-dashboard-form-actions">
-				<a href="<?php echo URL::to('/account')?>" class="btn btn-default pull-left" /><?php echo t('Back to Account')?></a>
+				<a href="<?=URL::to('/account')?>" class="btn btn-default pull-left" /><?=t('Back to Account')?></a>
 			</div>
 		</div>
 
@@ -163,8 +163,8 @@ if (is_object($mui)) {
 			break;
 		case 'reply_complete': ?>
 
-		<div class="alert alert-success"><?php echo t('Reply Sent.')?></div>
-		<a href="<?php echo $view->url('/account/messages', 'view_message', $box, $msgID)?>" class="btn btn-default"><?php echo t('Back to Message')?></a>
+		<div class="alert alert-success"><?=t('Reply Sent.')?></div>
+		<a href="<?=$view->url('/account/messages', 'view_message', $box, $msgID)?>" class="btn btn-default"><?=t('Back to Message')?></a>
 
 		<?php
 			break;
@@ -172,11 +172,11 @@ if (is_object($mui)) {
 			$profileURL = $recipient->getUserPublicProfileURL();
 			?>
 
-		<div class="alert alert-success"><?php echo t('Message Sent.')?></div>
+		<div class="alert alert-success"><?=t('Message Sent.')?></div>
 
 			<?php if ($profileURL) {
 ?>
-				<a href="<?php echo $profileURL?>" class="btn btn-default"><?php echo t('Back to Profile')?></a>
+				<a href="<?=$profileURL?>" class="btn btn-default"><?=t('Back to Profile')?></a>
 			<?php
 } ?>
 		<?php
@@ -192,13 +192,13 @@ if (is_object($mui)) {
 		case 'write': ?>
 
 		<div id="ccm-profile-message-compose">
-			<form method="post" action="<?php echo $view->action('send')?>">
+			<form method="post" action="<?=$view->action('send')?>">
 
-			<?php echo $form->hidden("uID", $recipient->getUserID())?>
+			<?=$form->hidden("uID", $recipient->getUserID())?>
 			<?php if ($this->controller->getTask() == 'reply') {
 ?>
-				<?php echo $form->hidden("msgID", $msgID)?>
-				<?php echo $form->hidden("box", $box)?>
+				<?=$form->hidden("msgID", $msgID)?>
+				<?=$form->hidden("box", $box)?>
 			<?php
 				$subject = t('Re: %s', $text->entities($msgSubject));
 } else {
@@ -206,31 +206,31 @@ $subject = $text->entities($msgSubject);
 }
 			?>
 
-			<h4><?php echo t('Send a Private Message')?></h4>
+			<h4><?=t('Send a Private Message')?></h4>
 
 			<div class="form-group">
-				<label class="control-label"><?php echo t("To")?></label>
-				<input disabled="disabled" class="form-control" type="text" value="<?php echo $recipient->getUserName()?>" class="span5" />
+				<label class="control-label"><?=t("To")?></label>
+				<input disabled="disabled" class="form-control" type="text" value="<?=$recipient->getUserName()?>" class="span5" />
 			</div>
 
 			<div class="form-group">
-				<?php echo $form->label('subject', t('Subject'))?>
-				<?php echo $form->text('msgSubject', $subject, array('class' => 'span5'))?>
+				<?=$form->label('subject', t('Subject'))?>
+				<?=$form->text('msgSubject', $subject, array('class' => 'span5'))?>
 			</div>
 
 			<div class="form-group">
-				<?php echo $form->label('body', t('Message'))?>
-				<?php echo $form->textarea('msgBody', $msgBody, array('rows' => 8, 'class' => 'span5'))?>
+				<?=$form->label('body', t('Message'))?>
+				<?=$form->textarea('msgBody', $msgBody, array('rows' => 8, 'class' => 'span5'))?>
 			</div>
 
 			<div class="ccm-dashboard-form-actions-wrapper">
 			    <div class="ccm-dashboard-form-actions">
-					<?php echo $form->submit('button_submit', t('Send Message'), array('class' => 'pull-right btn btn-primary'))?>
-					<?php echo $form->submit('button_cancel', t('Cancel'), array('class' => 'btn-default', 'onclick' => 'window.location.href=\'' . $backURL . '\'; return false'))?>
+					<?=$form->submit('button_submit', t('Send Message'), array('class' => 'pull-right btn btn-primary'))?>
+					<?=$form->submit('button_cancel', t('Cancel'), array('class' => 'btn-default', 'onclick' => 'window.location.href=\'' . $backURL . '\'; return false'))?>
 				</div>
 			</div>
 
-			<?php echo $valt->output('validate_send_message');?>
+			<?=$valt->output('validate_send_message');?>
 
 			</form>
 
@@ -244,13 +244,13 @@ $subject = $text->entities($msgSubject);
 
 			<table class="table table-striped" border="0" cellspacing="0" cellpadding="0">
 			<tr>
-				<th class="ccm-profile-messages-item-mailbox"><?php echo t('Mailbox')?></th>
-				<th><?php echo t('Messages')?></th>
-				<th class="ccm-profile-mailbox-last-message"><?php echo t('Latest Message')?></th>
+				<th class="ccm-profile-messages-item-mailbox"><?=t('Mailbox')?></th>
+				<th><?=t('Messages')?></th>
+				<th class="ccm-profile-mailbox-last-message"><?=t('Latest Message')?></th>
 			</tr>
 			<tr>
-				<td class="ccm-profile-messages-item-mailbox"><a href="<?php echo $view->action('view_mailbox', 'inbox')?>"><?php echo t('Inbox')?></a></td>
-				<td><?php echo $inbox->getTotalMessages()?></td>
+				<td class="ccm-profile-messages-item-mailbox"><a href="<?=$view->action('view_mailbox', 'inbox')?>"><?=t('Inbox')?></a></td>
+				<td><?=$inbox->getTotalMessages()?></td>
 				<td class="ccm-profile-mailbox-last-message"><?php
 				$msg = $inbox->getLastMessageObject();
 				if (is_object($msg)) {
@@ -259,8 +259,8 @@ $subject = $text->entities($msgSubject);
 				?></td>
 			</tr>
 			<tr>
-				<td class="ccm-profile-messages-item-mailbox"><a href="<?php echo $view->action('view_mailbox', 'sent')?>"><?php echo t('Sent Messages')?></a></td>
-				<td><?php echo $sent->getTotalMessages()?></td>
+				<td class="ccm-profile-messages-item-mailbox"><a href="<?=$view->action('view_mailbox', 'sent')?>"><?=t('Sent Messages')?></a></td>
+				<td><?=$sent->getTotalMessages()?></td>
 				<td class="ccm-profile-mailbox-last-message"><?php
 				 $msg = $sent->getLastMessageObject();
 				if (is_object($msg)) {
@@ -273,7 +273,7 @@ $subject = $text->entities($msgSubject);
 
 			<div class="ccm-dashboard-form-actions-wrapper">
 			    <div class="ccm-dashboard-form-actions">
-					<a href="<?php echo URL::to('/account')?>" class="btn btn-default" /><?php echo t('Back to Account')?></a>
+					<a href="<?=URL::to('/account')?>" class="btn btn-default" /><?=t('Back to Account')?></a>
 				</div>
 			</div>
 

@@ -22,7 +22,7 @@ for ($i = 0; $i < count($sets); ++$i) {
 <div class="ccm-ui" id="ccm-add-block-list">
 
 <section>
-    <legend><?php echo $set->getBlockTypeSetDisplayName() ?></legend>
+    <legend><?= $set->getBlockTypeSetDisplayName() ?></legend>
     <ul class="item-select-list">
         <?php $blockTypes = isset($types[$set->getBlockTypeSetName()]) ? $types[$set->getBlockTypeSetName()] : array();
     foreach ($blockTypes as $bt) {
@@ -30,16 +30,16 @@ for ($i = 0; $i < count($sets); ++$i) {
         ?>
             <li>
                 <a
-                    data-cID="<?php echo $c->getCollectionID() ?>"
-                    data-block-type-handle="<?php echo $bt->getBlockTypeHandle() ?>"
-                    data-dialog-title="<?php echo t('Add %s', t($bt->getBlockTypeName())) ?>"
-                    data-dialog-width="<?php echo $bt->getBlockTypeInterfaceWidth() ?>"
-                    data-dialog-height="<?php echo $bt->getBlockTypeInterfaceHeight() ?>"
-                    data-has-add-template="<?php echo $bt->hasAddTemplate() ?>"
-                    data-supports-inline-add="<?php echo $bt->supportsInlineAdd() ?>"
-                    data-btID="<?php echo $bt->getBlockTypeID() ?>"
-                    title="<?php echo t($bt->getBlockTypeName()) ?>"
-                    href="javascript:void(0)"><img src="<?php echo $btIcon?>" /> <?php echo t($bt->getBlockTypeName())?></a>
+                    data-cID="<?= $c->getCollectionID() ?>"
+                    data-block-type-handle="<?= $bt->getBlockTypeHandle() ?>"
+                    data-dialog-title="<?= t('Add %s', t($bt->getBlockTypeName())) ?>"
+                    data-dialog-width="<?= $bt->getBlockTypeInterfaceWidth() ?>"
+                    data-dialog-height="<?= $bt->getBlockTypeInterfaceHeight() ?>"
+                    data-has-add-template="<?= $bt->hasAddTemplate() ?>"
+                    data-supports-inline-add="<?= $bt->supportsInlineAdd() ?>"
+                    data-btID="<?= $bt->getBlockTypeID() ?>"
+                    title="<?= t($bt->getBlockTypeName()) ?>"
+                    href="javascript:void(0)"><img src="<?=$btIcon?>" /> <?=t($bt->getBlockTypeName())?></a>
             </li>
         <?php 
     }
@@ -54,7 +54,7 @@ for ($i = 0; $i < count($sets); ++$i) {
     ?>
 
     <section>
-        <legend><?php echo t('Other')?></legend>
+        <legend><?=t('Other')?></legend>
         <ul class="item-select-list">
             <?php $blockTypes = $types['Other'];
     foreach ($blockTypes as $bt) {
@@ -62,16 +62,16 @@ for ($i = 0; $i < count($sets); ++$i) {
         ?>
                 <li>
                     <a
-                        data-cID="<?php echo $c->getCollectionID() ?>"
-                        data-block-type-handle="<?php echo $bt->getBlockTypeHandle() ?>"
-                        data-dialog-title="<?php echo t('Add %s', t($bt->getBlockTypeName())) ?>"
-                        data-dialog-width="<?php echo $bt->getBlockTypeInterfaceWidth() ?>"
-                        data-dialog-height="<?php echo $bt->getBlockTypeInterfaceHeight() ?>"
-                        data-has-add-template="<?php echo $bt->hasAddTemplate() ?>"
-                        data-supports-inline-add="<?php echo $bt->supportsInlineAdd() ?>"
-                        data-btID="<?php echo $bt->getBlockTypeID() ?>"
-                        title="<?php echo t($bt->getBlockTypeName()) ?>"
-                        href="javascript:void(0)"><img src="<?php echo $btIcon?>" /> <?php echo t($bt->getBlockTypeName())?></a>
+                        data-cID="<?= $c->getCollectionID() ?>"
+                        data-block-type-handle="<?= $bt->getBlockTypeHandle() ?>"
+                        data-dialog-title="<?= t('Add %s', t($bt->getBlockTypeName())) ?>"
+                        data-dialog-width="<?= $bt->getBlockTypeInterfaceWidth() ?>"
+                        data-dialog-height="<?= $bt->getBlockTypeInterfaceHeight() ?>"
+                        data-has-add-template="<?= $bt->hasAddTemplate() ?>"
+                        data-supports-inline-add="<?= $bt->supportsInlineAdd() ?>"
+                        data-btID="<?= $bt->getBlockTypeID() ?>"
+                        title="<?= t($bt->getBlockTypeName()) ?>"
+                        href="javascript:void(0)"><img src="<?=$btIcon?>" /> <?=t($bt->getBlockTypeName())?></a>
                 </li>
             <?php 
     }

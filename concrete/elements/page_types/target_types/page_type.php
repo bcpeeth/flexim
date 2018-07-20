@@ -18,18 +18,18 @@ if (is_object($pagetype) && $pagetype->getPageTypePublishTargetTypeID() == $type
 }
 ?>
 <div class="form-group">
-	<?php echo $form->label('ptID', t('Publish Beneath Pages of Type'))?>
-	<?php echo $form->select('ptID', $types, $ptID)?>
+	<?=$form->label('ptID', t('Publish Beneath Pages of Type'))?>
+	<?=$form->select('ptID', $types, $ptID)?>
 </div>
 
 <div class="form-group">
-	<?php echo $form->label('selectorFormFactorPageType', t('Selector Form Factor'))?>
-	<?php echo $form->select('selectorFormFactorPageType', $factors, $selectorFormFactor)?>
+	<?=$form->label('selectorFormFactorPageType', t('Selector Form Factor'))?>
+	<?=$form->select('selectorFormFactorPageType', $factors, $selectorFormFactor)?>
 </div>
 
 <div class="form-group" data-page-type-form-factor-display="sitemap_in_page">
-	<?php echo $form->label('startingPointPageIDPageType', t('Display Pages Beneath Page'))?>
-	<?php echo $pageSelector->selectPage('startingPointPageIDPageType', $startingPointPageID)?>
+	<?=$form->label('startingPointPageIDPageType', t('Display Pages Beneath Page'))?>
+	<?=$pageSelector->selectPage('startingPointPageIDPageType', $startingPointPageID)?>
 </div>
 
 <script type="text/javascript">

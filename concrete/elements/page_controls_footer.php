@@ -47,8 +47,8 @@ if (isset($cp) && $cp->canViewToolbar() && (!$dh->inDashboard())) {
 
     ?>
     <div id="ccm-page-controls-wrapper" class="ccm-ui">
-        <div id="ccm-toolbar" class="<?php echo $show_titles ? 'titles' : '' ?> <?php echo $large_font ? 'large-font' : '' ?>">
-            <div class="ccm-mobile-menu-overlay">
+        <div id="ccm-toolbar" class="<?= $show_titles ? 'titles' : '' ?> <?= $large_font ? 'large-font' : '' ?>">
+            <div class="ccm-mobile-menu-overlay" style="height: calc(100vh - 48px)">
                 <div class="ccm-mobile-menu-main">
                     <ul class="ccm-mobile-menu-entries">
                         <?php
@@ -68,8 +68,8 @@ if (isset($cp) && $cp->canViewToolbar() && (!$dh->inDashboard())) {
                                             ><?php echo t('Save Changes') ?><?php
                                         } else {
                                             ?>
-                                            href="<?php echo URL::to('/ccm/system/page/check_in', $cID, $valt->generate()) ?>"
-                                            data-panel-url="<?php echo URL::to('/ccm/system/panels/page/check_in') ?>"
+                                            href="<?= URL::to('/ccm/system/page/check_in', $cID, $valt->generate()) ?>"
+                                            data-panel-url="<?= URL::to('/ccm/system/panels/page/check_in') ?>"
                                             ><?php echo t('Save Changes') ?><?php
                                         }
                                         ?>
@@ -83,7 +83,7 @@ if (isset($cp) && $cp->canViewToolbar() && (!$dh->inDashboard())) {
                                     <a
                                         <?php if ($c->isMasterCollection()) { ?>data-disable-panel="check-in"<?php } ?>
                                         data-toolbar-action="check-out"
-                                        href="<?php echo DIR_REL ?>/<?php echo DISPATCHER_FILENAME ?>?cID=<?php echo $cID ?>&ctask=check-out<?php echo $token ?>"
+                                        href="<?= DIR_REL ?>/<?= DISPATCHER_FILENAME ?>?cID=<?= $cID ?>&ctask=check-out<?= $token ?>"
                                     ><?php echo t('Edit this Page') ?></a>
                                 </li>
                                 <?php
@@ -91,7 +91,7 @@ if (isset($cp) && $cp->canViewToolbar() && (!$dh->inDashboard())) {
                             ?>
                             <li class="parent-ul">
                                 <i class="fa fa-cog mobile-leading-icon"></i>
-                                <a href="#"><?php echo t('Page Properties') ?><i class="fa fa-caret-down"></i></a>
+                                <a href="#"><?php echo t('Page Properties') ?></a><i class="fa fa-caret-down drop-down-toggle"></i>
                                 <ul class="list-unstyled">
                                     <?php
                                     $pagetype = PageType::getByID($c->getPageTypeID());
@@ -103,9 +103,9 @@ if (isset($cp) && $cp->canViewToolbar() && (!$dh->inDashboard())) {
                                                 dialog-width="640"
                                                 dialog-height="640"
                                                 dialog-modal="false"
-                                                dialog-title="<?php echo t('Composer') ?>"
-                                                href="<?php echo URL::to('/ccm/system/panels/details/page/composer') ?>?cID=<?php echo $cID ?>"
-                                            ><?php echo t('Composer') ?></a>
+                                                dialog-title="<?= t('Composer') ?>"
+                                                href="<?= URL::to('/ccm/system/panels/details/page/composer') ?>?cID=<?= $cID ?>"
+                                            ><?= t('Composer') ?></a>
                                         </li>
                                         <?php
                                     }
@@ -123,9 +123,9 @@ if (isset($cp) && $cp->canViewToolbar() && (!$dh->inDashboard())) {
                                                 dialog-width="640"
                                                 dialog-height="360"
                                                 dialog-modal="false"
-                                                dialog-title="<?php echo t('SEO') ?>"
-                                                href="<?php echo URL::to('/ccm/system/panels/details/page/seo') ?>?cID=<?php echo $cID ?>"
-                                            ><?php echo t('SEO') ?></a>
+                                                dialog-title="<?= t('SEO') ?>"
+                                                href="<?= URL::to('/ccm/system/panels/details/page/seo') ?>?cID=<?= $cID ?>"
+                                            ><?= t('SEO') ?></a>
                                         </li>
                                         <?php
                                     }
@@ -138,9 +138,9 @@ if (isset($cp) && $cp->canViewToolbar() && (!$dh->inDashboard())) {
                                                     dialog-width="500"
                                                     dialog-height="500"
                                                     dialog-modal="false"
-                                                    dialog-title="<?php echo t('Location') ?>"
-                                                    href="<?php echo URL::to('/ccm/system/panels/details/page/location') ?>?cID=<?php echo $cID ?>"
-                                                ><?php echo t('Location'); ?></a>
+                                                    dialog-title="<?= t('Location') ?>"
+                                                    href="<?= URL::to('/ccm/system/panels/details/page/location') ?>?cID=<?= $cID ?>"
+                                                ><?= t('Location'); ?></a>
                                             </li>
                                             <?php
                                         }
@@ -151,9 +151,9 @@ if (isset($cp) && $cp->canViewToolbar() && (!$dh->inDashboard())) {
                                                 dialog-width="90%"
                                                 dialog-height="70%"
                                                 dialog-modal="false"
-                                                dialog-title="<?php echo t('Attributes') ?>"
-                                                href="<?php echo URL::to('/ccm/system/dialogs/page/attributes') ?>?cID=<?php echo $cID ?>"
-                                            ><?php echo t('Attributes') ?></a>
+                                                dialog-title="<?= t('Attributes') ?>"
+                                                href="<?= URL::to('/ccm/system/dialogs/page/attributes') ?>?cID=<?= $cID ?>"
+                                            ><?= t('Attributes') ?></a>
                                         </li>
                                         <?php
                                     }
@@ -165,9 +165,9 @@ if (isset($cp) && $cp->canViewToolbar() && (!$dh->inDashboard())) {
                                                 dialog-width="550"
                                                 dialog-height="280"
                                                 dialog-modal="false"
-                                                dialog-title="<?php echo t('Caching') ?>"
-                                                href="<?php echo URL::to('/ccm/system/panels/details/page/caching') ?>?cID=<?php echo $cID ?>"
-                                            ><?php echo t('Caching') ?></a>
+                                                dialog-title="<?= t('Caching') ?>"
+                                                href="<?= URL::to('/ccm/system/panels/details/page/caching') ?>?cID=<?= $cID ?>"
+                                            ><?= t('Caching') ?></a>
                                         </li>
                                         <?php
                                     }
@@ -179,9 +179,9 @@ if (isset($cp) && $cp->canViewToolbar() && (!$dh->inDashboard())) {
                                                 dialog-width="500"
                                                 dialog-height="630"
                                                 dialog-modal="false"
-                                                dialog-title="<?php echo t('Permissions') ?>"
-                                                href="<?php echo URL::to('/ccm/system/panels/details/page/permissions') ?>?cID=<?php echo $cID ?>"
-                                            ><?php echo t('Permissions') ?></a>
+                                                dialog-title="<?= t('Permissions') ?>"
+                                                href="<?= URL::to('/ccm/system/panels/details/page/permissions') ?>?cID=<?= $cID ?>"
+                                            ><?= t('Permissions') ?></a>
                                         </li>
                                         <?php
                                     }
@@ -193,9 +193,9 @@ if (isset($cp) && $cp->canViewToolbar() && (!$dh->inDashboard())) {
                                                 dialog-width="350"
                                                 dialog-height="250"
                                                 dialog-modal="false"
-                                                dialog-title="<?php echo t('Design') ?>"
-                                                href="<?php echo URL::to('/ccm/system/dialogs/page/design') ?>?cID=<?php echo $cID ?>"
-                                            ><?php echo t('Design') ?></a>
+                                                dialog-title="<?= t('Design') ?>"
+                                                href="<?= URL::to('/ccm/system/dialogs/page/design') ?>?cID=<?= $cID ?>"
+                                            ><?= t('Design') ?></a>
                                         </li>
                                         <?php
                                     }
@@ -207,9 +207,9 @@ if (isset($cp) && $cp->canViewToolbar() && (!$dh->inDashboard())) {
                                                 dialog-width="640"
                                                 dialog-height="340"
                                                 dialog-modal="false"
-                                                dialog-title="<?php echo t('Versions') ?>"
-                                                href="<?php echo URL::to('/ccm/system/panels/page/versions') ?>?cID=<?php echo $cID ?>"
-                                            ><?php echo t('Versions') ?></a>
+                                                dialog-title="<?= t('Versions') ?>"
+                                                href="<?= URL::to('/ccm/system/panels/page/versions') ?>?cID=<?= $cID ?>"
+                                            ><?= t('Versions') ?></a>
                                         </li>
                                         <?php
                                     }
@@ -221,8 +221,8 @@ if (isset($cp) && $cp->canViewToolbar() && (!$dh->inDashboard())) {
                                                 dialog-width="360"
                                                 dialog-height="250"
                                                 dialog-modal="false"
-                                                dialog-title="<?php echo t('Delete') ?>"
-                                                href="<?php echo URL::to('/ccm/system/dialogs/page/delete') ?>?cID=<?php echo $cID ?>"
+                                                dialog-title="<?= t('Delete') ?>"
+                                                href="<?= URL::to('/ccm/system/dialogs/page/delete') ?>?cID=<?= $cID ?>"
                                             ><?php echo t('Delete') ?></a>
                                         </li>
                                         <?php
@@ -245,13 +245,13 @@ if (isset($cp) && $cp->canViewToolbar() && (!$dh->inDashboard())) {
                         ?>
                         <li>
                             <i class="fa fa-sign-out mobile-leading-icon"></i>
-                            <a href="<?php echo URL::to('/login', 'do_logout', $valt->generate('do_logout')); ?>"><?php echo t('Sign Out'); ?></a>
+                            <a href="<?= URL::to('/login', 'do_logout', $valt->generate('do_logout')); ?>"><?= t('Sign Out'); ?></a>
                         </li>
                     </ul>
                 </div>
             </div>
             <ul class="ccm-toolbar-item-list">
-                <li class="ccm-logo pull-left"><span><?php echo $cih->getToolbarLogoSRC() ?></span></li>
+                <li class="ccm-logo pull-left"><span><?= $cih->getToolbarLogoSRC() ?></span></li>
                 <?php
                 if ($c->isMasterCollection()) {
                     ?>
@@ -273,13 +273,13 @@ if (isset($cp) && $cp->canViewToolbar() && (!$dh->inDashboard())) {
                                 if ($vo->isNew() || $c->isPageDraft()) {
                                     ?>href="javascript:void(0)" data-launch-panel="check-in"<?php
                                 } else {
-                                    ?>href="<?php echo URL::to('/ccm/system/page/check_in', $cID, $valt->generate()) ?>"<?php
+                                    ?>href="<?= URL::to('/ccm/system/page/check_in', $cID, $valt->generate()) ?>"<?php
                                 }
                                 ?>
-                                data-panel-url="<?php echo URL::to('/ccm/system/panels/page/check_in') ?>"
-                                title="<?php echo t('Exit Edit Mode') ?>"
+                                data-panel-url="<?= URL::to('/ccm/system/panels/page/check_in') ?>"
+                                title="<?= t('Exit Edit Mode') ?>"
                             >
-                                <i class="fa fa-pencil"></i><span class="ccm-toolbar-accessibility-title ccm-toolbar-accessibility-title-edit-mode"><?php echo tc('toolbar', 'Exit Edit Mode') ?></span>
+                                <i class="fa fa-pencil"></i><span class="ccm-toolbar-accessibility-title ccm-toolbar-accessibility-title-edit-mode"><?= tc('toolbar', 'Exit Edit Mode') ?></span>
                             </a>
                         </li>
                         <?php
@@ -289,10 +289,10 @@ if (isset($cp) && $cp->canViewToolbar() && (!$dh->inDashboard())) {
                             <a <?php if ($show_tooltips) { ?>class="launch-tooltip"<?php } ?> data-toggle="tooltip" data-placement="bottom" data-delay='{ "show": 500, "hide": 0 }'
                                 <?php if ($c->isMasterCollection()) { ?>data-disable-panel="check-in"<?php } ?>
                                 data-toolbar-action="check-out"
-                                href="<?php echo DIR_REL ?>/<?php echo DISPATCHER_FILENAME ?>?cID=<?php echo $cID ?>&ctask=check-out<?php echo $token ?>"
-                                title="<?php echo t('Edit This Page') ?>"
+                                href="<?= DIR_REL ?>/<?= DISPATCHER_FILENAME ?>?cID=<?= $cID ?>&ctask=check-out<?= $token ?>"
+                                title="<?= t('Edit This Page') ?>"
                             >
-                                <i class="fa fa-pencil"></i><span class="ccm-toolbar-accessibility-title ccm-toolbar-accessibility-title-edit-mode"><?php echo tc('toolbar', 'Edit Mode') ?></span>
+                                <i class="fa fa-pencil"></i><span class="ccm-toolbar-accessibility-title ccm-toolbar-accessibility-title-edit-mode"><?= tc('toolbar', 'Edit Mode') ?></span>
                             </a>
                         </li>
                         <?php
@@ -312,20 +312,20 @@ if (isset($cp) && $cp->canViewToolbar() && (!$dh->inDashboard())) {
                             <a <?php if ($show_tooltips) { ?>class="launch-tooltip"<?php } ?> data-toggle="tooltip" data-placement="bottom" data-delay='{ "show": 500, "hide": 0 }'
                                 href="#"
                                 data-launch-panel="page"
-                                data-panel-url="<?php echo URL::to('/ccm/system/panels/page') ?>"
+                                data-panel-url="<?= URL::to('/ccm/system/panels/page') ?>"
                                 <?php
                                 if ($hasComposer) {
-                                    ?>title="<?php echo t('Composer, Page Design, Location, Attributes and Settings') ?>"><?php
+                                    ?>title="<?= t('Composer, Page Design, Location, Attributes and Settings') ?>"><?php
                                 } else {
-                                    ?>title="<?php echo t('Page Design, Location, Attributes and Settings') ?>"><?php
+                                    ?>title="<?= t('Page Design, Location, Attributes and Settings') ?>"><?php
                                 }
                                 ?>
 
                                 <i class="fa fa-cog"></i><span class="ccm-toolbar-accessibility-title ccm-toolbar-accessibility-title-settings"><?php
                                     if ($hasComposer) {
-                                        ?><?php echo tc('toolbar', 'Composer') ?> / <?php
+                                        ?><?= tc('toolbar', 'Composer') ?> / <?php
                                     }
-                                    ?><?php echo tc('toolbar', 'Page Settings') ?></span>
+                                    ?><?= tc('toolbar', 'Page Settings') ?></span>
                             </a>
                         </li>
                         <?php
@@ -336,12 +336,12 @@ if (isset($cp) && $cp->canViewToolbar() && (!$dh->inDashboard())) {
                     ?>
                     <li data-guide-toolbar-action="add-content" class="ccm-toolbar-add pull-left hidden-xs">
                         <?php if ($c->isEditMode()) { ?>
-                            <a href="#" data-launch-panel="add-block" data-panel-url="<?php echo URL::to('/ccm/system/panels/add') ?>" title="<?php echo t('Add Content to The Page') ?>">
-                                <i class="fa fa-plus"></i><span class="ccm-toolbar-accessibility-title ccm-toolbar-accessibility-title-add"><?php echo tc('toolbar', 'Add Content') ?></span>
+                            <a href="#" data-launch-panel="add-block" data-panel-url="<?= URL::to('/ccm/system/panels/add') ?>" title="<?= t('Add Content to The Page') ?>">
+                                <i class="fa fa-plus"></i><span class="ccm-toolbar-accessibility-title ccm-toolbar-accessibility-title-add"><?= tc('toolbar', 'Add Content') ?></span>
                             </a>
                         <?php } else { ?>
-                            <a href="<?php echo DIR_REL ?>/<?php echo DISPATCHER_FILENAME ?>?cID=<?php echo $cID ?>&ctask=check-out-add-block<?php echo $token ?>" <?php if ($show_tooltips) { ?>class="launch-tooltip"<?php } ?> data-toggle="tooltip" data-placement="bottom" data-delay='{ "show": 500, "hide": 0 }' title="<?php echo t('Add Content to The Page') ?>">
-                                <i class="fa fa-plus"></i><span class="ccm-toolbar-accessibility-title ccm-toolbar-accessibility-title-add"><?php echo tc('toolbar', 'Add Content') ?></span>
+                            <a href="<?= DIR_REL ?>/<?= DISPATCHER_FILENAME ?>?cID=<?= $cID ?>&ctask=check-out-add-block<?= $token ?>" <?php if ($show_tooltips) { ?>class="launch-tooltip"<?php } ?> data-toggle="tooltip" data-placement="bottom" data-delay='{ "show": 500, "hide": 0 }' title="<?= t('Add Content to The Page') ?>">
+                                <i class="fa fa-plus"></i><span class="ccm-toolbar-accessibility-title ccm-toolbar-accessibility-title-add"><?= tc('toolbar', 'Add Content') ?></span>
                             </a>
                         <?php } ?>
                     </li>
@@ -354,42 +354,42 @@ if (isset($cp) && $cp->canViewToolbar() && (!$dh->inDashboard())) {
                     if ($cnt->displayItem()) {
                         $cnt->registerViewAssets();
                         ?>
-                        <li class="pull-left hidden-xs"><?php echo $cnt->getMenuItemLinkElement() ?></li>
+                        <li class="pull-left hidden-xs"><?= $cnt->getMenuItemLinkElement() ?></li>
                         <?php
                     }
                 }
 
                 if ($cih->showWhiteLabelMessage()) {
                     ?>
-                    <li class="pull-left visible-xs visible-lg" id="ccm-white-label-message"><?php echo t('Powered by <a href="%s">concrete5</a>.', $config->get('concrete.urls.concrete5')) ?></li>
+                    <li class="pull-left visible-xs visible-lg" id="ccm-white-label-message"><?= t('Powered by <a href="%s">concrete5</a>.', $config->get('concrete.urls.concrete5')) ?></li>
                     <?php
                 }
                 ?>
-                <li class="pull-right ccm-toolbar-mobile-menu-button visible-xs hidden-sm hidden-md hidden-lg<?php echo $c->isEditMode() ? ' ccm-toolbar-mobile-menu-button-active' : ''?>">
+                <li class="pull-right ccm-toolbar-mobile-menu-button visible-xs hidden-sm hidden-md hidden-lg<?=$c->isEditMode() ? ' ccm-toolbar-mobile-menu-button-active' : ''?>">
                     <i class="fa fa-bars fa-2"></i>
                 </li>
                 <?php
                 if ($dh->canRead()) {
                     ?>
                     <li data-guide-toolbar-action="dashboard" class="pull-right hidden-xs ">
-                        <a <?php if ($show_tooltips) { ?>class="launch-tooltip"<?php } ?> data-toggle="tooltip" data-placement="bottom" data-delay='{ "show": 500, "hide": 0 }' href="<?php echo URL::to('/dashboard') ?>" data-launch-panel="dashboard" title="<?php echo t('Dashboard – Change Site-wide Settings') ?>">
-                            <i class="fa fa-sliders"></i><span class="ccm-toolbar-accessibility-title ccm-toolbar-accessibility-title-site-settings"><?php echo tc('toolbar', 'Dashboard') ?></span>
+                        <a <?php if ($show_tooltips) { ?>class="launch-tooltip"<?php } ?> data-toggle="tooltip" data-placement="bottom" data-delay='{ "show": 500, "hide": 0 }' href="<?= URL::to('/dashboard') ?>" data-launch-panel="dashboard" title="<?= t('Dashboard – Change Site-wide Settings') ?>">
+                            <i class="fa fa-sliders"></i><span class="ccm-toolbar-accessibility-title ccm-toolbar-accessibility-title-site-settings"><?= tc('toolbar', 'Dashboard') ?></span>
                         </a>
                     </li>
                     <?php
                 } else {
                     ?>
                     <li class="pull-right hidden-xs">
-                        <a <?php if ($show_tooltips) { ?>class="launch-tooltip"<?php } ?> data-toggle="tooltip" data-placement="bottom" data-delay='{ "show": 500, "hide": 0 }' href="<?php echo URL::to('/login', 'logout', $valt->generate('logout'))?>" title="<?php echo t('Sign Out')?>">
-                            <i class="fa fa-sign-out"></i><span class="ccm-toolbar-accessibility-title ccm-toolbar-accessibility-title-site-settings"><?php echo tc('toolbar', 'Sign Out') ?></span>
+                        <a <?php if ($show_tooltips) { ?>class="launch-tooltip"<?php } ?> data-toggle="tooltip" data-placement="bottom" data-delay='{ "show": 500, "hide": 0 }' href="<?=URL::to('/login', 'logout', $valt->generate('logout'))?>" title="<?=t('Sign Out')?>">
+                            <i class="fa fa-sign-out"></i><span class="ccm-toolbar-accessibility-title ccm-toolbar-accessibility-title-site-settings"><?= tc('toolbar', 'Sign Out') ?></span>
                         </a>
                     </li>
                     <?php
                 }
                 ?>
                 <li data-guide-toolbar-action="sitemap" class="pull-right hidden-xs">
-                    <a <?php if ($show_tooltips) { ?>class="launch-tooltip"<?php } ?> data-toggle="tooltip" data-placement="bottom" data-delay='{ "show": 500, "hide": 0 }' href="#" data-panel-url="<?php echo URL::to('/ccm/system/panels/sitemap') ?>" title="<?php echo t('Add Pages and Navigate Your Site') ?>" data-launch-panel="sitemap">
-                        <i class="fa fa-files-o"></i><span class="ccm-toolbar-accessibility-title ccm-toolbar-accessibility-title-add-page"><?php echo tc('toolbar', 'Pages') ?></span>
+                    <a <?php if ($show_tooltips) { ?>class="launch-tooltip"<?php } ?> data-toggle="tooltip" data-placement="bottom" data-delay='{ "show": 500, "hide": 0 }' href="#" data-panel-url="<?= URL::to('/ccm/system/panels/sitemap') ?>" title="<?= t('Add Pages and Navigate Your Site') ?>" data-launch-panel="sitemap">
+                        <i class="fa fa-files-o"></i><span class="ccm-toolbar-accessibility-title ccm-toolbar-accessibility-title-add-page"><?= tc('toolbar', 'Pages') ?></span>
                     </a>
                 </li>
                 <?php
@@ -399,7 +399,7 @@ if (isset($cp) && $cp->canViewToolbar() && (!$dh->inDashboard())) {
                     if ($cnt->displayItem()) {
                         $cnt->registerViewAssets();
                         ?>
-                        <li class="pull-right hidden-xs"><?php echo $cnt->getMenuItemLinkElement() ?></li>
+                        <li class="pull-right hidden-xs"><?= $cnt->getMenuItemLinkElement() ?></li>
                         <?php
                     }
                 }

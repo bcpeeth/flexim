@@ -4,20 +4,20 @@ $composer = Core::make("helper/concrete/composer");
 ?>
 
 <div class="ccm-ui">
-    <form data-dialog-form="add-page-compose" action="<?php echo $controller->action('submit')?>">
+    <form data-dialog-form="add-page-compose" action="<?=$controller->action('submit')?>">
         <?php $pagetype->renderComposerOutputForm(null, $parent); ?>
         <input type="hidden" name="addPageComposeAction" value="preview" />
         <div class="dialog-buttons">
-            <button type="button" data-dialog-action="cancel" class="btn btn-default pull-left"><?php echo t('Cancel')?></button>
+            <button type="button" data-dialog-action="cancel" class="btn btn-default pull-left"><?=t('Cancel')?></button>
             <div class="btn-group pull-right">
-                <button style="margin-right: 0;" type="button" data-composer-dialog-action="publish" value="publish" class="btn btn-primary"><?php echo t('Publish Page')?>
+                <button style="margin-right: 0;" type="button" data-composer-dialog-action="publish" value="publish" class="btn btn-primary"><?=t('Publish Page')?>
                 <button style="padding-right: 5px; padding-left: 5px; width: 35px;" data-page-type-composer-form-btn="schedule" type="button" class="btn btn-primary">
                     <i class="fa fa-clock-o"></i>
                 </button>
 
             </button>
                 </div>
-            <button type="button" data-dialog-action="submit" value="preview" data-page-type-composer-form-btn="preview" class="btn btn-success pull-right"><?php echo t('Edit Mode')?></button>
+            <button type="button" data-dialog-action="submit" value="preview" data-page-type-composer-form-btn="preview" class="btn btn-success pull-right"><?=t('Edit Mode')?></button>
         </div>
     </form>
 </div>
@@ -50,7 +50,7 @@ $composer = Core::make("helper/concrete/composer");
                 element: 'div[data-dialog=schedule-page]',
                 modal: true,
                 width: 460,
-                title: '<?php echo t('Schedule Publishing')?>',
+                title: '<?=t('Schedule Publishing')?>',
                 height: 'auto',
                 onOpen: function() {
                     $('.ccm-check-in-schedule').on('click', function() {
@@ -60,7 +60,7 @@ $composer = Core::make("helper/concrete/composer");
                         data.push({'name': 'addPageComposeAction', 'value': 'schedule'});
                         $.concreteAjax({
                             data: data,
-                            url: '<?php echo $controller->action('submit')?>',
+                            url: '<?=$controller->action('submit')?>',
                             success: function(r) {
                                 ConcreteEvent.fire('AjaxFormSubmitSuccess', {
                                     response: r

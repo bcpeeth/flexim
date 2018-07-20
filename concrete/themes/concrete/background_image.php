@@ -20,14 +20,14 @@ View::element(
 
 <style>
     body {
-        background: url("<?php echo ASSETS_URL_IMAGES ?>/bg_login.png");
+        background: url("<?= ASSETS_URL_IMAGES ?>/bg_login.png");
     }
 </style>
 
 <?php echo $innerContent ?>
 
 <div class="ccm-page-background-credit" style="display:none">
-    <?php echo t('Photo Credit:') ?>
+    <?= t('Photo Credit:') ?>
     <a href="#" style="pull-right"></a>
 </div>
 
@@ -54,7 +54,7 @@ $(function() {
             .append(
             $('<img/>')
                 .css({ width: '100%', height: '100%' })
-                .attr('src', '<?php echo ASSETS_URL_IMAGES ?>/login_fade.png'))
+                .attr('src', '<?= ASSETS_URL_IMAGES ?>/login_fade.png'))
             .fadeIn();
     }, 0);
 
@@ -62,7 +62,7 @@ $(function() {
     ?>
     $(function () {
         var shown = false, info;
-        $.getJSON('<?php echo Core::getApplicationURL() . '/' . DISPATCHER_FILENAME . '/tools/required/dashboard/get_image_data' ?>', { image: '<?php echo $image ?>' }, function (data) {
+        $.getJSON('<?= Core::getApplicationURL() . '/' . DISPATCHER_FILENAME . '/tools/required/dashboard/get_image_data' ?>', { image: '<?= $image ?>' }, function (data) {
             if (shown) {
                 $('div.ccm-page-background-credit').fadeIn().children().attr('href', data.link).text(data.author.join());
             } else {
@@ -77,14 +77,14 @@ $(function() {
             }
 
         });
-        $.backstretch("<?php echo Config::get('concrete.urls.background_feed') . '/' . $image ?>", {
+        $.backstretch("<?= Config::get('concrete.urls.background_feed') . '/' . $image ?>", {
             fade: 500
         });
     });
     <?php 
 } elseif (Config::get('concrete.white_label.background_url')) {
     ?>
-        $.backstretch("<?php echo Config::get('concrete.white_label.background_url') ?>", {
+        $.backstretch("<?= Config::get('concrete.white_label.background_url') ?>", {
             fade: 500
         });
     <?php 

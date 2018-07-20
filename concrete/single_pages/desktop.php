@@ -1,6 +1,6 @@
 <?php defined('C5_EXECUTE') or die("Access Denied."); ?>
 
-<p><?php echo t('You are currently logged in as <strong>%s</strong>', $profile->getUserDisplayName())?>. <a href="<?php echo URL::to('/')?>"><?php echo t('Return to Previous Page.')?></a></p>
+<p><?=t('You are currently logged in as <strong>%s</strong>', $profile->getUserDisplayName())?>. <a href="<?=URL::to('/')?>"><?=t('Return to Previous Page.')?></a></p>
 
 <hr/>
 
@@ -12,8 +12,8 @@ if ($profileURL) {
     ?>
     <hr/>
     <div>
-        <a href="<?php echo $profileURL?>"><?php echo t("View Public Profile")?></a>
-        <p><?php echo t('View your public user profile and the information you are sharing.')?></p>
+        <a href="<?=$profileURL?>"><?=t("View Public Profile")?></a>
+        <p><?=t('View your public user profile and the information you are sharing.')?></p>
     </div>
 
 

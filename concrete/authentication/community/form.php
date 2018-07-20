@@ -1,13 +1,13 @@
 <?php
 if (isset($error)) {
     ?>
-    <div class="alert alert-danger"><?php echo $error ?></div>
+    <div class="alert alert-danger"><?= $error ?></div>
     <?php
 
 }
 if (isset($message)) {
     ?>
-    <div class="alert alert-success"><?php echo $message ?></div>
+    <div class="alert alert-success"><?= $message ?></div>
 <?php
 
 }
@@ -18,15 +18,15 @@ if ($user->isLoggedIn()) {
     ?>
     <div class="form-group">
         <span>
-            <?php echo t('Attach a community account') ?>
+            <?= t('Attach a community account') ?>
         </span>
         <hr>
     </div>
     <div class="form-group">
-        <a href="<?php echo \URL::to('/ccm/system/authentication/oauth2/community/attempt_attach');
+        <a href="<?= \URL::to('/ccm/system/authentication/oauth2/community/attempt_attach');
     ?>" class="btn btn-primary btn-community btn-block">
-            <img src="<?php echo Core::getApplicationURL() ?>/concrete/images/logo.svg" class="concrete5-icon"></i>
-            <?php echo t('Attach a concrete5.org account') ?>
+            <img src="<?= Core::getApplicationURL() ?>/concrete/images/logo.svg" class="concrete5-icon"></i>
+            <?= t('Attach a concrete5.org account') ?>
         </a>
     </div>
     <?php
@@ -35,19 +35,19 @@ if ($user->isLoggedIn()) {
     ?>
     <div class="form-group">
         <span>
-            <?php echo t('Sign in with a community account') ?>
+            <?= t('Sign in with a community account') ?>
         </span>
         <hr class="ccm-authentication-type-community">
     </div>
     <div class="form-group">
-        <a href="<?php echo \URL::to('/ccm/system/authentication/oauth2/community/attempt_auth');
+        <a href="<?= \URL::to('/ccm/system/authentication/oauth2/community/attempt_auth');
     ?>" class="btn btn-primary btn-community btn-block">
-            <img src="<?php echo Core::getApplicationURL() ?>/concrete/images/logo.svg" class="concrete5-icon"></i>
-            <?php echo t('Log in with concrete5.org') ?>
+            <img src="<?= Core::getApplicationURL() ?>/concrete/images/logo.svg" class="concrete5-icon"></i>
+            <?= t('Log in with concrete5.org') ?>
         </a>
     </div>
     <div class="form-group">
-        <p><?php echo t('Join the concrete5.org community to setup multiple websites, shop for extensions, and get support.') ?></p>
+        <p><?= t('Join the concrete5.org community to setup multiple websites, shop for extensions, and get support.') ?></p>
     </div>
     <?php
 

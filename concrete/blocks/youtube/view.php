@@ -43,6 +43,9 @@ if (isset($iv_load_policy) && $iv_load_policy > 0) {
 
 if (isset($loopEnd) && $loopEnd) {
     $params[] = 'loop=1';
+    if (!isset($playlist) && $videoID !== '') {
+        $params[] = 'playlist='.$videoID;
+    }
 }
 
 if (isset($modestbranding) && $modestbranding) {
@@ -57,6 +60,8 @@ if (isset($rel) && $rel) {
 
 if (isset($showinfo) && $showinfo) {
     $params[] = 'showinfo=1';
+} else {
+    $params[] = 'showinfo=0';
 }
 
 $paramstring = '?' . implode('&', $params);
@@ -66,18 +71,18 @@ if (Page::getCurrentPage()->isEditMode()) {
     $loc->pushActiveContext(Localization::CONTEXT_UI);
     ?>
 	<div class="ccm-edit-mode-disabled-item youtubeBlock <?php echo $responsiveClass; ?>" <?php echo $sizeDisabled; ?>>
-		<div><?php echo t('YouTube Video disabled in edit mode.'); ?></div>
+		<div><?= t('YouTube Video disabled in edit mode.'); ?></div>
 	</div>
     <?php
     $loc->popActiveContext();
 } else {
     ?>
-	<div id="youtube<?php echo $bID;
+	<div id="youtube<?= $bID;
     ?>" class="youtubeBlock <?php echo $responsiveClass;
     ?>">
 		<iframe class="youtube-player" <?php echo $sizeargs;
-    ?> src="//www.youtube.com/embed/<?php echo $videoID;
-    ?><?php echo $paramstring;
+    ?> src="//www.youtube.com/embed/<?= $videoID;
+    ?><?= $paramstring;
     ?>" frameborder="0" allowfullscreen></iframe>
 	</div>
 <?php

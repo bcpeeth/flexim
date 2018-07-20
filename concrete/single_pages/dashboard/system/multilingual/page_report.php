@@ -7,23 +7,23 @@ $nav = Loader::helper('navigation');
 
 <div class="ccm-dashboard-content-full">
 
-    <form role="form" action="<?php echo $controller->action('view')?>" data-form="search-multilingual-pages" class="form-inline ccm-search-fields">
-        <input type="hidden" name="sectionID" value="<?php echo $sectionID?>" />
+    <form role="form" action="<?=$controller->action('view')?>" data-form="search-multilingual-pages" class="form-inline ccm-search-fields">
+        <input type="hidden" name="sectionID" value="<?=$sectionID?>" />
         <div class="ccm-search-fields-row">
             <div class="form-group">
-                <?php echo $form->label('keywords', t('Search'))?>
+                <?=$form->label('keywords', t('Search'))?>
                 <div class="ccm-search-field-content">
                     <div class="ccm-search-main-lookup-field">
                         <i class="fa fa-search"></i>
-                        <?php echo $form->search('keywords', array('placeholder' => t('Keywords')))?>
-                        <button type="submit" class="ccm-search-field-hidden-submit" tabindex="-1"><?php echo t('Search')?></button>
+                        <?=$form->search('keywords', array('placeholder' => t('Keywords')))?>
+                        <button type="submit" class="ccm-search-field-hidden-submit" tabindex="-1"><?=t('Search')?></button>
                     </div>
                 </div>
             </div>
         </div>
         <div class="ccm-search-fields-row">
             <div class="form-group">
-                <label class="control-label" for="sectionIDSelect"><?php echo t('Choose Source')?></label>
+                <label class="control-label" for="sectionIDSelect"><?=t('Choose Source')?></label>
                 <div class="ccm-search-field-content">
                     <?php echo $form->select('sectionIDSelect', $sections, $sectionID)?>
                 </div>
@@ -32,7 +32,7 @@ $nav = Loader::helper('navigation');
 
         <div class="ccm-search-fields-row" data-list="multilingual-targets">
             <div class="form-group">
-                <label class="control-label"><?php echo t('Choose Targets')?></label>
+                <label class="control-label"><?=t('Choose Targets')?></label>
                 <div class="ccm-search-field-content">
                 <?php foreach ($sectionList as $sc) {
     ?>
@@ -58,7 +58,7 @@ $nav = Loader::helper('navigation');
 
         <div class="ccm-search-fields-row">
             <div class="form-group">
-                <label class="control-label"><?php echo t('Display')?></label>
+                <label class="control-label"><?=t('Display')?></label>
                 <div class="ccm-search-field-content">
                     <label class="radio-inline">
                         <?php echo $form->radio('showAllPages', 0, 0)?>
@@ -73,7 +73,7 @@ $nav = Loader::helper('navigation');
         </div>
 
         <div class="ccm-search-fields-submit">
-            <button type="submit" class="btn btn-primary pull-right"><?php echo t('Search')?></button>
+            <button type="submit" class="btn btn-primary pull-right"><?=t('Search')?></button>
         </div>
 
     </form>
@@ -89,7 +89,7 @@ $nav = Loader::helper('navigation');
         <table class="ccm-search-results-table">
             <thead>
             <tr>
-                <th style="width: <?php echo $width?>%"><span><?php
+                <th style="width: <?=$width?>%"><span><?php
                     $sourceMS = \Concrete\Core\Multilingual\Page\Section\Section::getByID($sectionID);
     echo t('%s (%s)', $sourceMS->getLanguageText(), $sourceMS->getLocale());
     ?>
@@ -98,7 +98,7 @@ $nav = Loader::helper('navigation');
     ?>
                     <?php if ($section->getCollectionID() != $sc->getCollectionID()) {
     ?>
-                        <th style="width:<?php echo $width?>%"><span><?php
+                        <th style="width:<?=$width?>%"><span><?php
                             echo $fh->getSectionFlagIcon($sc);
     echo '&nbsp;';
     echo t('%s (%s)', $sc->getLanguageText(), $sc->getLocale());
@@ -119,8 +119,8 @@ $nav = Loader::helper('navigation');
     ?>
                     <tr>
                     <td>
-                        <a href="<?php echo $pc->getCollectionLink()?>"><?php echo $pc->getCollectionName()?></a>
-                        <div><small><?php echo $pc->getCollectionPath()?></small></div>
+                        <a href="<?php echo $pc->getCollectionLink()?>"><?=$pc->getCollectionName()?></a>
+                        <div><small><?=$pc->getCollectionPath()?></small></div>
                     </td>
                     <?php foreach ($targetList as $sc) {
     $multilingualController = Core::make('\Concrete\Controller\Backend\Page\Multilingual');
@@ -128,7 +128,7 @@ $nav = Loader::helper('navigation');
     ?>
                         <?php if ($section->getCollectionID() != $sc->getCollectionID()) {
     ?>
-                            <td><div data-multilingual-page-section="<?php echo $sc->getCollectionID()?>" data-multilingual-page-source="<?php echo $pc->getCollectionID()?>">
+                            <td><div data-multilingual-page-section="<?=$sc->getCollectionID()?>" data-multilingual-page-source="<?=$pc->getCollectionID()?>">
 
                                     <div data-wrapper="page">
                                     <?php                        $cID = $sc->getTranslatedPageID($pc);
@@ -156,16 +156,16 @@ $nav = Loader::helper('navigation');
     ?>
                                             <button class="btn btn-success btn-xs" type="button"
                                                     data-btn-action="create"
-                                                    data-btn-url="<?php echo $multilingualController->action('create_new')?>"
+                                                    data-btn-url="<?=$multilingualController->action('create_new')?>"
                                                     data-btn-multilingual-page-source="<?php echo $pc->getCollectionID()?>"
                                                     data-btn-multilingual-section="<?php echo $sc->getCollectionID()?>"
-                                            ><?php echo t('Create Page')?></button>
+                                            ><?=t('Create Page')?></button>
                                         <?php 
 }
         ?>
                                         <button class="btn btn-info btn-xs" type="button"
                                                 data-btn-action="map"
-                                                data-btn-url="<?php echo $multilingualController->action('assign')?>"
+                                                data-btn-url="<?=$multilingualController->action('assign')?>"
                                                 data-btn-multilingual-page-source="<?php echo $pc->getCollectionID()?>"
                                                 data-btn-multilingual-section="<?php echo $sc->getCollectionID()?>"
                                             ><?php echo $assignLang?></button>
@@ -173,10 +173,10 @@ $nav = Loader::helper('navigation');
     ?>
                                            <button class="btn btn-warning btn-xs" type="button"
                                                data-btn-action="ignore"
-                                               data-btn-url="<?php echo $multilingualController->action('ignore')?>"
+                                               data-btn-url="<?=$multilingualController->action('ignore')?>"
                                                data-btn-multilingual-page-source="<?php echo $pc->getCollectionID()?>"
                                                data-btn-multilingual-section="<?php echo $sc->getCollectionID()?>"
-                                           ><?php echo t('Ignore')?></button>
+                                           ><?=t('Ignore')?></button>
                                         <?php 
 }
         ?>
@@ -184,9 +184,9 @@ $nav = Loader::helper('navigation');
     ?>
                                             <button class="btn btn-danger btn-xs" type="button"
                                                     data-btn-action="unmap"
-                                                    data-btn-url="<?php echo $multilingualController->action('unmap')?>"
+                                                    data-btn-url="<?=$multilingualController->action('unmap')?>"
                                                     data-btn-multilingual-page-source="<?php echo $pc->getCollectionID()?>"
-                                                ><?php echo t('Un-Map')?></button>
+                                                ><?=t('Un-Map')?></button>
                                         <?php 
 }
         ?>
@@ -301,7 +301,7 @@ $nav = Loader::helper('navigation');
                     },
                     success: function(r) {
                         var $wrapper = $('div[data-multilingual-page-section=' + sectionID + '][data-multilingual-page-source=' + cID + ']');
-                        $wrapper.find('div[data-wrapper=page]').html('<?php echo t('Ignored')?>');
+                        $wrapper.find('div[data-wrapper=page]').html('<?=t('Ignored')?>');
                         $wrapper.find('div[data-wrapper=buttons]').hide();
                     }
                 });
@@ -318,7 +318,7 @@ $nav = Loader::helper('navigation');
                     },
                     success: function(r) {
                         var $wrapper = $('div[data-multilingual-page-source=' + cID + ']');
-                        $wrapper.find('div[data-wrapper=page]').html('<?php echo t('Unmapped')?>');
+                        $wrapper.find('div[data-wrapper=page]').html('<?=t('Unmapped')?>');
                         $wrapper.find('div[data-wrapper=buttons]').hide();
                     }
                 });
@@ -331,7 +331,7 @@ $nav = Loader::helper('navigation');
     <div class="ccm-search-results-pagination">
         <?php if ($pagination->haveToPaginate()) {
     ?>
-            <?php echo $pagination->renderView('dashboard');
+            <?=$pagination->renderView('dashboard');
     ?>
         <?php 
 }

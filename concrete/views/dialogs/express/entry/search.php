@@ -9,7 +9,7 @@ defined('C5_EXECUTE') or die("Access Denied.");
 <script type="text/javascript">
     $(function () {
         $('div[data-search=express_entries]').concreteAjaxSearch({
-            result: <?php echo $result?>,
+            result: <?=$result?>,
             onUpdateResults: function(concreteSearch) {
                 concreteSearch.$element.on('mouseover', 'tr[data-entity-id]', function(e) {
                     e.stopPropagation();

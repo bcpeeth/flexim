@@ -8,7 +8,6 @@ $baseDir = dirname(dirname($vendorDir));
 return array(
     'ZendQueue' => array($vendorDir . '/concrete5/zend-queue/library'),
     'URLify' => array($vendorDir . '/voku/urlify'),
-    'Symfony\\Component\\Finder\\' => array($vendorDir . '/symfony/finder'),
     'Sunra\\PhpSimple\\HtmlDomParser' => array($vendorDir . '/sunra/php-simple-html-dom-parser/Src'),
     'ProxyManager\\' => array($vendorDir . '/ocramius/proxy-manager/src'),
     'Primal\\Color' => array($vendorDir . '/primal/color/lib'),
@@ -19,9 +18,6 @@ return array(
     'Less' => array($vendorDir . '/concrete5/less.php/lib'),
     'JShrink' => array($vendorDir . '/tedivm/jshrink/src'),
     'Imagine' => array($vendorDir . '/imagine/imagine/lib'),
-    'Illuminate\\Support' => array($vendorDir . '/illuminate/support'),
-    'Illuminate\\Filesystem' => array($vendorDir . '/illuminate/filesystem'),
-    'Illuminate\\Config' => array($vendorDir . '/illuminate/config'),
     'Hautelook' => array($vendorDir . '/hautelook/phpass/src'),
     'Egulias\\' => array($vendorDir . '/egulias/email-validator/src'),
     'Doctrine\\ORM\\' => array($vendorDir . '/doctrine/orm/lib'),

@@ -2,17 +2,17 @@
 $form = Core::make('helper/form');
 $token = Core::make('token');
 ?>
-<form action="<?php echo $view->action('save')?>" method='POST'>
+<form action="<?=$view->action('save')?>" method='POST'>
 	<?php
     $token->output('update_banned_words');
     ?>
     <div class="ccm-dashboard-header-buttons">
-        <a class='add_word btn btn-primary' href='#'><?php echo t('Add Word')?></a>
+        <a class='add_word btn btn-primary' href='#'><?=t('Add Word')?></a>
     </div>
 
     <div class="checkbox">
         <label>
-		    <input value=1 name='banned_list_enabled' <?php echo $bannedListEnabled ? 'checked ' : ''?>type='checkbox'> <?php echo t('Disallow posts that include banned words?')?>
+		    <input value=1 name='banned_list_enabled' <?=$bannedListEnabled ? 'checked ' : ''?>type='checkbox'> <?=t('Disallow posts that include banned words?')?>
         </label>
     </div>
 
@@ -20,7 +20,7 @@ $token = Core::make('token');
 		<tr class='editing'>
 			<th class='id'></th>
 			<td class='word'><span></span><input name='banned_word[]' class="form-control"></td>
-			<td style='text-align:right'><a href='#' class='save_word btn btn-primary'><?php echo t('Save')?></a></td>
+			<td style='text-align:right'><a href='#' class='save_word btn btn-primary'><?=t('Save')?></a></td>
 		</tr>
 	</script>
 
@@ -29,7 +29,7 @@ $token = Core::make('token');
 			<thead>
 				<tr>
 					<th style='width:20px'>ID</th>
-					<th><?php echo t('Word')?></th>
+					<th><?=t('Word')?></th>
 					<th style='width:200px;text-align:right'></th>
 				</tr>
 			</thead>
@@ -41,12 +41,12 @@ $token = Core::make('token');
                     }
                     ?>
 					<tr>
-						<th class='id'><?php echo $word->getID()?></th>
-						<td class='word'><span><?php echo h($word->getWord())?></span><input style='display:none' name='banned_word[]' value='<?php echo h($word->getWord())?>'></td>
+						<th class='id'><?=$word->getID()?></th>
+						<td class='word'><span><?=h($word->getWord())?></span><input style='display:none' name='banned_word[]' value='<?=h($word->getWord())?>'></td>
 						<td style='text-align:right'>
                             <div class="btn-group">
-                                <a href='#' class='edit_word btn btn-default'><?php echo t('Edit')?></a>
-                                <a href='#' class='delete_word btn btn-danger'><?php echo t('Delete')?></a>
+                                <a href='#' class='edit_word btn btn-default'><?=t('Edit')?></a>
+                                <a href='#' class='delete_word btn btn-danger'><?=t('Delete')?></a>
                             </div>
 						 </td>
 					</tr>
@@ -67,8 +67,8 @@ $token = Core::make('token');
 <script>
 var ctx = $('table.banned_word_list'), template = $('script.word_template'),
 	getTemplate = function(){return $(template.text());},
-	save = $("<a href='#' class='save_word btn btn-primary'><?php echo t('Save')?></a>"),
-	edit = $("<div class=\"btn-group\"><a href='#' class='edit_word btn btn-default'><?php echo t('Edit')?></a><a href='#' class='delete_word btn btn-danger'><?php echo t('Delete')?></a></div>"),
+	save = $("<a href='#' class='save_word btn btn-primary'><?=t('Save')?></a>"),
+	edit = $("<div class=\"btn-group\"><a href='#' class='edit_word btn btn-default'><?=t('Edit')?></a><a href='#' class='delete_word btn btn-danger'><?=t('Delete')?></a></div>"),
 	totalheight = ctx.parent().height();
 
 if (!$('input[name=banned_list_enabled]').get(0).checked) {
@@ -136,7 +136,7 @@ ctx.on('click','a.edit_word',function(e){
 	e.stopPropagation();
 	return false;
 }).on('click','a.delete_word',function(e){
-	if (confirm("<?php echo t('Are you sure you want to delete this word?')?>"))
+	if (confirm("<?=t('Are you sure you want to delete this word?')?>"))
 		$(this).closest('tr').remove();
 });
 </script>

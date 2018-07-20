@@ -24,6 +24,7 @@ use Detection\MobileDetect;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Concrete\Core\Http\Service\Ajax;
+use Concrete\Core\User\PostLoginLocation;
 
 class ResponseFactory implements ResponseFactoryInterface, ApplicationAwareInterface
 {
@@ -113,8 +114,7 @@ class ResponseFactory implements ResponseFactoryInterface, ApplicationAwareInter
      */
     public function forbidden($requestUrl, $code = Response::HTTP_FORBIDDEN, $headers = [])
     {
-        // set page for redirection after successful login
-        $this->session->set('rUri', $requestUrl);
+        $this->app->make(PostLoginLocation::class)->setSessionPostLoginUrl($requestUrl);
 
         // load page forbidden
         $item = '/page_forbidden';
@@ -348,7 +348,7 @@ class ResponseFactory implements ResponseFactoryInterface, ApplicationAwareInter
         $request->setCurrentPage($collection);
         $c = $collection; // process.php needs this
         require DIR_BASE_CORE . '/bootstrap/process.php';
-        $u = new User();
+        $u = $this->app->make(User::class);
 
         // On page view event.
         $pe = new Event($collection);
@@ -378,7 +378,7 @@ class ResponseFactory implements ResponseFactoryInterface, ApplicationAwareInter
 
         // let's test to see if this is, in fact, the home page,
         // and we're routing arguments onto it (which is screwing up the path.)
-        $home = Page::getByID(HOME_CID);
+        $home = Page::getByID(Page::getHomePageID());
         $request->setCurrentPage($home);
         $homeController = $home->getPageController();
         $homeController->setupRequestActionAndParameters($request);

@@ -1,14 +1,14 @@
 <?php defined('C5_EXECUTE') or die("Access Denied."); ?>
 <fieldset>
-    <legend><?php echo t('Filtering')?></legend>
+    <legend><?=t('Filtering')?></legend>
     <div class='form-group'>
-        <label for='title' class="control-label"><?php echo t('By Parent Page')?>:</label>
+        <label for='title' class="control-label"><?=t('By Parent Page')?>:</label>
         <div class="checkbox">
             <label>
                 <input <?php if (intval($cParentID) > 0) {
     ?>checked<?php 
 } ?> name="filterByParent" type="checkbox" value="1" />
-                <?php echo t('Filter by Parent Page')?>
+                <?=t('Filter by Parent Page')?>
             </label>
         </div>
         <div id="ccm-block-related-pages-parent-page">
@@ -19,7 +19,7 @@
     </div>
 
     <div class="form-group">
-        <label class="control-label"><?php echo t('By Page Type') ?></label>
+        <label class="control-label"><?= t('By Page Type') ?></label>
         <?php ?>
             <select class="form-control" name="ptID" id="selectPTID">
                 <option value="0">** <?php echo t('All') ?> **</option>
@@ -27,11 +27,11 @@
                 foreach ($pagetypes as $ct) {
                     ?>
                     <option
-                        value="<?php echo $ct->getPageTypeID() ?>" <?php if ($ptID == $ct->getPageTypeID()) {
+                        value="<?= $ct->getPageTypeID() ?>" <?php if ($ptID == $ct->getPageTypeID()) {
     ?> selected <?php 
 }
                     ?>>
-                        <?php echo $ct->getPageTypeDisplayName() ?>
+                        <?= $ct->getPageTypeDisplayName() ?>
                     </option>
                 <?php
 
@@ -42,14 +42,14 @@
     </div>
 </fieldset>
 <fieldset>
-    <legend><?php echo t("Results")?></legend>
+    <legend><?=t("Results")?></legend>
     <div class="form-group">
         <div class="checkbox">
             <label>
                 <input <?php if (intval($cTargetID) > 0) {
     ?>checked<?php 
 } ?> name="redirectToResults" type="checkbox" value="1" />
-                <?php echo t('Redirect to Different Page on Click')?>
+                <?=t('Redirect to Different Page on Click')?>
             </label>
         </div>
         <div id="ccm-block-related-pages-search-page">
@@ -60,10 +60,10 @@
     </div>
 </fieldset>
 <fieldset>
-    <legend><?php echo t('Formatting')?></legend>
+    <legend><?=t('Formatting')?></legend>
     <div class="form-group">
-        <label class="control-label" for="title"><?php echo t('Title')?></label>
-        <input class="form-control" name="title" id="title" value="<?php echo $title?>" />
+        <label class="control-label" for="title"><?=t('Title')?></label>
+        <input class="form-control" name="title" id="title" value="<?=$title?>" />
     </div>
 </fieldset>
 

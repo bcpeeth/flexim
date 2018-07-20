@@ -17,7 +17,7 @@
     <script type="text/javascript">
         $(function() {
             ConcreteEvent.subscribe('SelectExpressEntry', function(e, data) {
-                var url = '<?php echo $view->action('view_entry', 'ENTRY_ID')?>';
+                var url = '<?=$view->action('view_entry', 'ENTRY_ID')?>';
                 url = url.replace('ENTRY_ID', data.exEntryID);
                 if (data.event.metaKey) {
                     window.open(url);
@@ -27,7 +27,7 @@
             });
 
             $('#ccm-dashboard-content').concreteAjaxSearch({
-                result: <?php echo $result?>,
+                result: <?=$result?>,
                 onUpdateResults: function(concreteSearch) {
                     concreteSearch.$element.on('mouseover', 'tr[data-entity-id]', function(e) {
                         e.stopPropagation();
@@ -58,7 +58,7 @@
 
     <div class="ccm-dashboard-content-full-inner">
 
-    <p><?php echo t('None created yet.') ?></p>
+    <p><?= t('None created yet.') ?></p>
 
         </div>
 

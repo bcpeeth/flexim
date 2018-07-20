@@ -45,15 +45,15 @@ $show_tooltips = (bool) $config->get('concrete.accessibility.toolbar_tooltips');
 $large_font = (bool) $config->get('concrete.accessibility.toolbar_large_font');
 
 ?><!DOCTYPE html>
-<html<?php echo $hideDashboardPanel ? '' : ' class="ccm-panel-open ccm-panel-right"'; ?>>
+<html<?= $hideDashboardPanel ? '' : ' class="ccm-panel-open ccm-panel-right"'; ?>>
 <head>
-    <link rel="stylesheet" type="text/css" href="<?php echo $this->getThemePath()?>/main.css" />
+    <link rel="stylesheet" type="text/css" href="<?=$this->getThemePath()?>/main.css" />
     <?php View::element('header_required', ['disableTrackingCode' => true]); ?>
     <link href='https://fonts.googleapis.com/css?family=Roboto:900' rel='stylesheet' type='text/css'>
 </head>
-<body <?php if (isset($bodyClass)) { ?>class="<?php echo $bodyClass?>"<?php } ?>>
+<body <?php if (isset($bodyClass)) { ?>class="<?=$bodyClass?>"<?php } ?>>
     <div id="ccm-dashboard-page" class="<?php if ($view->section('/account')) { ?>ccm-dashboard-my-account<?php } ?> ccm-ui">
-        <div class="ccm-mobile-menu-overlay ccm-mobile-menu-overlay-dashboard hidden-md hidden-lg">
+        <div class="ccm-mobile-menu-overlay ccm-mobile-menu-overlay-dashboard hidden-md hidden-lg" style="height: calc(100vh - 48px);">
             <div class="ccm-mobile-menu-main">
                 <ul class="ccm-mobile-menu-entries">
                     <li>
@@ -63,17 +63,17 @@ $large_font = (bool) $config->get('concrete.accessibility.toolbar_large_font');
                         ?>
                     </li>
                     <li>
-                        <i class="fa fa-sign-out mobile-leading-icon"></i><a href="<?php echo URL::to('/login', 'do_logout', $valt->generate('do_logout')); ?>"><?php echo t('Sign Out'); ?></a>
+                        <i class="fa fa-sign-out mobile-leading-icon"></i><a href="<?= URL::to('/login', 'do_logout', $valt->generate('do_logout')); ?>"><?= t('Sign Out'); ?></a>
                     </li>
                 </ul>
             </div>
         </div>
-        <div id="ccm-toolbar" class="<?php echo $show_titles ? 'titles' : '' ?> <?php echo $large_font ? 'large-font' : '' ?>">
+        <div id="ccm-toolbar" class="<?= $show_titles ? 'titles' : '' ?> <?= $large_font ? 'large-font' : '' ?>">
             <ul>
-                <li class="ccm-logo pull-left"><span><?php echo Loader::helper('concrete/ui')->getToolbarLogoSRC()?></span></li>
+                <li class="ccm-logo pull-left"><span><?=Loader::helper('concrete/ui')->getToolbarLogoSRC()?></span></li>
                 <li class="ccm-toolbar-account pull-left">
-                    <a <?php if ($show_tooltips) { ?>class="launch-tooltip"<?php } ?> data-toggle="tooltip" data-placement="bottom" data-delay='{ "show": 500, "hide": 0 }' title="<?php echo t('Back to Website') ?>" href="<?php echo $backLink?>">
-                        <i class="fa fa-arrow-left"></i><span class="ccm-toolbar-accessibility-title ccm-toolbar-accessibility-title-return"><?php echo tc('toolbar', 'Return to Website') ?></span>
+                    <a <?php if ($show_tooltips) { ?>class="launch-tooltip"<?php } ?> data-toggle="tooltip" data-placement="bottom" data-delay='{ "show": 500, "hide": 0 }' title="<?= t('Back to Website') ?>" href="<?=$backLink?>">
+                        <i class="fa fa-arrow-left"></i><span class="ccm-toolbar-accessibility-title ccm-toolbar-accessibility-title-return"><?= tc('toolbar', 'Return to Website') ?></span>
                     </a>
                 </li>
                 <?php
@@ -85,13 +85,13 @@ $large_font = (bool) $config->get('concrete.accessibility.toolbar_large_font');
                     if ($cnt->displayItem()) {
                         $cnt->registerViewAssets();
                         ?>
-                        <li class="pull-left"><?php echo $cnt->getMenuItemLinkElement() ?></li>
+                        <li class="pull-left"><?= $cnt->getMenuItemLinkElement() ?></li>
                         <?php
                     }
                 }
                 if ($cih->showWhiteLabelMessage()) {
                     ?>
-                    <li class="pull-left visible-xs visible-lg" id="ccm-white-label-message"><?php echo t('Powered by <a href="%s">concrete5</a>.', $config->get('concrete.urls.concrete5')) ?></li>
+                    <li class="pull-left visible-xs visible-lg" id="ccm-white-label-message"><?= t('Powered by <a href="%s">concrete5</a>.', $config->get('concrete.urls.concrete5')) ?></li>
                     <?php
                 }
                 ?>
@@ -106,18 +106,18 @@ $large_font = (bool) $config->get('concrete.accessibility.toolbar_large_font');
                     }
                     $dashboardPanelClass = implode(' ', $dashboardPanelClasses);
                     ?>
-                    <a class="<?php echo $dashboardPanelClass?>" data-placement="bottom" data-delay='{ "show": 500, "hide": 0 }' href="<?php echo URL::to('/dashboard') ?>" title="<?php echo t('Dashboard – Change Site-wide Settings') ?>"
+                    <a class="<?=$dashboardPanelClass?>" data-placement="bottom" data-delay='{ "show": 500, "hide": 0 }' href="<?= URL::to('/dashboard') ?>" title="<?= t('Dashboard – Change Site-wide Settings') ?>"
                         data-launch-panel="dashboard"
-                        data-panel-url="<?php echo URL::to('/system/panels/dashboard')?>"
+                        data-panel-url="<?=URL::to('/system/panels/dashboard')?>"
                     >
                         <i class="fa fa-sliders"></i>
-                        <span class="ccm-toolbar-accessibility-title ccm-toolbar-accessibility-title-site-settings"><?php echo tc('toolbar', 'Dashboard') ?></span>
+                        <span class="ccm-toolbar-accessibility-title ccm-toolbar-accessibility-title-site-settings"><?= tc('toolbar', 'Dashboard') ?></span>
                     </a>
                 </li>
                 <li class="pull-right hidden-xs hidden-sm">
-                    <a <?php if ($show_tooltips) { ?>class="launch-tooltip"<?php } ?>  data-toggle="tooltip" data-placement="bottom" data-delay='{ "show": 500, "hide": 0 }' href="#" data-panel-url="<?php echo URL::to('/ccm/system/panels/sitemap') ?>" title="<?php echo t('Add Pages and Navigate Your Site') ?>" data-launch-panel="sitemap">
+                    <a <?php if ($show_tooltips) { ?>class="launch-tooltip"<?php } ?>  data-toggle="tooltip" data-placement="bottom" data-delay='{ "show": 500, "hide": 0 }' href="#" data-panel-url="<?= URL::to('/ccm/system/panels/sitemap') ?>" title="<?= t('Add Pages and Navigate Your Site') ?>" data-launch-panel="sitemap">
                         <i class="fa fa-files-o"></i>
-                        <span class="ccm-toolbar-accessibility-title ccm-toolbar-accessibility-title-add-page"><?php echo tc('toolbar', 'Pages') ?></span>
+                        <span class="ccm-toolbar-accessibility-title ccm-toolbar-accessibility-title-add-page"><?= tc('toolbar', 'Pages') ?></span>
                     </a>
                 </li>
                 <li class="ccm-toolbar-search pull-right hidden-xs hidden-sm">
@@ -134,7 +134,7 @@ $large_font = (bool) $config->get('concrete.accessibility.toolbar_large_font');
                     if ($cnt->displayItem()) {
                         $cnt->registerViewAssets();
                         ?>
-                        <li class="pull-right"><?php echo $cnt->getMenuItemLinkElement() ?></li>
+                        <li class="pull-right"><?= $cnt->getMenuItemLinkElement() ?></li>
                         <?php
                     }
                 }

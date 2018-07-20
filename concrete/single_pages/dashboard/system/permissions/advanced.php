@@ -7,14 +7,14 @@ $form = Loader::helper('form');
 <?php echo Loader::helper('validation/token')->output('enable_advanced_permissions')?>
 <?php if (Config::get('concrete.permissions.model') != 'simple') {
     ?>
-    <p><?php echo t('Advanced permissions are turned on.')?></p>
+    <p><?=t('Advanced permissions are turned on.')?></p>
 <?php 
 } else {
     ?>
-    <p><?php echo t('Advanced permissions are turned off. Enable them below.')?></p>
+    <p><?=t('Advanced permissions are turned off. Enable them below.')?></p>
     <br/>
     <div class="alert alert-warning">
-    <?php echo t('<strong>Note:</strong> Once enabled, advanced permissions cannot be turned off.')?>
+    <?=t('<strong>Note:</strong> Once enabled, advanced permissions cannot be turned off.')?>
     </div>
 <?php 
 } ?>

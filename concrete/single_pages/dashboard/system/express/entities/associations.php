@@ -8,8 +8,8 @@
     $manage->render();
     ?>
 
-    <a href="<?php echo URL::to('/dashboard/system/express/entities/associations', 'add', $entity->getId())?>" class="btn btn-primary">
-        <?php echo t("Add Association")?>
+    <a href="<?=URL::to('/dashboard/system/express/entities/associations', 'add', $entity->getId())?>" class="btn btn-primary">
+        <?=t("Add Association")?>
     </a>
 
 </div>
@@ -27,8 +27,8 @@
     ?>
 
                     <li>
-                        <a href="<?php echo URL::to('/dashboard/system/express/entities/associations', 'view_association_details', $association->getID())?>">
-                            <?php echo $formatter->getIcon()?> <?php echo $formatter->getDisplayName()?>
+                        <a href="<?=URL::to('/dashboard/system/express/entities/associations', 'view_association_details', $association->getID())?>">
+                            <?=$formatter->getIcon()?> <?=$formatter->getDisplayName()?>
                         </a>
                     </li>
                 <?php 
@@ -40,7 +40,7 @@
 
 } else {
     ?>
-            <p><?php echo t('You have not created any associations.')?></p>
+            <p><?=t('You have not created any associations.')?></p>
         <?php
 
 } ?>

@@ -4,24 +4,24 @@
 <div class="ccm-block-tags-wrapper">
     <?php if ($title) { ?>
     <div class="ccm-block-tags-header">
-        <h5><?php echo $title?></h5>
+        <h5><?=$title?></h5>
     </div>
     <?php } ?>
 
     <?php foreach ($options as $option) { ?>
         <?php if (isset($target) && $target) { ?>
-            <a href="<?php echo $controller->getTagLink($option) ?>">
+            <a href="<?=$controller->getTagLink($option) ?>">
                 <?php if (isset($selectedTag) && $option->getSelectAttributeOptionValue() == $selectedTag) { ?>
-                <span class="ccm-block-tags-tag ccm-block-tags-tag-selected label"><?php echo $option->getSelectAttributeOptionValue()?></span>
+                <span class="ccm-block-tags-tag ccm-block-tags-tag-selected label"><?=$option->getSelectAttributeOptionValue()?></span>
                 <?php } else { ?>
-                <span class="ccm-block-tags-tag label"><?php echo $option->getSelectAttributeOptionValue()?></span>
+                <span class="ccm-block-tags-tag label"><?=$option->getSelectAttributeOptionValue()?></span>
                 <?php } ?>
             </a>
         <?php } else { ?>
             <?php if (isset($selectedTag) && $option->getSelectAttributeOptionValue() == $selectedTag) { ?>
-            <span class="ccm-block-tags-tag ccm-block-tags-tag-selected label"><?php echo $option->getSelectAttributeOptionValue()?></span>
+            <span class="ccm-block-tags-tag ccm-block-tags-tag-selected label"><?=$option->getSelectAttributeOptionValue()?></span>
             <?php } else { ?>
-            <span class="ccm-block-tags-tag label"><?php echo $option->getSelectAttributeOptionValue()?></span>
+            <span class="ccm-block-tags-tag label"><?=$option->getSelectAttributeOptionValue()?></span>
             <?php } ?>
         <?php } ?>
     <?php } ?>

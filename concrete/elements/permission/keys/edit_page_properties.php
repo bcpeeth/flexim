@@ -11,7 +11,7 @@
 <?php if (count($included) > 0) {
     ?>
 
-<h3><?php echo t('Who can edit what?')?></h3>
+<h3><?=t('Who can edit what?')?></h3>
 
 <?php foreach ($included as $assignment) {
     $entity = $assignment->getAccessEntityObject();
@@ -19,44 +19,44 @@
 
 
 <div class="clearfix">
-	<label><?php echo $entity->getAccessEntityLabel()?></label>
+	<label><?=$entity->getAccessEntityLabel()?></label>
 	<div class="input">
-	<?php echo $form->select('propertiesIncluded[' . $entity->getAccessEntityID() . ']', array('A' => t('All Attributes'), 'C' => t('Custom')), $assignment->getAttributesAllowedPermission())?><br/><br/>
+	<?=$form->select('propertiesIncluded[' . $entity->getAccessEntityID() . ']', array('A' => t('All Attributes'), 'C' => t('Custom')), $assignment->getAttributesAllowedPermission())?><br/><br/>
 	<ul class="page-type-list inputs-list" <?php if ($assignment->getAttributesAllowedPermission() != 'C') {
     ?>style="display: none"<?php 
 }
     ?>>
 		<?php foreach ($attributes as $ak) {
     ?>
-			<li><label><input type="checkbox" name="akIDInclude[<?php echo $entity->getAccessEntityID()?>][]" value="<?php echo $ak->getAttributeKeyID()?>" <?php if (in_array($ak->getAttributeKeyID(), $assignment->getAttributesAllowedArray())) {
+			<li><label><input type="checkbox" name="akIDInclude[<?=$entity->getAccessEntityID()?>][]" value="<?=$ak->getAttributeKeyID()?>" <?php if (in_array($ak->getAttributeKeyID(), $assignment->getAttributesAllowedArray())) {
     ?> checked="checked" <?php 
 }
-    ?> /> <span><?php echo $ak->getAttributeKeyDisplayName()?></span></label></li>
+    ?> /> <span><?=$ak->getAttributeKeyDisplayName()?></span></label></li>
 		<?php 
 }
     ?>
 	</ul>
 	<ul class="inputs-list">
-		<li><label><input type="checkbox" name="allowEditName[<?php echo $entity->getAccessEntityID()?>]" value="1" <?php if ($assignment->allowEditName()) {
+		<li><label><input type="checkbox" name="allowEditName[<?=$entity->getAccessEntityID()?>]" value="1" <?php if ($assignment->allowEditName()) {
     ?>checked="checked" <?php 
 }
-    ?> /> <span><?php echo t('Name')?></span></label></li>
-		<li><label><input type="checkbox" name="allowEditDescription[<?php echo $entity->getAccessEntityID()?>]" value="1" <?php if ($assignment->allowEditDescription()) {
+    ?> /> <span><?=t('Name')?></span></label></li>
+		<li><label><input type="checkbox" name="allowEditDescription[<?=$entity->getAccessEntityID()?>]" value="1" <?php if ($assignment->allowEditDescription()) {
     ?>checked="checked" <?php 
 }
-    ?> /> <span><?php echo t('Short Description')?></span></label></li>
-		<li><label><input type="checkbox" name="allowEditUID[<?php echo $entity->getAccessEntityID()?>]" value="1" <?php if ($assignment->allowEditUserID()) {
+    ?> /> <span><?=t('Short Description')?></span></label></li>
+		<li><label><input type="checkbox" name="allowEditUID[<?=$entity->getAccessEntityID()?>]" value="1" <?php if ($assignment->allowEditUserID()) {
     ?>checked="checked" <?php 
 }
-    ?> /> <span><?php echo t('Owner')?></span></label></li>
-		<li><label><input type="checkbox" name="allowEditDateTime[<?php echo $entity->getAccessEntityID()?>]" value="1" <?php if ($assignment->allowEditDateTime()) {
+    ?> /> <span><?=t('Owner')?></span></label></li>
+		<li><label><input type="checkbox" name="allowEditDateTime[<?=$entity->getAccessEntityID()?>]" value="1" <?php if ($assignment->allowEditDateTime()) {
     ?>checked="checked" <?php 
 }
-    ?> /> <span><?php echo t('Public Date/Time')?></span></label></li>
-		<li><label><input type="checkbox" name="allowEditPaths[<?php echo $entity->getAccessEntityID()?>]" value="1" <?php if ($assignment->allowEditPaths()) {
+    ?> /> <span><?=t('Public Date/Time')?></span></label></li>
+		<li><label><input type="checkbox" name="allowEditPaths[<?=$entity->getAccessEntityID()?>]" value="1" <?php if ($assignment->allowEditPaths()) {
     ?>checked="checked" <?php 
 }
-    ?> /> <span><?php echo t('Paths')?></span></label></li>
+    ?> /> <span><?=t('Paths')?></span></label></li>
 	</ul>
 
 	</div>
@@ -72,7 +72,7 @@
 <?php if (count($excluded) > 0) {
     ?>
 
-<h3><?php echo t('Who can\'t edit what?')?></h3>
+<h3><?=t('Who can\'t edit what?')?></h3>
 
 <?php foreach ($excluded as $assignment) {
     $entity = $assignment->getAccessEntityObject();
@@ -80,45 +80,45 @@
 
 
 <div class="clearfix">
-	<label><?php echo $entity->getAccessEntityLabel()?></label>
+	<label><?=$entity->getAccessEntityLabel()?></label>
 	<div class="input">
 
-	<?php echo $form->select('propertiesExcluded[' . $entity->getAccessEntityID() . ']', array('N' => t('No Page Attributes'), 'C' => t('Custom')), $assignment->getAttributesAllowedPermission())?><br/><br/>
+	<?=$form->select('propertiesExcluded[' . $entity->getAccessEntityID() . ']', array('N' => t('No Page Attributes'), 'C' => t('Custom')), $assignment->getAttributesAllowedPermission())?><br/><br/>
 	<ul class="page-type-list inputs-list" <?php if ($assignment->getAttributesAllowedPermission() != 'C') {
     ?>style="display: none"<?php 
 }
     ?>>
 		<?php foreach ($attributes as $ak) {
     ?>
-			<li><label><input type="checkbox" name="akIDExclude[<?php echo $entity->getAccessEntityID()?>][]" value="<?php echo $ak->getAttributeKeyID()?>" <?php if (in_array($ak->getAttributeKeyID(), $assignment->getAttributesAllowedArray())) {
+			<li><label><input type="checkbox" name="akIDExclude[<?=$entity->getAccessEntityID()?>][]" value="<?=$ak->getAttributeKeyID()?>" <?php if (in_array($ak->getAttributeKeyID(), $assignment->getAttributesAllowedArray())) {
     ?> checked="checked" <?php 
 }
-    ?> /> <span><?php echo $ak->getAttributeKeyDisplayName()?></span></label></li>
+    ?> /> <span><?=$ak->getAttributeKeyDisplayName()?></span></label></li>
 		<?php 
 }
     ?>
 	</ul>
 	<ul class="inputs-list">
-		<li><label><input type="checkbox" name="allowEditNameExcluded[<?php echo $entity->getAccessEntityID()?>]" value="1" <?php if ($assignment->allowEditName()) {
+		<li><label><input type="checkbox" name="allowEditNameExcluded[<?=$entity->getAccessEntityID()?>]" value="1" <?php if ($assignment->allowEditName()) {
     ?>checked="checked" <?php 
 }
-    ?> /> <span><?php echo t('Name')?></span></label></li>
-		<li><label><input type="checkbox" name="allowEditDescriptionExcluded[<?php echo $entity->getAccessEntityID()?>]" value="1" <?php if ($assignment->allowEditDescription()) {
+    ?> /> <span><?=t('Name')?></span></label></li>
+		<li><label><input type="checkbox" name="allowEditDescriptionExcluded[<?=$entity->getAccessEntityID()?>]" value="1" <?php if ($assignment->allowEditDescription()) {
     ?>checked="checked" <?php 
 }
-    ?> /> <span><?php echo t('Short Description')?></span></label></li>
-		<li><label><input type="checkbox" name="allowEditUIDExcluded[<?php echo $entity->getAccessEntityID()?>]" value="1" <?php if ($assignment->allowEditUserID()) {
+    ?> /> <span><?=t('Short Description')?></span></label></li>
+		<li><label><input type="checkbox" name="allowEditUIDExcluded[<?=$entity->getAccessEntityID()?>]" value="1" <?php if ($assignment->allowEditUserID()) {
     ?>checked="checked" <?php 
 }
-    ?> /> <span><?php echo t('Owner')?></span></label></li>
-		<li><label><input type="checkbox" name="allowEditDateTimeExcluded[<?php echo $entity->getAccessEntityID()?>]" value="1" <?php if ($assignment->allowEditDateTime()) {
+    ?> /> <span><?=t('Owner')?></span></label></li>
+		<li><label><input type="checkbox" name="allowEditDateTimeExcluded[<?=$entity->getAccessEntityID()?>]" value="1" <?php if ($assignment->allowEditDateTime()) {
     ?>checked="checked" <?php 
 }
-    ?> /> <span><?php echo t('Public Date/Time')?></span></label></li>
-		<li><label><input type="checkbox" name="allowEditPathsExcluded[<?php echo $entity->getAccessEntityID()?>]" value="1" <?php if ($assignment->allowEditPaths()) {
+    ?> /> <span><?=t('Public Date/Time')?></span></label></li>
+		<li><label><input type="checkbox" name="allowEditPathsExcluded[<?=$entity->getAccessEntityID()?>]" value="1" <?php if ($assignment->allowEditPaths()) {
     ?>checked="checked" <?php 
 }
-    ?> /> <span><?php echo t('Paths')?></span></label></li>
+    ?> /> <span><?=t('Paths')?></span></label></li>
 	</ul>
 	</div>
 </div>
@@ -133,7 +133,7 @@
 <?php 
 } else {
     ?>
-	<p><?php echo t('No users or groups selected.')?></p>
+	<p><?=t('No users or groups selected.')?></p>
 <?php 
 } ?>
 

@@ -22,11 +22,11 @@
             ?>
 
             <div class="ccm-dashboard-header-buttons">
-                <form method="post" action="<?php echo $this->action('delete')?>">
-                    <input type="hidden" name="ftTypeID" value="<?php echo $type->getID()?>" />
-                    <?php echo Loader::helper('validation/token')->output('delete');
+                <form method="post" action="<?=$this->action('delete')?>">
+                    <input type="hidden" name="ftTypeID" value="<?=$type->getID()?>" />
+                    <?=Loader::helper('validation/token')->output('delete');
             ?>
-                    <button type="button" class="btn btn-danger" data-action="delete-type"><?php echo t('Delete Type')?></button>
+                    <button type="button" class="btn btn-danger" data-action="delete-type"><?=t('Delete Type')?></button>
                 </form>
             </div>
 
@@ -38,60 +38,60 @@
     }
     ?>
 
-    <form method="post" action="<?php echo $view->action($method)?>" id="ccm-attribute-key-form">
-        <?php echo Loader::helper('validation/token')->output($method);
+    <form method="post" action="<?=$view->action($method)?>" id="ccm-attribute-key-form">
+        <?=Loader::helper('validation/token')->output($method);
     ?>
         <?php if (is_object($type)) {
     ?>
-            <input type="hidden" name="ftTypeID" value="<?php echo $type->getID()?>" />
+            <input type="hidden" name="ftTypeID" value="<?=$type->getID()?>" />
         <?php
 }
     ?>
         <fieldset>
             <div class="form-group">
-                <?php echo $form->label('ftTypeHandle', t('Handle'))?>
+                <?=$form->label('ftTypeHandle', t('Handle'))?>
                 <div class="input-group">
-                    <?php echo $form->text('ftTypeHandle', $ftTypeHandle)?>
+                    <?=$form->text('ftTypeHandle', $ftTypeHandle)?>
                     <span class="input-group-addon"><i class="fa fa-asterisk"></i></span>
                 </div>
             </div>
             <div class="form-group">
-                <?php echo $form->label('ftTypeName', t('Name'))?>
+                <?=$form->label('ftTypeName', t('Name'))?>
                 <div class="input-group">
-                    <?php echo $form->text('ftTypeName', $ftTypeName)?>
+                    <?=$form->text('ftTypeName', $ftTypeName)?>
                     <span class="input-group-addon"><i class="fa fa-asterisk"></i></span>
                 </div>
             </div>
             <div class="form-group">
-                <?php echo $form->label('ftTypeWidth', t('Width'))?>
+                <?=$form->label('ftTypeWidth', t('Width'))?>
                 <div class="input-group">
-                    <?php echo $form->text('ftTypeWidth', $ftTypeWidth)?>
+                    <?=$form->text('ftTypeWidth', $ftTypeWidth)?>
                     <span class="input-group-addon"><?php echo t('px'); ?></span>
                 </div>
             </div>
             <div class="form-group">
-                <?php echo $form->label('ftTypeHeight', t('Height'))?>
+                <?=$form->label('ftTypeHeight', t('Height'))?>
                 <div class="input-group">
-                    <?php echo $form->text('ftTypeHeight', $ftTypeHeight)?>
+                    <?=$form->text('ftTypeHeight', $ftTypeHeight)?>
                     <span class="input-group-addon"><?php echo t('px'); ?></span>
                 </div>
             </div>
             <div class="form-group">
-                <?php echo $form->label('ftTypeSizingMode', t('Sizing Mode'))?>
-                <?php echo $form->select('ftTypeSizingMode', $sizingModes, $ftTypeSizingMode)?>
-                <p class="sizingmode-help help-block"><span><?php echo $sizingHelpText?></span></p>
+                <?=$form->label('ftTypeSizingMode', t('Sizing Mode'))?>
+                <?=$form->select('ftTypeSizingMode', $sizingModes, $ftTypeSizingMode)?>
+                <p class="sizingmode-help help-block"><span><?=$sizingHelpText?></span></p>
             </div>
         </fieldset>
         <div class="ccm-dashboard-form-actions-wrapper">
             <div class="ccm-dashboard-form-actions">
-                <a href="<?php echo URL::page($c)?>" class="btn pull-left btn-default"><?php echo t('Back')?></a>
+                <a href="<?=URL::page($c)?>" class="btn pull-left btn-default"><?=t('Back')?></a>
                 <?php if (is_object($type)) {
     ?>
-                    <button type="submit" class="btn btn-primary pull-right"><?php echo t('Save')?></button>
+                    <button type="submit" class="btn btn-primary pull-right"><?=t('Save')?></button>
                 <?php
 } else {
     ?>
-                    <button type="submit" class="btn btn-primary pull-right"><?php echo t('Add')?></button>
+                    <button type="submit" class="btn btn-primary pull-right"><?=t('Add')?></button>
                 <?php
 }
     ?>
@@ -104,7 +104,7 @@
             var sizingModeHelp = <?php echo json_encode($sizingModeHelp)?>;
             $('button[data-action=delete-type]').on('click', function(e) {
                 e.preventDefault();
-                if (confirm('<?php echo t('Delete this thumbnail type?')?>')) {
+                if (confirm('<?=t('Delete this thumbnail type?')?>')) {
                     $(this).closest('form').submit();
                 }
             });
@@ -129,24 +129,24 @@
     <table class="table">
     <thead>
     <tr>
-        <th><?php echo t('Handle')?></th>
-        <th><?php echo t('Name')?></th>
-        <th><?php echo t('Width')?></th>
-        <th><?php echo t('Height')?></th>
-        <th><?php echo t('Sizing')?></th>
-        <th><?php echo t('Required')?></th>
+        <th><?=t('Handle')?></th>
+        <th><?=t('Name')?></th>
+        <th><?=t('Width')?></th>
+        <th><?=t('Height')?></th>
+        <th><?=t('Sizing')?></th>
+        <th><?=t('Required')?></th>
     </tr>
     </thead>
     <tbody>
     <?php foreach ($types as $type) {
     ?>
     <tr>
-        <td><a href="<?php echo $view->action('edit', $type->getID())?>"><?php echo $type->getHandle()?></a></td>
-        <td><?php echo $type->getDisplayName()?></td>
-        <td><?php echo $type->getWidth() ? $type->getWidth() : '<span class="text-muted">' . t('Automatic') . '</span>' ?></td>
-        <td><?php echo $type->getHeight() ? $type->getHeight() : '<span class="text-muted">' . t('Automatic') . '</span>' ?></td>
-        <td><?php echo $type->getSizingModeDisplayName()?></td>
-        <td><?php echo $type->isRequired() ? t('Yes') : t('No')?></td>
+        <td><a href="<?=$view->action('edit', $type->getID())?>"><?=$type->getHandle()?></a></td>
+        <td><?=$type->getDisplayName()?></td>
+        <td><?=$type->getWidth() ? $type->getWidth() : '<span class="text-muted">' . t('Automatic') . '</span>' ?></td>
+        <td><?=$type->getHeight() ? $type->getHeight() : '<span class="text-muted">' . t('Automatic') . '</span>' ?></td>
+        <td><?=$type->getSizingModeDisplayName()?></td>
+        <td><?=$type->isRequired() ? t('Yes') : t('No')?></td>
     </tr>
     <?php
 }

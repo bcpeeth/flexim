@@ -297,6 +297,17 @@ class Version extends \Concrete\Core\Entity\File\Version implements \Doctrine\OR
     /**
      * {@inheritDoc}
      */
+    public function duplicateUnderlyingThumbnailFiles($type, \Concrete\Core\Entity\File\Version $source)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'duplicateUnderlyingThumbnailFiles', [$type, $source]);
+
+        return parent::duplicateUnderlyingThumbnailFiles($type, $source);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function updateThumbnailStorageLocation($type, \Concrete\Core\Entity\File\StorageLocation\StorageLocation $location)
     {
 
@@ -869,23 +880,23 @@ class Version extends \Concrete\Core\Entity\File\Version implements \Doctrine\OR
     /**
      * {@inheritDoc}
      */
-    public function getAttribute($ak, $mode = false)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getAttribute', [$ak, $mode]);
-
-        return parent::getAttribute($ak, $mode);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function getAttributeValue($ak)
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getAttributeValue', [$ak]);
 
         return parent::getAttributeValue($ak);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getAttribute($ak, $mode = false)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getAttribute', [$ak, $mode]);
+
+        return parent::getAttribute($ak, $mode);
     }
 
     /**

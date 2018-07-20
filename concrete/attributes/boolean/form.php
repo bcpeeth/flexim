@@ -4,9 +4,9 @@
         <input
             type="checkbox"
             value="1"
-            name="<?php echo $view->field('value')?>"
+            name="<?=$view->field('value')?>"
             <?php if ($checked) { ?> checked <?php } ?>
         >
-        <?php echo $controller->getCheckboxLabel()?>
+        <?=$controller->getCheckboxLabel()?>
     </label>
 </div>

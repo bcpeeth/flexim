@@ -4,16 +4,16 @@ $app = \Concrete\Core\Support\Facade\Application::getFacadeApplication();
 $config = $app->make('config');
 ?>
 
-<form method="post" id="site-form" action="<?php echo $view->action('update_library')?>">
+<form method="post" id="site-form" action="<?=$view->action('update_library')?>">
     <div class="form-group">
-        <?php echo $form->label('group_id', t('Spam Whitelist Group'))?>
-		<?php echo $form->select('group_id', (array) $groups, $whitelistGroup);?>
+        <?=$form->label('group_id', t('Spam Whitelist Group'))?>
+		<?=$form->select('group_id', (array) $groups, $whitelistGroup);?>
     </div>
 
-	<?php echo $this->controller->token->output('update_library')?>
+	<?=$this->controller->token->output('update_library')?>
 	<?php if (count($libraries) > 0) { ?>
 		<div class="form-group">
-    		<?php echo $form->label('activeLibrary', t('Active Library'))?>
+    		<?=$form->label('activeLibrary', t('Active Library'))?>
     		<?php
             $activeHandle = '';
             if (is_object($activeLibrary)) {
@@ -21,7 +21,7 @@ $config = $app->make('config');
             }
             ?>
 
-    		<?php echo $form->select('activeLibrary', $libraries, $activeHandle, array('class' => 'form-control'))?>
+    		<?=$form->select('activeLibrary', $libraries, $activeHandle, array('class' => 'form-control'))?>
 		</div>
 
 		<?php if (is_object($activeLibrary)) {
@@ -36,18 +36,18 @@ $config = $app->make('config');
 
         if (is_object($activeLibrary)) { ?>
 			<fieldset>
-				<legend style="margin-bottom: 0"><?php echo t('Log Settings')?></legend>
+				<legend style="margin-bottom: 0"><?=t('Log Settings')?></legend>
 				<div class="checkbox">
 					<div class="checkbox">
-						<label><?php echo $form->checkbox('ANTISPAM_LOG_SPAM', 1, $config->get('concrete.log.spam'))?> <?php echo t('Log entries marked as spam.')?></label>
+						<label><?=$form->checkbox('ANTISPAM_LOG_SPAM', 1, $config->get('concrete.log.spam'))?> <?=t('Log entries marked as spam.')?></label>
 					</div>
-					<span class="help-block"><?php echo t('Logged entries can be found in <a href="%s" style="color: #bfbfbf; text-decoration: underline">Dashboard > Reports > Logs</a>', $view->url('/dashboard/reports/logs'))?></span>
+					<span class="help-block"><?=t('Logged entries can be found in <a href="%s" style="color: #bfbfbf; text-decoration: underline">Dashboard > Reports > Logs</a>', $view->url('/dashboard/reports/logs'))?></span>
 				</div>
 
 				<div class="form-group">
-					<label><?php echo t('Email Notification')?> </label>
-					<?php echo $form->text('ANTISPAM_NOTIFY_EMAIL', $config->get('concrete.spam.notify_email'))?>
-					<span class="help-block"><?php echo t('Any email address in this box will be notified when spam is detected.')?></span>
+					<label><?=t('Email Notification')?> </label>
+					<?=$form->text('ANTISPAM_NOTIFY_EMAIL', $config->get('concrete.spam.notify_email'))?>
+					<span class="help-block"><?=t('Any email address in this box will be notified when spam is detected.')?></span>
 				</div>
 			</fieldset>
 		<?php
@@ -55,14 +55,14 @@ $config = $app->make('config');
         ?>
     <?php
     } else { ?>
-        <p><?php echo t('You have no anti-spam libraries installed.')?></p>
+        <p><?=t('You have no anti-spam libraries installed.')?></p>
     <?php
     }
     ?>
 
 	<div class="ccm-dashboard-form-actions-wrapper">
         <div class="ccm-dashboard-form-actions">
-		    <?php echo $app->make('helper/concrete/ui')->submit(t('Save'), 'submit', 'right', 'btn-primary')?>
+		    <?=$app->make('helper/concrete/ui')->submit(t('Save'), 'submit', 'right', 'btn-primary')?>
         </div>
 	</div>
 </form>

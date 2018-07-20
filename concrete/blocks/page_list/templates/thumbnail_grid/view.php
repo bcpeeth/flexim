@@ -8,7 +8,7 @@ $c = Page::getCurrentPage();
 
     <?php if (isset($pageListTitle) && $pageListTitle): ?>
         <div class="ccm-block-page-list-header">
-            <h5><?php echo h($pageListTitle)?></h5>
+            <h5><?=h($pageListTitle)?></h5>
         </div>
     <?php endif; ?>
 
@@ -43,7 +43,7 @@ $c = Page::getCurrentPage();
                         <div class="ccm-block-page-list-page-entry-grid-thumbnail-title-wrapper">
                         <div class="ccm-block-page-list-page-entry-grid-thumbnail-title">
                             <i class="ccm-block-page-list-page-entry-grid-thumbnail-icon"></i>
-                            <?php echo $hoverLinkText?>
+                            <?=$hoverLinkText?>
                         </div>
                         </div>
                     </div>
@@ -59,7 +59,7 @@ $c = Page::getCurrentPage();
 } ?>
 
                 <?php if ($includeDate): ?>
-                    <div class="ccm-block-page-list-date"><?php echo $date?></div>
+                    <div class="ccm-block-page-list-date"><?=$date?></div>
                 <?php endif; ?>
 
                 <?php if ($includeDescription): ?>
@@ -76,7 +76,7 @@ $c = Page::getCurrentPage();
 	<?php endforeach; ?>
 
     <?php if (count($pages) == 0): ?>
-        <div class="ccm-block-page-list-no-pages"><?php echo h($noResultsMessage)?></div>
+        <div class="ccm-block-page-list-no-pages"><?=h($noResultsMessage)?></div>
     <?php endif;?>
 
 </div>
@@ -86,5 +86,5 @@ $c = Page::getCurrentPage();
 <?php endif; ?>
 
 <?php if ($c->isEditMode() && $controller->isBlockEmpty()): ?>
-    <div class="ccm-edit-mode-disabled-item"><?php echo t('Empty Page List Block.')?></div>
+    <div class="ccm-edit-mode-disabled-item"><?=t('Empty Page List Block.')?></div>
 <?php endif; ?>

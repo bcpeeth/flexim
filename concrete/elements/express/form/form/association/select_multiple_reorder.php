@@ -2,15 +2,15 @@
 
 <div class="form-group">
     <?php if ($view->supportsLabel()) { ?>
-        <label class="control-label"><?php echo $label?></label>
+        <label class="control-label"><?=$label?></label>
     <?php } ?>
     <?php
     if (!empty($selectedEntities) && count($selectedEntities)) { ?>
         <ul class="item-select-list" data-sortable-list="items">
             <?php foreach($selectedEntities as $entry) { ?>
                 <li>
-                    <input type="hidden" name="express_association_<?php echo $control->getID()?>[]" value="<?php echo $entry->getID()?>">
-                    <?php echo $formatter->getEntryDisplayName($control, $entry)?>
+                    <input type="hidden" name="express_association_<?=$control->getID()?>[]" value="<?=$entry->getID()?>">
+                    <?=$formatter->getEntryDisplayName($control, $entry)?>
                     <i class="ccm-item-select-list-sort"></i>
 
                 </li>

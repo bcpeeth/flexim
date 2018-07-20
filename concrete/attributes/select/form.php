@@ -10,9 +10,9 @@ if ($akSelectAllowMultipleValues && !$akSelectAllowOtherValues) {
         ?>
 
 		<div class="checkbox"><label>
-				<?php echo $form->checkbox($view->field('atSelectOptionValue') . '[]', $opt->getSelectAttributeOptionID(), in_array($opt->getSelectAttributeOptionID(), $selectedOptionIDs));
+				<?=$form->checkbox($view->field('atSelectOptionValue') . '[]', $opt->getSelectAttributeOptionID(), in_array($opt->getSelectAttributeOptionID(), $selectedOptionIDs));
         ?>
-				<?php echo $opt->getSelectAttributeOptionDisplayValue()?>
+				<?=$opt->getSelectAttributeOptionDisplayValue()?>
 			</label>
 		</div>
 
@@ -24,19 +24,51 @@ if ($akSelectAllowMultipleValues && !$akSelectAllowOtherValues) {
 /*
  * Select Menu.
  */
-if (!$akSelectAllowMultipleValues && !$akSelectAllowOtherValues) {
+if (!$akSelectAllowMultipleValues && !$akSelectAllowOtherValues && !$akDisplayMultipleValuesOnSelect) {
     $form = Loader::helper('form');
-    $options = array('' => t('** None'));
+    if (!$akHideNoneOption) {
+        $options = array('' => t('** None'));
+    }
     foreach ($controller->getOptions() as $option) {
         $options[$option->getSelectAttributeOptionID()] = $option->getSelectAttributeOptionDisplayValue();
     }
     ?>
-	<?php echo $form->select($view->field('atSelectOptionValue'), $options, empty($selectedOptionIDs) ? '' : $selectedOptionIDs[0]);
+	<?=$form->select($view->field('atSelectOptionValue'), $options, empty($selectedOptionIDs) ? '' : $selectedOptionIDs[0]);
     ?>
 
 
 <?php
 }
+
+/*
+ * Radio list.
+ */
+if (!$akSelectAllowMultipleValues && !$akSelectAllowOtherValues && $akDisplayMultipleValuesOnSelect) {
+	$form = Loader::helper('form');
+
+    if (!$akHideNoneOption) {
+        ?>
+        <div class="radio"><label>
+                <?= $form->radio($view->field('atSelectOptionValue'), '', empty($selectedOptionIDs) ? '' : $selectedOptionIDs[0]) ?>
+                <?= t('None') ?>
+            </label>
+        </div>
+
+        <?php
+    }
+
+	foreach ($controller->getOptions() as $opt) { ?>
+
+		<div class="radio"><label>
+				<?=$form->radio($view->field('atSelectOptionValue'), $opt->getSelectAttributeOptionID(), in_array($opt->getSelectAttributeOptionID(), $selectedOptionIDs));
+				?>
+				<?=$opt->getSelectAttributeOptionDisplayValue()?>
+			</label>
+		</div>
+
+	<?php }
+}
+
 
 /*
  * Select2
@@ -45,15 +77,15 @@ if ($akSelectAllowOtherValues) {
 
 
     ?>
-	<input type="hidden" data-select-and-add="<?php echo $akID?>" style="width: 100%" name="<?php echo $view->field('atSelectOptionValue')?>" value="<?php echo $value?>" />
+	<input type="hidden" data-select-and-add="<?=$akID?>" style="width: 100%" name="<?=$view->field('atSelectOptionValue')?>" value="<?=$value?>" />
 	<script type="text/javascript">
 		$(function() {
-			$('input[data-select-and-add=<?php echo $akID?>]').selectize({
+			$('input[data-select-and-add=<?=$akID?>]').selectize({
                 plugins: ['remove_button'],
 				valueField: 'id',
 				labelField: 'text',
-				options: <?php echo json_encode($selectedOptions)?>,
-				items: <?php echo json_encode($selectedOptionIDs)?>,
+				options: <?=json_encode($selectedOptions)?>,
+				items: <?=json_encode($selectedOptionIDs)?>,
 				openOnFocus: false,
 				create: true,
 				createFilter: function(input) {
@@ -76,7 +108,7 @@ if ($akSelectAllowOtherValues) {
 				load: function(query, callback) {
 					if (!query.length) return callback();
 					$.ajax({
-						url: "<?php echo $view->action('load_autocomplete_values')?>",
+						url: "<?=$view->action('load_autocomplete_values')?>",
 						dataType: 'json',
 						error: function() {
 							callback();

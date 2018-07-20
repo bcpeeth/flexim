@@ -25,7 +25,7 @@ echo Core::make('helper/concrete/ui')->tabs(array(
         <?php echo $form->text('videoURL', $videoURL, array('required' => 'required'));?>
     </div>
     <div class="form-group">
-        <label class="control-label"><?php echo t('Size')?></label>
+        <label class="control-label"><?=t('Size')?></label>
         <div class="radio">
             <label>
                 <?php echo $form->radio('sizing', '16:9', $sizing); ?>

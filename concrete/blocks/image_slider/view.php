@@ -49,7 +49,7 @@ $(document).ready(function(){
 });
 </script>
 
-<div class="ccm-image-slider-container ccm-block-image-slider-<?php echo $navigationTypeText?>" >
+<div class="ccm-image-slider-container ccm-block-image-slider-<?=$navigationTypeText?>" >
     <div class="ccm-image-slider">
         <div class="ccm-image-slider-inner">
 

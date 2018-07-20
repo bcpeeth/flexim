@@ -12,22 +12,22 @@ defined('C5_EXECUTE') or die("Access Denied.");
     $childCount = count($node->getChildNodes());
     if ($childCount > 0) { ?>
         <div class="alert alert-danger">
-            <?php echo t('This results folder contains one or more results folders. You may not remove it until it is empty.')?>
+            <?=t('This results folder contains one or more results folders. You may not remove it until it is empty.')?>
         </div>
     <?php } else if ($count > 0) {?>
         <div class="alert alert-danger">
-            <?php echo t2('This results folder currently contains one result. It must be empty before you can remove it.', 'This results folder currently contains %s results. It must be empty before you can remove it.', $count)?>
+            <?=t2('This results folder currently contains one result. It must be empty before you can remove it.', 'This results folder currently contains %s results. It must be empty before you can remove it.', $count)?>
         </div>
     <?php } else { ?>
 
-        <form method="post" data-dialog-form="remove-tree-node" class="form-horizontal" action="<?php echo $controller->action('remove_tree_node')?>">
-            <?php echo Loader::helper('validation/token')->output('remove_tree_node')?>
-            <input type="hidden" name="treeNodeID" value="<?php echo $node->getTreeNodeID()?>" />
-            <p><?php echo t('Are you sure you want to remove the Express entity results folder "%s"?', $node->getTreeNodeDisplayName())?></p>
+        <form method="post" data-dialog-form="remove-tree-node" class="form-horizontal" action="<?=$controller->action('remove_tree_node')?>">
+            <?=Loader::helper('validation/token')->output('remove_tree_node')?>
+            <input type="hidden" name="treeNodeID" value="<?=$node->getTreeNodeID()?>" />
+            <p><?=t('Are you sure you want to remove the Express entity results folder "%s"?', $node->getTreeNodeDisplayName())?></p>
 
             <div class="dialog-buttons">
-                <button class="btn btn-default" data-dialog-action="cancel"><?php echo t('Cancel')?></button>
-                <button class="btn btn-danger pull-right" data-dialog-action="submit" type="submit"><?php echo t('Remove')?></button>
+                <button class="btn btn-default" data-dialog-action="cancel"><?=t('Cancel')?></button>
+                <button class="btn btn-danger pull-right" data-dialog-action="submit" type="submit"><?=t('Remove')?></button>
             </div>
         </form>
 

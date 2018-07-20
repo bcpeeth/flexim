@@ -65,7 +65,7 @@ return array(
     'CssVariablesMinifierPlugin' => $vendorDir . '/natxet/CssMin/src/CssMin.php',
     'CssWhitesmithsFormatter' => $vendorDir . '/natxet/CssMin/src/CssMin.php',
     'Mobile_Detect' => $vendorDir . '/mobiledetect/mobiledetectlib/Mobile_Detect.php',
-    'Normalizer' => $vendorDir . '/voku/portable-utf8/src/Normalizer.php',
+    'Normalizer' => $vendorDir . '/patchwork/utf8/src/Normalizer.php',
     'Securimage' => $vendorDir . '/dapphp/securimage/securimage.php',
     'Securimage_Color' => $vendorDir . '/dapphp/securimage/securimage.php',
     'aCssAtBlockEndToken' => $vendorDir . '/natxet/CssMin/src/CssMin.php',

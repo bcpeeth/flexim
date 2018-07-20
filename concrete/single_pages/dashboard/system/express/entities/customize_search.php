@@ -12,14 +12,14 @@
 <div class="row">
     <?php View::element('dashboard/express/detail_navigation', array('entity' => $entity))?>
     <div class="col-md-8">
-        <form method="post" action="<?php echo $view->action('save', $entity->getID())?>">
-            <?php echo $token->output('save')?>
+        <form method="post" action="<?=$view->action('save', $entity->getID())?>">
+            <?=$token->output('save')?>
         <?php
         print $customizeElement->render();
         ?>
             <div class="ccm-dashboard-form-actions-wrapper">
                 <div class="ccm-dashboard-form-actions">
-                    <button class="pull-right btn btn-primary" type="submit" ><?php echo t('Save')?></button>
+                    <button class="pull-right btn btn-primary" type="submit" ><?=t('Save')?></button>
                 </div>
             </div>
 

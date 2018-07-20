@@ -9,17 +9,17 @@ foreach ($parents as $pc) {
 	<div data-panel-menu="accordion" class="ccm-panel-header-accordion">
 	<nav>
 	<span><?php if (!in_array($tab, array('favorites'))) {
-    ?><?php echo t('Dashboard')?><?php 
+    ?><?=t('Dashboard')?><?php 
 } else {
-    ?><?php echo t('Favorites')?><?php 
+    ?><?=t('Favorites')?><?php 
 } ?></span>
 	<ul class="ccm-panel-header-accordion-dropdown">
 		<li><a data-panel-accordion-tab="dashboard" <?php if (!in_array($tab, array('favorites'))) {
     ?>data-panel-accordion-tab-selected="true" <?php 
-} ?>><?php echo t('Dashboard')?></a></li>
+} ?>><?=t('Dashboard')?></a></li>
 		<li><a data-panel-accordion-tab="favorites" <?php if ($tab == 'favorites') {
     ?>data-panel-accordion-tab-selected="true" <?php 
-} ?>><?php echo t('Favorites')?></a></li>
+} ?>><?=t('Favorites')?></a></li>
 	</ul>
 	</nav>
 	</div>
@@ -35,7 +35,7 @@ foreach ($parents as $pc) {
     if ($cp->canViewPage()) {
         ?>
 					<li <?php if ($active) {
-    ?>class="nav-selected"<?php } ?>><a href="<?php echo Loader::helper('navigation')->getLinkToCollection($cc)?>"><?php echo t($cc->getCollectionName())?></a></li>
+    ?>class="nav-selected"<?php } ?>><a href="<?=Loader::helper('navigation')->getLinkToCollection($cc)?>"><?=t($cc->getCollectionName())?></a></li>
 
 			<?php
 		$next = $nav[$i + 1];
@@ -60,7 +60,7 @@ foreach ($parents as $pc) {
 
 	
 	<div class="ccm-panel-dashboard-footer">
-		<p><?php echo t('Logged in as <a href="%s">%s</a>', URL::to('/account'), $ui->getUserDisplayName());?>. </p>
-		<a href="<?php echo URL::to('/login', 'do_logout', Loader::helper('validation/token')->generate('do_logout'))?>"><?php echo t('Sign Out.')?></a>
+		<p><?=t('Logged in as <a href="%s">%s</a>', URL::to('/account'), $ui->getUserDisplayName());?>. </p>
+		<a href="<?=URL::to('/login', 'do_logout', Loader::helper('validation/token')->generate('do_logout'))?>"><?=t('Sign Out.')?></a>
 	</div>
 </section>

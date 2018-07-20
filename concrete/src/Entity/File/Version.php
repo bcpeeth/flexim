@@ -36,6 +36,7 @@ use View;
 use Doctrine\ORM\Mapping as ORM;
 use Concrete\Core\Support\Facade\Facade;
 use Imagine\Image\Box;
+use Concrete\Core\File\Image\Thumbnail\ThumbnailFormatService;
 
 /**
  * @ORM\Entity
@@ -368,6 +369,31 @@ class Version implements ObjectInterface
         }
     }
 
+    /**
+     * Copy the thumbnails from the original to the copy when duplicating a file.
+     *
+     * @param string          $type
+     * @param Version $source
+     */
+    public function duplicateUnderlyingThumbnailFiles($type, Version $source)
+    {
+        if (!($type instanceof ThumbnailTypeVersion)) {
+            $type = ThumbnailTypeVersion::getByHandle($type);
+        }
+        $new = $this->getFile()->getFileStorageLocationObject()->getFileSystemObject();
+        $current = $source->getFile()->getFileStorageLocationObject()->getFileSystemObject();
+        $newPath = $type->getFilePath($this);
+        $currentPath = $type->getFilePath($source);
+        $manager = new \League\Flysystem\MountManager([
+            'current' => $current,
+            'new' => $new,
+        ]);
+        try {
+            $manager->copy('current://' . $currentPath, 'new://' . $newPath);
+        } catch (FileNotFoundException $e) {
+        }
+    }
+    
     /**
      * Move the thumbnails for the current file version to a new storage location.
      *
@@ -1425,7 +1451,6 @@ class Version implements ObjectInterface
     public function generateThumbnail(ThumbnailTypeVersion $type)
     {
         $image = $this->getImagineImage();
-        $mimetype = $this->getMimetype();
 
         $filesystem = $this->getFile()
             ->getFileStorageLocationObject()
@@ -1455,34 +1480,25 @@ class Version implements ObjectInterface
         }
 
         $thumbnail = $image->thumbnail($size, $thumbnailMode);
+        $thumbnailFormat = Core::make(ThumbnailFormatService::class)->getFormatForFile($this);
         $thumbnailPath = $type->getFilePath($this);
         $thumbnailOptions = [];
 
-        switch ($mimetype) {
-            case 'image/jpeg':
-                $thumbnailType = 'jpeg';
+        switch($thumbnailFormat) {
+            case ThumbnailFormatService::FORMAT_JPEG:
+                $mimetype = 'image/jpeg';
                 $thumbnailOptions = ['jpeg_quality' => \Config::get('concrete.misc.default_jpeg_image_compression')];
                 break;
-            case 'image/png':
-                $thumbnailType = 'png';
-                break;
-            case 'image/gif':
-                $thumbnailType = 'gif';
-                break;
-            case 'image/xbm':
-                $thumbnailType = 'xbm';
-                break;
-            case 'image/vnd.wap.wbmp':
-                $thumbnailType = 'wbmp';
-                break;
+            case ThumbnailFormatService::FORMAT_PNG:
             default:
-                $thumbnailType = 'png';
+                $mimetype = 'image/png';
+                $thumbnailOptions = ['png_compression_level' => \Config::get('concrete.misc.default_png_image_compression')];
                 break;
         }
 
         $filesystem->write(
             $thumbnailPath,
-            $thumbnail->get($thumbnailType, $thumbnailOptions),
+            $thumbnail->get($thumbnailFormat, $thumbnailOptions),
             [
                 'visibility' => AdapterInterface::VISIBILITY_PUBLIC,
                 'mimetype' => $mimetype,

@@ -7,7 +7,7 @@ $(function() {
 	ConcreteEvent.subscribe('SelectGroup.core', function(e, data) {
 		jQuery.fn.dialog.closeTop();
 		$('#ccm-permissions-access-entity-form .btn-group').removeClass('open');
-		$.getJSON('<?php echo $url?>', {
+		$.getJSON('<?=$url?>', {
 			'gID': data.gID
 		}, function(r) {
 			$('#ccm-permissions-access-entity-form input[name=peID]').val(r.peID);

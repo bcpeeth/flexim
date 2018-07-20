@@ -15,7 +15,7 @@ echo Core::make('helper/concrete/ui')->tabs($tabs);
     <?php
     $editorJavascript = Core::make('editor')->outputStandardEditorInitJSFunction();
     ?>
-    var launchEditor = <?php echo $editorJavascript?>;
+    var launchEditor = <?=$editorJavascript?>;
     $(document).ready(function() {
         var ccmReceivingEntry = '';
         var sliderEntriesContainer = $('.ccm-image-slider-entries-<?php echo $bID?>');

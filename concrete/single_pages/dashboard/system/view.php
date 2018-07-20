@@ -12,7 +12,7 @@ for ($i = 0; $i < count($categories); ++$i) {
     ?>
 
     <div class="col-md-4 ccm-dashboard-section-menu">
-        <h2><?php echo t($cat->getCollectionName())?></h2>
+        <h2><?=t($cat->getCollectionName())?></h2>
 
 
         <?php
@@ -35,7 +35,7 @@ for ($i = 0; $i < count($categories); ++$i) {
             <?php foreach ($show as $subcat) {
     ?>
 
-                <li><a href="<?php echo Loader::helper('navigation')->getLinkToCollection($subcat, false, true)?>"><i class="<?php echo $subcat->getAttribute('icon_dashboard')?>"></i> <?php echo t($subcat->getCollectionName())?></a></li>
+                <li><a href="<?=Loader::helper('navigation')->getLinkToCollection($subcat, false, true)?>"><i class="<?=$subcat->getAttribute('icon_dashboard')?>"></i> <?=t($subcat->getCollectionName())?></a></li>
 
             <?php 
 }
@@ -45,7 +45,7 @@ for ($i = 0; $i < count($categories); ++$i) {
 } else {
     ?>
 
-            <li><a href="<?php echo Loader::helper('navigation')->getLinkToCollection($cat, false, true)?>"><i class="<?php echo $cat->getAttribute('icon_dashboard')?>"></i> <?php echo t('Home')?></a></li>
+            <li><a href="<?=Loader::helper('navigation')->getLinkToCollection($cat, false, true)?>"><i class="<?=$cat->getAttribute('icon_dashboard')?>"></i> <?=t('Home')?></a></li>
 
         <?php 
 }

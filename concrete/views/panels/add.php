@@ -17,15 +17,15 @@ defined('C5_EXECUTE') or die("Access Denied.");
                         if (!in_array($tab, ['clipboard', 'stacks', 'tiles'])) { ?>
                             data-panel-accordion-tab-selected="true"
                         <?php } ?>
-                    ><?php echo t('Blocks') ?></a>
+                    ><?= t('Blocks') ?></a>
                 </li>
                 <li><a data-panel-accordion-tab="clipboard"
                        <?php if ($tab == 'clipboard') { ?>data-panel-accordion-tab-selected="true" <?php } ?>
-                    ><?php echo t('Clipboard') ?></a>
+                    ><?= t('Clipboard') ?></a>
                 </li>
                 <li><a data-panel-accordion-tab="stacks"
                        <?php if ($tab == 'stacks') { ?>data-panel-accordion-tab-selected="true" <?php } ?>
-                    ><?php echo t('Stacks') ?></a>
+                    ><?= t('Stacks') ?></a>
                 </li>
             </ul>
         </nav>
@@ -56,20 +56,20 @@ defined('C5_EXECUTE') or die("Access Denied.");
                 ?>
                 <div class="ccm-panel-add-block-stack-item"
                      data-panel-add-block-drag-item="stack-item"
-                     data-cID="<?php echo intval($c->getCollectionID()) ?>"
-                     data-sID="<?php echo intval($stack->getCollectionID()) ?>"
+                     data-cID="<?= intval($c->getCollectionID()) ?>"
+                     data-sID="<?= intval($stack->getCollectionID()) ?>"
                      data-block-type-handle="stack"
                      data-has-add-template="no"
                      data-supports-inline-add="no"
                      data-btID="0"
-                     data-dragging-avatar="<p><img src='<?php echo DIR_REL?>/concrete/images/stack.png' /><span><?php echo t('Stack')?>'</span></p>"
-            data-block-id="<?php echo intval($stack->getCollectionID()) ?>">
+                     data-dragging-avatar="<p><img src='<?=DIR_REL?>/concrete/images/stack.png' /><span><?= t('Stack')?>'</span></p>"
+            data-block-id="<?= intval($stack->getCollectionID()) ?>">
                     <div class="stack-name">
-                        <span class="handle"><?php echo htmlspecialchars($stack->getStackName()) ?></span>
+                        <span class="handle"><?= htmlspecialchars($stack->getStackName()) ?></span>
                     </div>
                     <div class="blocks">
                         <div class="block-count">
-                            <?php echo t2('%d Block', '%d Blocks', $block_count) ?>
+                            <?= t2('%d Block', '%d Blocks', $block_count) ?>
                         </div>
                         <?php
 
@@ -79,26 +79,26 @@ defined('C5_EXECUTE') or die("Access Denied.");
                             ?>
                             <div class="block ccm-panel-add-block-draggable-block-type"
                                  data-panel-add-block-drag-item="block"
-                                 data-cID="<?php echo $stack->getCollectionID() ?>"
-                                 data-block-type-handle="<?php echo $type->getBlockTypeHandle() ?>"
-                                 data-dialog-title="<?php echo t('Add %s', t($type->getBlockTypeName())) ?>"
-                                 data-dialog-width="<?php echo $type->getBlockTypeInterfaceWidth() ?>"
-                                 data-dialog-height="<?php echo $type->getBlockTypeInterfaceHeight() ?>"
-                                 data-has-add-template="<?php echo $type->hasAddTemplate() ?>"
-                                 data-supports-inline-add="<?php echo $type->supportsInlineAdd() ?>"
-                                 data-btID="<?php echo $type->getBlockTypeID() ?>"
-                                 data-dragging-avatar="<?php echo
+                                 data-cID="<?= $stack->getCollectionID() ?>"
+                                 data-block-type-handle="<?= $type->getBlockTypeHandle() ?>"
+                                 data-dialog-title="<?= t('Add %s', t($type->getBlockTypeName())) ?>"
+                                 data-dialog-width="<?= $type->getBlockTypeInterfaceWidth() ?>"
+                                 data-dialog-height="<?= $type->getBlockTypeInterfaceHeight() ?>"
+                                 data-has-add-template="<?= $type->hasAddTemplate() ?>"
+                                 data-supports-inline-add="<?= $type->supportsInlineAdd() ?>"
+                                 data-btID="<?= $type->getBlockTypeID() ?>"
+                                 data-dragging-avatar="<?=
                                  h(
                                      '<p><img src="' . $icon . '" /><span>' . t(
                                          $type->getBlockTypeName()
                                      ) . '</span></p>'
                                  ) ?>"
-                                 title="<?php echo t($type->getBlockTypeName()) ?>"
+                                 title="<?= t($type->getBlockTypeName()) ?>"
                                  href="javascript:void(0)"
-                                 data-block-id="<?php echo intval($block->getBlockID()) ?>">
+                                 data-block-id="<?= intval($block->getBlockID()) ?>">
 
                                 <div class="block-name">
-                                    <span class="handle"><?php echo h($type->getBlockTypeName()) ?></span>
+                                    <span class="handle"><?= h($type->getBlockTypeName()) ?></span>
                                 </div>
                                 <div class="block-content">
                                     <?php
@@ -183,31 +183,31 @@ defined('C5_EXECUTE') or die("Access Denied.");
                 <div class="ccm-panel-add-clipboard-block-item"
                      data-event="duplicate"
                      data-panel-add-block-drag-item="clipboard-item"
-                     data-name="<?php echo h($type->getBlockTypeName()) ?>"
-                     data-cID="<?php echo $c->getCollectionID() ?>"
-                     data-token="<?php echo $pileToken ?>"
-                     data-block-type-handle="<?php echo $type->getBlockTypeHandle() ?>"
-                     data-dialog-title="<?php echo t('Add %s', t($type->getBlockTypeName())) ?>"
-                     data-dialog-width="<?php echo $type->getBlockTypeInterfaceWidth() ?>"
-                     data-dialog-height="<?php echo $type->getBlockTypeInterfaceHeight() ?>"
-                     data-has-add-template="<?php echo $type->hasAddTemplate() ?>"
-                     data-supports-inline-add="<?php echo $type->supportsInlineAdd() ?>"
-                     data-btID="<?php echo $type->getBlockTypeID() ?>"
-                     data-pcID="<?php echo $pile_content->getPileContentID() ?>"
-                     data-dragging-avatar="<?php echo
+                     data-name="<?= h($type->getBlockTypeName()) ?>"
+                     data-cID="<?= $c->getCollectionID() ?>"
+                     data-token="<?= $pileToken ?>"
+                     data-block-type-handle="<?= $type->getBlockTypeHandle() ?>"
+                     data-dialog-title="<?= t('Add %s', t($type->getBlockTypeName())) ?>"
+                     data-dialog-width="<?= $type->getBlockTypeInterfaceWidth() ?>"
+                     data-dialog-height="<?= $type->getBlockTypeInterfaceHeight() ?>"
+                     data-has-add-template="<?= $type->hasAddTemplate() ?>"
+                     data-supports-inline-add="<?= $type->supportsInlineAdd() ?>"
+                     data-btID="<?= $type->getBlockTypeID() ?>"
+                     data-pcID="<?= $pile_content->getPileContentID() ?>"
+                     data-dragging-avatar="<?=
                      h(
                          '<p><img src="' . $icon . '" /><span>' . t(
                              $type->getBlockTypeName()
                          ) . '</span></p>'
                      ) ?>"
-                     data-block-id="<?php echo intval($block->getBlockID()) ?>">
+                     data-block-id="<?= intval($block->getBlockID()) ?>">
                     <div class="block-content">
                         <div class="block-name">
-                            <span class="handle"><?php echo h(t($type->getBlockTypeName())) ?></span>
+                            <span class="handle"><?= h(t($type->getBlockTypeName())) ?></span>
                         </div>
                         <div class="blocks">
                             <div class="block ccm-panel-add-block-draggable-block-type"
-                                 title="<?php echo t($type->getBlockTypeName()) ?>">
+                                 title="<?= t($type->getBlockTypeName()) ?>">
                                 <div class="block-content">
                                     <?php
                                     $bv = new \Concrete\Core\Block\View\BlockView($block);
@@ -220,7 +220,7 @@ defined('C5_EXECUTE') or die("Access Denied.");
                     </div>
                     <div class="delete">
                         <button class="ccm-delete-clipboard-item pull-right btn btn-sm btn-link">
-                            <?php echo t('Delete') ?>
+                            <?= t('Delete') ?>
                         </button>
                     </div>
                 </div>
@@ -241,7 +241,7 @@ defined('C5_EXECUTE') or die("Access Denied.");
                     }, function () {
                         item.remove();
                     }).fail(function (data) {
-                        alert("<?php echo t('An error occurred while deleting this item:') ?>\n" + data.responseJSON.errors.join("\n"));
+                        alert("<?= t('An error occurred while deleting this item:') ?>\n" + data.responseJSON.errors.join("\n"));
                     });
                     return false;
                 });
@@ -255,7 +255,7 @@ defined('C5_EXECUTE') or die("Access Denied.");
     ?>
     <div class="ccm-panel-header-search">
         <i class="fa fa-search"></i>
-        <input type="text" data-input="search-blocks" placeholder="<?php echo t('Search') ?>" autocomplete="false"/>
+        <input type="text" data-input="search-blocks" placeholder="<?= t('Search') ?>" autocomplete="false"/>
     </div>
 
     <div class="ccm-panel-content-inner" id="ccm-panel-add-blocktypes-list">
@@ -289,7 +289,7 @@ defined('C5_EXECUTE') or die("Access Denied.");
                 ?>
 
                 <?php if (count($blocktypes)) { ?>
-                <header><?php echo $set->getBlockTypeSetDisplayName() ?></header>
+                <header><?= $set->getBlockTypeSetDisplayName() ?></header>
                 <?php } ?>
 
                 <ul>
@@ -311,24 +311,24 @@ defined('C5_EXECUTE') or die("Access Denied.");
                                 <a
                                     data-panel-add-block-drag-item="block"
                                     class="ccm-panel-add-block-draggable-block-type"
-                                    data-cID="<?php echo $c->getCollectionID() ?>"
-                                    data-block-type-handle="<?php echo $bt->getBlockTypeHandle() ?>"
-                                    data-dialog-title="<?php echo t('Add %s', t($bt->getBlockTypeName())) ?>"
-                                    data-dialog-width="<?php echo $bt->getBlockTypeInterfaceWidth() ?>"
-                                    data-dialog-height="<?php echo $bt->getBlockTypeInterfaceHeight() ?>"
-                                    data-has-add-template="<?php echo $bt->hasAddTemplate() ?>"
-                                    data-supports-inline-add="<?php echo $bt->supportsInlineAdd() ?>"
-                                    data-btID="<?php echo $bt->getBlockTypeID() ?>"
-                                    data-dragging-avatar="<?php echo
+                                    data-cID="<?= $c->getCollectionID() ?>"
+                                    data-block-type-handle="<?= $bt->getBlockTypeHandle() ?>"
+                                    data-dialog-title="<?= t('Add %s', t($bt->getBlockTypeName())) ?>"
+                                    data-dialog-width="<?= $bt->getBlockTypeInterfaceWidth() ?>"
+                                    data-dialog-height="<?= $bt->getBlockTypeInterfaceHeight() ?>"
+                                    data-has-add-template="<?= $bt->hasAddTemplate() ?>"
+                                    data-supports-inline-add="<?= $bt->supportsInlineAdd() ?>"
+                                    data-btID="<?= $bt->getBlockTypeID() ?>"
+                                    data-dragging-avatar="<?=
                                     h(
                                         '<p><img src="' . $btIcon . '" /><span>' . t(
                                             $bt->getBlockTypeInSetName()
                                         ) . '</span></p>'
                                     ) ?>"
-                                    title="<?php echo t($bt->getBlockTypeName()) ?>"
+                                    title="<?= t($bt->getBlockTypeName()) ?>"
                                     href="javascript:void(0)"
                                 >
-                                    <p><img src="<?php echo $btIcon ?>"/><span><?php echo t($bt->getBlockTypeInSetName()) ?></span></p>
+                                    <p><img src="<?= $btIcon ?>"/><span><?= t($bt->getBlockTypeInSetName()) ?></span></p>
                                 </a>
                             </li>
 
@@ -348,7 +348,7 @@ defined('C5_EXECUTE') or die("Access Denied.");
             ?>
 
             <div class="ccm-panel-add-block-set">
-                <header><?php echo t('Other') ?></header>
+                <header><?= t('Other') ?></header>
                 <ul>
                     <?php $blocktypes = $types['Other'];
                     foreach ($blocktypes as $bt) {
@@ -359,23 +359,23 @@ defined('C5_EXECUTE') or die("Access Denied.");
                             <a
                                 data-panel-add-block-drag-item="block"
                                 class="ccm-panel-add-block-draggable-block-type"
-                                data-cID="<?php echo $c->getCollectionID() ?>"
-                                data-block-type-handle="<?php echo $bt->getBlockTypeHandle() ?>"
-                                data-dialog-title="<?php echo t('Add %s', t($bt->getBlockTypeName())) ?>"
-                                data-dialog-width="<?php echo $bt->getBlockTypeInterfaceWidth() ?>"
-                                data-dialog-height="<?php echo $bt->getBlockTypeInterfaceHeight() ?>"
-                                data-has-add-template="<?php echo $bt->hasAddTemplate() ?>"
-                                data-supports-inline-add="<?php echo $bt->supportsInlineAdd() ?>"
-                                data-btID="<?php echo $bt->getBlockTypeID() ?>"
-                                data-dragging-avatar="<?php echo
+                                data-cID="<?= $c->getCollectionID() ?>"
+                                data-block-type-handle="<?= $bt->getBlockTypeHandle() ?>"
+                                data-dialog-title="<?= t('Add %s', t($bt->getBlockTypeName())) ?>"
+                                data-dialog-width="<?= $bt->getBlockTypeInterfaceWidth() ?>"
+                                data-dialog-height="<?= $bt->getBlockTypeInterfaceHeight() ?>"
+                                data-has-add-template="<?= $bt->hasAddTemplate() ?>"
+                                data-supports-inline-add="<?= $bt->supportsInlineAdd() ?>"
+                                data-btID="<?= $bt->getBlockTypeID() ?>"
+                                data-dragging-avatar="<?=
                                 h(
                                     '<p><img src="' . $btIcon . '" /><span>' . t(
                                         $bt->getBlockTypeName()
                                     ) . '</span></p>'
                                 ) ?>"
-                                title="<?php echo t($bt->getBlockTypeName()) ?>"
+                                title="<?= t($bt->getBlockTypeName()) ?>"
                                 href="javascript:void(0)"
-                            ><p><img src="<?php echo $btIcon ?>"/><span><?php echo t($bt->getBlockTypeName()) ?></span></p></a>
+                            ><p><img src="<?= $btIcon ?>"/><span><?= t($bt->getBlockTypeName()) ?></span></p></a>
                         </li>
 
                         <?php
@@ -393,8 +393,8 @@ defined('C5_EXECUTE') or die("Access Denied.");
         if (Config::get('concrete.marketplace.enabled') && $p->canInstallPackages()) {
             ?>
             <div class="ccm-marketplace-btn-wrapper">
-                <button type="button" onclick="window.location.href='<?php echo URL::to('/dashboard/extend/addons') ?>'"
-                        class="btn-info btn-block btn btn-large"><?php echo t("Get More Blocks") ?></button>
+                <button type="button" onclick="window.location.href='<?= URL::to('/dashboard/extend/addons') ?>'"
+                        class="btn-info btn-block btn btn-large"><?= t("Get More Blocks") ?></button>
             </div>
             <?php
         } ?>

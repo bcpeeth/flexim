@@ -10,8 +10,8 @@ foreach ($permissions as $pk) {
     $pk->setPermissionObject($folder);
     ?>
 	<tr>
-	<td class="ccm-permission-grid-name" id="ccm-permission-grid-name-<?php echo $pk->getPermissionKeyID()?>"><strong><a dialog-title="<?php echo $pk->getPermissionKeyDisplayName()?>" data-pkID="<?php echo $pk->getPermissionKeyID()?>" data-paID="<?php echo $pk->getPermissionAccessID()?>" onclick="ccm_permissionLaunchDialog(this)" href="javascript:void(0)"><?php echo $pk->getPermissionKeyDisplayName()?></a></strong></td>
-	<td id="ccm-permission-grid-cell-<?php echo $pk->getPermissionKeyID()?>" class="ccm-permission-grid-cell"><?php echo Loader::element('permission/labels', array('pk' => $pk))?></td>
+	<td class="ccm-permission-grid-name" id="ccm-permission-grid-name-<?=$pk->getPermissionKeyID()?>"><strong><a dialog-title="<?=$pk->getPermissionKeyDisplayName()?>" data-pkID="<?=$pk->getPermissionKeyID()?>" data-paID="<?=$pk->getPermissionAccessID()?>" onclick="ccm_permissionLaunchDialog(this)" href="javascript:void(0)"><?=$pk->getPermissionKeyDisplayName()?></a></strong></td>
+	<td id="ccm-permission-grid-cell-<?=$pk->getPermissionKeyID()?>" class="ccm-permission-grid-cell"><?=Loader::element('permission/labels', array('pk' => $pk))?></td>
 </tr>
 <?php 
 } ?>
@@ -20,7 +20,7 @@ foreach ($permissions as $pk) {
 <tr>
 	<td class="ccm-permission-grid-name" ></td>
 	<td>
-	<?php echo Loader::element('permission/clipboard', array('pkCategory' => $cat))?>
+	<?=Loader::element('permission/clipboard', array('pkCategory' => $cat))?>
 	</td>
 </tr>
 <?php 
@@ -37,7 +37,7 @@ foreach ($permissions as $pk) {
 
 		jQuery.fn.dialog.open({
 			title: $(link).attr('dialog-title'),
-			href: '<?php echo REL_DIR_FILES_TOOLS_REQUIRED?>/permissions/dialogs/file_set?duplicate=' + dupe + '&treeNodeIDID=<?php echo $fs->getFileSetID()?>&pkID=' + $(link).attr('data-pkID') + '&paID=' + $(link).attr('data-paID'),
+			href: '<?=REL_DIR_FILES_TOOLS_REQUIRED?>/permissions/dialogs/file_set?duplicate=' + dupe + '&treeNodeIDID=<?=$fs->getFileSetID()?>&pkID=' + $(link).attr('data-pkID') + '&paID=' + $(link).attr('data-paID'),
 			modal: true,
 			width: 500,
 			height: 380
