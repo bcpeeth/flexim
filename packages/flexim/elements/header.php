@@ -37,23 +37,23 @@
 
               <label class="red display--none display--sm-block" for="toggle"><span></span></label>
 
-                <?php
+                <!-- <?php
                   $a = new GlobalArea('Menu');
                   $a->display();
-                ?>
-
+                ?> -->
 
               <ul>
                 <li>
-                  <a href="#home">De Stichting</a>
+                  <a class= "" href="<?php echo View::url('/'); ?>">De Stichting</a>
+                  
                 </li>
 
                 <li>
-                  <a href="#news">Nieuws</a>
+                  <a class= "" href="<?php echo View::url('/nieuws'); ?>">Nieuws</a>
                 </li>
 
                 <li>
-                  <a href="#news">Projecten</a>
+                  <a class= "" href="<?php echo View::url('/projecten'); ?>">Projecten</a>
                 </li>
 
                 <li>
@@ -62,15 +62,15 @@
                 
 
                 <li>
-                  <a href="#news">Informatie</a>
+                  <a class= "" href="<?php echo View::url('/informatie'); ?>">Informatie</a>
                 </li>
 
                 <li>
-                  <a href="#home">Partners</a>
+                  <a class= "" href="<?php echo View::url('/partners'); ?>">Partners</a>
                 </li>
 
                 <li>
-                  <a href="#home">Contact</a>
+                  <a class= "" href="<?php echo View::url('/contact'); ?>">Contact</a>
                 </li>
 
               </ul>
