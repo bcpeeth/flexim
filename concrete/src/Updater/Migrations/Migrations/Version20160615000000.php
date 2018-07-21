@@ -2,26 +2,29 @@
 
 namespace Concrete\Core\Updater\Migrations\Migrations;
 
-use Concrete\Core\Block\BlockType\BlockType;
 use Concrete\Core\Updater\Migrations\AbstractMigration;
-use Concrete\Core\Updater\Migrations\DirectSchemaUpgraderInterface;
+use Concrete\Core\Updater\Migrations\RepeatableMigrationInterface;
 
-class Version20160615000000 extends AbstractMigration implements DirectSchemaUpgraderInterface
+class Version20160615000000 extends AbstractMigration implements RepeatableMigrationInterface
 {
     /**
      * {@inheritdoc}
      *
-     * @see \Concrete\Core\Updater\Migrations\DirectSchemaUpgraderInterface::upgradeDatabase()
+     * @see \Doctrine\DBAL\Migrations\AbstractMigration::getDescription()
+     */
+    public function getDescription()
+    {
+        return '5.7.5.9';
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Concrete\Core\Updater\Migrations\AbstractMigration::upgradeDatabase()
      */
     public function upgradeDatabase()
     {
-        $bt = BlockType::getByHandle('page_list');
-        if (is_object($bt)) {
-            $bt->refresh();
-        }
-        $bt = BlockType::getByHandle('form');
-        if (is_object($bt)) {
-            $bt->refresh();
-        }
+        $this->refreshBlockType('page_list');
+        $this->refreshBlockType('form');
     }
 }

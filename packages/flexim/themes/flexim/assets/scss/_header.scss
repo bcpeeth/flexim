@@ -14,6 +14,7 @@
   
 
   .navbar {
+    width: 100%;
     display: inline-block;
     color: $color-grey;
     font-weight: 700;
@@ -24,13 +25,20 @@
       padding: 0 15px;
       font-size: 15px;
     }
+    a {
+      padding: 10px 0;
+    }
 
     a.logo {
 
       img{
-        width: 130px;
+        width: 150px;
       }
     }
+
+    ul li img {
+      vertical-align: middle;
+  }
 
     // Contains styling for first-level list items
     & > ul > li {
@@ -157,62 +165,6 @@
     display: none;
   }
 
-  form{
-    position: relative;
-    height: 30px;
-    line-height: 30px;
-    margin-top: 30px;
-    width: 150px;
-    input {
-      position: absolute;
-      height: 30px;
-      line-height: 30px;
-      padding: 0 10px;
-      background-color: #F2F2F2;
-      // background-color: white;
-      width: 150px;
-      transition: .2s;
-      float: right;
-      right: 0;
-      font-size: inherit;
-
-      &:focus{
-        background-color: darken($color: #F2F2F2, $amount: 5%);
-        width: 850px;
-        height: 90px;
-        line-height: 90px;
-        margin-top: -30px;
-        color: inherit;
-        background: $color-white;
-        font-size: 18px;
-        & + button{
-          pointer-events: auto !important;
-          background-color: transparent;
-          & + button{
-            opacity: 1;
-            background: $color-white;
-          }
-        }
-      }
-    }
-
-    button {
-      background-color: #F2F2F2;
-      transition: .2s;
-      position: absolute;
-      cursor: pointer;
-      top: 0;
-      right: 0;
-      width: 30px;
-      height: 30px;
-      line-height: 30px;
-      text-align: center;
-      pointer-events: none;
-      &.cancel{
-        opacity: 0;
-      }
-    }
-  }
 
 
 }

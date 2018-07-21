@@ -44,6 +44,20 @@ interface AddressInterface
     public function getAddressType();
 
     /**
+     * Get the default RFC reserved range type.
+     *
+     * @return int One of the \IPLib\Range\Type::T_... constants
+     */
+    public static function getDefaultReservedRangeType();
+
+    /**
+     * Get the RFC reserved ranges (except the ones of type getDefaultReservedRangeType).
+     *
+     * @return \IPLib\Address\AssignedRange[] ranges are sorted
+     */
+    public static function getReservedRanges();
+
+    /**
      * Get the type of range of the IP address.
      *
      * @return int One of the \IPLib\Range\Type::T_... constants

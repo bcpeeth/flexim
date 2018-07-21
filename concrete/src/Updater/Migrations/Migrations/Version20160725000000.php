@@ -3,7 +3,6 @@
 namespace Concrete\Core\Updater\Migrations\Migrations;
 
 use Concrete\Block\ExpressForm\Controller as ExpressFormBlockController;
-use Concrete\Core\Attribute\Category\PageCategory;
 use Concrete\Core\Attribute\Key\Category;
 use Concrete\Core\Attribute\Key\CollectionKey;
 use Concrete\Core\Attribute\Type;
@@ -14,7 +13,6 @@ use Concrete\Core\Entity\Attribute\Key\PageKey;
 use Concrete\Core\File\Filesystem;
 use Concrete\Core\Localization\Localization;
 use Concrete\Core\Page\Page;
-use Concrete\Core\Page\Single as SinglePage;
 use Concrete\Core\Page\Template;
 use Concrete\Core\Permission\Access\Access;
 use Concrete\Core\Permission\Access\Entity\GroupEntity;
@@ -27,10 +25,10 @@ use Concrete\Core\Tree\Node\Type\FileFolder;
 use Concrete\Core\Tree\TreeType;
 use Concrete\Core\Tree\Type\ExpressEntryResults;
 use Concrete\Core\Updater\Migrations\AbstractMigration;
-use Concrete\Core\Updater\Migrations\DirectSchemaUpgraderInterface;
+use Concrete\Core\Updater\Migrations\LongRunningMigrationInterface;
 use Concrete\Core\Updater\Migrations\Routine\AddPageDraftsBooleanTrait;
 
-class Version20160725000000 extends AbstractMigration implements DirectSchemaUpgraderInterface
+class Version20160725000000 extends AbstractMigration implements LongRunningMigrationInterface
 {
     use AddPageDraftsBooleanTrait;
 
@@ -50,16 +48,17 @@ class Version20160725000000 extends AbstractMigration implements DirectSchemaUpg
     /**
      * {@inheritdoc}
      *
-     * @see \Concrete\Core\Updater\Migrations\DirectSchemaUpgraderInterface::upgradeDatabase()
+     * @see \Concrete\Core\Updater\Migrations\AbstractMigration::upgradeDatabase()
      */
     public function upgradeDatabase()
     {
         $this->connection->Execute('set foreign_key_checks = 0');
         $this->prepareInvalidForeignKeys();
+        $this->fixMultilingualPageRelations();
         $this->renameProblematicTables();
         $this->updateDoctrineXmlTables();
         $this->prepareProblematicEntityTables();
-        $this->installEntities(['Concrete\Core\Entity\File\File', 'Concrete\Core\Entity\File\Version']);
+        $this->installEntities(['Concrete\Core\Entity\File\File', 'Concrete\Core\Entity\File\Version', 'Concrete\Core\Entity\File\Image\Thumbnail\Type\Type']);
         $this->installOtherEntities();
         $this->installSite();
         $this->importAttributeTypes();
@@ -548,15 +547,18 @@ class Version20160725000000 extends AbstractMigration implements DirectSchemaUpg
                     if (!$count) {
                         $rowA = $this->connection->fetchAssoc('select * from _atAddressSettings where akID = ?', [$akID]);
                         if ($rowA['akID']) {
-                            $countries = $this->connection->fetchAll('select * from _atAddressCustomCountries where akID = ?', [$akID]);
-                            if (!$countries) {
-                                $countries = [];
+                            $countries = [];
+                            foreach ($this->connection->fetchAll('select * from _atAddressCustomCountries where akID = ?', [$akID]) as $customCountryRow) {
+                                if ($customCountryRow['country']) {
+                                    $countries[] = $customCountryRow['country'];
+                                }
                             }
                             $this->connection->insert('atAddressSettings', [
                                 'akHasCustomCountries' => $rowA['akHasCustomCountries'],
                                 'akDefaultCountry' => $rowA['akDefaultCountry'],
                                 'customCountries' => json_encode($countries),
                                 'akID' => $akID,
+                                'akGeolocateCountry' => 0,
                             ]);
                         }
                     }
@@ -647,112 +649,23 @@ class Version20160725000000 extends AbstractMigration implements DirectSchemaUpg
     {
         $this->output(t('Updating Dashboard...'));
 
-        $pageAttributeCategory = Application::getFacadeApplication()->make(PageCategory::class);
-        /* @var PageCategory $pageAttributeCategory */
-        $availableAttributes = [];
-        foreach ([
-            'exclude_nav',
-            'exclude_search_index',
-            'meta_keywords',
-        ] as $akHandle) {
-            $availableAttributes[$akHandle] = $pageAttributeCategory->getAttributeKeyByHandle($akHandle) ? true : false;
-        }
-
-        $page = Page::getByPath('/dashboard/express');
-        if (!is_object($page) || $page->isError()) {
-            $sp = SinglePage::add('/dashboard/express');
-            $sp->update(['cName' => 'Express', 'cDescription' => 'Express Data Objects']);
-        }
-        $page = Page::getByPath('/dashboard/express/entries');
-        if (!is_object($page) || $page->isError()) {
-            $sp = SinglePage::add('/dashboard/express/entries');
-            $sp->update(['cName' => 'View Entries']);
-        }
-        $page = Page::getByPath('/dashboard/system/express');
-        if (!is_object($page) || $page->isError()) {
-            $sp = SinglePage::add('/dashboard/system/express');
-            $sp->update(['cName' => 'Express']);
-        }
-        $page = Page::getByPath('/dashboard/system/express/entities');
-        if (!is_object($page) || $page->isError()) {
-            $sp = SinglePage::add('/dashboard/system/express/entities');
-            $sp->update(['cName' => 'Data Objects']);
-            if ($availableAttributes['exclude_nav']) {
-                $sp->setAttribute('exclude_nav', true);
-            }
-        }
-        $page = Page::getByPath('/dashboard/system/express/entities/attributes');
-        if (!is_object($page) || $page->isError()) {
-            $sp = SinglePage::add('/dashboard/system/express/entities/attributes');
-            if ($availableAttributes['exclude_nav']) {
-                $sp->setAttribute('exclude_nav', true);
-            }
-        }
-        $page = Page::getByPath('/dashboard/system/express/entities/associations');
-        if (!is_object($page) || $page->isError()) {
-            $sp = SinglePage::add('/dashboard/system/express/entities/associations');
-            if ($availableAttributes['exclude_nav']) {
-                $sp->setAttribute('exclude_nav', true);
-            }
-        }
-        $page = Page::getByPath('/dashboard/system/express/entities/forms');
-        if (!is_object($page) || $page->isError()) {
-            $sp = SinglePage::add('/dashboard/system/express/entities/forms');
-            if ($availableAttributes['exclude_nav']) {
-                $sp->setAttribute('exclude_nav', true);
-            }
-        }
-        $page = Page::getByPath('/dashboard/system/express/entities/customize_search');
-        if (!is_object($page) || $page->isError()) {
-            $sp = SinglePage::add('/dashboard/system/express/entities/customize_search');
-            if ($availableAttributes['exclude_nav']) {
-                $sp->setAttribute('exclude_nav', true);
-            }
-        }
-        $page = Page::getByPath('/dashboard/system/express/entries');
-        if (!is_object($page) || $page->isError()) {
-            $sp = SinglePage::add('/dashboard/system/express/entries');
-            $sp->update(['cName' => 'Custom Entry Locations']);
-        }
-        $page = Page::getByPath('/dashboard/reports/forms/legacy');
-        if (!is_object($page) || $page->isError()) {
-            $sp = SinglePage::add('/dashboard/reports/forms/legacy');
-            $sp->update(['cName' => 'Form Results']);
-            if ($availableAttributes['exclude_search_index']) {
-                $sp->setAttribute('exclude_search_index', true);
-            }
-            if ($availableAttributes['exclude_nav']) {
-                $sp->setAttribute('exclude_nav', true);
-            }
-        }
+        $this->createSinglePage('/dashboard/express', 'Express', ['cDescription' => 'Express Data Objects']);
+        $this->createSinglePage('/dashboard/express/entries', 'View Entries');
+        $this->createSinglePage('/dashboard/system/express', 'Express');
+        $this->createSinglePage('/dashboard/system/express/entities', 'Data Objects', ['exclude_nav' => true]);
+        $this->createSinglePage('/dashboard/system/express/entities/attributes', '', ['exclude_nav' => true]);
+        $this->createSinglePage('/dashboard/system/express/entities/associations', '', ['exclude_nav' => true]);
+        $this->createSinglePage('/dashboard/system/express/entities/forms', '', ['exclude_nav' => true]);
+        $this->createSinglePage('/dashboard/system/express/entities/customize_search', '', ['exclude_nav' => true]);
+        $this->createSinglePage('/dashboard/system/express/entries', 'Custom Entry Locations');
+        $this->createSinglePage('/dashboard/reports/forms/legacy', 'Form Results', ['exclude_search_index' => true, 'exclude_nav' => true]);
         $page = Page::getByPath('/dashboard/system/basics/name');
         if (is_object($page) && !$page->isError()) {
             $page->update(['cName' => 'Name & Attributes']);
         }
-        $page = Page::getByPath('/dashboard/system/basics/attributes');
-        if (!is_object($page) || $page->isError()) {
-            $sp = SinglePage::add('/dashboard/system/basics/attributes');
-            $sp->update(['cName' => 'Custom Attributes']);
-            if ($availableAttributes['exclude_search_index']) {
-                $sp->setAttribute('exclude_search_index', true);
-            }
-            if ($availableAttributes['exclude_nav']) {
-                $sp->setAttribute('exclude_nav', true);
-            }
-        }
-        $page = Page::getByPath('/dashboard/system/registration/global_password_reset');
-        if (!is_object($page) || $page->isError()) {
-            $sp = SinglePage::add('/dashboard/system/registration/global_password_reset');
-            $sp->update(['cDescription' => 'Signs out all users, resets all passwords and forces users to choose a new one']);
-            if ($availableAttributes['meta_keywords']) {
-                $sp->setAttribute('meta_keywords', 'global, password, reset, change password, force, sign out');
-            }
-        }
-        $page = Page::getByPath('/dashboard/system/registration/notification');
-        if (!is_object($page) || $page->isError()) {
-            $sp = SinglePage::add('/dashboard/system/registration/notification');
-            $sp->update(['cName' => 'Notification Settings']);
-        }
+        $this->createSinglePage('/dashboard/system/basics/attributes', 'Custom Attributes', ['exclude_search_index' => true, 'exclude_nav' => true]);
+        $this->createSinglePage('/dashboard/system/registration/global_password_reset', '', ['cDescription' => 'Signs out all users, resets all passwords and forces users to choose a new one', 'meta_keywords' => 'global, password, reset, change password, force, sign out']);
+        $this->createSinglePage('/dashboard/system/registration/notification', 'Notification Settings');
     }
 
     protected function addBlockTypes()
@@ -875,25 +788,13 @@ class Version20160725000000 extends AbstractMigration implements DirectSchemaUpg
 
         $desktopSet->addBlockType($bt);
 
-        $bt = BlockType::getByHandle('page_title');
-        if (is_object($bt)) {
-            $bt->refresh();
-        }
+        $this->refreshBlockType('page_title');
 
-        $bt = BlockType::getByHandle('page_list');
-        if (is_object($bt)) {
-            $bt->refresh();
-        }
+        $this->refreshBlockType('page_list');
 
-        $bt = BlockType::getByHandle('next_previous');
-        if (is_object($bt)) {
-            $bt->refresh();
-        }
+        $this->refreshBlockType('next_previous');
 
-        $bt = BlockType::getByHandle('autonav');
-        if (is_object($bt)) {
-            $bt->refresh();
-        }
+        $this->refreshBlockType('autonav');
     }
 
     protected function addTreeNodeTypes()
@@ -976,7 +877,7 @@ class Version20160725000000 extends AbstractMigration implements DirectSchemaUpg
         }
 
         // Private Messages tweak
-        SinglePage::add('/account/messages');
+        $this->createSinglePage('/account/messages');
 
         $bt = BlockType::getByHandle('rss_displayer');
         if (!is_object($bt)) {
@@ -999,10 +900,7 @@ class Version20160725000000 extends AbstractMigration implements DirectSchemaUpg
         if (is_object($page) && !$page->isError()) {
             $page->moveToTrash();
         }
-        $page = \Page::getByPath('/dashboard/system/permissions/workflows');
-        if (!is_object($page) || $page->isError()) {
-            SinglePage::add('/dashboard/system/permissions/workflows');
-        }
+        $this->createSinglePage('/dashboard/system/permissions/workflows', '');
     }
 
     protected function installSite()
@@ -1278,7 +1176,7 @@ class Version20160725000000 extends AbstractMigration implements DirectSchemaUpg
         $defaultLocale = \Config::get('concrete.multilingual.default_locale');
         $sectionsIncludeHome = false;
         foreach ($sections as $section) {
-            if ($section['cID'] == 1) {
+            if ($section['cID'] == $homeCID) {
                 $sectionsIncludeHome = true;
             }
         }
@@ -1288,7 +1186,7 @@ class Version20160725000000 extends AbstractMigration implements DirectSchemaUpg
         if (!$sectionsIncludeHome && $redirectToDefaultLocale) {
             // Move the home page outside site trees.
             $this->output(t('Moving home page to outside of site trees...'));
-            $this->connection->executeQuery('update Pages set siteTreeID = 0 where cID = 1');
+            $this->connection->executeQuery('update Pages set siteTreeID = 0 where cID = ' . $homeCID);
         }
 
         foreach ($sections as $section) {
@@ -1307,7 +1205,7 @@ class Version20160725000000 extends AbstractMigration implements DirectSchemaUpg
 
             // Now that we have the locale, let's take the multilingual section and make it the
             // home page for the newly created site tree
-            if ($section['cID'] != 1) {
+            if ($section['cID'] != $homeCID) {
                 $tree = $locale->getSiteTree();
                 if (!$redirectToDefaultLocale && $locale->getLocale() == $site->getDefaultLocale()->getLocale()) {
                     // Case 2: This is our default locale (/en perhaps) but it is contained within a home
@@ -1346,7 +1244,7 @@ class Version20160725000000 extends AbstractMigration implements DirectSchemaUpg
         $site = \Site::getSite();
         if ((int) $this->connection->fetchColumn('select count(*) from SiteLocales where siteID = ?', [$site->getSiteID()]) > 1) {
             $neutrals = [];
-            foreach ($this->connection->fetchAll('select stName, stType from Stacks where stMultilingualSection = 0') as $row) {
+            foreach ($this->connection->fetchAll('select stName, stType, cID from Stacks where stMultilingualSection = 0') as $row) {
                 $neutrals[$row['stName'] . '@' . $row['stType']] = $row['cID'];
             }
             foreach ($this->connection->fetchAll('select * from Stacks where stMultilingualSection <> 0') as $row) {
@@ -1380,5 +1278,96 @@ class Version20160725000000 extends AbstractMigration implements DirectSchemaUpg
             // Consider all the stacks and global areas as "neutral version"
             $this->connection->executeQuery('update Stacks set stMultilingualSection = 0');
         }
+    }
+
+    protected function fixMultilingualPageRelations()
+    {
+        // Delete records in MultilingualPageRelations with invalid locales
+        $this->connection->query(<<<'EOT'
+DELETE MultilingualPageRelations
+FROM MultilingualPageRelations
+LEFT JOIN MultilingualSections ON (
+    (MultilingualPageRelations.mpLocale = CONCAT(MultilingualSections.msLanguage, '_', MultilingualSections.msCountry))
+    OR
+    (MultilingualPageRelations.mpLocale = MultilingualSections.msLanguage AND '' = MultilingualSections.msCountry)
+)
+WHERE MultilingualSections.cID IS NULL
+EOT
+        );
+        // Set the mpLanguage field where it's missing
+        $this->connection->query(<<<'EOT'
+UPDATE MultilingualPageRelations
+SET mpLanguage = mpLocale
+WHERE mpLanguage = '' AND LOCATE('_', mpLocale) = 0
+EOT
+        );
+        $this->connection->query(<<<'EOT'
+UPDATE MultilingualPageRelations
+SET mpLanguage = LEFT(mpLocale, LOCATE('_', mpLocale) - 1)
+WHERE mpLanguage = '' AND LOCATE('_', mpLocale) > 1
+EOT
+        );
+        // Determine the map between locale and cID
+        $locales = [];
+        $rs = $this->connection->query('SELECT cID, msLanguage, msCountry FROM MultilingualSections');
+        while (false !== ($row = $rs->fetch())) {
+            $locales[$row['msLanguage'] . '_' . $row['msCountry']] = (int) $row['cID'];
+            if ((string) $row['msLanguage'] === '') {
+                $locales[$row['msLanguage']] = (int) $row['cID'];
+            }
+        }
+        // Delete duplicated relations p
+        $rs = $this->connection->query(<<<'EOT'
+SELECT
+    mpRelationID, cID, GROUP_CONCAT(mpLocale SEPARATOR '|') as mpLocales
+FROM
+    MultilingualPageRelations
+GROUP BY
+    mpRelationID,
+    cID
+HAVING
+    LOCATE('|', mpLocales) > 0
+EOT
+        );
+        while (false !== ($row = $rs->fetch())) {
+            $cID = (int) $row['cID'];
+            $trail = null;
+            $mpLocales = explode('|', $row['mpLocales']);
+            foreach (explode('|', $row['mpLocales']) as $locale) {
+                if (!isset($locales[$locale])) {
+                    $delete = true;
+                } elseif ($locales[$locale] === $cID) {
+                    $delete = false;
+                } else {
+                    if ($trail === null) {
+                        $trail = $this->getCollectionIdTrail($cID);
+                    }
+                    $delete = !in_array($locales[$locale], $trail, true);
+                }
+                if ($delete) {
+                    $this->connection->executeQuery('DELETE FROM MultilingualPageRelations WHERE mpRelationID = ? AND cID = ? AND mpLocale = ?', [$row['mpRelationID'], $cID, $locale]);
+                }
+            }
+        }
+    }
+
+    /**
+     * @param int $cID
+     *
+     * @return int[]
+     */
+    private function getCollectionIdTrail($cID)
+    {
+        $result = [];
+        $cID = (int) $cID;
+        if ($cID > 0) {
+            $result[] = $cID;
+            $cParentID = $this->connection->fetchColumn('SELECT cParentID FROM Pages WHERE cID = ?', [$cID]);
+            if ($cParentID) {
+                $result = array_merge($result, $this->getCollectionIdTrail($cParentID));
+            }
+        }
+
+        return $result;
     }
 }

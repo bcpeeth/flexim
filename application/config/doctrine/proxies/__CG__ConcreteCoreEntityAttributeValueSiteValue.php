@@ -64,10 +64,10 @@ class SiteValue extends \Concrete\Core\Entity\Attribute\Value\SiteValue implemen
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'site', 'attribute_key', 'generic_value'];
+            return ['__isInitialized__', 'site', 'attribute_key', 'generic_value', 'attribute_value'];
         }
 
-        return ['__isInitialized__', 'site', 'attribute_key', 'generic_value'];
+        return ['__isInitialized__', 'site', 'attribute_key', 'generic_value', 'attribute_value'];
     }
 
     /**
@@ -226,6 +226,17 @@ class SiteValue extends \Concrete\Core\Entity\Attribute\Value\SiteValue implemen
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setAttributeKey', [$attribute_key]);
 
         return parent::setAttributeKey($attribute_key);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setAttributeValueObject($attributeValueObject)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setAttributeValueObject', [$attributeValueObject]);
+
+        return parent::setAttributeValueObject($attributeValueObject);
     }
 
     /**

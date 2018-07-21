@@ -5,15 +5,25 @@ namespace Concrete\Core\Updater\Migrations\Migrations;
 use Concrete\Block\ExpressForm\Controller as ExpressFormBlockController;
 use Concrete\Core\Tree\Node\Type\ExpressEntryCategory;
 use Concrete\Core\Updater\Migrations\AbstractMigration;
-use Concrete\Core\Updater\Migrations\DirectSchemaUpgraderInterface;
+use Concrete\Core\Updater\Migrations\RepeatableMigrationInterface;
 use Concrete\Core\User\Group\Group;
 
-class Version20161216000000 extends AbstractMigration implements DirectSchemaUpgraderInterface
+class Version20161216000000 extends AbstractMigration implements RepeatableMigrationInterface
 {
     /**
      * {@inheritdoc}
      *
-     * @see \Concrete\Core\Updater\Migrations\DirectSchemaUpgraderInterface::upgradeDatabase()
+     * @see \Doctrine\DBAL\Migrations\AbstractMigration::getDescription()
+     */
+    public function getDescription()
+    {
+        return '8.0.3';
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Concrete\Core\Updater\Migrations\AbstractMigration::upgradeDatabase()
      */
     public function upgradeDatabase()
     {

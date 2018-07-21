@@ -3,7 +3,7 @@
 $dh = Core::make('helper/date'); /* @var $dh \Concrete\Core\Localization\Service\Date */
 ?>
 
-<h4><?=t('Recent Page Views')?></h4>
+<h4><?php echo t('Recent Page Views')?></h4>
 
 <table class="table" id="ccm-site-statistics-visits" style="display: none">
 <thead>
@@ -11,23 +11,23 @@ $dh = Core::make('helper/date'); /* @var $dh \Concrete\Core\Localization\Service
 	<td></td>
 	<?php foreach ($pageViews as $day => $total) {
     ?>
-		<th><?=$day?></th>
+		<th><?php echo $day?></th>
 	<?php
 } ?>
 </tr>
 </thead>
 <tbody>
 <tr>
-	<th><?=t('Page Views')?></th>
+	<th><?php echo t('Page Views')?></th>
 	<?php foreach ($pageViews as $total) {
     ?>
-		<td><?=$total?></td>
+		<td><?php echo $total?></td>
 	<?php
 } ?>
 </tr>
 </table>
 
-<h4><?=t('Recent Registrations')?></h4>
+<h4><?php echo t('Recent Registrations')?></h4>
 
 <table class="table"  id="ccm-site-statistics-registrations" style="display: none">
 <thead>
@@ -35,23 +35,23 @@ $dh = Core::make('helper/date'); /* @var $dh \Concrete\Core\Localization\Service
 	<td></td>
 	<?php foreach ($userRegistrations as $day => $total) {
     ?>
-		<th><?=$day?></th>
+		<th><?php echo $day?></th>
 	<?php
 } ?>
 </tr>
 </thead>
 <tbody>
 <tr>
-	<th><?=t('User Registrations')?></th>
+	<th><?php echo t('User Registrations')?></th>
 	<?php foreach ($userRegistrations as $total) {
     ?>
-		<td><?=$total?></td>
+		<td><?php echo $total?></td>
 	<?php
 } ?>
 </tr>
 </table>
 
-<h4><?=t('Pages Created')?></h4>
+<h4><?php echo t('Pages Created')?></h4>
 
 <table class="table"  id="ccm-site-statistics-new-pages" style="display: none">
 <thead>
@@ -59,17 +59,17 @@ $dh = Core::make('helper/date'); /* @var $dh \Concrete\Core\Localization\Service
 	<td></td>
 	<?php foreach ($newPages as $day => $total) {
     ?>
-		<th><?=$day?></th>
+		<th><?php echo $day?></th>
 	<?php
 } ?>
 </tr>
 </thead>
 <tbody>
 <tr>
-	<th><?=t('Pages Created')?></th>
+	<th><?php echo t('Pages Created')?></th>
 	<?php foreach ($newPages as $total) {
     ?>
-		<td><?=$total?></td>
+		<td><?php echo $total?></td>
 	<?php
 } ?>
 </tr>
@@ -81,21 +81,21 @@ $dh = Core::make('helper/date'); /* @var $dh \Concrete\Core\Localization\Service
 
 <br/><br/>
 
-<h4><?=t('Five Most Recent Downloads')?></h4>
+<h4><?php echo t('Five Most Recent Downloads')?></h4>
 
 <table class="table"  id="ccm-site-statistics-downloads">
 <thead>
 <tr>
-	<th><?=t('File')?></th>
-	<th><?=t('User')?></th>
-	<th><?=t('Downloaded On')?></th>
+	<th><?php echo t('File')?></th>
+	<th><?php echo t('User')?></th>
+	<th><?php echo t('Downloaded On')?></th>
 </tr>
 </thead>
 <tbody>
 <?php if (count($downloads) == 0) {
     ?>
 	<tr>
-		<td colspan="3" style="text-align: center"><?=t('No files have been downloaded.')?></td>
+		<td colspan="3" style="text-align: center"><?php echo t('No files have been downloaded.')?></td>
 	</tr>
 <?php
 } else {
@@ -108,7 +108,7 @@ $dh = Core::make('helper/date'); /* @var $dh \Concrete\Core\Localization\Service
         }
         ?>
 	<tr>
-		<td class='ccm-site-statistics-downloads-title'><a href="<?=$f->getDownloadURL()?>" title="<?=$f->getTitle();
+		<td class='ccm-site-statistics-downloads-title'><a href="<?php echo $f->getDownloadURL()?>" title="<?php echo $f->getTitle();
         ?>"><?php
         $title = $f->getTitle();
         $maxlen = 20;
@@ -136,7 +136,7 @@ $dh = Core::make('helper/date'); /* @var $dh \Concrete\Core\Localization\Service
         }
         ?>
 		</td>
-		<td><?=$dh->formatDateTime($download['timestamp'])?></td>
+		<td><?php echo $dh->formatDateTime($download['timestamp'])?></td>
 	</tr>
 	<?php
     }

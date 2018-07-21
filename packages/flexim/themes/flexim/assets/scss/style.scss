@@ -9,6 +9,7 @@ $color-bgtest: rgb(161, 161, 161);
 $color-lightblue: #49A4D6;
 $color-lightgreen: #4BB886;
 $color-green : #38C616;
+$color-red: #d1271b;
 
 $padding: 50px;
 
@@ -40,6 +41,9 @@ $breakpoint-max-xl: 1499px;
 @import "hero";
 @import "intro";
 @import "lists";
+@import "method";
+@import "target";
+@import "team";
 
 
 .bg-yellow {

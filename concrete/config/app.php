@@ -114,6 +114,7 @@ return [
         'core_database' => '\Concrete\Core\Database\DatabaseServiceProvider',
         'core_form' => '\Concrete\Core\Form\FormServiceProvider',
         'core_session' => '\Concrete\Core\Session\SessionServiceProvider',
+        'core_system' => '\Concrete\Core\System\SystemServiceProvider',
         'core_cookie' => '\Concrete\Core\Cookie\CookieServiceProvider',
         'core_http' => '\Concrete\Core\Http\HttpServiceProvider',
         'core_events' => '\Concrete\Core\Events\EventsServiceProvider',
@@ -316,6 +317,10 @@ return [
         '/ccm/system/dialogs/file/advanced_search/add_field' => ['\Concrete\Controller\Dialog\File\AdvancedSearch::addField'],
         '/ccm/system/dialogs/file/advanced_search/submit' => ['\Concrete\Controller\Dialog\File\AdvancedSearch::submit'],
         '/ccm/system/dialogs/file/advanced_search/save_preset' => ['\Concrete\Controller\Dialog\File\AdvancedSearch::savePreset'],
+        '/ccm/system/dialogs/file/advanced_search/preset/edit' => ['\Concrete\Controller\Dialog\File\Preset\Edit::view'],
+        '/ccm/system/dialogs/file/advanced_search/preset/edit/edit_search_preset' => ['\Concrete\Controller\Dialog\File\Preset\Edit::edit_search_preset'],
+        '/ccm/system/dialogs/file/advanced_search/preset/delete' => ['\Concrete\Controller\Dialog\File\Preset\Delete::view'],
+        '/ccm/system/dialogs/file/advanced_search/preset/delete/remove_search_preset' => ['\Concrete\Controller\Dialog\File\Preset\Delete::remove_search_preset'],
         '/ccm/system/dialogs/file/properties/clear_attribute' => ['\Concrete\Controller\Dialog\File\Properties::clear_attribute'],
         '/ccm/system/dialogs/file/properties/save' => ['\Concrete\Controller\Dialog\File\Properties::save'],
         '/ccm/system/dialogs/file/properties/update_attribute' => ['\Concrete\Controller\Dialog\File\Properties::update_attribute'],
@@ -359,16 +364,35 @@ return [
         '/ccm/system/dialogs/page/advanced_search/add_field' => ['\Concrete\Controller\Dialog\Page\AdvancedSearch::addField'],
         '/ccm/system/dialogs/page/advanced_search/submit' => ['\Concrete\Controller\Dialog\Page\AdvancedSearch::submit'],
         '/ccm/system/dialogs/page/advanced_search/save_preset' => ['\Concrete\Controller\Dialog\Page\AdvancedSearch::savePreset'],
+        '/ccm/system/dialogs/page/advanced_search/preset/edit' => ['\Concrete\Controller\Dialog\Page\Preset\Edit::view'],
+        '/ccm/system/dialogs/page/advanced_search/preset/edit/edit_search_preset' => ['\Concrete\Controller\Dialog\Page\Preset\Edit::edit_search_preset'],
+        '/ccm/system/dialogs/page/advanced_search/preset/delete' => ['\Concrete\Controller\Dialog\Page\Preset\Delete::view'],
+        '/ccm/system/dialogs/page/advanced_search/preset/delete/remove_search_preset' => ['\Concrete\Controller\Dialog\Page\Preset\Delete::remove_search_preset'],
 
         '/ccm/system/dialogs/user/bulk/properties' => ['\Concrete\Controller\Dialog\User\Bulk\Properties::view'],
         '/ccm/system/dialogs/user/bulk/properties/clear_attribute' => ['\Concrete\Controller\Dialog\User\Bulk\Properties::clearAttribute'],
         '/ccm/system/dialogs/user/bulk/properties/update_attribute' => ['\Concrete\Controller\Dialog\User\Bulk\Properties::updateAttribute'],
+		'/ccm/system/dialogs/user/bulk/groupadd' => ['\Concrete\Controller\Dialog\User\Bulk\Group::groupadd'],
+		'/ccm/system/dialogs/user/bulk/groupadd/submit' => ['\Concrete\Controller\Dialog\User\Bulk\Group::groupaddsubmit'],
+		'/ccm/system/dialogs/user/bulk/groupremove' => ['\Concrete\Controller\Dialog\User\Bulk\Group::groupremove'],
+		'/ccm/system/dialogs/user/bulk/groupremove/submit' => ['\Concrete\Controller\Dialog\User\Bulk\Group::groupremovesubmit'],
+		'/ccm/system/dialogs/user/bulk/delete' => ['\Concrete\Controller\Dialog\User\Bulk\Delete::view'],
+		'/ccm/system/dialogs/user/bulk/delete/submit' => ['\Concrete\Controller\Dialog\User\Bulk\Delete::submit'],
+		'/ccm/system/dialogs/user/bulk/activate' => ['\Concrete\Controller\Dialog\User\Bulk\Activate::activate'],
+		'/ccm/system/dialogs/user/bulk/deactivate' => ['\Concrete\Controller\Dialog\User\Bulk\Activate::deactivate'],
+		'/ccm/system/dialogs/user/bulk/activate/submit' => ['\Concrete\Controller\Dialog\User\Bulk\Activate::activatesubmit'],
+		'/ccm/system/dialogs/user/bulk/deactivate/submit' => ['\Concrete\Controller\Dialog\User\Bulk\Activate::deactivatesubmit'],
+
         '/ccm/system/dialogs/user/search' => ['\Concrete\Controller\Dialog\User\Search::view'],
 
         '/ccm/system/dialogs/user/advanced_search' => ['\Concrete\Controller\Dialog\User\AdvancedSearch::view'],
         '/ccm/system/dialogs/user/advanced_search/add_field' => ['\Concrete\Controller\Dialog\User\AdvancedSearch::addField'],
         '/ccm/system/dialogs/user/advanced_search/submit' => ['\Concrete\Controller\Dialog\User\AdvancedSearch::submit'],
         '/ccm/system/dialogs/user/advanced_search/save_preset' => ['\Concrete\Controller\Dialog\User\AdvancedSearch::savePreset'],
+        '/ccm/system/dialogs/user/advanced_search/preset/edit' => ['\Concrete\Controller\Dialog\User\Preset\Edit::view'],
+        '/ccm/system/dialogs/user/advanced_search/preset/edit/edit_search_preset' => ['\Concrete\Controller\Dialog\User\Preset\Edit::edit_search_preset'],
+        '/ccm/system/dialogs/user/advanced_search/preset/delete' => ['\Concrete\Controller\Dialog\User\Preset\Delete::view'],
+        '/ccm/system/dialogs/user/advanced_search/preset/delete/remove_search_preset' => ['\Concrete\Controller\Dialog\User\Preset\Delete::remove_search_preset'],
 
         '/ccm/system/dialogs/type/update_from_type/{ptID}/{pTemplateID}' => ['\Concrete\Controller\Dialog\Type\UpdateFromType::view'],
         '/ccm/system/dialogs/type/update_from_type/{ptID}/{pTemplateID}/submit' => ['\Concrete\Controller\Dialog\Type\UpdateFromType::submit'],
@@ -376,6 +400,13 @@ return [
         '/ccm/system/dialogs/express/advanced_search/' => ['\Concrete\Controller\Dialog\Express\AdvancedSearch::view'],
         '/ccm/system/dialogs/express/advanced_search/add_field/' => ['\Concrete\Controller\Dialog\Express\AdvancedSearch::addField'],
         '/ccm/system/dialogs/express/advanced_search/submit' => ['\Concrete\Controller\Dialog\Express\AdvancedSearch::submit'],
+        '/ccm/system/dialogs/express/advanced_search/save_preset' => ['\Concrete\Controller\Dialog\Express\AdvancedSearch::savePreset'],
+        '/ccm/system/dialogs/express/advanced_search/preset/edit' => ['\Concrete\Controller\Dialog\Express\Preset\Edit::view'],
+        '/ccm/system/dialogs/express/advanced_search/preset/edit/edit_search_preset' => ['\Concrete\Controller\Dialog\Express\Preset\Edit::edit_search_preset'],
+        '/ccm/system/dialogs/express/advanced_search/preset/delete' => ['\Concrete\Controller\Dialog\Express\Preset\Delete::view'],
+        '/ccm/system/dialogs/express/advanced_search/preset/delete/remove_search_preset' => ['\Concrete\Controller\Dialog\Express\Preset\Delete::remove_search_preset'],
+
+        '/ccm/system/dialogs/editor/settings/preview' => ['\Concrete\Controller\Dialog\Editor\Settings\Preview::view'],
 
         /*
          * Conversations
@@ -424,6 +455,7 @@ return [
         '/ccm/system/page/multilingual/ignore' => ['\Concrete\Controller\Backend\Page\Multilingual::ignore'],
         '/ccm/system/page/multilingual/unmap' => ['\Concrete\Controller\Backend\Page\Multilingual::unmap'],
         '/ccm/system/page/select_sitemap' => ['\Concrete\Controller\Backend\Page\SitemapSelector::view'],
+        '/ccm/system/page/sitemap_data' => ['\Concrete\Controller\Backend\Page\SitemapData::view'],
 
         /*
          * Block actions - non UI
@@ -521,6 +553,7 @@ return [
         '/ccm/system/search/files/current' => ['\Concrete\Controller\Search\Files::searchCurrent'],
         '/ccm/system/search/files/preset/{presetID}' => ['\Concrete\Controller\Search\Files::searchPreset'],
         '/ccm/system/search/files/clear' => ['\Concrete\Controller\Search\Files::clearSearch'],
+
         '/ccm/system/search/pages/basic' => ['\Concrete\Controller\Search\Pages::searchBasic'],
         '/ccm/system/search/pages/current' => ['\Concrete\Controller\Search\Pages::searchCurrent'],
         '/ccm/system/search/pages/preset/{presetID}' => ['\Concrete\Controller\Search\Pages::searchPreset'],
@@ -533,6 +566,7 @@ return [
 
         '/ccm/system/search/express/basic' => ['\Concrete\Controller\Search\Express::searchBasic'],
         '/ccm/system/search/express/current' => ['\Concrete\Controller\Search\Express::searchCurrent'],
+        '/ccm/system/search/express/preset/{entityID}/{presetID}' => ['\Concrete\Controller\Search\Express::expressSearchPreset'],
         '/ccm/system/search/express/clear' => ['\Concrete\Controller\Search\Express::clearSearch'],
 
         '/ccm/system/search/groups/submit' => ['\Concrete\Controller\Search\Groups::submit'],
@@ -567,6 +601,7 @@ return [
         '/ccm/system/panels/page/versions/new_page' => ['\Concrete\Controller\Panel\Page\Versions::new_page'],
         '/ccm/system/panels/page/versions/delete' => ['\Concrete\Controller\Panel\Page\Versions::delete'],
         '/ccm/system/panels/page/versions/approve' => ['\Concrete\Controller\Panel\Page\Versions::approve'],
+		'/ccm/system/panels/page/versions/unapprove' => ['\Concrete\Controller\Panel\Page\Versions::unapprove'],
         '/ccm/system/panels/page/devices' => ['\Concrete\Controller\Panel\Page\Devices::view'],
         '/ccm/system/panels/page/devices/preview' => ['\Concrete\Controller\Panel\Page\Devices::preview'],
         '/ccm/system/panels/sitemap' => ['\Concrete\Controller\Panel\Sitemap::view'],
@@ -627,7 +662,12 @@ return [
          */
         '/ccm/system/dialogs/language/update/details' => ['\Concrete\Controller\Dialog\Language\Update\Details::view'],
 
-        /*
+		/*
+		 * Privacy Policy
+		 */
+		'/ccm/system/accept_privacy_policy' => ['\Concrete\Controller\Backend\PrivacyPolicy::acceptPrivacyPolicy'],
+
+		/*
          * Captcha images
          */
         '/ccm/system/captcha/picture' => ['\Concrete\Core\Captcha\CaptchaWithPictureInterface::displayCaptchaPicture'],
@@ -812,7 +852,7 @@ return [
             ['css', 'js/fullcalendar/fullcalendar.css', ['minify' => false]],
         ],
         'fullcalendar/localization' => [
-            ['javascript', 'js/fullcalendar/lang-all.js', ['minify' => false, 'combine' => false]],
+            ['javascript', 'js/fullcalendar/locale-all.js', ['minify' => false, 'combine' => false]],
         ],
         'fullcalendar/print' => [
             ['css', 'js/fullcalendar/fullcalendar.print.css', ['minify' => false]],
@@ -1374,9 +1414,9 @@ return [
         'core/calendar/admin' => [
             [
                 ['javascript-localized', 'core/localization'],
-                ['javascript-localized', 'jquery/ui'],
                 ['javascript', 'jquery'],
                 ['javascript', 'jquery/ui'],
+                ['javascript-localized', 'jquery/ui'],
                 ['javascript', 'core/events'],
                 ['javascript', 'underscore'],
                 ['javascript', 'backbone'],

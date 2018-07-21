@@ -7,7 +7,9 @@ use BlockType;
 use CacheLocal;
 use Collection;
 use Concrete\Core\Backup\ContentExporter;
+use Concrete\Core\Block\Events\BlockDuplicate;
 use Concrete\Core\Block\View\BlockView;
+use Concrete\Core\Database\Connection\Connection;
 use Concrete\Core\Feature\Assignment\Assignment as FeatureAssignment;
 use Concrete\Core\Feature\Assignment\CollectionVersionAssignment as CollectionVersionFeatureAssignment;
 use Concrete\Core\Foundation\ConcreteObject;
@@ -15,6 +17,7 @@ use Concrete\Core\Foundation\Queue\Queue;
 use Concrete\Core\Package\PackageList;
 use Concrete\Core\Permission\Key\Key as PermissionKey;
 use Concrete\Core\StyleCustomizer\Inline\StyleSet;
+use Concrete\Core\Support\Facade\Application;
 use Concrete\Core\Support\Facade\Facade;
 use Config;
 use Loader;
@@ -1184,6 +1187,23 @@ class Block extends ConcreteObject implements \Concrete\Core\Permission\ObjectIn
     }
 
     /**
+     * Refreshes the block record cache
+     *
+     * The block record contains information from the block's $btTable.
+     *
+     * @since 8.4.1
+     */
+    public function refreshBlockRecordCache()
+    {
+        $app = Application::getFacadeApplication();
+        $db = $app->make(Connection::class);
+
+        $db->executeQuery('UPDATE Blocks SET btCachedBlockRecord = NULL WHERE bID = ?', [
+            $this->getBlockID(),
+        ]);
+    }
+
+    /**
      * Area permissions are overridden?
      *
      * @var int|null 1 for true; 0/null for false
@@ -1393,7 +1413,8 @@ class Block extends ConcreteObject implements \Concrete\Core\Permission\ObjectIn
             $this->instance = $app->build($class, [$this]);
         }
         $this->instance->setBlockObject($this);
-
+        $this->instance->setAreaObject($this->getBlockAreaObject());
+        
         return $this->instance;
     }
 
@@ -1647,6 +1668,11 @@ class Block extends ConcreteObject implements \Concrete\Core\Permission\ObjectIn
                 $v
                 );
         }
+
+        $event = new BlockDuplicate($nb);
+        $event->setOldBlock($this);
+
+        $app->make('director')->dispatch('on_block_duplicate', $event);
 
         return $nb;
     }
@@ -1930,7 +1956,16 @@ class Block extends ConcreteObject implements \Concrete\Core\Permission\ObjectIn
         $site = \Core::make('site')->getSite();
         $siteTreeID = $site->getSiteTreeID();
         $cbRelationID = $this->getBlockRelationID();
-        $rows = $db->GetAll('select p.cID, max(cvID) as cvID from Pages p inner join CollectionVersions cv on p.cID = cv.cID where ptID = ? and cIsTemplate = 0 and cIsActive = 1 and siteTreeID = ? group by cID order by cID', [$oc->getPageTypeID(), $siteTreeID]);
+        $treeIDs = [0];
+        foreach($site->getLocales() as $locale) {
+            $tree = $locale->getSiteTree();
+            if (is_object($tree)) {
+                $treeIDs[] = $tree->getSiteTreeID();
+            }
+        }
+        $treeIDs = implode(',', $treeIDs);
+
+        $rows = $db->GetAll('select p.cID, max(cvID) as cvID from Pages p inner join CollectionVersions cv on p.cID = cv.cID where ptID = ? and cIsTemplate = 0 and cIsActive = 1 and siteTreeID in (' . $treeIDs . ') group by cID order by cID', [$oc->getPageTypeID()]);
 
         // now we have a list of all pages of this type in the site.
         foreach ($rows as $row) {
@@ -2051,10 +2086,9 @@ class Block extends ConcreteObject implements \Concrete\Core\Permission\ObjectIn
         $cID = $this->getBlockActionCollectionID();
         $bID = $this->getBlockID();
         $arHandle = urlencode($this->getAreaHandle());
-        $step = ($_REQUEST['step']) ? '&amp;step=' . $_REQUEST['step'] : '';
         $valt = Loader::helper('validation/token');
         $token = $valt->generate();
-        $str = DIR_REL . '/' . DISPATCHER_FILENAME . "?cID={$cID}&amp;bID={$bID}&amp;arHandle={$arHandle}" . $step . '&amp;ccm_token=' . $token;
+        $str = DIR_REL . '/' . DISPATCHER_FILENAME . "?cID={$cID}&amp;bID={$bID}&amp;arHandle={$arHandle}&amp;ccm_token={$token}";
 
         return $str;
     }

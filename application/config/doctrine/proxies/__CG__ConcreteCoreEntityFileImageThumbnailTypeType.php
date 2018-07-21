@@ -64,10 +64,10 @@ class Type extends \Concrete\Core\Entity\File\Image\Thumbnail\Type\Type implemen
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'ftTypeID', 'ftTypeHandle', 'ftTypeName', 'ftTypeWidth', 'ftTypeHeight', 'ftTypeIsRequired', 'ftTypeSizingMode'];
+            return ['__isInitialized__', 'ftTypeID', 'ftTypeHandle', 'ftTypeName', 'ftTypeWidth', 'ftTypeHeight', 'ftTypeIsRequired', 'ftTypeSizingMode', 'ftUpscalingEnabled', 'ftLimitedToFileSets', 'ftAssociatedFileSets'];
         }
 
-        return ['__isInitialized__', 'ftTypeID', 'ftTypeHandle', 'ftTypeName', 'ftTypeWidth', 'ftTypeHeight', 'ftTypeIsRequired', 'ftTypeSizingMode'];
+        return ['__isInitialized__', 'ftTypeID', 'ftTypeHandle', 'ftTypeName', 'ftTypeWidth', 'ftTypeHeight', 'ftTypeIsRequired', 'ftTypeSizingMode', 'ftUpscalingEnabled', 'ftLimitedToFileSets', 'ftAssociatedFileSets'];
     }
 
     /**
@@ -330,12 +330,67 @@ class Type extends \Concrete\Core\Entity\File\Image\Thumbnail\Type\Type implemen
     /**
      * {@inheritDoc}
      */
+    public function isUpscalingEnabled()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'isUpscalingEnabled', []);
+
+        return parent::isUpscalingEnabled();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setIsUpscalingEnabled($value)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIsUpscalingEnabled', [$value]);
+
+        return parent::setIsUpscalingEnabled($value);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getSizingModeDisplayName()
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getSizingModeDisplayName', []);
 
         return parent::getSizingModeDisplayName();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setLimitedToFileSets($value)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setLimitedToFileSets', [$value]);
+
+        return parent::setLimitedToFileSets($value);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function isLimitedToFileSets()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'isLimitedToFileSets', []);
+
+        return parent::isLimitedToFileSets();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getAssociatedFileSets()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getAssociatedFileSets', []);
+
+        return parent::getAssociatedFileSets();
     }
 
     /**

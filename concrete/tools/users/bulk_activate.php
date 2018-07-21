@@ -89,8 +89,8 @@ if (!isset($_REQUEST['reload'])) {
 		</form>	
 	</div>
 	<div class="dialog-buttons">
-		<?=$ih->button_js(t('Cancel'), 'jQuery.fn.dialog.closeTop()', 'left', 'btn')?>	
-		<?=$ih->button_js(t('Activate'), 'ccm_userBulkActivate()', 'right', 'btn primary')?>
+		<?php echo $ih->button_js(t('Cancel'), 'jQuery.fn.dialog.closeTop()', 'left', 'btn')?>	
+		<?php echo $ih->button_js(t('Activate'), 'ccm_userBulkActivate()', 'right', 'btn primary')?>
 	</div>
 <?php
 if (!isset($_REQUEST['reload'])) {
@@ -105,10 +105,10 @@ ccm_userBulkActivate = function() {
 	$("#ccm-user-bulk-activate").ajaxSubmit(function(resp) {
 		jQuery.fn.dialog.closeTop();
 		jQuery.fn.dialog.hideLoader();
-		ccm_deactivateSearchResults('<?=$searchInstance?>');
+		ccm_deactivateSearchResults('<?php echo $searchInstance?>');
 		ccmAlert.hud(respObj.hudMessage, 2000, 'success', ccmi18n.user_activate);
-		$("#ccm-<?=$searchInstance?>-advanced-search").ajaxSubmit(function(r) {
-		       ccm_parseAdvancedSearchResponse(r, '<?=$searchInstance?>');
+		$("#ccm-<?php echo $searchInstance?>-advanced-search").ajaxSubmit(function(r) {
+		       ccm_parseAdvancedSearchResponse(r, '<?php echo $searchInstance?>');
 		});
 	});
 };

@@ -528,6 +528,17 @@ class BlockType extends \Concrete\Core\Entity\Block\BlockType\BlockType implemen
     /**
      * {@inheritDoc}
      */
+    public function getBlockTypeDisplayOrder()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getBlockTypeDisplayOrder', []);
+
+        return parent::getBlockTypeDisplayOrder();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function refresh()
     {
 

@@ -1289,6 +1289,9 @@
       <default value=""/>
       <notnull/>
     </field>
+    <references table="AreaLayouts" ondelete="cascade" onupdate="cascade">
+    	<column local="arLayoutID" foreign="arLayoutID"/>
+    </references>
   </table>
 
   <table name="AreaLayoutPresets">
@@ -1846,7 +1849,9 @@
       <notnull/>
     </field>
     <field name="cvActivateDatetime" type="datetime"/>
-    <field name="cvPublishDate" type="datetime"/>
+    <field name="cvPublishDate" type="datetime" />
+    <field name="cvPublishEndDate" type="datetime" />
+    <field name="cvDateApproved" type="datetime" />
     <index name="cvIsApproved">
       <col>cvIsApproved</col>
     </index>
@@ -4338,8 +4343,7 @@
       <key/>
       <notnull/>
     </field>
-    <field name="sessionValue" type="text" size="65535">
-      <notnull/>
+    <field name="sessionValue" type="text">
     </field>
     <field name="sessionTime" type="integer" size="11">
       <unsigned/>

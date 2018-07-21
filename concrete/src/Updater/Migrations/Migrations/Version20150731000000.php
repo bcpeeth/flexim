@@ -3,16 +3,25 @@
 namespace Concrete\Core\Updater\Migrations\Migrations;
 
 use Concrete\Core\Updater\Migrations\AbstractMigration;
-use Concrete\Core\Updater\Migrations\DirectSchemaUpgraderInterface;
-use Concrete\Core\Updater\Migrations\ManagedSchemaUpgraderInterface;
+use Concrete\Core\Updater\Migrations\RepeatableMigrationInterface;
 use Doctrine\DBAL\Schema\Schema;
 
-class Version20150731000000 extends AbstractMigration implements ManagedSchemaUpgraderInterface, DirectSchemaUpgraderInterface
+class Version20150731000000 extends AbstractMigration implements RepeatableMigrationInterface
 {
     /**
      * {@inheritdoc}
      *
-     * @see \Concrete\Core\Updater\Migrations\ManagedSchemaUpgraderInterface::upgradeSchema()
+     * @see \Doctrine\DBAL\Migrations\AbstractMigration::getDescription()
+     */
+    public function getDescription()
+    {
+        return '5.7.5.2';
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Concrete\Core\Updater\Migrations\AbstractMigration::upgradeSchema()
      */
     public function upgradeSchema(Schema $schema)
     {
@@ -27,7 +36,7 @@ class Version20150731000000 extends AbstractMigration implements ManagedSchemaUp
     /**
      * {@inheritdoc}
      *
-     * @see \Concrete\Core\Updater\Migrations\DirectSchemaUpgraderInterface::upgradeDatabase()
+     * @see \Concrete\Core\Updater\Migrations\AbstractMigration::upgradeDatabase()
      */
     public function upgradeDatabase()
     {
@@ -37,9 +46,6 @@ class Version20150731000000 extends AbstractMigration implements ManagedSchemaUp
         $db->executeQuery('DELETE FROM DownloadStatistics WHERE fID NOT IN (SELECT fID FROM Files)');
         $db->executeQuery('DELETE FROM FilePermissionAssignments WHERE fID NOT IN (SELECT fID FROM Files)');
 
-        $bt = \BlockType::getByHandle('page_list');
-        if (is_object($bt)) {
-            $bt->refresh();
-        }
+        $this->refreshBlockType('page_list');
     }
 }

@@ -179,16 +179,6 @@
                 </attributekey>
             </attributes>
         </page>
-        <!--
-        <page name="Statistics" path="/dashboard/reports/statistics" filename="/dashboard/reports/statistics.php"
-              pagetype="" description="View your site activity." package="">
-            <attributes>
-                <attributekey handle="meta_keywords">
-                    <value>hits, pageviews, visitors, activity</value>
-                </attributekey>
-            </attributes>
-        </page>
-        //-->
         <page name="Form Results" path="/dashboard/reports/forms" filename="/dashboard/reports/forms.php" pagetype=""
               description="Get submission data." package="">
             <attributes>
@@ -559,6 +549,16 @@
             </attributes>
         </page>
 
+        <page name="Reset Edit Mode" path="/dashboard/system/basics/reset_edit_mode" filename="/dashboard/system/basics/reset_edit_mode.php"
+              pagetype="" description="" package="">
+            <attributes>
+                <attributekey handle="meta_keywords">
+                    <value>checkin, check-in, check, force</value>
+                </attributekey>
+            </attributes>
+        </page>
+
+
         <page name="Express" path="/dashboard/system/express" filename="/dashboard/system/express/view.php" pagetype=""
               description="Express" package=""/>
 
@@ -757,11 +757,11 @@
                 </attributekey>
             </attributes>
         </page>
-        <page name="Image Uploading" path="/dashboard/system/files/image_uploading"
+        <page name="Image Options" path="/dashboard/system/files/image_uploading"
               filename="/dashboard/system/files/image_uploading.php" pagetype="" description="" package="">
             <attributes>
                 <attributekey handle="meta_keywords">
-                    <value>uploading, upload, images, image, resizing, manager</value>
+                    <value>uploading, upload, images, image, resizing, manager, exif, rotation, rotate, quality, compression, png, jpg, jpeg</value>
                 </attributekey>
             </attributes>
         </page>
@@ -925,6 +925,10 @@
               filename="/dashboard/system/registration/notification.php" pagetype="" description="" package="">
         </page>
 
+        <page name="User Deactivation Settings" path="/dashboard/system/registration/deactivation"
+              filename="/dashboard/system/registration/deactivation.php" pagetype="" description="" package="">
+        </page>
+
         <page name="Email" path="/dashboard/system/mail" filename="/dashboard/system/mail/view.php" pagetype=""
               description="Control how your site send and processes mail." package="">
             <attributes>
@@ -954,6 +958,14 @@
             <attributes>
                 <attributekey handle="meta_keywords">
                     <value>email server, mail settings, mail configuration, private message, message system, import, email, message</value>
+                </attributekey>
+            </attributes>
+        </page>
+        <page name="System Email Addresses" path="/dashboard/system/mail/addresses"
+              filename="/dashboard/system/mail/addresses.php" pagetype="" description="" package="">
+            <attributes>
+                <attributekey handle="meta_keywords">
+                    <value>mail settings, mail configuration, email, sender</value>
                 </attributekey>
             </attributes>
         </page>
@@ -1247,7 +1259,24 @@
     <page name="Waiting for Me" path="/dashboard/welcome/me" filename="" pagetype="" template="desktop" description="" package="">
         <area name="Main">
             <blocks>
-                <block type="desktop_waiting_for_me" />
+                <block type="core_area_layout" name="">
+                    <arealayout type="theme-grid" columns="12">
+                        <columns>
+                            <column span="12" offset="0">
+                                <block type="desktop_waiting_for_me" />
+                            </column>
+                        </columns>
+                    </arealayout>
+                </block>
+                <block type="core_area_layout" name="">
+                    <arealayout type="theme-grid" columns="12">
+                        <columns>
+                            <column span="12" offset="0">
+                                <block type="desktop_draft_list" />
+                            </column>
+                        </columns>
+                    </arealayout>
+                </block>
             </blocks>
         </area>
     </page>

@@ -29,196 +29,50 @@
 
 
             <nav class="navbar text--align-center">
+
+            
               <div class="display--none">
                 <input type="checkbox" name="toggle" class="navbar-toggle" id="toggle"/>
               </div>
 
               <label class="red display--none display--sm-block" for="toggle"><span></span></label>
 
+                <?php
+                  $a = new GlobalArea('Menu');
+                  $a->display();
+                ?>
+
 
               <ul>
-
                 <li>
-                  <a href="#home">
-                    <span class="navbar__item--text-default">De Stichting</span>
-                    <span class="navbar__item--text-hover">De Stichting</span>
-                  </a>
+                  <a href="#home">De Stichting</a>
                 </li>
 
                 <li>
-                  <a href="#news">
-                    <span class="navbar__item--text-default">Nieuws</span>
-                    <span class="navbar__item--text-hover">Nieuws</span>
-                  </a>
-
-                  <!-- <ul>
-                    <li>
-                      <a href="#">
-                        <span class="navbar__item--text-default">Tektalan A2</span>
-                        <span class="navbar__item--text-hover">Tektalan A2</span>
-
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <span class="navbar__item--text-default">Herafoam</span>
-                        <span class="navbar__item--text-hover">Herafoam</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <span class="navbar__item--text-default">Heratekta</span>
-                        <span class="navbar__item--text-hover">Heratekta</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <span class="navbar__item--text-default">A2 afbouwpaneel</span>
-                        <span class="navbar__item--text-hover">A2 afbouwpaneel</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <span class="navbar__item--text-default">Basis</span>
-                        <span class="navbar__item--text-hover">Basis</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <span class="navbar__item--text-default">DDS plus betonschroef</span>
-                        <span class="navbar__item--text-hover">DDS plus betonschroef</span>
-                      </a>
-                    </li>
-                  </ul> -->
-
+                  <a href="#news">Nieuws</a>
                 </li>
 
                 <li>
-                  <a href="#news">
-                    <span class="navbar__item--text-default">Projecten</span>
-                    <span class="navbar__item--text-hover">Projecten</span>
-                  </a>
-
-                  <!-- <ul>
-                    <li>
-                      <a href="#">
-                        <span class="navbar__item--text-default">Tektalan A2</span>
-                        <span class="navbar__item--text-hover">Tektalan A2</span>
-
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <span class="navbar__item--text-default">Herafoam</span>
-                        <span class="navbar__item--text-hover">Herafoam</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <span class="navbar__item--text-default">Heratekta</span>
-                        <span class="navbar__item--text-hover">Heratekta</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <span class="navbar__item--text-default">A2 afbouwpaneel</span>
-                        <span class="navbar__item--text-hover">A2 afbouwpaneel</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <span class="navbar__item--text-default">Basis</span>
-                        <span class="navbar__item--text-hover">Basis</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <span class="navbar__item--text-default">DDS plus betonschroef</span>
-                        <span class="navbar__item--text-hover">DDS plus betonschroef</span>
-                      </a>
-                    </li>
-                  </ul> -->
+                  <a href="#news">Projecten</a>
                 </li>
 
-                
-                  <a class= "logo" href="<?php echo View::url('/'); ?>"><img class="" src="<?php echo $view->getThemePath(); ?>/assets/images/logo-white-bg.png"></a>               
+                <li>
+                  <a class= "logo" href="<?php echo View::url('/'); ?>"><img class="" src="<?php echo $view->getThemePath(); ?>/assets/images/logo-white-bg.png"></a>    
+                </li>           
                 
 
                 <li>
-                  <a href="#news">
-                    <span class="navbar__item--text-default">Informatie</span>
-                    <span class="navbar__item--text-hover">Informatie</span>
-                  </a>
-
-                  <!-- <ul>
-                    <li>
-                      <a href="#">
-                        <span class="navbar__item--text-default">Tektalan A2</span>
-                        <span class="navbar__item--text-hover">Tektalan A2</span>
-
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <span class="navbar__item--text-default">Herafoam</span>
-                        <span class="navbar__item--text-hover">Herafoam</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <span class="navbar__item--text-default">Heratekta</span>
-                        <span class="navbar__item--text-hover">Heratekta</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <span class="navbar__item--text-default">A2 afbouwpaneel</span>
-                        <span class="navbar__item--text-hover">A2 afbouwpaneel</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <span class="navbar__item--text-default">Basis</span>
-                        <span class="navbar__item--text-hover">Basis</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <span class="navbar__item--text-default">DDS plus betonschroef</span>
-                        <span class="navbar__item--text-hover">DDS plus betonschroef</span>
-                      </a>
-                    </li>
-                  </ul> -->
-
+                  <a href="#news">Informatie</a>
                 </li>
 
                 <li>
-                  <a href="#home">
-                    <span class="navbar__item--text-default">Partners</span>
-                    <span class="navbar__item--text-hover">Partners</span>
-                  </a>
+                  <a href="#home">Partners</a>
                 </li>
 
                 <li>
-                  <a href="#home">
-                    <span class="navbar__item--text-default">Contact</span>
-                    <span class="navbar__item--text-hover">Contact</span>
-                  </a>
+                  <a href="#home">Contact</a>
                 </li>
 
-                <li>
-                  <a href="#home">
-                    <span class="navbar__item--text-default">Contact</span>
-                    <span class="navbar__item--text-hover">Contact</span>
-                  </a>
-                </li>
-
-                <!-- <li class="search-container">
-                  <form action="/search.php">
-                    <input type="text" placeholder="" name="search">
-                    <button type="submit"><i class="fa fa-search"></i></button>
-                  </form>
-                </li> -->
               </ul>
 
             </nav>

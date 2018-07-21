@@ -305,6 +305,7 @@ class StartingPointPackage extends BasePackage
         $thumbnailType->setName(tc('ThumbnailTypeName', 'File Manager Thumbnails'));
         $thumbnailType->setHandle(Config::get('concrete.icons.file_manager_listing.handle'));
         $thumbnailType->setSizingMode($thumbnailType::RESIZE_EXACT);
+        $thumbnailType->setIsUpscalingEnabled(true);
         $thumbnailType->setWidth(Config::get('concrete.icons.file_manager_listing.width'));
         $thumbnailType->setHeight(Config::get('concrete.icons.file_manager_listing.height'));
         $thumbnailType->save();
@@ -314,6 +315,7 @@ class StartingPointPackage extends BasePackage
         $thumbnailType->setName(tc('ThumbnailTypeName', 'File Manager Detail Thumbnails'));
         $thumbnailType->setHandle(Config::get('concrete.icons.file_manager_detail.handle'));
         $thumbnailType->setSizingMode($thumbnailType::RESIZE_EXACT);
+        $thumbnailType->setIsUpscalingEnabled(false);
         $thumbnailType->setWidth(Config::get('concrete.icons.file_manager_detail.width'));
         $thumbnailType->setHeight(Config::get('concrete.icons.file_manager_detail.height'));
         $thumbnailType->save();
@@ -526,6 +528,9 @@ class StartingPointPackage extends BasePackage
 
         Config::save('concrete.version_installed', APP_VERSION);
         Config::save('concrete.misc.login_redirect', 'DESKTOP');
+
+        $dbConfig = \Core::make('config/database');
+        $dbConfig->save('app.privacy_policy_accepted', $this->installerOptions->isPrivacyPolicyAccepted());
     }
 
     protected function install_site_permissions()
@@ -552,9 +557,6 @@ class StartingPointPackage extends BasePackage
                 'add_file',
             ]
         );
-
-        $u = new User();
-        $u->saveConfig('NEWSFLOW_LAST_VIEWED', 'FIRSTRUN');
 
         // login
         $login = Page::getByPath('/login', 'RECENT');

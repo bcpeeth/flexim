@@ -2,23 +2,28 @@
 
 namespace Concrete\Core\Updater\Migrations\Migrations;
 
-use Concrete\Core\Page\Single;
 use Concrete\Core\Updater\Migrations\AbstractMigration;
-use Concrete\Core\Updater\Migrations\DirectSchemaUpgraderInterface;
+use Concrete\Core\Updater\Migrations\RepeatableMigrationInterface;
 
-class Version20171129190607 extends AbstractMigration implements DirectSchemaUpgraderInterface
+class Version20171129190607 extends AbstractMigration implements RepeatableMigrationInterface
 {
     /**
      * {@inheritdoc}
      *
-     * @see \Concrete\Core\Updater\Migrations\DirectSchemaUpgraderInterface::upgradeDatabase()
+     * @see \Doctrine\DBAL\Migrations\AbstractMigration::getDescription()
+     */
+    public function getDescription()
+    {
+        return '8.3.0';
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Concrete\Core\Updater\Migrations\AbstractMigration::upgradeDatabase()
      */
     public function upgradeDatabase()
     {
-        $sp = \Page::getByPath('/dashboard/system/calendar/import');
-        if (!is_object($sp) || $sp->isError()) {
-            $sp = Single::add('/dashboard/system/calendar/import');
-            $sp->update(['cName' => 'Import Calendar Data']);
-        }
+        $this->createSinglePage('/dashboard/system/calendar/import', 'Import Calendar Data');
     }
 }

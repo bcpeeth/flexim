@@ -2,8 +2,12 @@
 
 namespace Concrete\Core\Updater\Migrations;
 
+use Concrete\Core\Attribute\Category\PageCategory;
 use Concrete\Core\Block\BlockType\BlockType;
 use Concrete\Core\Database\DatabaseStructureManager;
+use Concrete\Core\Page\Page;
+use Concrete\Core\Page\Single as SinglePage;
+use Concrete\Core\Support\Facade\Application;
 use Concrete\Core\Support\Facade\Facade;
 use Doctrine\DBAL\Migrations\AbstractMigration as DoctrineAbstractMigration;
 use Doctrine\DBAL\Migrations\Version;
@@ -14,6 +18,8 @@ abstract class AbstractMigration extends DoctrineAbstractMigration
 {
     protected $app;
 
+    protected $validAttributes = [];
+
     public function __construct(Version $version)
     {
         parent::__construct($version);
@@ -22,15 +28,47 @@ abstract class AbstractMigration extends DoctrineAbstractMigration
     }
 
     /**
+     * Override this method when the database structure is upgraded using ONLY the DBAL Schema object.
+     *
+     * @param Schema $schema
+     */
+    public function upgradeSchema(Schema $schema)
+    {
+    }
+
+    /**
+     * Override this method when database schema is not upgraded, or when it's upgraded without using a Schema.
+     *
+     * @param Schema $schema
+     */
+    public function upgradeDatabase()
+    {
+    }
+
+    /**
+     * Override this method when the database structure is downgraded using ONLY the DBAL Schema object.
+     *
+     * @param Schema $schema
+     */
+    public function downgradeSchema(Schema $schema)
+    {
+    }
+
+    /**
+     * Override this method when database schema is not downgraded, or when it's downgraded without using a Schema.
+     */
+    public function downgradeDatabase()
+    {
+    }
+    
+    /**
      * {@inheritdoc}
      *
      * @see \Doctrine\DBAL\Migrations\AbstractMigration::up()
      */
     final public function up(Schema $schema)
     {
-        if ($this instanceof ManagedSchemaUpgraderInterface) {
-            $this->upgradeSchema($schema);
-        }
+        $this->upgradeSchema($schema);
     }
 
     /**
@@ -40,9 +78,7 @@ abstract class AbstractMigration extends DoctrineAbstractMigration
      */
     final public function postUp(Schema $schema)
     {
-        if ($this instanceof DirectSchemaUpgraderInterface) {
-            $this->upgradeDatabase();
-        }
+        $this->upgradeDatabase();
     }
 
     /**
@@ -52,9 +88,7 @@ abstract class AbstractMigration extends DoctrineAbstractMigration
      */
     final public function down(Schema $schema)
     {
-        if ($this instanceof ManagedSchemaDowngraderInterface) {
-            $this->downgradeSchema($schema);
-        }
+        $this->downgradeSchema($schema);
     }
 
     /**
@@ -64,9 +98,7 @@ abstract class AbstractMigration extends DoctrineAbstractMigration
      */
     final public function postDown(Schema $schema)
     {
-        if ($this instanceof DirectSchemaDowngraderInterface) {
-            $this->downgradeDatabase();
-        }
+        $this->downgradeDatabase();
     }
 
     protected function output($message)
@@ -149,5 +181,60 @@ abstract class AbstractMigration extends DoctrineAbstractMigration
             left join {$sqlLinkedTable} on {$sqlTable}.{$sqlField} = {$sqlLinkedTable}.{$sqlLinkedField}
             where {$sqlLinkedTable}.{$sqlLinkedField} is null
         ");
+    }
+
+    protected function isAttributeHandleValid($categoryClass, $handle)
+    {
+        if (!isset($this->validAttributes[$categoryClass])) {
+            $this->validAttributes[$categoryClass] = [];
+        }
+        if (!isset($this->validAttributes[$categoryClass][$handle])) {
+            $app = Application::getFacadeApplication();
+            $category = $app->make($categoryClass);
+            $this->validAttributes[$categoryClass][$handle] = $category->getAttributeKeyByHandle($handle) ? true : false;
+        }
+
+        return $this->validAttributes[$categoryClass][$handle];
+    }
+
+    /**
+     * Create a new SinglePage (if it does not exist).
+     *
+     * @param string $path the single page path
+     * @param string $name the single page name
+     * @param array $attributes the attribute values (keys are the attribute handles, values are the attribute values)
+
+     *
+     * @return \Concrete\Core\Page\Page
+     */
+    protected function createSinglePage($path, $name = '', array $attributes = [])
+    {
+        $sp = Page::getByPath($path);
+        if (!is_object($sp) || $sp->isError()) {
+            $this->output(t('Creating single page at %s...', $path));
+            $sp = SinglePage::add($path);
+            $update = [];
+            $name = (string) $name;
+            if ($name !== '') {
+                $update['cName'] = $name;
+            }
+            if (array_key_exists('cDescription', $attributes)) {
+                $description = (string) $attributes['cDescription'];
+                unset($attributes['cDescription']);
+                if ($description !== '') {
+                    $update['cDescription'] = $description;
+                }
+            }
+            if (count($update) > 0) {
+                $sp->update($update);
+            }
+            foreach ($attributes as $attributeHandle => $attributeValue) {
+                if ($this->isAttributeHandleValid(PageCategory::class, $attributeHandle)) {
+                    $sp->setAttribute($attributeHandle, $attributeValue);
+                }
+            }
+        }
+
+        return $sp;
     }
 }

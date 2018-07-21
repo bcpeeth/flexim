@@ -6,9 +6,9 @@ return [
      *
      * @var string
      */
-    'version' => '8.3.2',
-    'version_installed' => '8.3.2',
-    'version_db' => '20180122213656', // the key of the latest database migration
+    'version' => '8.4.1',
+    'version_installed' => '8.4.1',
+    'version_db' => '20180710203437', // the key of the latest database migration
 
     /*
      * Installation status
@@ -51,6 +51,13 @@ return [
          * @var string (message|debug)
          */
         'detail' => 'message',
+
+        /*
+         * Error reporting level
+         *
+         * @var int|null
+         */
+        'error_reporting' => null,
     ],
 
     /*
@@ -165,7 +172,7 @@ return [
         /*
          * Cache full page
          *
-         * @var bool|string (block|all)
+         * @var bool|string (blocks|all)
          */
         'pages' => false,
 
@@ -254,7 +261,7 @@ return [
         ],
 
         'clear' => [
-            'thumbnails' => false
+            'thumbnails' => false,
         ],
     ],
 
@@ -316,7 +323,7 @@ return [
         ],
     ],
 
-/*
+    /*
      * ------------------------------------------------------------------------
      * Email settings
      * ------------------------------------------------------------------------
@@ -412,13 +419,6 @@ return [
         'intelligent_search_help' => true,
 
         /*
-         * Display an overlay with up-to-date news from concrete5
-         *
-         * @var bool concrete.external.news_overlay
-         */
-        'news_overlay' => false,
-
-        /*
          * Enable concrete5 news within your site
          *
          * @var bool concrete.external.news
@@ -453,12 +453,18 @@ return [
          * The default thumbnail format: jpeg, png, auto (if auto: we'll create a jpeg if the source image is jpeg, we'll create a png otherwise).
          */
         'default_thumbnail_format' => 'auto',
-        /**
+        /*
          * @var string (now|async)
          */
         'basic_thumbnailer_generation_strategy' => 'now',
         'help_overlay' => true,
         'require_version_comments' => false,
+        /*
+         * Control whether a block type can me moved to different block type sets
+         *
+         * @var bool
+         */
+        'enable_move_blocktypes_across_sets' => false,
     ],
 
     'theme' => [
@@ -571,7 +577,8 @@ return [
          * @var bool
          */
         'choose_language_login' => false,
-
+        // Fetch language files when installing a package connected to the marketplace [boolean]
+        'auto_install_package_languages' => true,
         // Community Translation instance offering concrete5 translations
         'community_translation' => [
             // API entry point of the Community Translation instance
@@ -591,6 +598,7 @@ return [
         'concrete5_secure' => 'https://www.concrete5.org',
         'newsflow' => 'http://newsflow.concrete5.org',
         'background_feed' => '//backgroundimages.concrete5.org/wallpaper',
+        'privacy_policy' => '//www.concrete5.org/legal/privacy-policy',
         'background_feed_secure' => 'https://backgroundimages.concrete5.org/wallpaper',
         'background_info' => 'http://backgroundimages.concrete5.org/get_image_data.php',
         'videos' => 'https://www.youtube.com/user/concrete5cms/videos',
@@ -598,6 +606,7 @@ return [
             'developer' => 'http://documentation.concrete5.org/developers',
             'user' => 'http://documentation.concrete5.org/editors',
             'forum' => 'http://www.concrete5.org/community/forums',
+            'slack' => 'https://www.concrete5.org/slack',
         ],
         'paths' => [
             'menu_help_service' => '/tools/get_remote_help_list/',
@@ -698,7 +707,6 @@ return [
              */
             'email_registration' => false,
 
-
             /*
              * Determines whether the username field is displayed when registering
              */
@@ -758,6 +766,14 @@ return [
             'throttle_max' => 20,
             'throttle_max_timespan' => 15, // minutes
         ],
+
+        'deactivation' => [
+            'enable_login_threshold_deactivation' => false,
+            'login' => [
+                'threshold' => 120, // in days
+            ],
+            'message' => 'This user is inactive. Please contact us regarding this account.',
+        ],
     ],
 
     /*
@@ -787,12 +803,9 @@ return [
      * ------------------------------------------------------------------------
      */
     'calendar' => [
-
         'colors' => [
-
             'text' => '#ffffff',
             'background' => '#3A87AD',
-
         ],
     ],
 
@@ -856,21 +869,6 @@ return [
      * ------------------------------------------------------------------------
      */
     'seo' => [
-        'tracking' => [
-            /*
-             * User defined tracking code
-             *
-             * @var string
-             */
-            'code' => '',
-
-            /*
-             * Tracking code position
-             *
-             * @var string (top|bottom)
-             */
-            'code_position' => 'bottom',
-        ],
         'exclude_words' => 'a, an, as, at, before, but, by, for, from, is, in, into, like, of, off, on, onto, per, ' .
             'since, than, the, this, that, to, up, via, with',
 
@@ -927,5 +925,10 @@ return [
         'plugins' => [
             'selected' => [],
         ],
+    ],
+
+    'composer' => [
+        // [float] The time in seconds until idle triggers a save (set to 0 to disable autosave)
+        'idle_timeout' => 1,
     ],
 ];

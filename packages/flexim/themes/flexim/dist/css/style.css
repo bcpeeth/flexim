@@ -1068,6 +1068,11 @@ mark, .mark {
 .display--none-imp {
   display: none !important; }
 
+.display--flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex; }
+
 .display--inline-block {
   display: inline-block; }
 
@@ -1337,6 +1342,7 @@ mark, .mark {
   height: 90px;
   z-index: 99; }
   .header .navbar {
+    width: 100%;
     display: inline-block;
     color: #5c5a58;
     font-weight: 700;
@@ -1345,8 +1351,12 @@ mark, .mark {
     .header .navbar li {
       padding: 0 15px;
       font-size: 15px; }
+    .header .navbar a {
+      padding: 10px 0; }
     .header .navbar a.logo img {
-      width: 130px; }
+      width: 150px; }
+    .header .navbar ul li img {
+      vertical-align: middle; }
     .header .navbar > ul > li {
       position: relative;
       display: inline-block;
@@ -1487,54 +1497,6 @@ mark, .mark {
           left: 0; }
   .header .navbar-toggle {
     display: none; }
-  .header form {
-    position: relative;
-    height: 30px;
-    line-height: 30px;
-    margin-top: 30px;
-    width: 150px; }
-    .header form input {
-      position: absolute;
-      height: 30px;
-      line-height: 30px;
-      padding: 0 10px;
-      background-color: #F2F2F2;
-      width: 150px;
-      -webkit-transition: .2s;
-      transition: .2s;
-      float: right;
-      right: 0;
-      font-size: inherit; }
-      .header form input:focus {
-        background-color: #e5e5e5;
-        width: 850px;
-        height: 90px;
-        line-height: 90px;
-        margin-top: -30px;
-        color: inherit;
-        background: #FFFFFF;
-        font-size: 18px; }
-        .header form input:focus + button {
-          pointer-events: auto !important;
-          background-color: transparent; }
-          .header form input:focus + button + button {
-            opacity: 1;
-            background: #FFFFFF; }
-    .header form button {
-      background-color: #F2F2F2;
-      -webkit-transition: .2s;
-      transition: .2s;
-      position: absolute;
-      cursor: pointer;
-      top: 0;
-      right: 0;
-      width: 30px;
-      height: 30px;
-      line-height: 30px;
-      text-align: center;
-      pointer-events: none; }
-      .header form button.cancel {
-        opacity: 0; }
 
 @media screen and (max-width: 991px) {
   .header {
@@ -1769,24 +1731,19 @@ mark, .mark {
   list-style-type: none; }
 
 .list-horizontal li {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  width: 50%; }
+  width: 100%; }
 
 .list-horizontal li::before {
   -webkit-box-flex: 0;
-      -ms-flex: 0 0 25px;
-          flex: 0 0 25px;
+      -ms-flex: 0 0 7px;
+          flex: 0 0 7px;
   display: inline-block;
   content: '';
   border-radius: 100%;
   margin-right: 7px;
-  height: 25px;
-  width: 25px;
+  height: 7px;
+  width: 7px;
+  background-color: #d1271b;
   background-image: url(NaN/dist/images/5cddb0484e0cd0f0d18c8b01a7caa2b1.png); }
 
 .list-vertical ul {
@@ -1802,6 +1759,7 @@ mark, .mark {
   margin-right: 7px;
   height: 25px;
   width: 25px;
+  background-color: #d1271b;
   background-image: url(NaN/dist/images/5cddb0484e0cd0f0d18c8b01a7caa2b1.png); }
 
 @media screen and (max-width: 767px) {
@@ -1813,6 +1771,45 @@ mark, .mark {
             flex: none;
     height: 20px;
     width: 20px; } }
+
+.method {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 100%; }
+  .method .image {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    height: 100%; }
+  .method img {
+    width: 105px;
+    margin-top: auto;
+    margin-bottom: auto; }
+
+.target {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center; }
+  .target img {
+    width: 185px; }
+
+.team img {
+  display: block;
+  margin: auto;
+  width: 100px; }
 
 .bg-yellow {
   background-color: #F6A800; }

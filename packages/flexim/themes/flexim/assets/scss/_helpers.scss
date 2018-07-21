@@ -115,6 +115,10 @@ $sizes: (none: 0, x-nano: 8px, nano: 10px, half-step: 12.5px, step: 25px, 2-step
     display: none !important;
   }
 
+  &--flex {
+    display: flex;
+  }
+
   &--inline-block {
     display: inline-block;
   }

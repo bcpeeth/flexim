@@ -5,10 +5,11 @@ use Concrete\Core\Authentication\AuthenticationType;
 use Concrete\Core\Authentication\AuthenticationTypeFailureException;
 use Concrete\Core\Http\ResponseFactoryInterface;
 use Concrete\Core\Localization\Localization;
+use Concrete\Core\Routing\RedirectResponse;
 use Concrete\Core\User\PostLoginLocation;
 use Exception;
 use PageController;
-use User;
+use Concrete\Core\User\User;
 use UserAttributeKey;
 use UserInfo;
 
@@ -29,7 +30,8 @@ class Login extends PageController
 
     public function account_deactivated()
     {
-        $this->error->add(t('This user is inactive. Please contact us regarding this account.'));
+        $config = $this->app->make('config');
+        $this->error->add(t($config->get('concrete.user.deactivation.message')));
     }
 
     public function session_invalidated()
@@ -107,8 +109,8 @@ class Login extends PageController
             try {
                 $at = AuthenticationType::getByHandle($type);
                 $user = $at->controller->authenticate();
-                if ($user && $user->isLoggedIn()) {
-                    return $this->finishAuthentication($at);
+                if ($user && $user->isRegistered()) {
+                    return $this->finishAuthentication($at, $user);
                 }
             } catch (Exception $e) {
                 $this->error->add($e->getMessage());
@@ -127,13 +129,13 @@ class Login extends PageController
      *
      * @throws Exception
      */
-    public function finishAuthentication(/* AuthenticationType */
-        $type = null
+    public function finishAuthentication(
+        AuthenticationType $type,
+        User $u
     ) {
         if (!$type || !($type instanceof AuthenticationType)) {
             return $this->view();
         }
-        $u = new User();
         $config = $this->app->make('config');
         if ($config->get('concrete.i18n.choose_language_login')) {
             $userLocale = $this->post('USER_LOCALE');
@@ -187,7 +189,29 @@ class Login extends PageController
         $ue = new \Concrete\Core\User\Event\User($u);
         $this->app->make('director')->dispatch('on_user_login', $ue);
 
-        return $this->chooseRedirect();
+        return new RedirectResponse(
+            $this->app->make('url/manager')->resolve(['/login', 'login_complete'])
+        );
+    }
+
+    public function login_complete()
+    {
+        // Move this functionality to a redirected endpoint rather than from within the previous method because
+        // session isn't set until we redirect and reload.
+        $u = new User();
+        if (!$this->error) {
+            $this->error = $this->app->make('helper/validation/error');
+        }
+
+        if ($u->isRegistered()) {
+            $pll = $this->app->make(PostLoginLocation::class);
+            $response = $pll->getPostLoginRedirectResponse(true);
+
+            return $response;
+        } else {
+            $this->error->add(t('User is not registered. Check your authentication controller.'));
+            $u->logout();
+        }
     }
 
     public function on_start()
@@ -227,27 +251,6 @@ class Login extends PageController
         $loc->popActiveContext();
         $this->locales = $locales;
         $this->set('locales', $locales);
-    }
-
-    public function chooseRedirect()
-    {
-        if (!$this->error) {
-            $this->error = $this->app->make('helper/validation/error');
-        }
-
-        $u = new User(); // added for the required registration attribute change above. We recalc the user and make sure they're still logged in
-        if ($u->isRegistered()) {
-            if ($u->config('NEWSFLOW_LAST_VIEWED') === 'FIRSTRUN') {
-                $u->saveConfig('NEWSFLOW_LAST_VIEWED', 0);
-            }
-            $pll = $this->app->make(PostLoginLocation::class);
-            $response = $pll->getPostLoginRedirectResponse(true);
-
-            return $response;
-        } else {
-            $this->error->add(t('User is not registered. Check your authentication controller.'));
-            $u->logout();
-        }
     }
 
     /**
@@ -345,7 +348,7 @@ class Login extends PageController
                 $ui->saveUserAttributesForm($saveAttributes);
             }
 
-            return $this->finishAuthentication($at);
+            return $this->finishAuthentication($at, $u);
         } catch (Exception $e) {
             $this->error->add($e->getMessage());
         }

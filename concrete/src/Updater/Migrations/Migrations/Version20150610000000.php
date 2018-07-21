@@ -3,21 +3,18 @@
 namespace Concrete\Core\Updater\Migrations\Migrations;
 
 use Concrete\Core\Updater\Migrations\AbstractMigration;
-use Concrete\Core\Updater\Migrations\DirectSchemaUpgraderInterface;
+use Concrete\Core\Updater\Migrations\RepeatableMigrationInterface;
 
-class Version20150610000000 extends AbstractMigration implements DirectSchemaUpgraderInterface
+class Version20150610000000 extends AbstractMigration implements RepeatableMigrationInterface
 {
     /**
      * {@inheritdoc}
      *
-     * @see \Concrete\Core\Updater\Migrations\DirectSchemaUpgraderInterface::upgradeDatabase()
+     * @see \Concrete\Core\Updater\Migrations\AbstractMigration::upgradeDatabase()
      */
     public function upgradeDatabase()
     {
-        $bt = \BlockType::getByHandle('file');
-        if (is_object($bt)) {
-            $bt->refresh();
-        }
+        $this->refreshBlockType('file');
         if (\Config::get('conversation.banned_words')) {
             \Config::set('conversations.banned_words', true);
         }

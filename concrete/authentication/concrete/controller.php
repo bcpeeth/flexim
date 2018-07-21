@@ -131,7 +131,7 @@ class Controller extends AuthenticationTypeController
 
     public function isAuthenticated(User $u)
     {
-        return $u->isLoggedIn();
+        return $u->isRegistered();
     }
 
     public function saveAuthenticationType($values)
@@ -351,7 +351,7 @@ class Controller extends AuthenticationTypeController
                     }
                     break;
                 case USER_INACTIVE:
-                    throw new \Exception(t('This user is inactive. Please contact us regarding this account.'));
+                    throw new \Exception(t(Config::get('concrete.user.deactivation.message')));
                     break;
             }
         }

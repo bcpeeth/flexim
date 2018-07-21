@@ -14,7 +14,6 @@ return array(
     'Pagerfanta\\' => array($vendorDir . '/pagerfanta/pagerfanta/src'),
     'OAuth\\Unit' => array($vendorDir . '/lusitanian/oauth/tests'),
     'OAuth' => array($vendorDir . '/lusitanian/oauth/src'),
-    'Michelf' => array($vendorDir . '/michelf/php-markdown'),
     'Less' => array($vendorDir . '/concrete5/less.php/lib'),
     'JShrink' => array($vendorDir . '/tedivm/jshrink/src'),
     'Imagine' => array($vendorDir . '/imagine/imagine/lib'),

@@ -2,11 +2,10 @@
 
 namespace Concrete\Core\Updater\Migrations\Migrations;
 
-use Concrete\Core\Block\BlockType\BlockType;
 use Concrete\Core\Updater\Migrations\AbstractMigration;
-use Concrete\Core\Updater\Migrations\DirectSchemaUpgraderInterface;
+use Concrete\Core\Updater\Migrations\RepeatableMigrationInterface;
 
-class Version20150109000000 extends AbstractMigration implements DirectSchemaUpgraderInterface
+class Version20150109000000 extends AbstractMigration implements RepeatableMigrationInterface
 {
     /**
      * {@inheritdoc}
@@ -21,13 +20,10 @@ class Version20150109000000 extends AbstractMigration implements DirectSchemaUpg
     /**
      * {@inheritdoc}
      *
-     * @see \Concrete\Core\Updater\Migrations\DirectSchemaUpgraderInterface::upgradeDatabase()
+     * @see \Concrete\Core\Updater\Migrations\AbstractMigration::upgradeDatabase()
      */
     public function upgradeDatabase()
     {
-        $bt = BlockType::getByHandle('google_map');
-        if (is_object($bt)) {
-            $bt->refresh();
-        }
+        $this->refreshBlockType('google_map');
     }
 }
