@@ -35,14 +35,14 @@ if (is_object($key)) {
     ?>
 	<script type="text/javascript">
 	deleteAttribute = function() {
-		if (confirm('<?=$delConfirmJS?>')) {
-			location.href = "<?=$view->action('delete', $key->getAttributeKeyID(), $valt->generate('delete_attribute'))?>";
+		if (confirm('<?php echo $delConfirmJS?>')) {
+			location.href = "<?php echo $view->action('delete', $key->getAttributeKeyID(), $valt->generate('delete_attribute'))?>";
 		}
 	}
 	</script>
 
 <div class="ccm-dashboard-header-buttons">
-	<button type="button" class="btn btn-danger" onclick="deleteAttribute()"><?=t('Delete Attribute')?></button>
+	<button type="button" class="btn btn-danger" onclick="deleteAttribute()"><?php echo t('Delete Attribute')?></button>
 </div>
 
 <?php 
@@ -50,21 +50,21 @@ if (is_object($key)) {
 
 
 <fieldset>
-<legend><?=t('%s: Basic Details', $type->getAttributeTypeDisplayName())?></legend>
+<legend><?php echo t('%s: Basic Details', $type->getAttributeTypeDisplayName())?></legend>
 
 <div class="form-group">
-	<?=$form->label('akHandle', t('Handle'))?>
+	<?php echo $form->label('akHandle', t('Handle'))?>
 	<div class="input-group">
-	<?=$form->text('akHandle', $akHandle)?>
+	<?php echo $form->text('akHandle', $akHandle)?>
 	<span class="input-group-addon"><i class="fa fa-asterisk"></i></span>
 	</div>
 </div>
 
 
 <div class="form-group">
-	<?=$form->label('akName', t('Name'))?>
+	<?php echo $form->label('akName', t('Name'))?>
 	<div class="input-group">
-		<?=$form->text('akName', $akName)?>
+		<?php echo $form->text('akName', $akName)?>
 		<span class="input-group-addon"><i class="fa fa-asterisk"></i></span>
 	</div>
 </div>
@@ -72,7 +72,7 @@ if (is_object($key)) {
 <?php if ($category && $category->getController()->getSetManager()->allowAttributeSets() == AttributeKeyCategory::ASET_ALLOW_SINGLE) {
     ?>
 <div class="form-group">
-<?=$form->label('asID', t('Set'))?>
+<?php echo $form->label('asID', t('Set'))?>
 <div class="controls">
 	<?php
         $sel = array('0' => t('** None'));
@@ -88,7 +88,7 @@ if (is_object($key)) {
 } ?>
 
 <div class="form-group">
-<label class="control-label"><?=t('Searchable')?></label>
+<label class="control-label"><?php echo t('Searchable')?></label>
 
 <?php
 $keyword_label = t('Content included in search index.');
@@ -114,16 +114,16 @@ if (is_object($category)) {
     }
 }
     ?>
-	<div class="checkbox"><label><?=$form->checkbox('akIsSearchableIndexed', 1, $akIsSearchableIndexed)?> <?=$keyword_label?></label></div>
-	<div class="checkbox"><label><?=$form->checkbox('akIsSearchable', 1, $akIsSearchable)?> <?=$advanced_label?></label></div>
+	<div class="checkbox"><label><?php echo $form->checkbox('akIsSearchableIndexed', 1, $akIsSearchableIndexed)?> <?php echo $keyword_label?></label></div>
+	<div class="checkbox"><label><?php echo $form->checkbox('akIsSearchable', 1, $akIsSearchable)?> <?php echo $advanced_label?></label></div>
 </div>
 
 </fieldset>
 
-<?=$form->hidden('atID', $type->getAttributeTypeID())?>
+<?php echo $form->hidden('atID', $type->getAttributeTypeID())?>
 <?php if ($category) {
     ?>
-	<?=$form->hidden('akCategoryID', $category->getAttributeKeyCategoryID());
+	<?php echo $form->hidden('akCategoryID', $category->getAttributeKeyCategoryID());
     ?>
 
 <?php
@@ -138,7 +138,7 @@ if (is_object($category)) {
 <?php 
 } ?>
 
-<?=$valt->output('add_or_update_attribute')?>
+<?php echo $valt->output('add_or_update_attribute')?>
 <?php $type->render(new \Concrete\Core\Attribute\Context\AttributeTypeSettingsContext(), $key); ?>
 
 <?php if (!isset($back)) {
@@ -148,14 +148,14 @@ if (is_object($category)) {
 
 <div class="ccm-dashboard-form-actions-wrapper">
 <div class="ccm-dashboard-form-actions">
-	<a href="<?=$back?>" class="btn pull-left btn-default"><?=t('Back')?></a>
+	<a href="<?php echo $back?>" class="btn pull-left btn-default"><?php echo t('Back')?></a>
 <?php if (is_object($key)) {
     ?>
-	<button type="submit" class="btn btn-primary pull-right"><?=t('Save')?></button>
+	<button type="submit" class="btn btn-primary pull-right"><?php echo t('Save')?></button>
 <?php 
 } else {
     ?>
-	<button type="submit" class="btn btn-primary pull-right"><?=t('Add')?></button>
+	<button type="submit" class="btn btn-primary pull-right"><?php echo t('Add')?></button>
 <?php 
 } ?>
 </div>

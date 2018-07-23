@@ -1,11 +1,8 @@
-/* jshint unused:vars, undef:true, browser:true, jquery:true */
-/* global _ */
-
-;(function(global, $) {
+(function(global, $, _) {
     'use strict';
 
-    function SaveCoordinator($form, saver, options) {
-        this.init($form, saver, options);
+    function SaveCoordinator($form, options) {
+        this.init.apply(this, _.toArray(arguments));
     }
 
     SaveCoordinator.prototype = {
@@ -192,10 +189,10 @@
                 global.clearTimeout(this.idleTimer);
             }
 
-            this.idleTimer = global.setTimeout(function() {
+            this.idleTimer = setTimeout(function() {
                 me.requestSave();
                 me.resetIdleTimer();
-            }, this.options.idleTimeout * 1000);
+            }, this.options.idleTimeout * 1000)
         },
 
         /**
@@ -257,8 +254,8 @@
          */
         throttleSave: function(amount) {
             var me = this,
-                throttled = this.saveThrottleTimer !== null;
-            if (this.saveThrottleTimer === null && typeof amount != 'undefined') {
+                throttled = this.saveThrottleTimer != null;
+            if (this.saveThrottleTimer == null && typeof amount != 'undefined') {
                 this.saveThrottleTimer = global.setTimeout(function () {
                     me.debug('Throttle Expired');
                     me.saveThrottleTimer = null;
@@ -297,7 +294,7 @@
          */
         cachedForm: function(serialized) {
             if (typeof serialized != 'undefined') {
-                this.lastSerialized = serialized;
+                this.lastSerialized = serialized
             }
 
             return this.lastSerialized;
@@ -339,4 +336,4 @@
         });
     };
 
-})(this, jQuery);
+}(this, jQuery, _));

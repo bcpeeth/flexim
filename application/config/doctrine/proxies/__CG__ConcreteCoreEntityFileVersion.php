@@ -64,10 +64,10 @@ class Version extends \Concrete\Core\Entity\File\Version implements \Doctrine\OR
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'file', 'fvID', 'fvFilename', 'fvPrefix', 'fvDateAdded', 'fvActivateDateTime', 'fvIsApproved', 'fvAuthorUID', 'fvApproverUID', 'fvSize', 'fvTitle', 'fvDescription', 'fvExtension', 'fvTags', 'fvType', 'fvHasListingThumbnail', 'fvHasDetailThumbnail', '' . "\0" . 'Concrete\\Core\\Entity\\File\\Version' . "\0" . 'imagineImage'];
+            return ['__isInitialized__', 'file', 'fvID', 'fvFilename', 'fvPrefix', 'fvDateAdded', 'fvActivateDateTime', 'fvIsApproved', 'fvAuthorUID', 'fvSize', 'fvApproverUID', 'fvTitle', 'fvDescription', 'fvExtension', 'fvType', 'fvTags', 'fvHasListingThumbnail', 'fvHasDetailThumbnail', '' . "\0" . 'Concrete\\Core\\Entity\\File\\Version' . "\0" . 'imagineImage'];
         }
 
-        return ['__isInitialized__', 'file', 'fvID', 'fvFilename', 'fvPrefix', 'fvDateAdded', 'fvActivateDateTime', 'fvIsApproved', 'fvAuthorUID', 'fvApproverUID', 'fvSize', 'fvTitle', 'fvDescription', 'fvExtension', 'fvTags', 'fvType', 'fvHasListingThumbnail', 'fvHasDetailThumbnail', '' . "\0" . 'Concrete\\Core\\Entity\\File\\Version' . "\0" . 'imagineImage'];
+        return ['__isInitialized__', 'file', 'fvID', 'fvFilename', 'fvPrefix', 'fvDateAdded', 'fvActivateDateTime', 'fvIsApproved', 'fvAuthorUID', 'fvSize', 'fvApproverUID', 'fvTitle', 'fvDescription', 'fvExtension', 'fvType', 'fvTags', 'fvHasListingThumbnail', 'fvHasDetailThumbnail', '' . "\0" . 'Concrete\\Core\\Entity\\File\\Version' . "\0" . 'imagineImage'];
     }
 
     /**
@@ -176,100 +176,12 @@ class Version extends \Concrete\Core\Entity\File\Version implements \Doctrine\OR
     /**
      * {@inheritDoc}
      */
-    public function setFile(\Concrete\Core\Entity\File\File $file)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setFile', [$file]);
-
-        return parent::setFile($file);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getFile()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getFile', []);
-
-        return parent::getFile();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getFileID()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getFileID', []);
-
-        return parent::getFileID();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setFileVersionID($fvID)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setFileVersionID', [$fvID]);
-
-        return parent::setFileVersionID($fvID);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getFileVersionID()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getFileVersionID', []);
-
-        return parent::getFileVersionID();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function rename($filename)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'rename', [$filename]);
-
-        return parent::rename($filename);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function updateFile($filename, $prefix)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'updateFile', [$filename, $prefix]);
-
-        return parent::updateFile($filename, $prefix);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function setFilename($filename)
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setFilename', [$filename]);
 
         return parent::setFilename($filename);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getFileName()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getFileName', []);
-
-        return parent::getFileName();
     }
 
     /**
@@ -286,188 +198,12 @@ class Version extends \Concrete\Core\Entity\File\Version implements \Doctrine\OR
     /**
      * {@inheritDoc}
      */
-    public function getDateAdded()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getDateAdded', []);
-
-        return parent::getDateAdded();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getActivateDateTime()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getActivateDateTime', []);
-
-        return parent::getActivateDateTime();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function approve()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'approve', []);
-
-        return parent::approve();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function deny()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'deny', []);
-
-        return parent::deny();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function isApproved()
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'isApproved', []);
 
         return parent::isApproved();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getAuthorUserID()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getAuthorUserID', []);
-
-        return parent::getAuthorUserID();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getAuthorName()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getAuthorName', []);
-
-        return parent::getAuthorName();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getApproverUserID()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getApproverUserID', []);
-
-        return parent::getApproverUserID();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getApproverName()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getApproverName', []);
-
-        return parent::getApproverName();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getFullSize()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getFullSize', []);
-
-        return parent::getFullSize();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getSize()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getSize', []);
-
-        return parent::getSize();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function updateTitle($title)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'updateTitle', [$title]);
-
-        return parent::updateTitle($title);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getTitle()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getTitle', []);
-
-        return parent::getTitle();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function updateDescription($descr)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'updateDescription', [$descr]);
-
-        return parent::updateDescription($descr);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getDescription()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getDescription', []);
-
-        return parent::getDescription();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getExtension()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getExtension', []);
-
-        return parent::getExtension();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function updateTags($tags)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'updateTags', [$tags]);
-
-        return parent::updateTags($tags);
     }
 
     /**
@@ -495,177 +231,45 @@ class Version extends \Concrete\Core\Entity\File\Version implements \Doctrine\OR
     /**
      * {@inheritDoc}
      */
-    public function getMimeType()
+    public function getFile()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getMimeType', []);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getFile', []);
 
-        return parent::getMimeType();
+        return parent::getFile();
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getTypeObject()
+    public function setFile(\Concrete\Core\Entity\File\File $file)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getTypeObject', []);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setFile', [$file]);
 
-        return parent::getTypeObject();
+        return parent::setFile($file);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getType()
+    public function getFileID()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getType', []);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getFileID', []);
 
-        return parent::getType();
+        return parent::getFileID();
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getDisplayType()
+    public function getFileVersionID()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getDisplayType', []);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getFileVersionID', []);
 
-        return parent::getDisplayType();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getGenericTypeText()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getGenericTypeText', []);
-
-        return parent::getGenericTypeText();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function logVersionUpdate($updateTypeID, $updateTypeAttributeID = 0)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'logVersionUpdate', [$updateTypeID, $updateTypeAttributeID]);
-
-        return parent::logVersionUpdate($updateTypeID, $updateTypeAttributeID);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getVersionLogComments()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getVersionLogComments', []);
-
-        return parent::getVersionLogComments();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getRelativePath()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getRelativePath', []);
-
-        return parent::getRelativePath();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getURL()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getURL', []);
-
-        return parent::getURL();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getDownloadURL()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getDownloadURL', []);
-
-        return parent::getDownloadURL();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getForceDownloadURL()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getForceDownloadURL', []);
-
-        return parent::getForceDownloadURL();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function buildForceDownloadResponse()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'buildForceDownloadResponse', []);
-
-        return parent::buildForceDownloadResponse();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function canView()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'canView', []);
-
-        return parent::canView();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function canEdit()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'canEdit', []);
-
-        return parent::canEdit();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function duplicate()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'duplicate', []);
-
-        return parent::duplicate();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function duplicateUnderlyingFile()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'duplicateUnderlyingFile', []);
-
-        return parent::duplicateUnderlyingFile();
+        return parent::getFileVersionID();
     }
 
     /**
@@ -677,193 +281,6 @@ class Version extends \Concrete\Core\Entity\File\Version implements \Doctrine\OR
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'delete', [$deleteFilesAndThumbnails]);
 
         return parent::delete($deleteFilesAndThumbnails);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getFileResource()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getFileResource', []);
-
-        return parent::getFileResource();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function updateContents($contents, $rescanThumbnails = true)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'updateContents', [$contents, $rescanThumbnails]);
-
-        return parent::updateContents($contents, $rescanThumbnails);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getFileContents()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getFileContents', []);
-
-        return parent::getFileContents();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getObjectAttributeCategory()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getObjectAttributeCategory', []);
-
-        return parent::getObjectAttributeCategory();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function refreshAttributes($rescanThumbnails = true)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'refreshAttributes', [$rescanThumbnails]);
-
-        return parent::refreshAttributes($rescanThumbnails);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getAttributes()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getAttributes', []);
-
-        return parent::getAttributes();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getAttributeValueObject($ak, $createIfNotExists = false)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getAttributeValueObject', [$ak, $createIfNotExists]);
-
-        return parent::getAttributeValueObject($ak, $createIfNotExists);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getImagineImage()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getImagineImage', []);
-
-        return parent::getImagineImage();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function hasImagineImage()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'hasImagineImage', []);
-
-        return parent::hasImagineImage();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function releaseImagineImage()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'releaseImagineImage', []);
-
-        return parent::releaseImagineImage();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function refreshThumbnails($deleteExistingThumbnails)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'refreshThumbnails', [$deleteExistingThumbnails]);
-
-        return parent::refreshThumbnails($deleteExistingThumbnails);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function generateThumbnail(\Concrete\Core\File\Image\Thumbnail\Type\Version $type)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'generateThumbnail', [$type]);
-
-        return parent::generateThumbnail($type);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function importThumbnail(\Concrete\Core\File\Image\Thumbnail\Type\Version $version, $path)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'importThumbnail', [$version, $path]);
-
-        return parent::importThumbnail($version, $path);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getThumbnailURL($type)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getThumbnailURL', [$type]);
-
-        return parent::getThumbnailURL($type);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getThumbnails()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getThumbnails', []);
-
-        return parent::getThumbnails();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getDetailThumbnailImage()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getDetailThumbnailImage', []);
-
-        return parent::getDetailThumbnailImage();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getListingThumbnailImage()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getListingThumbnailImage', []);
-
-        return parent::getListingThumbnailImage();
     }
 
     /**
@@ -891,23 +308,287 @@ class Version extends \Concrete\Core\Entity\File\Version implements \Doctrine\OR
     /**
      * {@inheritDoc}
      */
-    public function duplicateUnderlyingThumbnailFiles($type, \Concrete\Core\Entity\File\Version $source)
+    public function getFileResource()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'duplicateUnderlyingThumbnailFiles', [$type, $source]);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getFileResource', []);
 
-        return parent::duplicateUnderlyingThumbnailFiles($type, $source);
+        return parent::getFileResource();
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getJSONObject()
+    public function getMimeType()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getJSONObject', []);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getMimeType', []);
 
-        return parent::getJSONObject();
+        return parent::getMimeType();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getSize()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getSize', []);
+
+        return parent::getSize();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getFullSize()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getFullSize', []);
+
+        return parent::getFullSize();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getAuthorName()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getAuthorName', []);
+
+        return parent::getAuthorName();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getAuthorUserID()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getAuthorUserID', []);
+
+        return parent::getAuthorUserID();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getDateAdded()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getDateAdded', []);
+
+        return parent::getDateAdded();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getExtension()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getExtension', []);
+
+        return parent::getExtension();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setFileVersionID($fvID)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setFileVersionID', [$fvID]);
+
+        return parent::setFileVersionID($fvID);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function duplicate()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'duplicate', []);
+
+        return parent::duplicate();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function deny()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'deny', []);
+
+        return parent::deny();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getType()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getType', []);
+
+        return parent::getType();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getDisplayType()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getDisplayType', []);
+
+        return parent::getDisplayType();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getTypeObject()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getTypeObject', []);
+
+        return parent::getTypeObject();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getVersionLogComments()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getVersionLogComments', []);
+
+        return parent::getVersionLogComments();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function updateTitle($title)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'updateTitle', [$title]);
+
+        return parent::updateTitle($title);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function duplicateUnderlyingFile()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'duplicateUnderlyingFile', []);
+
+        return parent::duplicateUnderlyingFile();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function logVersionUpdate($updateTypeID, $updateTypeAttributeID = 0)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'logVersionUpdate', [$updateTypeID, $updateTypeAttributeID]);
+
+        return parent::logVersionUpdate($updateTypeID, $updateTypeAttributeID);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function updateTags($tags)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'updateTags', [$tags]);
+
+        return parent::updateTags($tags);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function updateDescription($descr)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'updateDescription', [$descr]);
+
+        return parent::updateDescription($descr);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function rename($filename)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'rename', [$filename]);
+
+        return parent::rename($filename);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function updateContents($contents)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'updateContents', [$contents]);
+
+        return parent::updateContents($contents);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function updateFile($filename, $prefix)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'updateFile', [$filename, $prefix]);
+
+        return parent::updateFile($filename, $prefix);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function approve()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'approve', []);
+
+        return parent::approve();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getFileContents()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getFileContents', []);
+
+        return parent::getFileContents();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getForceDownloadURL()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getForceDownloadURL', []);
+
+        return parent::getForceDownloadURL();
     }
 
     /**
@@ -924,12 +605,78 @@ class Version extends \Concrete\Core\Entity\File\Version implements \Doctrine\OR
     /**
      * {@inheritDoc}
      */
-    public function hasThumbnail($level)
+    public function getFileName()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'hasThumbnail', [$level]);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getFileName', []);
 
-        return parent::hasThumbnail($level);
+        return parent::getFileName();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getRelativePath()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getRelativePath', []);
+
+        return parent::getRelativePath();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getThumbnails()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getThumbnails', []);
+
+        return parent::getThumbnails();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getObjectAttributeCategory()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getObjectAttributeCategory', []);
+
+        return parent::getObjectAttributeCategory();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getAttributeValueObject($ak, $createIfNotExists = false)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getAttributeValueObject', [$ak, $createIfNotExists]);
+
+        return parent::getAttributeValueObject($ak, $createIfNotExists);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getImagineImage()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getImagineImage', []);
+
+        return parent::getImagineImage();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function releaseImagineImage()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'releaseImagineImage', []);
+
+        return parent::releaseImagineImage();
     }
 
     /**
@@ -946,12 +693,177 @@ class Version extends \Concrete\Core\Entity\File\Version implements \Doctrine\OR
     /**
      * {@inheritDoc}
      */
-    public function getAttributeValue($ak)
+    public function hasThumbnail($level)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getAttributeValue', [$ak]);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'hasThumbnail', [$level]);
 
-        return parent::getAttributeValue($ak);
+        return parent::hasThumbnail($level);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getDetailThumbnailImage()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getDetailThumbnailImage', []);
+
+        return parent::getDetailThumbnailImage();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getThumbnailURL($type)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getThumbnailURL', [$type]);
+
+        return parent::getThumbnailURL($type);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function importThumbnail(\Concrete\Core\File\Image\Thumbnail\Type\Version $version, $path)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'importThumbnail', [$version, $path]);
+
+        return parent::importThumbnail($version, $path);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getURL()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getURL', []);
+
+        return parent::getURL();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getDownloadURL()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getDownloadURL', []);
+
+        return parent::getDownloadURL();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getAttributes()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getAttributes', []);
+
+        return parent::getAttributes();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function refreshAttributes($rescanThumbnails = true)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'refreshAttributes', [$rescanThumbnails]);
+
+        return parent::refreshAttributes($rescanThumbnails);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getTitle()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getTitle', []);
+
+        return parent::getTitle();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getJSONObject()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getJSONObject', []);
+
+        return parent::getJSONObject();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function canView()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'canView', []);
+
+        return parent::canView();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function canEdit()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'canEdit', []);
+
+        return parent::canEdit();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getGenericTypeText()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getGenericTypeText', []);
+
+        return parent::getGenericTypeText();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getDescription()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getDescription', []);
+
+        return parent::getDescription();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getListingThumbnailImage()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getListingThumbnailImage', []);
+
+        return parent::getListingThumbnailImage();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function generateThumbnail(\Concrete\Core\File\Image\Thumbnail\Type\Version $type)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'generateThumbnail', [$type]);
+
+        return parent::generateThumbnail($type);
     }
 
     /**
@@ -963,6 +875,17 @@ class Version extends \Concrete\Core\Entity\File\Version implements \Doctrine\OR
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getAttribute', [$ak, $mode]);
 
         return parent::getAttribute($ak, $mode);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getAttributeValue($ak)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getAttributeValue', [$ak]);
+
+        return parent::getAttributeValue($ak);
     }
 
     /**

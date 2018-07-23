@@ -3,11 +3,11 @@ namespace Concrete\Core\Area\Layout;
 
 use Core;
 use Database;
-use Concrete\Core\Foundation\ConcreteObject;
+use Concrete\Core\Foundation\Object;
 use Area;
 use Concrete\Core\Block\Block;
 
-abstract class Layout extends ConcreteObject
+abstract class Layout extends Object
 {
     /**
      * @var Area

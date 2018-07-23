@@ -22,11 +22,9 @@ class Dashboard
     public function canRead()
     {
         $c = Page::getByPath('/dashboard', 'ACTIVE');
-        if ($c && !$c->isError()) {
-            $cp = new Permissions($c);
+        $cp = new Permissions($c);
 
-            return $cp->canViewPage();
-        }
+        return $cp->canViewPage();
     }
 
     /**
@@ -213,15 +211,10 @@ class Dashboard
             return $dashboardMenus[$dashboardMenusKey];
         }
 
-        $page = Page::getByPath('/dashboard');
-        if (!$page || $page->isError()) {
-            return '';
-        }
-
-
         ob_start(); ?>
         <div id="ccm-intelligent-search-results">
             <?php
+            $page = Page::getByPath('/dashboard');
         $children = $page->getCollectionChildrenArray(true);
         $navHelper = Core::make('helper/navigation');
         $packagepages = [];
@@ -249,18 +242,18 @@ class Dashboard
                 $ch2 = $page->getCollectionChildrenArray(true);
             } ?>
                 <div class="ccm-intelligent-search-results-module ccm-intelligent-search-results-module-onsite">
-                    <h1><?=t($page->getCollectionName())?></h1>
+                    <h1><?php echo t($page->getCollectionName())?></h1>
                     <ul class="ccm-intelligent-search-results-list">
                         <?php
                         if (count($ch2) == 0) {
                             ?>
-                            <li><a href="<?=$navHelper->getLinkTocollection($page)?>"><?=t($page->getCollectionName())?></a><span><?=t($page->getCollectionName())?> <?=t($page->getAttribute('meta_keywords'))?></span></li>
+                            <li><a href="<?php echo $navHelper->getLinkTocollection($page)?>"><?php echo t($page->getCollectionName())?></a><span><?php echo t($page->getCollectionName())?> <?php echo t($page->getAttribute('meta_keywords'))?></span></li>
                             <?php
 
                         }
             if ($page->getCollectionPath() == '/dashboard/system') {
                 ?>
-                            <li><a href="<?=$navHelper->getLinkTocollection($page)?>"><?=t('View All')?></a><span><?=t($page->getCollectionName())?> <?=t($page->getAttribute('meta_keywords'))?></span></li>
+                            <li><a href="<?php echo $navHelper->getLinkTocollection($page)?>"><?php echo t('View All')?></a><span><?php echo t($page->getCollectionName())?> <?php echo t($page->getAttribute('meta_keywords'))?></span></li>
                             <?php
 
             }
@@ -275,10 +268,10 @@ class Dashboard
                 }
 
                 ?>
-                    <li><a href="<?=$navHelper->getLinkTocollection($subpage)?>"><?=t($subpage->getCollectionName())?></a><span><?php if ($page->getCollectionPath() != '/dashboard/system') {
-    ?><?=t($page->getCollectionName())?> <?=t($page->getAttribute('meta_keywords'))?> <?php
+                    <li><a href="<?php echo $navHelper->getLinkTocollection($subpage)?>"><?php echo t($subpage->getCollectionName())?></a><span><?php if ($page->getCollectionPath() != '/dashboard/system') {
+    ?><?php echo t($page->getCollectionName())?> <?php echo t($page->getAttribute('meta_keywords'))?> <?php
 }
-                ?><?=t($subpage->getCollectionName())?> <?=t($subpage->getAttribute('meta_keywords'))?></span></li>
+                ?><?php echo t($subpage->getCollectionName())?> <?php echo t($subpage->getAttribute('meta_keywords'))?></span></li>
                     <?php
 
             } ?>
@@ -288,7 +281,7 @@ class Dashboard
 
         } ?>
             <div class="ccm-intelligent-search-results-module">
-                <h1><?=t('Your Site')?></h1>
+                <h1><?php echo t('Your Site')?></h1>
                 <div class="loader">
                     <div class="dot dot1"></div>
                     <div class="dot dot2"></div>
@@ -302,7 +295,7 @@ class Dashboard
             if (Config::get('concrete.external.intelligent_search_help')) {
                 ?>
                 <div class="ccm-intelligent-search-results-module ccm-intelligent-search-results-module-offsite">
-                    <h1><?=t('Help')?></h1>
+                    <h1><?php echo t('Help')?></h1>
                     <div class="loader">
                         <div class="dot dot1"></div>
                         <div class="dot dot2"></div>
@@ -318,7 +311,7 @@ class Dashboard
         if (Config::get('concrete.marketplace.intelligent_search')) {
             ?>
                 <div class="ccm-intelligent-search-results-module ccm-intelligent-search-results-module-offsite">
-                    <h1><?=t('Add-Ons')?></h1>
+                    <h1><?php echo t('Add-Ons')?></h1>
                     <div class="loader">
                         <div class="dot dot1"></div>
                         <div class="dot dot2"></div>
@@ -469,6 +462,7 @@ class DefaultDashboardMenu extends DashboardMenu
         '/dashboard/sitemap/search',
         '/dashboard/files/search',
         '/dashboard/files/sets',
+        '/dashboard/reports/statistics',
         '/dashboard/reports/forms',
     ];
 }

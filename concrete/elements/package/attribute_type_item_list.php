@@ -2,23 +2,23 @@
 defined('C5_EXECUTE') or die("Access Denied.");
 ?>
 
-<legend><?=$category->getItemCategoryDisplayName()?></legend>
+<legend><?php echo $category->getItemCategoryDisplayName()?></legend>
 
 <dl class="dl-horizontal">
     <?php foreach ($category->getItems($package) as $at) {
         $controller = $at->getController();
         $formatter = $controller->getIconFormatter();
         ?>
-        <dt><?=$formatter->getListIconElement()?></dt>
+        <dt><?php echo $formatter->getListIconElement()?></dt>
         <dd>
-            <?=$at->getAttributeTypeName()?>
+            <?php echo $at->getAttributeTypeName()?>
             <?php
             foreach ($categories as $cat) {
                 if (!$at->isAssociatedWithCategory($cat)) {
                     continue;
                 }
                 ?>
-                <span class="badge"><?=$text->unhandle($cat->getAttributeKeyCategoryHandle())?></span>
+                <span class="badge"><?php echo $text->unhandle($cat->getAttributeKeyCategoryHandle())?></span>
                 <?php
             }
             ?>

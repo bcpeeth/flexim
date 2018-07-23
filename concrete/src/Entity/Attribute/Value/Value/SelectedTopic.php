@@ -16,7 +16,7 @@ class SelectedTopic
     protected $avTreeTopicNodeID;
 
     /**
-     * @ORM\ManyToOne(targetEntity="TopicsValue", inversedBy="topics")
+     * @ORM\ManyToOne(targetEntity="TopicsValue")
      * @ORM\JoinColumn(name="avID", referencedColumnName="avID")
      */
     protected $value;

@@ -1,7 +1,5 @@
-/* jshint unused:vars, undef:true, browser:true, jquery:true */
-/* global ccmi18n, ccmi18n_tree, CCM_DISPATCHER_FILENAME, ConcreteAlert, ConcreteEvent, ConcreteMenu */
 
-;(function(global, $) {
+!function(global, $, _) {
 	'use strict';
 
 	function ConcreteTree($element, options) {
@@ -38,6 +36,13 @@
 			}
 			jQuery.fn.dialog.showLoader();
 			var params = [{'name': 'sourceTreeNodeID', 'value': sourceNode.data.treeNodeID}, {'name': 'treeNodeParentID', 'value': treeNodeParentID}];
+			var childNodes = node.parent.getChildren();
+			if (childNodes) {
+				for (var i = 0; i < childNodes.length; i++) {
+					var childNode = childNodes[i];
+					params.push({'name': 'treeNodeID[]', 'value': childNode.data.treeNodeID});
+				}
+			}
 
 			$.concreteAjax({
 				data: params,
@@ -104,11 +109,10 @@
 				minExpandLevel = options.minExpandLevel;
 			}
 
-			var ajaxURL;
 			if (!options.treeNodeParentID) {
-				ajaxURL = CCM_DISPATCHER_FILENAME + '/ccm/system/tree/load';
+				var ajaxURL = CCM_DISPATCHER_FILENAME + '/ccm/system/tree/load';
 			} else {
-				ajaxURL = CCM_DISPATCHER_FILENAME + '/ccm/system/tree/node/load_starting';
+				var ajaxURL = CCM_DISPATCHER_FILENAME + '/ccm/system/tree/node/load_starting';
 			}
 
 			$(my.$element).fancytree({
@@ -170,9 +174,8 @@
 						$tree.fancytree('disable');
 					}
 
-					var selectedNodes;
 					if (options.chooseNodeInForm) {
-						selectedNodes = $tree.fancytree('getTree');
+						var selectedNodes = $tree.fancytree('getTree');
 						selectedNodes = selectedNodes.getSelectedNodes();
 						if (selectedNodes.length) {
 							var keys = $.map(selectedNodes, function(node) {
@@ -182,7 +185,7 @@
 						}
 					}
 					if (selectedNodes) {
-						$.map(selectedNodes, function(node){
+						var selKeys = $.map(selectedNodes, function(node){
 							node.makeVisible();
 						});
 					}
@@ -268,22 +271,6 @@
 					dragDrop: function(targetNode, data) {
 						my.dragRequest(data.otherNode, targetNode, data.hitMode, function() {
 							data.otherNode.moveTo(targetNode, data.hitMode);
-                            var treeNodeParentID = data.otherNode.parent.data.treeNodeID;
-                            if (data.hitMode == 'over') {
-                                treeNodeParentID = targetNode.data.treeNodeID;
-                            }
-                            var params = [{'name': 'sourceTreeNodeID', 'value': data.otherNode.data.treeNodeID}, {'name': 'treeNodeParentID', 'value': treeNodeParentID}];
-                            var childNodes = targetNode.parent.getChildren();
-                            if (childNodes) {
-                                for (var i = 0; i < childNodes.length; i++) {
-                                    var childNode = childNodes[i];
-                                    params.push({'name': 'treeNodeID[]', 'value': childNode.data.treeNodeID});
-                                }
-                            }
-                            $.concreteAjax({
-                                data: params,
-                                url: CCM_DISPATCHER_FILENAME + '/ccm/system/tree/node/update_order'
-                            });
 						});
 					}
 				}
@@ -292,6 +279,7 @@
 
 		getLoadNodePromise: function(node) {
 			var my = this,
+				options = my.options,
 				ajaxData = my.options.ajaxData != false ? my.options.ajaxData : {};
 
 			ajaxData.treeNodeParentID = node.data.treeNodeID;
@@ -347,7 +335,6 @@
 	};
 
 	ConcreteTree.setupTreeEvents = function(my) {
-        ConcreteEvent.unsubscribe('ConcreteMenuShow');
 		ConcreteEvent.subscribe('ConcreteMenuShow', function(e, data) {
 			var $menu = data.menuElement;
 			$menu.find('a[data-tree-action]').on('click.concreteMenu', function(e) {
@@ -398,15 +385,14 @@
 
 		ConcreteEvent.subscribe('ConcreteTreeAddTreeNode.concreteTree', function(e, r) {
 			var $tree = $('[data-tree=' + my.options.treeID + ']'),
-				nodes = r.node,
-				node;
+				nodes = r.node;
 			if (nodes.length) {
 				for (var i = 0; i < nodes.length; i++) {
-					node = $tree.fancytree('getTree').getNodeByKey(nodes[i].treeNodeParentID);
+					var node = $tree.fancytree('getTree').getNodeByKey(nodes[i].treeNodeParentID);
 					node.addChildren(nodes);
 				}
 			} else {
-				node = $tree.fancytree('getTree').getNodeByKey(nodes.treeNodeParentID);
+				var node = $tree.fancytree('getTree').getNodeByKey(nodes.treeNodeParentID);
 				node.addChildren(nodes);
 			}
 		});
@@ -432,4 +418,4 @@
 
 	global.ConcreteTree = ConcreteTree;
 
-})(this, jQuery);
+}(this, $, _);

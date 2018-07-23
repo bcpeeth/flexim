@@ -54,14 +54,14 @@ if ($_POST['task'] == 'set_location') {
 <div class="ccm-ui" id="ccm-file-permissions-dialog-wrapper">
     <ul class="nav nav-tabs" id="ccm-file-permissions-tabs">
     	<?php if ($config->get('concrete.permissions.model') != 'simple') { ?>
-    		<li class="active"><a href="javascript:void(0)" id="ccm-file-permissions-advanced"><?=t('Permissions')?></a></li>
+    		<li class="active"><a href="javascript:void(0)" id="ccm-file-permissions-advanced"><?php echo t('Permissions')?></a></li>
     	<?php
         } ?>
     	<li <?php if ($config->get('concrete.permissions.model') == 'simple') { ?> class="active" <?php } ?>>
-            <a href="javascript:void(0)" id="ccm-file-password"><?=t('Protect with Password')?></a>
+            <a href="javascript:void(0)" id="ccm-file-password"><?php echo t('Protect with Password')?></a>
         </li>
     	<li>
-            <a href="javascript:void(0)" id="ccm-file-storage"><?=t('Storage Location')?></a>
+            <a href="javascript:void(0)" id="ccm-file-storage"><?php echo t('Storage Location')?></a>
         </li>
     </ul>
 
@@ -77,49 +77,49 @@ if ($_POST['task'] == 'set_location') {
 
     <div id="ccm-file-password-tab" <?php if ($config->get('concrete.permissions.model') != 'simple') { ?> style="display: none" <?php } ?>>
         <br/>
-        <h4><?=t('Requires Password to Access')?></h4>
-        <p><?=t('Leave the following form field blank in order to allow everyone to download this file.')?></p>
+        <h4><?php echo t('Requires Password to Access')?></h4>
+        <p><?php echo t('Leave the following form field blank in order to allow everyone to download this file.')?></p>
 
-        <form method="post" data-dialog-form="file-password" action="<?=$app->make('helper/concrete/urls')->getToolsURL('files/permissions')?>">
+        <form method="post" data-dialog-form="file-password" action="<?php echo $app->make('helper/concrete/urls')->getToolsURL('files/permissions')?>">
         	<?php $token->output('set_password_' . $f->getFileID()); ?>
-            <?=$form->hidden('task', 'set_password')?>
-            <?=$form->hidden('fID', $f->getFileID())?>
-            <?=$form->text('fPassword', $f->getPassword())?>
+            <?php echo $form->hidden('task', 'set_password')?>
+            <?php echo $form->hidden('fID', $f->getFileID())?>
+            <?php echo $form->text('fPassword', $f->getPassword())?>
 
             <div id="ccm-file-password-buttons"  style="display: none">
-            	<button type="button" onclick="jQuery.fn.dialog.closeTop()" class="btn btn-default pull-left"><?=t('Cancel')?></button>
-            	<button type="button" onclick="$('form[data-dialog-form=file-password]').submit()" class="btn btn-primary pull-right"><?=t('Save Password')?></i></button>
+            	<button type="button" onclick="jQuery.fn.dialog.closeTop()" class="btn btn-default pull-left"><?php echo t('Cancel')?></button>
+            	<button type="button" onclick="$('form[data-dialog-form=file-password]').submit()" class="btn btn-primary pull-right"><?php echo t('Save Password')?></i></button>
             </div>
         </form>
 
         <div class="help-block">
-            <p><?=t('Users who access files through the file manager will not be prompted for a password.')?></p>
+            <p><?php echo t('Users who access files through the file manager will not be prompted for a password.')?></p>
         </div>
     </div>
 
     <div id="ccm-file-storage-tab" style="display: none">
         <br/>
-        <h4><?=t('Choose File Storage Location')?></h4>
+        <h4><?php echo t('Choose File Storage Location')?></h4>
 
-        <form method="post" data-dialog-form="file-storage" action="<?=$app->make('helper/concrete/urls')->getToolsURL('files/permissions')?>">
+        <form method="post" data-dialog-form="file-storage" action="<?php echo $app->make('helper/concrete/urls')->getToolsURL('files/permissions')?>">
             <div class="help-block">
-                <p><?=t('All versions of a file will be moved to the selected location.')?></p>
+                <p><?php echo t('All versions of a file will be moved to the selected location.')?></p>
             </div>
         	<?php $token->output('set_location_' . $f->getFileID()); ?>
-            <?=$form->hidden('task', 'set_location')?>
-            <?=$form->hidden('fID', $f->getFileID())?>
+            <?php echo $form->hidden('task', 'set_location')?>
+            <?php echo $form->hidden('fID', $f->getFileID())?>
             <?php
             $locations = FileStorageLocation::getList();
             foreach ($locations as $fsl) { ?>
-                <div class="radio"><label><?=$form->radio('fslID', $fsl->getID(), $f->getStorageLocationID() == $fsl->getID()) ?> <?=$fsl->getDisplayName()?></label></div>
+                <div class="radio"><label><?php echo $form->radio('fslID', $fsl->getID(), $f->getStorageLocationID() == $fsl->getID()) ?> <?php echo $fsl->getDisplayName()?></label></div>
             <?php
             }
             ?>
         </form>
 
         <div id="ccm-file-storage-buttons" style="display: none">
-        	<button type="button" onclick="jQuery.fn.dialog.closeTop()" class="btn btn-default pull-left"><?=t('Cancel')?></button>
-        	<button type="button" onclick="$('form[data-dialog-form=file-storage]').submit()" class="btn btn-primary pull-right"><?=t('Save Location')?></i></button>
+        	<button type="button" onclick="jQuery.fn.dialog.closeTop()" class="btn btn-default pull-left"><?php echo t('Cancel')?></button>
+        	<button type="button" onclick="$('form[data-dialog-form=file-storage]').submit()" class="btn btn-primary pull-right"><?php echo t('Save Location')?></i></button>
         </div>
     </div>
 </div>

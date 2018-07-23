@@ -58,10 +58,6 @@ class File extends TreeNode
     }
     public function getTreeNodeDisplayName($format = 'html')
     {
-        if ($format === 'html') {
-            return h($this->getTreeNodeDisplayName('text'));
-        }
-
         return $this->getTreeNodeName();
     }
 

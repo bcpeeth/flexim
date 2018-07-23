@@ -10,33 +10,33 @@ $this->inc('elements/header.php'); ?>
     ?>
         <div class="ccm-marketplace-nav">
             <nav>
-            <li><a href="<?=$controller->action('view')?>"><i class="fa fa-chevron-left"></i> <?=t('Back')?></a></li>
+            <li><a href="<?php echo $controller->action('view')?>"><i class="fa fa-chevron-left"></i> <?php echo t('Back')?></a></li>
             </nav>
         </div>
     <?php 
 } else {
     ?>
-        <form action="<?=$controller->action('view')?>" method="get">
-            <input type="hidden" name="ccm_order_by" value="<?=$sort?>" />
+        <form action="<?php echo $controller->action('view')?>" method="get">
+            <input type="hidden" name="ccm_order_by" value="<?php echo $sort?>" />
         <div class="ccm-marketplace-nav">
             <nav>
-            <li><a href="<?=URL::to('/dashboard/extend/themes')?>" <?php if ($type == 'themes') {
+            <li><a href="<?php echo URL::to('/dashboard/extend/themes')?>" <?php if ($type == 'themes') {
     ?>class="active"<?php 
 }
-    ?>><?=t('Themes')?></a></li>
-            <li><a href="<?=URL::to('/dashboard/extend/addons')?>" <?php if ($type == 'addons') {
+    ?>><?php echo t('Themes')?></a></li>
+            <li><a href="<?php echo URL::to('/dashboard/extend/addons')?>" <?php if ($type == 'addons') {
     ?>class="active"<?php 
 }
-    ?>><?=t('Add-Ons')?></a></li>
+    ?>><?php echo t('Add-Ons')?></a></li>
             </nav>
         </div>
         <div class="ccm-marketplace-search">
-            <?=$form->select('marketplaceRemoteItemSetID', $sets, $selectedSet, array('style' => 'width: 150px'))?>
+            <?php echo $form->select('marketplaceRemoteItemSetID', $sets, $selectedSet, array('style' => 'width: 150px'))?>
             <div class="ccm-marketplace-search-input">
                 <i class="fa fa-search"></i>
-                <input type="search" name="keywords" value="<?=$keywords?>" />
+                <input type="search" name="keywords" value="<?php echo $keywords?>" />
             </div>
-            <button type="submit" class="btn btn-primary btn-sm"><?=t('Search')?></button>
+            <button type="submit" class="btn btn-primary btn-sm"><?php echo t('Search')?></button>
         </div>
         </form>
     <?php 
@@ -47,29 +47,29 @@ $this->inc('elements/header.php'); ?>
 <?php if ($controller->getTask() != 'view_detail') {
     ?>
 <header class="ccm-marketplace-list">
-    <h1><?=$heading?></h1>
+    <h1><?php echo $heading?></h1>
     <div class="ccm-marketplace-sort">
         <nav>
-        <li><a href="<?=$list->getSortByURL('popularity')?>" <?php if ($sort == 'popularity') {
+        <li><a href="<?php echo $list->getSortByURL('popularity')?>" <?php if ($sort == 'popularity') {
     ?>class="active"<?php 
 }
-    ?>><?=t('Most Popular')?></a></li>
-        <li><a href="<?=$list->getSortByURL('recent')?>" <?php if ($sort == 'recent') {
+    ?>><?php echo t('Most Popular')?></a></li>
+        <li><a href="<?php echo $list->getSortByURL('recent')?>" <?php if ($sort == 'recent') {
     ?>class="active"<?php 
 }
-    ?>><?=t('Recent')?></a></li>
-        <li><a href="<?=$list->getSortByURL('price')?>" <?php if ($sort == 'price') {
+    ?>><?php echo t('Recent')?></a></li>
+        <li><a href="<?php echo $list->getSortByURL('price')?>" <?php if ($sort == 'price') {
     ?>class="active"<?php 
 }
-    ?>><?=t('Price')?></a></li>
-        <li><a href="<?=$list->getSortByURL('rating')?>" <?php if ($sort == 'rating') {
+    ?>><?php echo t('Price')?></a></li>
+        <li><a href="<?php echo $list->getSortByURL('rating')?>" <?php if ($sort == 'rating') {
     ?>class="active"<?php 
 }
-    ?>><?=t('Rating')?></a></li>
-        <li><a href="<?=$list->getSortByURL('skill_level')?>" <?php if ($sort == 'skill_level') {
+    ?>><?php echo t('Rating')?></a></li>
+        <li><a href="<?php echo $list->getSortByURL('skill_level')?>" <?php if ($sort == 'skill_level') {
     ?>class="active"<?php 
 }
-    ?>><?=t('Skill Level')?></a></li>
+    ?>><?php echo t('Skill Level')?></a></li>
         </nav>
     </div>
 </header>

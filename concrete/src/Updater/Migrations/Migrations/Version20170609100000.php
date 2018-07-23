@@ -1,19 +1,16 @@
 <?php
-
 namespace Concrete\Core\Updater\Migrations\Migrations;
 
+use Concrete\Core\File\Image\Thumbnail\Type\Type;
+use Concrete\Core\Page\Single;
 use Concrete\Core\Updater\Migrations\AbstractMigration;
-use Concrete\Core\Updater\Migrations\RepeatableMigrationInterface;
+use Doctrine\DBAL\Schema\Schema;
 
-class Version20170609100000 extends AbstractMigration implements RepeatableMigrationInterface
+class Version20170609100000 extends AbstractMigration
 {
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Updater\Migrations\AbstractMigration::upgradeDatabase()
-     */
-    public function upgradeDatabase()
+    public function up(Schema $schema)
     {
+
         $this->refreshDatabaseTables([
             'FailedLoginAttempts',
             'LoginControlIpRanges',
@@ -22,6 +19,15 @@ class Version20170609100000 extends AbstractMigration implements RepeatableMigra
         $this->connection->executeQuery('DROP TABLE IF EXISTS UserBannedIPs');
 
         // Add the new dashboard page to show IP ranges
-        $this->createSinglePage('/dashboard/system/permissions/blacklist/range', 'IP Range', ['exclude_nav' => true]);
+        $sp = \Page::getByPath('/dashboard/system/permissions/blacklist/range');
+        if (!is_object($sp) || $sp->isError()) {
+            $sp = Single::add('/dashboard/system/permissions/blacklist/range');
+            $sp->update(['cName' => 'IP Range']);
+            $sp->setAttribute('exclude_nav', true);
+        }
+    }
+
+    public function down(Schema $schema)
+    {
     }
 }

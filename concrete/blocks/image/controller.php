@@ -1,7 +1,7 @@
 <?php
-
 namespace Concrete\Block\Image;
 
+use Concrete\Core\Block\Block;
 use Concrete\Core\Block\BlockController;
 use Concrete\Core\Error\Error;
 use Concrete\Core\File\File;
@@ -17,7 +17,7 @@ class Controller extends BlockController implements FileTrackableInterface
     protected $btCacheBlockRecord = true;
     protected $btCacheBlockOutput = true;
     protected $btCacheBlockOutputOnPost = true;
-    protected $btCacheBlockOutputForRegisteredUsers = false;
+    protected $btCacheBlockOutputForRegisteredUsers = true;
     protected $btWrapperClass = 'ccm-ui';
     protected $btExportFileColumns = ['fID', 'fOnstateID', 'fileLinkID'];
     protected $btExportPageColumns = ['internalLinkCID'];
@@ -25,9 +25,7 @@ class Controller extends BlockController implements FileTrackableInterface
         'image',
     ];
 
-    /**
-     * @var \Concrete\Core\Statistics\UsageTracker\AggregateTracker|null
-     */
+    /** @var AggregateTracker */
     protected $tracker;
 
     public function __construct($blockType = null, AggregateTracker $tracker = null)
@@ -93,7 +91,6 @@ class Controller extends BlockController implements FileTrackableInterface
         $this->set('altText', $this->getAltText());
         $this->set('title', $this->getTitle());
         $this->set('linkURL', $this->getLinkURL());
-        $this->set('openLinkInNewWindow', $this->shouldLinkOpenInNewWindow());
         $this->set('c', Page::getCurrentPage());
     }
 
@@ -227,7 +224,7 @@ class Controller extends BlockController implements FileTrackableInterface
      */
     public function getFileOnstateObject()
     {
-        if (isset($this->fOnstateID) && $this->fOnstateID) {
+        if ($this->fOnstateID) {
             return File::getByID($this->fOnstateID);
         }
     }
@@ -307,14 +304,6 @@ class Controller extends BlockController implements FileTrackableInterface
     }
 
     /**
-     * @return bool
-     */
-    public function shouldLinkOpenInNewWindow()
-    {
-        return (bool) $this->openLinkInNewWindow;
-    }
-
-    /**
      * @return Error
      */
     public function validate_composer()
@@ -330,8 +319,6 @@ class Controller extends BlockController implements FileTrackableInterface
     }
 
     /**
-     * @param array $args
-     *
      * @return Error
      */
     public function validate($args)
@@ -347,7 +334,7 @@ class Controller extends BlockController implements FileTrackableInterface
             $e->add(t('Please select an image.'));
         }
 
-        if (isset($args['cropImage']) && ((int) $args['maxWidth'] <= 0 || ((int) $args['maxHeight'] <= 0)) && !$svg) {
+        if (isset($args['cropImage']) && (intval($args['maxWidth']) <= 0 || (intval($args['maxHeight']) <= 0)) && !$svg) {
             $e->add(t('Cropping an image requires setting a max width and max height.'));
         }
 
@@ -363,7 +350,7 @@ class Controller extends BlockController implements FileTrackableInterface
      */
     public function delete()
     {
-        $this->getTracker()->forget($this);
+        $this->tracker->forget($this);
         parent::delete();
     }
 
@@ -381,7 +368,6 @@ class Controller extends BlockController implements FileTrackableInterface
             'linkType' => 0,
             'externalLink' => '',
             'internalLinkCID' => 0,
-            'openLinkInNewWindow' => 0,
             'fileLinkID' => 0,
         ];
 
@@ -389,8 +375,8 @@ class Controller extends BlockController implements FileTrackableInterface
         $args['fOnstateID'] = $args['fOnstateID'] != '' ? $args['fOnstateID'] : 0;
         $args['fileLinkID'] = $args['fileLinkID'] != '' ? $args['fileLinkID'] : 0;
         $args['cropImage'] = isset($args['cropImage']) ? 1 : 0;
-        $args['maxWidth'] = (int) $args['maxWidth'] > 0 ? (int) $args['maxWidth'] : 0;
-        $args['maxHeight'] = (int) $args['maxHeight'] > 0 ? (int) $args['maxHeight'] : 0;
+        $args['maxWidth'] = intval($args['maxWidth']) > 0 ? intval($args['maxWidth']) : 0;
+        $args['maxHeight'] = intval($args['maxHeight']) > 0 ? intval($args['maxHeight']) : 0;
 
         if (!$args['constrainImage']) {
             $args['cropImage'] = 0;
@@ -398,7 +384,7 @@ class Controller extends BlockController implements FileTrackableInterface
             $args['maxHeight'] = 0;
         }
 
-        switch ((int) $args['linkType']) {
+        switch (intval($args['linkType'])) {
             case 1:
                 $args['externalLink'] = '';
                 $args['fileLinkID'] = 0;
@@ -418,15 +404,11 @@ class Controller extends BlockController implements FileTrackableInterface
                 break;
         }
 
-        if ((int) $args['linkType'] > 0) {
-            $args['openLinkInNewWindow'] = $args['openLinkInNewWindow'] ? 1 : 0;
-        }
-
         // This doesn't get saved to the database. It's only for UI usage.
         unset($args['linkType']);
 
         parent::save($args);
-        $this->getTracker()->track($this);
+        $this->tracker->track($this);
     }
 
     public function getUsedFiles()
@@ -437,17 +419,5 @@ class Controller extends BlockController implements FileTrackableInterface
     public function getUsedCollection()
     {
         return $this->getCollectionObject();
-    }
-
-    /**
-     * @return \Concrete\Core\Statistics\UsageTracker\AggregateTracker
-     */
-    protected function getTracker()
-    {
-        if ($this->tracker === null) {
-            $this->tracker = $this->app->make(AggregateTracker::class);
-        }
-
-        return $this->tracker;
     }
 }

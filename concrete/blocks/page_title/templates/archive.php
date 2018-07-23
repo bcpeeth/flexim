@@ -5,5 +5,5 @@ if (isset($currentTopic) && is_object($currentTopic)) {
     $title = t('Topic Archives: %s', $currentTopic->getTreeNodeDisplayName());
 }
 if (isset($title)) {
-    ?><h1 class="page-title"><?=h($title)?></h1><?php
+    ?><h1 class="page-title"><?php echo h($title)?></h1><?php
 }

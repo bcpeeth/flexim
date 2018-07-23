@@ -121,23 +121,15 @@ class Applier
             if ($oneAssociation) {
                 // Let's see if THAT entry relates back to this.
                 $oneEntry = $oneAssociation->getSelectedEntry();
-                if ($oneEntry) {
-                    $oneEntryAssociation = $oneEntry->getEntryAssociation($association);
-                    if ($oneEntryAssociation) {
-                        $oneEntryAssociation->getSelectedEntriesCollection()->removeElement($selectedEntry);
-                        $this->entityManager->persist($oneEntryAssociation);
-                    }
+                $oneEntryAssociation = $oneEntry->getEntryAssociation($association);
+                if ($oneEntryAssociation) {
+                    $oneEntryAssociation->getSelectedEntriesCollection()->removeElement($selectedEntry);
+                    $this->entityManager->persist($oneEntryAssociation);
                 }
                 $this->entityManager->remove($oneAssociation);
             }
         }
 
-        $this->entityManager->flush();
-
-        foreach($manyAssociation->getSelectedEntries() as $manyAssociationSelectedEntry) {
-            $manyAssociation->getSelectedEntriesCollection()->removeElement($manyAssociationSelectedEntry);
-        }
-        $this->entityManager->persist($manyAssociation);
         $this->entityManager->flush();
 
         $manyAssociation->setSelectedEntries($associatedEntries);

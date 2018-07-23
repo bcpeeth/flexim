@@ -22,25 +22,25 @@ if (isset($neutralStack)) {
     ?>
     <div class="ccm-dashboard-header-buttons">
         <?php if ($isGlobalArea) { ?>
-            <a href="<?=URL::to('/dashboard/blocks/stacks', 'view_global_areas')?>" class="btn btn-default"><i class="fa fa-angle-double-left"></i> <?=t("Back to Global Areas")?></a>
+            <a href="<?php echo URL::to('/dashboard/blocks/stacks', 'view_global_areas')?>" class="btn btn-default"><i class="fa fa-angle-double-left"></i> <?php echo t("Back to Global Areas")?></a>
         <?php } else { ?>
-            <a href="<?=$view->action('view_details', $neutralStack->getCollectionParentID())?>" class="btn btn-default"><i class="fa fa-angle-double-left"></i> <?=t("Back to Stacks")?></a>
+            <a href="<?php echo $view->action('view_details', $neutralStack->getCollectionParentID())?>" class="btn btn-default"><i class="fa fa-angle-double-left"></i> <?php echo t("Back to Stacks")?></a>
         <?php } ?>
     </div>
-    <p class="lead"><?=h($neutralStack->getCollectionName())?></p>
+    <p class="lead"><?php echo h($neutralStack->getCollectionName())?></p>
     <?php
     if ($stackToEdit === null) {
         ?>
-        <form method="post" action="<?=$view->action('add_localized_stack')?>">
-            <?=$token->output('add_localized_stack')?>
-            <?=$form->hidden('stackID', $neutralStack->getCollectionID());?>
-            <?=$form->hidden('locale', $localeCode);?>
+        <form method="post" action="<?php echo $view->action('add_localized_stack')?>">
+            <?php echo $token->output('add_localized_stack')?>
+            <?php echo $form->hidden('stackID', $neutralStack->getCollectionID());?>
+            <?php echo $form->hidden('locale', $localeCode);?>
             <div class="alert alert-info">
                 <p>
-                    <?=t(/*i18n: %1$s is a language name, %2$s is a language code*/'This stack is not defined for %1$s (%2$s): the default version will be used.', $localeName, $localeCode); ?>
+                    <?php echo t(/*i18n: %1$s is a language name, %2$s is a language code*/'This stack is not defined for %1$s (%2$s): the default version will be used.', $localeName, $localeCode); ?>
                 </p>
                 <p>
-                    <button class="btn btn-primary" type="submit"><?=$isGlobalArea ? t('Create localized global area version') : t('Create localized stack version')?></button><br />
+                    <button class="btn btn-primary" type="submit"><?php echo $isGlobalArea ? t('Create localized global area version') : t('Create localized stack version')?></button><br />
                 </p>
             </div>
         </form>
@@ -73,26 +73,26 @@ if (isset($neutralStack)) {
             <div class="container-fluid">
                 <ul class="nav navbar-nav small">
                     <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><?=t('Add')?> <span class="caret"></span></a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><?php echo t('Add')?> <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a class="dialog-launch" dialog-modal="false" dialog-width="550" dialog-height="380" dialog-title="<?=t('Add')?>" href="<?=URL::to('/ccm/system/dialogs/page/add_block_list')?>?cID=<?=$stackToEdit->getCollectionID()?>&arHandle=<?=STACKS_AREA_NAME?>"><?=t('Add Block')?></a></li>
-                            <li><a class="dialog-launch" dialog-modal="false" dialog-width="550" dialog-height="380" dialog-title="<?=t('Paste From Clipboard')?>" href="<?=URL::to('/ccm/system/dialogs/page/clipboard')?>?cID=<?=$stackToEdit->getCollectionID()?>&arHandle=<?=STACKS_AREA_NAME?>"><?=t('Paste From Clipboard')?></a></li>
+                            <li><a class="dialog-launch" dialog-modal="false" dialog-width="550" dialog-height="380" dialog-title="<?php echo t('Add')?>" href="<?php echo URL::to('/ccm/system/dialogs/page/add_block_list')?>?cID=<?php echo $stackToEdit->getCollectionID()?>&arHandle=<?php echo STACKS_AREA_NAME?>"><?php echo t('Add Block')?></a></li>
+                            <li><a class="dialog-launch" dialog-modal="false" dialog-width="550" dialog-height="380" dialog-title="<?php echo t('Paste From Clipboard')?>" href="<?php echo URL::to('/ccm/system/dialogs/page/clipboard')?>?cID=<?php echo $stackToEdit->getCollectionID()?>&arHandle=<?php echo STACKS_AREA_NAME?>"><?php echo t('Paste From Clipboard')?></a></li>
                         </ul>
                     </li>
-                    <li><a dialog-width="640" dialog-height="340" class="dialog-launch" id="stackVersions" dialog-title="<?=t('Version History')?>" href="<?=URL::to('/ccm/system/panels/page/versions')?>?cID=<?=$stackToEdit->getCollectionID()?>"><?=t('Version History')?></a></li>
+                    <li><a dialog-width="640" dialog-height="340" class="dialog-launch" id="stackVersions" dialog-title="<?php echo t('Version History')?>" href="<?php echo URL::to('/ccm/system/panels/page/versions')?>?cID=<?php echo $stackToEdit->getCollectionID()?>"><?php echo t('Version History')?></a></li>
                     <?php if (!$isGlobalArea && $cpc->canEditPageProperties()) { ?>
-                        <li><a href="<?=$view->action('rename', $neutralStack->getCollectionID())?>"><?=t('Rename')?></a></li>
+                        <li><a href="<?php echo $view->action('rename', $neutralStack->getCollectionID())?>"><?php echo t('Rename')?></a></li>
                     <?php } ?>
                     <?php if ($cpc->canEditPagePermissions() && Config::get('concrete.permissions.model') == 'advanced') { ?>
-                        <li><a dialog-width="580" class="dialog-launch" dialog-append-buttons="true" dialog-height="420" dialog-title="<?=t('Stack Permissions')?>" id="stackPermissions" href="<?=REL_DIR_FILES_TOOLS_REQUIRED?>/edit_area_popup?cID=<?=$stackToEdit->getCollectionID()?>&arHandle=<?=STACKS_AREA_NAME?>&atask=groups"><?=t('Permissions')?></a></li>
+                        <li><a dialog-width="580" class="dialog-launch" dialog-append-buttons="true" dialog-height="420" dialog-title="<?php echo t('Stack Permissions')?>" id="stackPermissions" href="<?php echo REL_DIR_FILES_TOOLS_REQUIRED?>/edit_area_popup?cID=<?php echo $stackToEdit->getCollectionID()?>&arHandle=<?php echo STACKS_AREA_NAME?>&atask=groups"><?php echo t('Permissions')?></a></li>
                     <?php } ?>
                     <?php if (!$isGlobalArea && $cpc->canMoveOrCopyPage()) { ?>
-                        <li><a href="<?=$view->action('duplicate', $neutralStack->getCollectionID())?>" style="margin-right: 4px;"><?=t('Duplicate')?></a></li>
+                        <li><a href="<?php echo $view->action('duplicate', $neutralStack->getCollectionID())?>" style="margin-right: 4px;"><?php echo t('Duplicate')?></a></li>
                     <?php } ?>
                     <?php if (!$isGlobalArea) { ?>
                     <li>
-                        <a dialog-width="640" dialog-height="340" class="dialog-launch" id="stackUsage" dialog-title="<?=t('Usage')?>" href="<?= $view->action('usage', $stackToEdit->getCollectionID()) ?>">
-                   <?=t('Stack Usage')?>
+                        <a dialog-width="640" dialog-height="340" class="dialog-launch" id="stackUsage" dialog-title="<?php echo t('Usage')?>" href="<?php echo $view->action('usage', $stackToEdit->getCollectionID()) ?>">
+                   <?php echo t('Stack Usage')?>
                     </a>
                     </li>
                     <?php } ?>
@@ -101,18 +101,18 @@ if (isset($neutralStack)) {
                         if ($isGlobalArea) {
                             if ($stackToEdit !== $neutralStack) {
                                 $deleteLabels = ['title' => t('Delete Localized Version'), 'button' => t('Delete')];
-                                ?><li><a href="javascript:void(0)" data-dialog="delete-stack"><span class="text-danger"><?=t('Clear Global Area')?></span></a></li><?php
+                                ?><li><a href="javascript:void(0)" data-dialog="delete-stack"><span class="text-danger"><?php echo t('Clear Global Area')?></span></a></li><?php
                             } else {
                                 $deleteLabels = ['title' => t('Clear Global Area Contents'), 'button' => t('Clear area'), 'canUndo' => true];
-                                ?><li><a href="javascript:void(0)" data-dialog="delete-stack"><span class="text-danger"><?=t('Clear Global Area')?></span></a></li><?php
+                                ?><li><a href="javascript:void(0)" data-dialog="delete-stack"><span class="text-danger"><?php echo t('Clear Global Area')?></span></a></li><?php
                             }
                         } else {
                             if ($stackToEdit !== $neutralStack) {
                                 $deleteLabels = ['title' => t('Delete Localized Version'), 'button' => t('Delete')];
-                                ?><li><a href="javascript:void(0)" data-dialog="delete-stack"><span class="text-danger"><?=t('Delete')?></span></a></li><?php
+                                ?><li><a href="javascript:void(0)" data-dialog="delete-stack"><span class="text-danger"><?php echo t('Delete')?></span></a></li><?php
                             } else {
                                 $deleteLabels = ['title' => t('Delete Stack'), 'button' => t('Delete')];
-                                ?><li><a href="javascript:void(0)" data-dialog="delete-stack"><span class="text-danger"><?=t('Delete')?></span></a></li><?php
+                                ?><li><a href="javascript:void(0)" data-dialog="delete-stack"><span class="text-danger"><?php echo t('Delete')?></span></a></li><?php
                             }
                         }
                     }
@@ -121,7 +121,7 @@ if (isset($neutralStack)) {
                 <?php if ($showApprovalButton) { ?>
                     <ul class="nav navbar-nav navbar-right">
                         <li id="ccm-stack-list-approve-button" class="navbar-form" <?php if ($vo->isApproved()) { ?> style="display: none;" <?php } ?>>
-                            <button class="btn btn-success" onclick="window.location.href='<?=URL::to('/dashboard/blocks/stacks', 'approve_stack', $stackToEdit->getCollectionID(), $token->generate('approve_stack'))?>'"><?=$publishTitle?></button>
+                            <button class="btn btn-success" onclick="window.location.href='<?php echo URL::to('/dashboard/blocks/stacks', 'approve_stack', $stackToEdit->getCollectionID(), $token->generate('approve_stack'))?>'"><?php echo $publishTitle?></button>
                         </li>
                     </ul>
                 <?php } ?>
@@ -153,9 +153,9 @@ if (isset($neutralStack)) {
             ?>
             <div style="display: none">
                 <div id="ccm-dialog-delete-stack" class="ccm-ui">
-                    <form method="post" class="form-stacked" style="padding-left: 0px" action="<?=$view->action('delete_stack')?>">
-                        <?=$token->output('delete_stack')?>
-                        <input type="hidden" name="stackID" value="<?=$stackToEdit->getCollectionID()?>" />
+                    <form method="post" class="form-stacked" style="padding-left: 0px" action="<?php echo $view->action('delete_stack')?>">
+                        <?php echo $token->output('delete_stack')?>
+                        <input type="hidden" name="stackID" value="<?php echo $stackToEdit->getCollectionID()?>" />
                         <p><?php
                             if (isset($deleteLabels['canUndo']) && $deleteLabels['canUndo']) {
                                 echo t('Are you sure you want to proceed?');
@@ -165,8 +165,8 @@ if (isset($neutralStack)) {
                         ?></p>
                     </form>
                     <div class="dialog-buttons">
-                        <button class="btn btn-default pull-left" onclick="jQuery.fn.dialog.closeTop()"><?=t('Cancel')?></button>
-                        <button class="btn btn-danger pull-right" onclick="$('#ccm-dialog-delete-stack form').submit()"><?=$deleteLabels['button']?></button>
+                        <button class="btn btn-default pull-left" onclick="jQuery.fn.dialog.closeTop()"><?php echo t('Cancel')?></button>
+                        <button class="btn btn-danger pull-right" onclick="$('#ccm-dialog-delete-stack form').submit()"><?php echo $deleteLabels['button']?></button>
                     </div>
                 </div>
             </div>
@@ -184,7 +184,7 @@ $(function() {
 
     ConcreteEvent.on('ClipboardAddBlock', function(event, data) {
         var editor = Concrete.getEditMode();
-        var area = editor.getAreaByID(<?=$a->getAreaID()?>);
+        var area = editor.getAreaByID(<?php echo $a->getAreaID()?>);
         block = new Concrete.DuplicateBlock(data.$launcher, editor);
         block.addToDragArea(_.last(area.getDragAreas()));
         return false;
@@ -192,7 +192,7 @@ $(function() {
 
     ConcreteEvent.on('AddBlockListAddBlock', function(event, data) {
         var editor = Concrete.getEditMode();
-        var area = editor.getAreaByID(<?=$a->getAreaID()?>);
+        var area = editor.getAreaByID(<?php echo $a->getAreaID()?>);
         blockType = new Concrete.BlockType(data.$launcher, editor);
         blockType.addToDragArea(_.last(area.getDragAreas()));
         return false;
@@ -233,7 +233,7 @@ $(function() {
                element: '#ccm-dialog-delete-stack',
                modal: true,
                width: 320,
-               title: <?=json_encode($deleteLabels['title'])?>,
+               title: <?php echo json_encode($deleteLabels['title'])?>,
                height: 'auto'
             });
         });
@@ -248,17 +248,17 @@ $(function() {
     /* @var Stack $duplicateStack */
     $sv = CollectionVersion::get($duplicateStack, 'ACTIVE');
     ?>
-    <form name="duplicate_form" action="<?=$view->action('duplicate', $duplicateStack->getCollectionID())?>" method="POST">
-        <?=$token->output('duplicate_stack')?>
-        <legend><?=t('Duplicate Stack')?></legend>
+    <form name="duplicate_form" action="<?php echo $view->action('duplicate', $duplicateStack->getCollectionID())?>" method="POST">
+        <?php echo $token->output('duplicate_stack')?>
+        <legend><?php echo t('Duplicate Stack')?></legend>
         <div class="form-group">
-            <?=$form->label('stackName', t("Name"))?>
-            <?=$form->text('stackName', $duplicateStack->getStackName())?>
+            <?php echo $form->label('stackName', t("Name"))?>
+            <?php echo $form->text('stackName', $duplicateStack->getStackName())?>
         </div>
         <div class="ccm-dashboard-form-actions-wrapper">
             <div class="ccm-dashboard-form-actions">
-                <a href="<?=$view->action('view_details', $duplicateStack->getCollectionID())?>" class="btn btn-default"><?=t('Cancel')?></a>
-                <button type="submit" class="btn pull-right btn-primary"><?=t('Duplicate')?></button>
+                <a href="<?php echo $view->action('view_details', $duplicateStack->getCollectionID())?>" class="btn btn-default"><?php echo t('Cancel')?></a>
+                <button type="submit" class="btn pull-right btn-primary"><?php echo t('Duplicate')?></button>
             </div>
         </div>
     </form>
@@ -269,17 +269,17 @@ $(function() {
     /* @var string $oldName */
     $sv = CollectionVersion::get($renamePage, 'ACTIVE');
     ?>
-    <form action="<?=$view->action('rename', $renamePage->getCollectionID())?>" method="POST">
-        <legend><?=$isFolder ? t('Rename Stack Folder') : t('Rename Stack')?></legend>
-        <?=$token->output('rename_stack')?>
+    <form action="<?php echo $view->action('rename', $renamePage->getCollectionID())?>" method="POST">
+        <legend><?php echo $isFolder ? t('Rename Stack Folder') : t('Rename Stack')?></legend>
+        <?php echo $token->output('rename_stack')?>
         <div class="form-group">
-            <?=$form->label('newName', t("Name"))?>
-            <?=$form->text('newName', $oldName)?>
+            <?php echo $form->label('newName', t("Name"))?>
+            <?php echo $form->text('newName', $oldName)?>
         </div>
         <div class="ccm-dashboard-form-actions-wrapper">
             <div class="ccm-dashboard-form-actions">
-                <a href="<?=$view->action('view_details', $renamePage->getCollectionID())?>" class="btn btn-default"><?=t('Cancel')?></a>
-                <button type="submit" class="btn pull-right btn-primary"><?=t('Rename')?></button>
+                <a href="<?php echo $view->action('view_details', $renamePage->getCollectionID())?>" class="btn btn-default"><?php echo t('Cancel')?></a>
+                <button type="submit" class="btn pull-right btn-primary"><?php echo t('Rename')?></button>
             </div>
         </div>
     </form>
@@ -303,8 +303,8 @@ $(function() {
                     <thead>
                         <tr>
                             <th></th>
-                            <th class="<?=$list->getSortClassName('cv.cvName')?>"><a href="<?=$list->getSortURL('cv.cvName')?>"><?=t('Name')?></a></th>
-                            <th class="<?=$list->getSortClassName('c.cDateAdded')?>"><a href="<?=$list->getSortURL('c.cDateAdded')?>"><?=t('Date Added')?></a></th>
+                            <th class="<?php echo $list->getSortClassName('cv.cvName')?>"><a href="<?php echo $list->getSortURL('cv.cvName')?>"><?php echo t('Name')?></a></th>
+                            <th class="<?php echo $list->getSortClassName('c.cDateAdded')?>"><a href="<?php echo $list->getSortURL('c.cDateAdded')?>"><?php echo t('Date Added')?></a></th>
                             <th></th>
                         </tr>
                     </thead>
@@ -312,9 +312,9 @@ $(function() {
                         <?php
                         if ($showGlobalAreasFolder) {
                             ?>
-                            <tr class="ccm-search-results-folder ccm-search-results-globalareafolder" data-details-url="<?=$view->url('/dashboard/blocks/stacks', 'view_global_areas')?>">
+                            <tr class="ccm-search-results-folder ccm-search-results-globalareafolder" data-details-url="<?php echo $view->url('/dashboard/blocks/stacks', 'view_global_areas')?>">
                                 <td class="ccm-search-results-icon"><i class="fa fa-object-group"></i></td>
-                                <td class="ccm-search-results-name"><?=t('Global Areas')?></td>
+                                <td class="ccm-search-results-name"><?php echo t('Global Areas')?></td>
                                 <td></td>
                                 <td></td>
                             </tr>
@@ -323,13 +323,13 @@ $(function() {
                         foreach ($stacks as $st) {
                             $formatter = new Concrete\Core\Page\Stack\Formatter($st);
                             ?>
-                            <tr class="<?=$formatter->getSearchResultsClass()?>" data-details-url="<?=$view->url('/dashboard/blocks/stacks', 'view_details', $st->getCollectionID())?>" data-collection-id="<?=$st->getCollectionID()?>">
-                                <td class="ccm-search-results-icon"><?=$formatter->getIconElement()?></td>
-                                <td class="ccm-search-results-name"><?=h($st->getCollectionName())?></td>
-                                <td><?=$dh->formatDateTime($st->getCollectionDateAdded())?></td>
+                            <tr class="<?php echo $formatter->getSearchResultsClass()?>" data-details-url="<?php echo $view->url('/dashboard/blocks/stacks', 'view_details', $st->getCollectionID())?>" data-collection-id="<?php echo $st->getCollectionID()?>">
+                                <td class="ccm-search-results-icon"><?php echo $formatter->getIconElement()?></td>
+                                <td class="ccm-search-results-name"><?php echo h($st->getCollectionName())?></td>
+                                <td><?php echo $dh->formatDateTime($st->getCollectionDateAdded())?></td>
                                 <td class="ccm-search-results-menu-launcher">
                                     <?php if ($st->getCollectionTypeHandle() == STACK_CATEGORY_PAGE_TYPE) { ?>
-                                        <a href="#" data-launch-stack-menu="<?=$st->getCollectionID()?>"><i class="fa fa-share"></i></a>
+                                        <a href="#" data-launch-stack-menu="<?php echo $st->getCollectionID()?>"><i class="fa fa-share"></i></a>
                                     <?php } ?>
                                 </td>
                             </tr>
@@ -406,9 +406,9 @@ $(function() {
                 }
                 $sourceItems.hide();
                 new ConcreteAjaxRequest({
-                    url: <?=json_encode($view->action('move_to_folder'))?>,
+                    url: <?php echo json_encode($view->action('move_to_folder'))?>,
                     data: {
-                        ccm_token:<?=json_encode($token->generate('move_to_folder'))?>,
+                        ccm_token:<?php echo json_encode($token->generate('move_to_folder'))?>,
                         sourceIDs: sourceIDs,
                         destinationID: destinationID
                     },
@@ -424,7 +424,7 @@ $(function() {
                         if (xhr.responseJSON && xhr.responseJSON.errors) {
                             msg = xhr.responseJSON.errors.join("<br/>");
                         }
-                        ConcreteAlert.dialog(<?=json_encode(t('Error'))?>, msg);
+                        ConcreteAlert.dialog(<?php echo json_encode(t('Error'))?>, msg);
                     }
                 });
             }
@@ -438,22 +438,22 @@ $(function() {
         	<div class="arrow"></div>
         	<div class="popover-inner">
         		<ul class="dropdown-menu">
-					<li><a data-action="rename" href="#" data-href-template="<?=$view->action('rename', '__folderID__')?>"><?=t('Rename Folder')?></a></li>
-					<li><a data-action="delete" href="javascript:void(0)"><?=t('Delete Folder')?></a></li>
+					<li><a data-action="rename" href="#" data-href-template="<?php echo $view->action('rename', '__folderID__')?>"><?php echo t('Rename Folder')?></a></li>
+					<li><a data-action="delete" href="javascript:void(0)"><?php echo t('Delete Folder')?></a></li>
 				</ul>
 			</div>
 		</div>
 
 		<div style="display: none">
-    		<div id="ccm-dialog-delete-stackfolder" class="ccm-ui" title="<?=t('Delete Folder')?>">
-    			<form method="post" class="form-stacked" style="padding-left: 0px" action="<?=$view->action('delete_stackfolder')?>">
-    				<?=$token->output('delete_stackfolder')?>
+    		<div id="ccm-dialog-delete-stackfolder" class="ccm-ui" title="<?php echo t('Delete Folder')?>">
+    			<form method="post" class="form-stacked" style="padding-left: 0px" action="<?php echo $view->action('delete_stackfolder')?>">
+    				<?php echo $token->output('delete_stackfolder')?>
     				<input type="hidden" name="stackfolderID" />
-    				<p><?=t('Are you sure? This action cannot be undone.');?></p>
+    				<p><?php echo t('Are you sure? This action cannot be undone.');?></p>
     			</form>
     			<div class="dialog-buttons">
-    				<button class="btn btn-default pull-left" onclick="jQuery.fn.dialog.closeTop()"><?=t('Cancel')?></button>
-    				<button class="btn btn-danger pull-right" onclick="$('#ccm-dialog-delete-stackfolder form').submit()"><?=t('Delete Folder')?></button>
+    				<button class="btn btn-default pull-left" onclick="jQuery.fn.dialog.closeTop()"><?php echo t('Cancel')?></button>
+    				<button class="btn btn-danger pull-right" onclick="$('#ccm-dialog-delete-stackfolder form').submit()"><?php echo t('Delete Folder')?></button>
     			</div>
     		</div>
     	</div>
@@ -474,8 +474,8 @@ $(function() {
         if ($controller->getTask() != 'view_global_areas') {
             ?>
             <div class="btn-group">
-                <button data-dialog="add-stack" class="btn btn-default"><i class="fa fa-bars"></i> <?=t("New Stack")?></button>
-                <button data-dialog="add-folder" class="btn btn-default"><i class="fa fa-folder"></i> <?=t("New Folder")?></button>
+                <button data-dialog="add-stack" class="btn btn-default"><i class="fa fa-bars"></i> <?php echo t("New Stack")?></button>
+                <button data-dialog="add-folder" class="btn btn-default"><i class="fa fa-folder"></i> <?php echo t("New Folder")?></button>
             </div>
             <?php
         }
@@ -484,31 +484,31 @@ $(function() {
 
     <div style="display: none">
         <div id="ccm-dialog-add-stack" class="ccm-ui">
-            <form method="post" class="form-stacked" style="padding-left: 0px" action="<?=$view->action('add_stack')?>">
-                <?=$token->output('add_stack')?>
-                <?=$form->hidden('stackFolderID', isset($currentStackFolderID) ? $currentStackFolderID : '');?>
+            <form method="post" class="form-stacked" style="padding-left: 0px" action="<?php echo $view->action('add_stack')?>">
+                <?php echo $token->output('add_stack')?>
+                <?php echo $form->hidden('stackFolderID', isset($currentStackFolderID) ? $currentStackFolderID : '');?>
                 <div class="form-group">
-                    <?=$form->label('stackName', t('Stack Name'))?>
-                    <?=$form->text('stackName')?>
+                    <?php echo $form->label('stackName', t('Stack Name'))?>
+                    <?php echo $form->text('stackName')?>
                 </div>
             </form>
             <div class="dialog-buttons">
-                <button class="btn btn-default pull-left" onclick="jQuery.fn.dialog.closeTop()"><?=t('Cancel')?></button>
-                <button class="btn btn-primary pull-right" onclick="$('#ccm-dialog-add-stack form').submit()"><?=t('Add Stack')?></button>
+                <button class="btn btn-default pull-left" onclick="jQuery.fn.dialog.closeTop()"><?php echo t('Cancel')?></button>
+                <button class="btn btn-primary pull-right" onclick="$('#ccm-dialog-add-stack form').submit()"><?php echo t('Add Stack')?></button>
             </div>
         </div>
         <div id="ccm-dialog-add-folder" class="ccm-ui">
-            <form method="post" class="form-stacked" style="padding-left: 0px" action="<?=$view->action('add_folder')?>">
-                <?=$token->output('add_folder')?>
-                <?=$form->hidden('stackFolderID', isset($currentStackFolderID) ? $currentStackFolderID : '');?>
+            <form method="post" class="form-stacked" style="padding-left: 0px" action="<?php echo $view->action('add_folder')?>">
+                <?php echo $token->output('add_folder')?>
+                <?php echo $form->hidden('stackFolderID', isset($currentStackFolderID) ? $currentStackFolderID : '');?>
                 <div class="form-group">
-                    <?=$form->label('folderName', t('Folder Name'))?>
-                    <?=$form->text('folderName')?>
+                    <?php echo $form->label('folderName', t('Folder Name'))?>
+                    <?php echo $form->text('folderName')?>
                 </div>
             </form>
             <div class="dialog-buttons">
-                <button class="btn btn-default pull-left" onclick="jQuery.fn.dialog.closeTop()"><?=t('Cancel')?></button>
-                <button class="btn btn-primary pull-right" onclick="$('#ccm-dialog-add-folder form').submit()"><?=t('Add Folder')?></button>
+                <button class="btn btn-default pull-left" onclick="jQuery.fn.dialog.closeTop()"><?php echo t('Cancel')?></button>
+                <button class="btn btn-primary pull-right" onclick="$('#ccm-dialog-add-folder form').submit()"><?php echo t('Add Folder')?></button>
             </div>
         </div>
     </div>
@@ -521,7 +521,7 @@ $(function() {
             element: '#ccm-dialog-add-stack',
             modal: true,
             width: 320,
-            title: <?=json_encode(t("Add Stack"))?>,
+            title: <?php echo json_encode(t("Add Stack"))?>,
             height: 'auto'
         });
     });
@@ -530,7 +530,7 @@ $(function() {
             element: '#ccm-dialog-add-folder',
             modal: true,
             width: 320,
-            title: <?=json_encode(t("Add Folder"))?>,
+            title: <?php echo json_encode(t("Add Folder"))?>,
             height: 'auto'
         });
     });
@@ -543,7 +543,7 @@ if (isset($flashMessage)) {
     ?><script>
     $(document).ready(function() {
         ConcreteAlert.notify({
-            message: <?=json_encode($flashMessage)?>
+            message: <?php echo json_encode($flashMessage)?>
         });
     });
     </script><?php

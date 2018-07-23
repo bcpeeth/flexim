@@ -83,14 +83,14 @@ if ($showMenu) {
     ?>
 
     <div
-        data-cID="<?=$c->getCollectionID()?>"
-        data-area-id="<?=$a->getAreaID()?>"
-        data-block-id="<?=$b->getBlockID()?>"
-        data-block-type-wraps="<?= intval(!$b->ignorePageThemeGridFrameworkContainer(), 10) ?>"
-        class="<?=$class?>"
-        data-block-type-handle="<?=$btHandle?>"
-        data-launch-block-menu="block-menu-b<?=$b->getBlockID()?>-<?=$a->getAreaID()?>"
-        data-dragging-avatar="<?=h('<p><img src="' . Loader::helper('concrete/urls')->getBlockTypeIconURL($btw) . '" /><span>' . t($btw->getBlockTypeName()) . '</span></p>')?>"
+        data-cID="<?php echo $c->getCollectionID()?>"
+        data-area-id="<?php echo $a->getAreaID()?>"
+        data-block-id="<?php echo $b->getBlockID()?>"
+        data-block-type-wraps="<?php echo intval(!$b->ignorePageThemeGridFrameworkContainer(), 10) ?>"
+        class="<?php echo $class?>"
+        data-block-type-handle="<?php echo $btHandle?>"
+        data-launch-block-menu="block-menu-b<?php echo $b->getBlockID()?>-<?php echo $a->getAreaID()?>"
+        data-dragging-avatar="<?php echo h('<p><img src="' . Loader::helper('concrete/urls')->getBlockTypeIconURL($btw) . '" /><span>' . t($btw->getBlockTypeName()) . '</span></p>')?>"
         <?php if ($btw->getBlockTypeHandle() == BLOCK_HANDLE_LAYOUT_PROXY) {
     ?> data-block-menu-handle="none"<?php
 }

@@ -1,17 +1,15 @@
-/* jshint unused:vars, undef:true, browser:true, jquery:true */
-/* global _, CCM_DISPATCHER_FILENAME, ccmi18n, ConcreteAjaxRequest, ConcreteAlert, ConcreteEvent */
-
-;(function(global, $) {
+!function(global, $) {
     'use strict';
 
     function ConcreteUserSelector($element, options) {
-        var my = this;
-        options = $.extend({
-            'chooseText': ccmi18n.chooseUser,
-            'loadingText': ccmi18n.loadingText,
-            'inputName': 'uID',
-            'uID': 0
-        }, options);
+        'use strict';
+        var my = this,
+            options = $.extend({
+                'chooseText': ccmi18n.chooseUser,
+                'loadingText': ccmi18n.loadingText,
+                'inputName': 'uID',
+                'uID': 0
+            }, options);
 
         my.$element = $element;
         my.options = options;
@@ -82,15 +80,15 @@
                 }
             });
         }
-    };
+    }
 
     // jQuery Plugin
     $.fn.concreteUserSelector = function(options) {
         return $.each($(this), function(i, obj) {
             new ConcreteUserSelector($(this), options);
         });
-    };
+    }
 
     global.ConcreteUserSelector = ConcreteUserSelector;
 
-})(this, jQuery);
+}(this, $);

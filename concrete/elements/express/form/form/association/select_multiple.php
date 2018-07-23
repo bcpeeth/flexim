@@ -2,7 +2,7 @@
 
 <div class="form-group">
     <?php if ($view->supportsLabel()) { ?>
-        <label class="control-label"><?=$label?></label>
+        <label class="control-label"><?php echo $label?></label>
     <?php } ?>
     <?php
     if (!empty($entities)) {
@@ -21,16 +21,16 @@
                             }
                         }
                         ?>
-                        name="express_association_<?=$control->getId()?>[]"
-                        value="<?=$entity->getId()?>"
+                        name="express_association_<?php echo $control->getId()?>[]"
+                        value="<?php echo $entity->getId()?>"
                     >
-                    <?=$formatter->getEntryDisplayName($control, $entity)?>
+                    <?php echo $formatter->getEntryDisplayName($control, $entity)?>
                 </label>
             </div>
             <?php
         }
     } else {
-        ?><p><?=t('No entity found.')?></p><?php
+        ?><p><?php echo t('No entity found.')?></p><?php
     }
     ?>
 </div>

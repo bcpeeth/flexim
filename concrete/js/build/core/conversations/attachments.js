@@ -1,8 +1,7 @@
-/* jshint unused:vars, undef:true, browser:true, jquery:true */
+/* jshint unused:vars, undef:true, browser:true, jquery:true, -W041 */
 /* global CCM_TOOLS_PATH */
 
-;(function(global, $) {
-  'use strict';
+(function($, window) {
 
   var i18n = {
     Too_many_files: 'Too many files',
@@ -314,4 +313,4 @@
   };
 
 
-})(window, jQuery);
+})(jQuery, window);

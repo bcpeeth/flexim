@@ -1,7 +1,7 @@
 <?php
 namespace Concrete\Core\Permission\Access;
 
-use Concrete\Core\Foundation\ConcreteObject;
+use Concrete\Core\Foundation\Object;
 use CacheLocal;
 use Concrete\Core\Permission\Access\ListItem\ListItem;
 use Concrete\Core\Permission\Key\Key as PermissionKey;
@@ -12,7 +12,7 @@ use Concrete\Core\Permission\Access\Entity\Entity as PermissionAccessEntity;
 use Concrete\Core\Permission\Duration as PermissionDuration;
 use Concrete\Core\Workflow\Workflow;
 
-class Access extends ConcreteObject
+class Access extends Object
 {
     protected $paID;
     protected $paIDList = array();

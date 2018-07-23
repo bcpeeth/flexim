@@ -1,20 +1,21 @@
 <?php
-
 namespace Concrete\Core\Updater\Migrations\Migrations;
 
-use Concrete\Core\Updater\Migrations\AbstractMigration;
-use Concrete\Core\Updater\Migrations\RepeatableMigrationInterface;
+use Doctrine\DBAL\Migrations\AbstractMigration;
+use Doctrine\DBAL\Schema\Schema;
 
-class Version20160213000000 extends AbstractMigration implements RepeatableMigrationInterface
+class Version20160213000000 extends AbstractMigration
 {
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Updater\Migrations\AbstractMigration::upgradeDatabase()
-     */
-    public function upgradeDatabase()
+    public function up(Schema $schema)
     {
         // added new delimiter settings.
-        $this->refreshBlockType('page_attribute_display');
+        $bt = \BlockType::getByHandle('page_attribute_display');
+        if (is_object($bt)) {
+            $bt->refresh();
+        }
+    }
+
+    public function down(Schema $schema)
+    {
     }
 }

@@ -99,7 +99,7 @@ if (!$error) {
                     }
                     break;
                 case "COPY":
-                    if (!empty($_REQUEST['copyAll']) && $u->isSuperUser()) {
+                    if ($_REQUEST['copyAll'] && $u->isSuperUser()) {
                         foreach ($originalPages as $oc) {
                             $nc2 = $oc->duplicateAll($dc); // new collection is passed back
                             if (is_object($nc2)) {
@@ -192,31 +192,31 @@ if ($successMessage !== '') {
     </h3>
     <br/>
     <form>
-        <input type="hidden" name="origCID" id="origCID" value="<?=h($_REQUEST['origCID'])?>" />
-        <input type="hidden" name="destParentID" id="destParentID" value="<?=$dc->getCollectionParentID()?>" />
-        <input type="hidden" name="destCID" id="destCID" value="<?=$dc->getCollectionID()?>" />
-        <input type="hidden" name="dragMode" id="dragMode" value="<?=h($_REQUEST['dragMode'])?>" />
+        <input type="hidden" name="origCID" id="origCID" value="<?php echo h($_REQUEST['origCID'])?>" />
+        <input type="hidden" name="destParentID" id="destParentID" value="<?php echo $dc->getCollectionParentID()?>" />
+        <input type="hidden" name="destCID" id="destCID" value="<?php echo $dc->getCollectionID()?>" />
+        <input type="hidden" name="dragMode" id="dragMode" value="<?php echo h($_REQUEST['dragMode'])?>" />
         <?php
         if (isset($destSibling)) {
             ?>
-            <input type="hidden" name="destSibling" id="destSibling" value="<?=$destSibling->getCollectionID()?>" />
+            <input type="hidden" name="destSibling" id="destSibling" value="<?php echo $destSibling->getCollectionID()?>" />
             <?php
         }
         ?>
-        <input type="hidden" name="select_mode" id="select_mode" value="<?=isset($_REQUEST['select_mode']) ? h($_REQUEST['select_mode']) : ''?>" />
-        <input type="hidden" name="display_mode" id="display_mode" value="<?=isset($_REQUEST['display_mode']) ? h($_REQUEST['display_mode']) : ''?>" />
+        <input type="hidden" name="select_mode" id="select_mode" value="<?php echo isset($_REQUEST['select_mode']) ? h($_REQUEST['select_mode']) : ''?>" />
+        <input type="hidden" name="display_mode" id="display_mode" value="<?php echo isset($_REQUEST['display_mode']) ? h($_REQUEST['display_mode']) : ''?>" />
 
         <input type="radio" checked style="vertical-align: middle" id="ctaskMove" name="ctask" value="MOVE" />
-        <strong><?=t('Move')?></strong>
+        <strong><?php echo t('Move')?></strong>
         <?php
         if (count($originalPages) == 1) {
             ?>
-            "<?=$oc->getCollectionName()?>"
+            "<?php echo $oc->getCollectionName()?>"
             <?php
         }
         ?>
-        <?=t('beneath')?>
-        "<?=$dc->getCollectionName()?>"
+        <?php echo t('beneath')?>
+        "<?php echo $dc->getCollectionName()?>"
         <div style="margin: 4px 0px 0px 20px">
             <input type="checkbox" id="saveOldPagePath" name="saveOldPagePath" value="1" style="vertical-align: middle"
                 <?php
@@ -227,47 +227,47 @@ if ($successMessage !== '') {
                 }
                 ?>
             />
-            <?=t('Save old page path')?>
+            <?php echo t('Save old page path')?>
         </div>
         <br/>
         <?php
         if ($oc->getCollectionPointerID() < 1) {
             ?>
             <input type="radio" style="vertical-align: middle" id="ctaskAlias" name="ctask" value="ALIAS" />
-            <strong><?=t('Alias')?></strong>
+            <strong><?php echo t('Alias')?></strong>
             <?php
             if (count($originalPages) == 1) {
                 ?>
-                "<?=$oc->getCollectionName()?>"
+                "<?php echo $oc->getCollectionName()?>"
                 <?php
             }
             ?>
-            <?=t('beneath')?>
-            "<?=$dc->getCollectionName()?>"
+            <?php echo t('beneath')?>
+            "<?php echo $dc->getCollectionName()?>"
             -
-            <?=t('Pages appear in both locations; all edits to originals will be reflected in their alias.')?>
+            <?php echo t('Pages appear in both locations; all edits to originals will be reflected in their alias.')?>
             <br/><br/>
             <?php
         }
         ?>
 
         <input type="radio" style="vertical-align: middle" id="ctaskCopy" name="ctask" value="COPY" />
-        <strong><?=t('Copy')?></strong>
+        <strong><?php echo t('Copy')?></strong>
         <?php
         if (count($originalPages) == 1) {
             ?>
-            "<?=$oc->getCollectionName()?>"
+            "<?php echo $oc->getCollectionName()?>"
             <?php
         }
         ?>
-        <?=t('beneath')?>
-        "<?=$dc->getCollectionName()?>"
+        <?php echo t('beneath')?>
+        "<?php echo $dc->getCollectionName()?>"
         <div style="margin: 4px 0px 0px 20px">
             <?php
             if ($canCopyChildren) {
                 ?>
-                <input type="radio" id="copyThisPage" name="copyAll" value="0" style="vertical-align: middle" disabled /> <?=t('Copy page.')?><br/>
-                <input type="radio" id="copyChildren" name="copyAll" value="1" style="vertical-align: middle" disabled /> <?=t('Copy page + children.')?>
+                <input type="radio" id="copyThisPage" name="copyAll" value="0" style="vertical-align: middle" disabled /> <?php echo t('Copy page.')?><br/>
+                <input type="radio" id="copyChildren" name="copyAll" value="1" style="vertical-align: middle" disabled /> <?php echo t('Copy page + children.')?>
                 <?php
             } else {
                 echo t('Your copy operation will only affect the current page - not any children.');
@@ -281,15 +281,15 @@ if ($successMessage !== '') {
             <?php
             if (isset($_REQUEST['sitemap_mode']) && $_REQUEST['sitemap_mode'] == 'move_copy_delete') {
                 ?>
-                <a href="javascript:void(0)" onclick="$.fn.dialog.closeTop()" id="ccm-exit-drag-request" title="<?=t('Choose Page')?>" class="pull-left btn btn-default"><?=t('Cancel')?></a>
+                <a href="javascript:void(0)" onclick="$.fn.dialog.closeTop()" id="ccm-exit-drag-request" title="<?php echo t('Choose Page')?>" class="pull-left btn btn-default"><?php echo t('Cancel')?></a>
                 <?php
             } else {
                 ?>
-                <a href="javascript:void(0)" onclick="$.fn.dialog.closeTop()" class="pull-left btn btn-default"><?=t('Cancel')?></a>
+                <a href="javascript:void(0)" onclick="$.fn.dialog.closeTop()" class="pull-left btn btn-default"><?php echo t('Cancel')?></a>
                 <?php
             }
             ?>
-            <a href="javascript:void(0)" onclick="ConcreteSitemap.submitDragRequest()" class="pull-right btn btn-primary"><?=t('Go')?></a>
+            <a href="javascript:void(0)" onclick="ConcreteSitemap.submitDragRequest()" class="pull-right btn btn-primary"><?php echo t('Go')?></a>
         </div>
         
         <div class="ccm-spacer">&nbsp;</div>

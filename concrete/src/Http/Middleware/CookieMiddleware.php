@@ -43,7 +43,7 @@ class CookieMiddleware implements MiddlewareInterface
 
         $cookies = $this->cookies->getCookies();
         foreach ($cookies as $cookie) {
-            $response->headers->setCookie($cookie);
+            $response->headers->setCookie($cookie, DIR_REL . '/');
         }
 
         return $response;

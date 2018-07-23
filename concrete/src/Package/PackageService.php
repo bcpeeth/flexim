@@ -1,5 +1,4 @@
 <?php
-
 namespace Concrete\Core\Package;
 
 use Concrete\Core\Application\Application;
@@ -10,53 +9,22 @@ use Concrete\Core\Foundation\ClassLoader;
 use Concrete\Core\Localization\Localization;
 use Doctrine\ORM\EntityManagerInterface;
 
-/**
- * Service class for the package entities and controllers.
- */
 class PackageService
 {
-    /**
-     * The Localization service instance.
-     *
-     * @var Localization
-     */
+    protected $entityManager;
+    protected $application;
     protected $localization;
 
-    /**
-     * The Application container instance.
-     *
-     * @var Application
-     */
-    protected $application;
-
-    /**
-     * The EntityManagerInterface instance.
-     *
-     * @var EntityManagerInterface
-     */
-    protected $entityManager;
-
-    /**
-     * Initialize the instance.
-     *
-     * @param Localization $localization the Localization service instance
-     * @param Application $application the Application container instance
-     * @param EntityManagerInterface $entityManager the EntityManagerInterface instance
-     */
-    public function __construct(Localization $localization, Application $application, EntityManagerInterface $entityManager)
-    {
-        $this->localization = $localization;
+    public function __construct(
+        Localization $localization,
+        Application $application,
+        EntityManagerInterface $entityManager
+    ) {
         $this->application = $application;
+        $this->localization = $localization;
         $this->entityManager = $entityManager;
     }
 
-    /**
-     * Get a package entity given its handle.
-     *
-     * @param string $pkgHandle
-     *
-     * @return \Concrete\Core\Entity\Package|null
-     */
     public function getByHandle($pkgHandle)
     {
         $r = $this->entityManager->getRepository('\Concrete\Core\Entity\Package');
@@ -64,13 +32,6 @@ class PackageService
         return $r->findOneBy(['pkgHandle' => $pkgHandle]);
     }
 
-    /**
-     * Get a package entity given its ID.
-     *
-     * @param int $pkgID
-     *
-     * @return \Concrete\Core\Entity\Package|null
-     */
     public function getByID($pkgID)
     {
         $r = $this->entityManager->getRepository('\Concrete\Core\Entity\Package');
@@ -79,7 +40,7 @@ class PackageService
     }
 
     /**
-     * Get the package entities of installed packages.
+     * Returns an array of all installed packages.
      *
      * @return \Concrete\Core\Entity\Package[]
      */
@@ -91,18 +52,18 @@ class PackageService
     }
 
     /**
-     * Get the package controllers of the available packages.
+     * Returns all available packages.
      *
-     * @param bool $onlyNotInstalled true to get the controllers of not installed packages, false to get all the package controllers
+     * @param bool $filterInstalled True to only return not installed packages
      *
-     * @return \Concrete\Core\Package\Package[]
+     * @return Package[]
      */
-    public function getAvailablePackages($onlyNotInstalled = true)
+    public function getAvailablePackages($filterInstalled = true)
     {
         $dh = $this->application->make('helper/file');
         $packages = $dh->getDirectoryContents(DIR_PACKAGES);
-        if ($onlyNotInstalled) {
-            $handles = $this->getInstalledHandles();
+        if ($filterInstalled) {
+            $handles = self::getInstalledHandles();
             $packages = array_diff($packages, $handles);
         }
 
@@ -124,14 +85,14 @@ class PackageService
     }
 
     /**
-     * Get the controllers of packages that have newer versions in the local packages directory than those which are in the Packages table.
-     * This means they're ready to be upgraded.
+     * Returns an array of packages that have newer versions in the local packages directory
+     * than those which are in the Packages table. This means they're ready to be upgraded.
      *
-     * @return \Concrete\Core\Package\Package[]
+     * @return Package[]
      */
     public function getLocalUpgradeablePackages()
     {
-        $packages = $this->getAvailablePackages(false);
+        $packages = self::getAvailablePackages(false);
         $upgradeables = [];
         foreach ($packages as $p) {
             $entity = $this->getByHandle($p->getPackageHandle());
@@ -147,7 +108,7 @@ class PackageService
     }
 
     /**
-     * Get the handles of all the installed packages.
+     * Returns all installed package handles.
      *
      * @return string[]
      */
@@ -165,13 +126,13 @@ class PackageService
     }
 
     /**
-     * Get the controllers of the packages that have an upgraded version available in the marketplace.
+     * Finds all packages that have an upgraded version available in the marketplace.
      *
-     * @return \Concrete\Core\Package\Package[]
+     * @return Package[]
      */
     public function getRemotelyUpgradeablePackages()
     {
-        $packages = $this->getInstalledList();
+        $packages = self::getInstalledList();
         $upgradeables = [];
         foreach ($packages as $p) {
             if (version_compare($p->getPackageVersion(), $p->getPackageVersionUpdateAvailable(), '<')) {
@@ -182,49 +143,38 @@ class PackageService
         return $upgradeables;
     }
 
-    /**
-     * Initialize the entity manager for a package.
-     *
-     * @param \Concrete\Core\Package\Package $p The controller of package
-     * @param bool $clearCache Should the entity metadata cache be emptied?
-     */
-    public function bootPackageEntityManager(Package $p, $clearCache = false)
+    public function setupLocalization(LocalizablePackageInterface $package, $locale = null, $translate = 'current')
+    {
+        if ($translate === 'current') {
+            $translate = \Localization::getTranslate();
+        }
+        if (is_object($translate)) {
+            if (!isset($locale) || !strlen($locale)) {
+                $locale = Localization::activeLocale();
+            }
+            $languageFile = $package->getTranslationFile($locale);
+            if (is_file($languageFile)) {
+                $translate->addTranslationFile('gettext', $languageFile);
+            }
+        }
+    }
+
+    public function bootPackageEntityManager(Package $p)
     {
         $configUpdater = new EntityManagerConfigUpdater($this->entityManager);
         $providerFactory = new PackageProviderFactory($this->application, $p);
         $provider = $providerFactory->getEntityManagerProvider();
         $configUpdater->addProvider($provider);
-        if ($clearCache) {
-            $cache = $this->entityManager->getConfiguration()->getMetadataCacheImpl();
-            if ($cache) {
-                $cache->flushAll();
-            }
-        }
     }
 
-    /**
-     * Uninstall a package.
-     *
-     * @param \Concrete\Core\Package\Package $p the controller of the package to be uninstalled
-     */
     public function uninstall(Package $p)
     {
         $p->uninstall();
         $config = $this->entityManager->getConfiguration();
         $cache = $config->getMetadataCacheImpl();
-        if ($cache) {
-            $cache->flushAll();
-        }
+        $cache->flushAll();
     }
 
-    /**
-     * Install a package.
-     *
-     * @param \Concrete\Core\Package\Package $p the controller of the package to be installed
-     * @param array $data data to be passed to the Package::validate_install(), Package::install(), ContentSwapper::swapContent(), ContentSwapper::on_after_swap_content() methods
-     *
-     * @return \Concrete\Core\Error\ErrorList\ErrorList|\Concrete\Core\Package\Package return an ErrorList instance in case of errors, the package controller otherwise
-     */
     public function install(Package $p, $data)
     {
         $this->localization->pushActiveContext(Localization::CONTEXT_SYSTEM);
@@ -238,7 +188,7 @@ class PackageService
             return $response;
         }
 
-        $this->bootPackageEntityManager($p, true);
+        $this->bootPackageEntityManager($p);
         $p->install($data);
 
         $u = new \User();
@@ -256,7 +206,7 @@ class PackageService
     }
 
     /**
-     * Get the controller of a package given its handle.
+     * Returns a package's class.
      *
      * @param string $pkgHandle Handle of package
      *
@@ -264,7 +214,8 @@ class PackageService
      */
     public function getClass($pkgHandle)
     {
-        $cache = $this->application->make('cache/request');
+        $app = \Core::make('app');
+        $cache = $app->make('cache/request');
         $item = $cache->getItem('package/class/' . $pkgHandle);
         $cl = $item->get();
         if ($item->isMiss()) {
@@ -276,37 +227,13 @@ class PackageService
 
             $class = '\\Concrete\\Package\\' . camelcase($pkgHandle) . '\\Controller';
             try {
-                $cl = $this->application->make($class);
+                $cl = $app->make($class);
             } catch (\Exception $ex) {
-                $cl = $this->application->make('Concrete\Core\Package\BrokenPackage', [$pkgHandle]);
+                $cl = $app->make('Concrete\Core\Package\BrokenPackage', [$pkgHandle]);
             }
             $cache->save($item->set($cl));
         }
 
         return clone $cl;
-    }
-
-    /**
-     * @deprecated
-     *
-     * @param LocalizablePackageInterface $package
-     * @param string|null $locale
-     * @param \Zend\I18n\Translator\Translator|'current' $translator
-     */
-    public function setupLocalization(LocalizablePackageInterface $package, $locale = null, $translator = 'current')
-    {
-        if ($translator === 'current') {
-            $translator = $this->localization->getActiveTranslateObject();
-        }
-        if (is_object($translator)) {
-            $locale = (string) $locale;
-            if ($locale === '') {
-                $locale = $this->localization->getLocale();
-            }
-            $languageFile = $package->getTranslationFile($locale);
-            if (is_file($languageFile)) {
-                $translator->addTranslationFile('gettext', $languageFile);
-            }
-        }
     }
 }

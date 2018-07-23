@@ -1,21 +1,15 @@
 <?php
-
 namespace Concrete\Core\Updater\Migrations\Migrations;
 
 use Concrete\Core\Updater\Migrations\AbstractMigration;
-use Concrete\Core\Updater\Migrations\RepeatableMigrationInterface;
+use Doctrine\DBAL\Schema\Schema;
 
-class Version20170406000000 extends AbstractMigration implements RepeatableMigrationInterface
+class Version20170406000000 extends AbstractMigration
 {
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Updater\Migrations\AbstractMigration::upgradeDatabase()
-     */
-    public function upgradeDatabase()
+    public function up(Schema $schema)
     {
         $all_tables = $this->connection->executeQuery('SHOW TABLES LIKE "%ExpressSearchIndexAttributes"')->fetchAll();
-        $all_tables = array_map(function ($row) {
+        $all_tables = array_map(function($row) {
             return array_values($row)[0];
         }, $all_tables);
 
@@ -32,5 +26,9 @@ class Version20170406000000 extends AbstractMigration implements RepeatableMigra
         foreach ($drop_tables as $table) {
             $this->connection->exec('DROP TABLE IF EXISTS ' . $table);
         }
+    }
+
+    public function down(Schema $schema)
+    {
     }
 }

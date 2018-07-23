@@ -64,10 +64,10 @@ class AddressSettings extends \Concrete\Core\Entity\Attribute\Key\Settings\Addre
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'akDefaultCountry', 'akHasCustomCountries', 'customCountries', 'akGeolocateCountry', 'key'];
+            return ['__isInitialized__', 'akDefaultCountry', 'akHasCustomCountries', 'customCountries', 'key'];
         }
 
-        return ['__isInitialized__', 'akDefaultCountry', 'akHasCustomCountries', 'customCountries', 'akGeolocateCountry', 'key'];
+        return ['__isInitialized__', 'akDefaultCountry', 'akHasCustomCountries', 'customCountries', 'key'];
     }
 
     /**
@@ -237,28 +237,6 @@ class AddressSettings extends \Concrete\Core\Entity\Attribute\Key\Settings\Addre
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCustomCountries', [$customCountries]);
 
         return parent::setCustomCountries($customCountries);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function geolocateCountry()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'geolocateCountry', []);
-
-        return parent::geolocateCountry();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setGeolocateCountry($value)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setGeolocateCountry', [$value]);
-
-        return parent::setGeolocateCountry($value);
     }
 
     /**

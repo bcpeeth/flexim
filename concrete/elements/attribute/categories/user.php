@@ -10,35 +10,35 @@ if (is_object($key)) {
 ?>
 <?php $form = Loader::helper('form'); ?>
 <fieldset>
-    <legend><?=t('User Attribute Options')?></legend>
+    <legend><?php echo t('User Attribute Options')?></legend>
     <div class="form-group">
-    <label class="control-label"><?=t('Public Display')?></label>
+    <label class="control-label"><?php echo t('Public Display')?></label>
         <div class="checkbox">
-            <label class="checkbox"><?=$form->checkbox('uakProfileDisplay', 1, !empty($uakProfileDisplay))?> <?=t('Displayed in Public Profile.');?></label>
+            <label class="checkbox"><?php echo $form->checkbox('uakProfileDisplay', 1, $uakProfileDisplay)?> <?php echo t('Displayed in Public Profile.');?></label>
         </div>
         <div class="checkbox">
-            <label class="checkbox"><?=$form->checkbox('uakMemberListDisplay', 1, !empty($uakMemberListDisplay))?> <?=t('Displayed on Member List.');?></label>
+            <label class="checkbox"><?php echo $form->checkbox('uakMemberListDisplay', 1, $uakMemberListDisplay)?> <?php echo t('Displayed on Member List.');?></label>
         </div>
     </div>
 
     <div class="form-group">
-        <label class="control-label"><?=t('Edit Mode')?></label>
+        <label class="control-label"><?php echo t('Edit Mode')?></label>
         <div class="checkbox">
-            <label class="checkbox"><?=$form->checkbox('uakProfileEdit', 1, !empty($uakProfileEdit))?> <?=t('Editable in Profile.');?></label>
+            <label class="checkbox"><?php echo $form->checkbox('uakProfileEdit', 1, $uakProfileEdit)?> <?php echo t('Editable in Profile.');?></label>
         </div>
         <div class="checkbox">
-            <label class="checkbox"><?=$form->checkbox('uakProfileEditRequired', 1, !empty($uakProfileEditRequired))?> <?=t('Editable and Required in Profile.');?></label>
+            <label class="checkbox"><?php echo $form->checkbox('uakProfileEditRequired', 1, $uakProfileEditRequired)?> <?php echo t('Editable and Required in Profile.');?></label>
         </div>
     </div>
 
 
     <div class="form-group">
-        <label class="control-label"><?=t('Registration')?></label>
+        <label class="control-label"><?php echo t('Registration')?></label>
         <div class="checkbox">
-            <label class="checkbox"><?=$form->checkbox('uakRegisterEdit', 1, !empty($uakRegisterEdit))?> <?=t('Show on Registration Form.');?></label>
+            <label class="checkbox"><?php echo $form->checkbox('uakRegisterEdit', 1, $uakRegisterEdit)?> <?php echo t('Show on Registration Form.');?></label>
         </div>
         <div class="checkbox">
-            <label class="checkbox"><?=$form->checkbox('uakRegisterEditRequired', 1, !empty($uakRegisterEditRequired))?> <?=t('Require on Registration Form.');?></label>
+            <label class="checkbox"><?php echo $form->checkbox('uakRegisterEditRequired', 1, $uakRegisterEditRequired)?> <?php echo t('Require on Registration Form.');?></label>
         </div>
     </div>
 </fieldset>

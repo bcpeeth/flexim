@@ -17,13 +17,6 @@ class FileRoutine extends AbstractRegularExpressionRoutine
 
     public function getItem($identifier)
     {
-        $prefix = null;
-        $filename = null;
-        if (strpos($identifier, ':') > -1) {
-            list($prefix, $filename) = explode(':', $identifier);
-        } else {
-            $filename = $identifier;
-        }
-        return new FileItem($filename, $prefix);
+        return new FileItem($identifier);
     }
 }

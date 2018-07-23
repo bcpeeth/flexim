@@ -6,11 +6,11 @@ if (is_array($image)) {
 ?>
 <div class="ccm-gathering-thumbnail-description ccm-gathering-centered-content ccm-gathering-scaled-image">
 	<a href="#" data-overlay="gathering-item">
-		<img src="<?=$image->getSrc()?>" alt="<?php echo t('Preview Image') ?>" />
+		<img src="<?php echo $image->getSrc()?>" alt="<?php echo t('Preview Image') ?>" />
 	</a>
 	<div class="ccm-gathering-tile-title-description">
 		<div class="ccm-gathering-tile-description">
-		<?=$description?>
+		<?php echo $description?>
 		</div>
 	</div>
 	<div class="clearfix" style="clear: both;"></div>

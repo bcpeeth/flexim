@@ -6,20 +6,20 @@
 if (!isset($starsOnly) || !$starsOnly) {
     ?>
     <label for="review" class="pull-left">
-        <?= t('Rating') ?>&nbsp;
+        <?php echo t('Rating') ?>&nbsp;
     </label>
     <?php
 }
 ?>
-<div class="star-rating <?= $selector = uniqid('rating') ?>" data-name="review" data-score="<?= intval($review) ?>""></div>
+<div class="star-rating <?php echo $selector = uniqid('rating') ?>" data-name="review" data-score="<?php echo intval($review) ?>""></div>
 
 <script>
     (function() {
-        var stars = $('.<?= $selector ?>').awesomeStarRating();
+        var stars = $('.<?php echo $selector ?>').awesomeStarRating();
         <?php
         if (isset($starsOnly) && $starsOnly) {
             ?>
-            $('.<?= $selector ?>').children().unbind();
+            $('.<?php echo $selector ?>').children().unbind();
             <?php
         }
         ?>

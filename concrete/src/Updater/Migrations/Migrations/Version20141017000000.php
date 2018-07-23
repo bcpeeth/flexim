@@ -1,62 +1,38 @@
 <?php
-
 namespace Concrete\Core\Updater\Migrations\Migrations;
 
-use Concrete\Core\Attribute\Category\PageCategory;
 use Concrete\Core\Authentication\AuthenticationType;
 use Concrete\Core\Page\Page;
 use Concrete\Core\Permission\Key\Key;
-use Concrete\Core\Updater\Migrations\AbstractMigration;
-use Concrete\Core\Updater\Migrations\RepeatableMigrationInterface;
+use Doctrine\DBAL\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
+use SinglePage;
 use Exception;
 
-class Version20141017000000 extends AbstractMigration implements RepeatableMigrationInterface
+class Version20141017000000 extends AbstractMigration
 {
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Doctrine\DBAL\Migrations\AbstractMigration::getDescription()
-     */
     public function getDescription()
     {
         return '5.7.1';
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Updater\Migrations\AbstractMigration::upgradeSchema()
-     */
-    public function upgradeSchema(Schema $schema)
+    public function up(Schema $schema)
     {
         /* refresh CollectionVersionBlocks, CollectionVersionBlocksCacheSettings tables */
         $cvb = $schema->getTable('CollectionVersionBlocks');
-        if (!$cvb->hasColumn('cbOverrideBlockTypeCacheSettings')) {
-            $cvb->addColumn('cbOverrideBlockTypeCacheSettings', 'boolean', ['default' => 0]);
-        }
+        $cvb->addColumn('cbOverrideBlockTypeCacheSettings', 'boolean', array('default' => 0));
 
-        if (!$schema->hasTable('CollectionVersionBlocksCacheSettings')) {
-            $cvbcs = $schema->createTable('CollectionVersionBlocksCacheSettings');
-            $cvbcs->addColumn('cID', 'integer', ['notnull' => true, 'unsigned' => true, 'default' => 0]);
-            $cvbcs->addColumn('cvID', 'integer', ['notnull' => true, 'unsigned' => true, 'default' => 1]);
-            $cvbcs->addColumn('bID', 'integer', ['notnull' => true, 'unsigned' => true, 'default' => 0]);
-            $cvbcs->addColumn('arHandle', 'string', ['notnull' => false]);
-            $cvbcs->addColumn('btCacheBlockOutput', 'boolean', ['default' => 0]);
-            $cvbcs->addColumn('btCacheBlockOutputOnPost', 'boolean', ['default' => 0]);
-            $cvbcs->addColumn('btCacheBlockOutputForRegisteredUsers', 'boolean', ['default' => 0]);
-            $cvbcs->addColumn('btCacheBlockOutputLifetime', 'integer', ['notnull' => true, 'unsigned' => true, 'default' => 0]);
-            $cvbcs->setPrimaryKey(['cID', 'cvID', 'bId', 'arHandle']);
-        }
-    }
+        $cvbcs = $schema->createTable('CollectionVersionBlocksCacheSettings');
+        $cvbcs->addColumn('cID', 'integer', array('notnull' => true, 'unsigned' => true, 'default' => 0));
+        $cvbcs->addColumn('cvID', 'integer', array('notnull' => true, 'unsigned' => true, 'default' => 1));
+        $cvbcs->addColumn('bID', 'integer', array('notnull' => true, 'unsigned' => true, 'default' => 0));
+        $cvbcs->addColumn('arHandle', 'string', array('notnull' => false));
+        $cvbcs->addColumn('btCacheBlockOutput', 'boolean', array('default' => 0));
+        $cvbcs->addColumn('btCacheBlockOutputOnPost', 'boolean', array('default' => 0));
+        $cvbcs->addColumn('btCacheBlockOutputForRegisteredUsers', 'boolean', array('default' => 0));
+        $cvbcs->addColumn('btCacheBlockOutputLifetime', 'integer', array('notnull' => true, 'unsigned' => true, 'default' => 0));
+        $cvbcs->setPrimaryKey(array('cID', 'cvID', 'bId', 'arHandle'));
 
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Updater\Migrations\AbstractMigration::upgradeDatabase()
-     */
-    public function upgradeDatabase()
-    {
         /* add permissions lines for edit_block_name and edit_block_cache_settings */
         $ebk = Key::getByHandle('edit_block_name');
         if (!is_object($ebk)) {
@@ -64,13 +40,28 @@ class Version20141017000000 extends AbstractMigration implements RepeatableMigra
         }
         $ebk = Key::getByHandle('edit_block_cache_settings');
         if (!is_object($ebk)) {
-            Key::add('block', 'edit_block_cache_settings', 'Edit Cache Settings', 'Controls whether users can change the block cache settings for this block instance.', false, false);
+            Key::add('block', 'edit_block_cache_settings', 'Edit Cache Settings', "Controls whether users can change the block cache settings for this block instance.", false, false);
         }
 
         /* Add marketplace single pages */
-        $this->createSinglePage('/dashboard/extend/connect', 'Connect to the Community', ['meta_keywords' => 'concrete5.org, my account, marketplace']);
-        $this->createSinglePage('/dashboard/extend/themes', 'Get More Themes', ['meta_keywords' => 'buy theme, new theme, marketplace, template']);
-        $this->createSinglePage('/dashboard/extend/addons', 'Get More Add-Ons', ['meta_keywords' => 'buy addon, buy add on, buy add-on, purchase addon, purchase add on, purchase add-on, find addon, new addon, marketplace']);
+        $sp = Page::getByPath('/dashboard/extend/connect');
+        if (!is_object($sp) || $sp->isError()) {
+            $sp = SinglePage::add('/dashboard/extend/connect');
+            $sp->update(array('cName' => 'Connect to the Community'));
+            $sp->setAttribute('meta_keywords', 'concrete5.org, my account, marketplace');
+        }
+        $sp = Page::getByPath('/dashboard/extend/themes');
+        if (!is_object($sp) || $sp->isError()) {
+            $sp = SinglePage::add('/dashboard/extend/themes');
+            $sp->update(array('cName' => 'Get More Themes'));
+            $sp->setAttribute('meta_keywords', 'buy theme, new theme, marketplace, template');
+        }
+        $sp = Page::getByPath('/dashboard/extend/addons');
+        if (!is_object($sp) || $sp->isError()) {
+            $sp = SinglePage::add('/dashboard/extend/addons');
+            $sp->update(array('cName' => 'Get More Add-Ons'));
+            $sp->setAttribute('meta_keywords', 'buy addon, buy add on, buy add-on, purchase addon, purchase add on, purchase add-on, find addon, new addon, marketplace');
+        }
 
         /* Add auth types ("handle|name") "twitter|Twitter" and "community|concrete5.org" */
         try {
@@ -99,8 +90,12 @@ class Version20141017000000 extends AbstractMigration implements RepeatableMigra
 
         /* exclude nav from flat view in dashboard */
         $flat = Page::getByPath('/dashboard/sitemap/explore');
-        if (is_object($customize) && !$customize->isError() && $this->isAttributeHandleValid(PageCategory::class, 'exclude_nav')) {
-            $flat->setAttribute('exclude_nav', false);
+        if (is_object($customize) && !$customize->isError()) {
+            $flat->setAttribute("exclude_nav", false);
         }
+    }
+
+    public function down(Schema $schema)
+    {
     }
 }

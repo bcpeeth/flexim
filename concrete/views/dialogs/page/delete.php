@@ -5,19 +5,19 @@ defined('C5_EXECUTE') or die("Access Denied.");
 <div class="ccm-ui">
 <?php if ($c->getCollectionID() == 1) {
     ?>
-	<div class="alert alert-danger"><?=t('You may not delete the home page.');
+	<div class="alert alert-danger"><?php echo t('You may not delete the home page.');
     ?></div>
-	<div class="dialog-buttons"><input type="button" class="btn btn-default" value="<?=t('Cancel')?>" onclick="jQuery.fn.dialog.closeTop()" /></div>
+	<div class="dialog-buttons"><input type="button" class="btn btn-default" value="<?php echo t('Cancel')?>" onclick="jQuery.fn.dialog.closeTop()" /></div>
 
 <?php 
 } elseif ($numChildren > 0 && !$u->isSuperUser()) {
     ?>
-	<div class="alert alert-danger"><?=t('Before you can delete this page, you must delete all of its child pages.')?></div>
-	<div class="dialog-buttons"><input type="button" class="btn btn-default" value="<?=t('Cancel')?>" onclick="jQuery.fn.dialog.closeTop()" /></div>
+	<div class="alert alert-danger"><?php echo t('Before you can delete this page, you must delete all of its child pages.')?></div>
+	<div class="dialog-buttons"><input type="button" class="btn btn-default" value="<?php echo t('Cancel')?>" onclick="jQuery.fn.dialog.closeTop()" /></div>
 <?php 
 } else {
     ?>
-	<form method="post" data-dialog-form="delete-page" action="<?=$controller->action('submit')?>">
+	<form method="post" data-dialog-form="delete-page" action="<?php echo $controller->action('submit')?>">
         <?php if ($sitemap) {
     ?>
             <input type="hidden" name="sitemap" value="1" />
@@ -26,8 +26,8 @@ defined('C5_EXECUTE') or die("Access Denied.");
     ?>
 
 		<div class="dialog-buttons">
-		<button class="btn btn-default pull-left" data-dialog-action="cancel"><?=t('Cancel')?></button>
-		<button type="button" data-dialog-action="submit" class="btn btn-danger pull-right"><?=t('Delete')?></button>
+		<button class="btn btn-default pull-left" data-dialog-action="cancel"><?php echo t('Cancel')?></button>
+		<button type="button" data-dialog-action="submit" class="btn btn-danger pull-right"><?php echo t('Delete')?></button>
 		</div>
 
 		<?php if ($c->isSystemPage() && !$c->isPageDraft()) {
@@ -36,21 +36,21 @@ defined('C5_EXECUTE') or die("Access Denied.");
 		<?php 
 }
     ?>
-		<strong><?=t('Are you sure you wish to delete this page?')?></strong><br>
+		<strong><?php echo t('Are you sure you wish to delete this page?')?></strong><br>
 		<?php if ($u->isSuperUser() && $numChildren > 0) {
     ?>
-			<p><strong><?=t2('This will remove %s child page.', 'This will remove %s child pages.', $numChildren, $numChildren)?></strong></p>
+			<p><strong><?php echo t2('This will remove %s child page.', 'This will remove %s child pages.', $numChildren, $numChildren)?></strong></p>
 		<?php 
 }
     ?>
 
 		<?php if (Config::get('concrete.misc.enable_trash_can')) {
     ?>
-			<br><p><?=t('Deleted pages are moved to Trash in the System Pages section of the sitemap.')?></p>
+			<br><p><?php echo t('Deleted pages are moved to Trash in the System Pages section of the sitemap.')?></p>
 		<?php 
 } else {
     ?>
-			<p><?=t('This cannot be undone.')?></p>
+			<p><?php echo t('This cannot be undone.')?></p>
 		<?php 
 }
     ?>
@@ -62,7 +62,7 @@ defined('C5_EXECUTE') or die("Access Denied.");
         ConcreteEvent.unsubscribe('AjaxFormSubmitSuccess.sitemapDelete');
 		ConcreteEvent.subscribe('AjaxFormSubmitSuccess.sitemapDelete', function(e, data) {
 			if (data.form == 'delete-page') {
-				ConcreteEvent.publish('SitemapDeleteRequestComplete', {'cID': '<?=$c->getCollectionID()?>'});
+				ConcreteEvent.publish('SitemapDeleteRequestComplete', {'cID': '<?php echo $c->getCollectionID()?>'});
 			}
 		});
 	});

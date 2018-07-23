@@ -37,12 +37,6 @@ class UserCorePageProperty extends CorePageProperty
     public function validate()
     {
         $uID = $this->getPageTypeComposerControlDraftValue();
-        $val = $this->getRequestValue();
-        if (isset($val['user'])) {
-            $uID = intval($val['user']);
-        } else {
-            $uID = $this->getPageTypeComposerControlDraftValue();
-        }
         $ux = UserInfo::getByID($uID);
         $e = Core::make('helper/validation/error');
         if (!is_object($ux)) {

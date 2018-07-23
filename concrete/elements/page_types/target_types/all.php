@@ -7,24 +7,17 @@ if (is_object($pagetype) && $pagetype->getPageTypePublishTargetTypeID() == $type
     $configuredTarget = $pagetype->getPageTypePublishTargetObject();
     $selectorFormFactor = $configuredTarget->getSelectorFormFactor();
     $startingPointPageID = $configuredTarget->getStartingPointPageID();
-} else {
-    if (!isset($selectorFormFactor)) {
-        $selectorFormFactor = null;
-    }
-    if (!isset($startingPointPageID)) {
-        $startingPointPageID = null;
-    }
 }
 ?>
 
 <div class="form-group">
-	<?=$form->label('selectorFormFactorAll', t('Selector Form Factor'))?>
-	<?=$form->select('selectorFormFactorAll', $factors, $selectorFormFactor)?>
+	<?php echo $form->label('selectorFormFactorAll', t('Selector Form Factor'))?>
+	<?php echo $form->select('selectorFormFactorAll', $factors, $selectorFormFactor)?>
 </div>
 
 <div class="form-group" data-all-form-factor-display="sitemap_in_page">
-	<?=$form->label('startingPointPageIDAll', t('Display Pages Beneath Page'))?>
-	<?=$pageSelector->selectPage('startingPointPageIDAll', $startingPointPageID)?>
+	<?php echo $form->label('startingPointPageIDAll', t('Display Pages Beneath Page'))?>
+	<?php echo $pageSelector->selectPage('startingPointPageIDAll', $startingPointPageID)?>
 </div>
 
 <script type="text/javascript">

@@ -59,11 +59,6 @@ class Manager extends CoreManager
         return new CaptchaLibrary();
     }
 
-    public function createGeolocatorLibraryDriver()
-    {
-        return new GeolocatorLibrary();
-    }
-
     public function createGroupSetDriver()
     {
         return new GroupSet();

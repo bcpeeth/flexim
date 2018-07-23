@@ -6,10 +6,10 @@ use Concrete\Core\Package\Package;
 use Concrete\Core\Package\PackageArchive;
 use Loader;
 use Config;
-use Concrete\Core\Foundation\ConcreteObject;
+use Concrete\Core\Foundation\Object;
 use Exception;
 
-class RemoteItem extends ConcreteObject
+class RemoteItem extends Object
 {
     protected $price = 0.00;
     protected $remoteCID = 0;
@@ -227,11 +227,9 @@ class RemoteItem extends ConcreteObject
         }
 
         $r = $pkg->backup();
-        if (is_object($r) && $r instanceof Error) {
+        if (is_object($r)) {
             return $r;
         }
-
-        $pkg = $r;
 
         try {
             $am = new PackageArchive($this->getHandle());

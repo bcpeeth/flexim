@@ -11,14 +11,14 @@ $interface = Loader::helper('concrete/ui');
 $valt = Core::make('token');
 
 ?>
-	<form method="post" class="" id="attribute_type_associations_form" action="<?=$view->action('save_attribute_type_associations')?>">
+	<form method="post" class="" id="attribute_type_associations_form" action="<?php echo $view->action('save_attribute_type_associations')?>">
 	<?php $valt->output('save_attribute_type_associations'); ?>
 	<table border="0" cellspacing="1" cellpadding="0" border="0" class="table">
 		<tr>
-			<th><?=t('Name')?></th>
+			<th><?php echo t('Name')?></th>
 			<?php foreach ($categories as $cat) {
     ?>
-				<th><?=$txt->unhandle($cat->getAttributeKeyCategoryHandle())?></th>
+				<th><?php echo $txt->unhandle($cat->getAttributeKeyCategoryHandle())?></th>
 			<?php 
 } ?>
 		</tr>
@@ -26,10 +26,10 @@ $valt = Core::make('token');
     ?>
 
 			<tr>
-				<td><?=$at->getAttributeTypeDisplayName()?></td>
+				<td><?php echo $at->getAttributeTypeDisplayName()?></td>
 				<?php foreach ($categories as $cat) {
     ?>
-					<td style="width: 1px; text-align: center"><?=$form->checkbox($cat->getAttributeKeyCategoryHandle() . '[]', $at->getAttributeTypeID(), $at->isAssociatedWithCategory($cat))?></td>
+					<td style="width: 1px; text-align: center"><?php echo $form->checkbox($cat->getAttributeKeyCategoryHandle() . '[]', $at->getAttributeTypeID(), $at->isAssociatedWithCategory($cat))?></td>
 				<?php 
 }
     ?>
@@ -49,13 +49,13 @@ $valt = Core::make('token');
 	</div>
 </form>
 
-<h4><?=t('Custom Attribute Types')?></h4>
+<h4><?php echo t('Custom Attribute Types')?></h4>
 <?php
 $ch = Loader::helper('concrete/ui');
 $types = PendingAttributeType::getList(); ?>
 <?php if (count($types) == 0) {
     ?>
-	<?=t('There are no available attribute types awaiting installation.')?>
+	<?php echo t('There are no available attribute types awaiting installation.')?>
 <?php 
 } else {
     ?>
@@ -64,16 +64,16 @@ $types = PendingAttributeType::getList(); ?>
     ?>
 			<li>
 					<span>
-		        		<form id="attribute_type_install_form_<?=$at->getAttributeTypeHandle()?>" style="margin: 0px" method="post" action="<?=$view->action('add_attribute_type')?>">
+		        		<form id="attribute_type_install_form_<?php echo $at->getAttributeTypeHandle()?>" style="margin: 0px" method="post" action="<?php echo $view->action('add_attribute_type')?>">
                             <?php
 							$controller = $at->getController();
 							$formatter = $controller->getIconFormatter();
                             echo $form->hidden("atHandle", $at->getAttributeTypeHandle());
 							print $formatter->getListIconElement();
     ?>
-                        <?=$at->getAttributeTypeDisplayName()?>
+                        <?php echo $at->getAttributeTypeDisplayName()?>
 
-                        <?=$ch->submit(t("Install"), 'submit', 'right', 'btn-default btn-xs')?>
+                        <?php echo $ch->submit(t("Install"), 'submit', 'right', 'btn-default btn-xs')?>
                         </form>
 
                     </span>

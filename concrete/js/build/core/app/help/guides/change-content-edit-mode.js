@@ -1,9 +1,5 @@
-/* jshint unused:vars, undef:true, browser:true, jquery:true */
-/* global Tourist, ccmi18n_helpGuides, ConcreteEvent, ConcreteHelpGuideManager, ConcreteMenuManager */
-
-;(function(global, $) {
+!function(global, $) {
 	'use strict';
-
 	var i18n = ccmi18n_helpGuides['change-content-edit-mode'];
 	var $area = $('div.ccm-area:not(.ccm-global-area)').eq(0);
 	var $block = $area.find('.ccm-block-edit').eq(0);
@@ -41,7 +37,7 @@
 		nextButton: true,
 		setup: function(tour, options) {
 			var target = $('div#ccm-popover-menu-container div.ccm-edit-mode-block-menu').eq(0);
-			return {target: target};
+			return {target: target}
 		},
 		teardown: function() {
 			var menu = ConcreteMenuManager.getActiveMenu();
@@ -76,4 +72,4 @@
 
 	ConcreteHelpGuideManager.register('change-content-edit-mode', tour);
 
-})(window, jQuery);
+}(window, jQuery);

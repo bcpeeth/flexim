@@ -20,21 +20,15 @@ View::element(
 
 <style>
     body {
-        background: url("<?= ASSETS_URL_IMAGES ?>/bg_login.png");
+        background: url("<?php echo ASSETS_URL_IMAGES ?>/bg_login.png");
     }
 </style>
 
 <?php echo $innerContent ?>
 
 <div class="ccm-page-background-credit" style="display:none">
-    <div class="ccm-page-background-privacy-notice pull-left">
-        <?=t('Image served from concrete5.org. <a href="%s" target="_blank">View Privacy Policy</a>.',
-            Config::get('concrete.urls.privacy_policy'))?>
-    </div>
-    <div class="ccm-page-background-photo-credit pull-right">
-        <?= t('Photo Credit:') ?>
-        <a href="#"></a>
-    </div>
+    <?php echo t('Photo Credit:') ?>
+    <a href="#" style="pull-right"></a>
 </div>
 
 </div>
@@ -60,7 +54,7 @@ $(function() {
             .append(
             $('<img/>')
                 .css({ width: '100%', height: '100%' })
-                .attr('src', '<?= ASSETS_URL_IMAGES ?>/login_fade.png'))
+                .attr('src', '<?php echo ASSETS_URL_IMAGES ?>/login_fade.png'))
             .fadeIn();
     }, 0);
 
@@ -68,7 +62,7 @@ $(function() {
     ?>
     $(function () {
         var shown = false, info;
-        $.getJSON('<?= Core::getApplicationURL() . '/' . DISPATCHER_FILENAME . '/tools/required/dashboard/get_image_data' ?>', { image: '<?= $image ?>' }, function (data) {
+        $.getJSON('<?php echo Core::getApplicationURL() . '/' . DISPATCHER_FILENAME . '/tools/required/dashboard/get_image_data' ?>', { image: '<?php echo $image ?>' }, function (data) {
             if (shown) {
                 $('div.ccm-page-background-credit').fadeIn().children().attr('href', data.link).text(data.author.join());
             } else {
@@ -79,18 +73,18 @@ $(function() {
             shown = true;
 
             if (info) {
-                $('div.ccm-page-background-credit').fadeIn().find('div.ccm-page-background-photo-credit').children().attr('href', info.link).text(info.author.join());
+                $('div.ccm-page-background-credit').fadeIn().children().attr('href', info.link).text(info.author.join());
             }
 
         });
-        $.backstretch("<?= Config::get('concrete.urls.background_feed') . '/' . $image ?>", {
+        $.backstretch("<?php echo Config::get('concrete.urls.background_feed') . '/' . $image ?>", {
             fade: 500
         });
     });
     <?php 
 } elseif (Config::get('concrete.white_label.background_url')) {
     ?>
-        $.backstretch("<?= Config::get('concrete.white_label.background_url') ?>", {
+        $.backstretch("<?php echo Config::get('concrete.white_label.background_url') ?>", {
             fade: 500
         });
     <?php 

@@ -79,17 +79,17 @@ $searchInstance = Loader::helper('text')->entities($_REQUEST['searchInstance']);
 
 <?php if ($pcnt == 0) {
     ?>
-	<?=t("You do not have permission to modify speed settings on any of the selected pages.");
+	<?php echo t("You do not have permission to modify speed settings on any of the selected pages.");
     ?>
 <?php 
 } else {
     ?>
 
-	<form id="ccm-<?=$searchInstance?>-speed-settings-form" method="post" action="<?=REL_DIR_FILES_TOOLS_REQUIRED?>/pages/speed_settings">
-	<?=$form->hidden('task', 'edit_speed_settings')?>
+	<form id="ccm-<?php echo $searchInstance?>-speed-settings-form" method="post" action="<?php echo REL_DIR_FILES_TOOLS_REQUIRED?>/pages/speed_settings">
+	<?php echo $form->hidden('task', 'edit_speed_settings')?>
 	<?php foreach ($pages as $c) {
     ?>
-		<?=$form->hidden('cID[]', $c->getCollectionID())?>
+		<?php echo $form->hidden('cID[]', $c->getCollectionID())?>
 	<?php 
 }
     ?>
@@ -127,21 +127,21 @@ $searchInstance = Loader::helper('text')->entities($_REQUEST['searchInstance']);
     ?>
 
 		<div class="clearfix">
-		<label><?=t('Full Page Caching')?></label>
+		<label><?php echo t('Full Page Caching')?></label>
 
 		<div class="input">
 		<ul class="inputs-list">
-		<li><label><?=$form->radio('cCacheFullPageContent', -2, $fullPageCaching)?>
-		<span><?=t('Multiple values')?></span>
+		<li><label><?php echo $form->radio('cCacheFullPageContent', -2, $fullPageCaching)?>
+		<span><?php echo t('Multiple values')?></span>
 		</label></li>
-		<li><label><?=$form->radio('cCacheFullPageContent', -1, $fullPageCaching, array('enable-cache' => $enableCache))?>
-		<span><?=t('Use global setting - %s', $globalSetting)?></span>
+		<li><label><?php echo $form->radio('cCacheFullPageContent', -1, $fullPageCaching, array('enable-cache' => $enableCache))?>
+		<span><?php echo t('Use global setting - %s', $globalSetting)?></span>
 		</label></li>
-		<li><label><?=$form->radio('cCacheFullPageContent', 0, $fullPageCaching, array('enable-cache' => 0))?>
-		<span><?=t('Do not cache this page.')?></span>
+		<li><label><?php echo $form->radio('cCacheFullPageContent', 0, $fullPageCaching, array('enable-cache' => 0))?>
+		<span><?php echo t('Do not cache this page.')?></span>
 		</label></li>
-		<li><label><?=$form->radio('cCacheFullPageContent', 1, $fullPageCaching, array('enable-cache' => 1))?>
-		<span><?=t('Cache this page.')?></span>
+		<li><label><?php echo $form->radio('cCacheFullPageContent', 1, $fullPageCaching, array('enable-cache' => 1))?>
+		<span><?php echo t('Cache this page.')?></span>
 		</label>
 		</li>
 		</ul>
@@ -150,29 +150,29 @@ $searchInstance = Loader::helper('text')->entities($_REQUEST['searchInstance']);
 		</div>
 
 		<div class="clearfix">
-		<label><?=t('Cache for how long?')?></label>
+		<label><?php echo t('Cache for how long?')?></label>
 
 		<div class="ccm-properties-cache-lifetime input">
 		<ul class="inputs-list">
 			<?php $val = ($cCacheFullPageContentLifetimeCustomValue > 0 && $cCacheFullPageContentOverrideLifetime) ? $cCacheFullPageContentLifetimeCustomValue : '';
     ?>
-			<li><label><?=$form->radio('cCacheFullPageContentOverrideLifetime', -1, $cCacheFullPageContentOverrideLifetime)?>
-			<span><?=t('Multiple values')?></span>
+			<li><label><?php echo $form->radio('cCacheFullPageContentOverrideLifetime', -1, $cCacheFullPageContentOverrideLifetime)?>
+			<span><?php echo t('Multiple values')?></span>
 			</label></li>
-			<li><label><span><?=$form->radio('cCacheFullPageContentOverrideLifetime', 0, $cCacheFullPageContentOverrideLifetime)?>
-			<?=t('Use global setting - %s', $globalSettingLifetime)?>
+			<li><label><span><?php echo $form->radio('cCacheFullPageContentOverrideLifetime', 0, $cCacheFullPageContentOverrideLifetime)?>
+			<?php echo t('Use global setting - %s', $globalSettingLifetime)?>
 			</span></label></li>
-			<li><label><span><?=$form->radio('cCacheFullPageContentOverrideLifetime', 'default', $cCacheFullPageContentOverrideLifetime)?>
-			<?=t('Default - %s minutes', Config::get('concrete.cache.lifetime') / 60)?>
+			<li><label><span><?php echo $form->radio('cCacheFullPageContentOverrideLifetime', 'default', $cCacheFullPageContentOverrideLifetime)?>
+			<?php echo t('Default - %s minutes', Config::get('concrete.cache.lifetime') / 60)?>
 			</span></label></li>
-			<li><label><span><?=$form->radio('cCacheFullPageContentOverrideLifetime', 'forever', $cCacheFullPageContentOverrideLifetime)?>
-			<?=t('Until manually cleared')?>
+			<li><label><span><?php echo $form->radio('cCacheFullPageContentOverrideLifetime', 'forever', $cCacheFullPageContentOverrideLifetime)?>
+			<?php echo t('Until manually cleared')?>
 			</span></label></li>
-			<li><label><span><?=$form->radio('cCacheFullPageContentOverrideLifetime', 'custom', $cCacheFullPageContentOverrideLifetime)?>
-			<?=t('Custom')?>
+			<li><label><span><?php echo $form->radio('cCacheFullPageContentOverrideLifetime', 'custom', $cCacheFullPageContentOverrideLifetime)?>
+			<?php echo t('Custom')?>
 			</span></label>
 			<div style="margin-top: 4px; margin-left: 16px">
-				<label><?=$form->text('cCacheFullPageContentLifetimeCustom', $val, array('style' => 'width: 40px'))?> <?=t('minutes')?></label>
+				<label><?php echo $form->text('cCacheFullPageContentLifetimeCustom', $val, array('style' => 'width: 40px'))?> <?php echo t('minutes')?></label>
 			</div>
 			</li>
 		</ul>
@@ -182,8 +182,8 @@ $searchInstance = Loader::helper('text')->entities($_REQUEST['searchInstance']);
 	</form>
 	<div class="dialog-buttons">
 	<?php $ih = Loader::helper('concrete/ui')?>
-	<?=$ih->button_js(t('Cancel'), 'jQuery.fn.dialog.closeTop()', 'left', 'btn')?>
-	<?=$ih->button_js(t('Update'), "$('#ccm-" . $searchInstance . "-speed-settings-form').submit()", 'right', 'btn primary')?>
+	<?php echo $ih->button_js(t('Cancel'), 'jQuery.fn.dialog.closeTop()', 'left', 'btn')?>
+	<?php echo $ih->button_js(t('Update'), "$('#ccm-" . $searchInstance . "-speed-settings-form').submit()", 'right', 'btn primary')?>
 	</div>
 
 	<?php
@@ -224,7 +224,7 @@ $searchInstance = Loader::helper('text')->entities($_REQUEST['searchInstance']);
 				$('input[name=cCacheFullPageContentLifetimeCustom]').get(0).focus();
 			});
 			ccm_settingsSetupCacheForm();
-			$("#ccm-<?=$searchInstance?>-speed-settings-form").ajaxForm({
+			$("#ccm-<?php echo $searchInstance?>-speed-settings-form").ajaxForm({
 				type: 'POST',
 				iframe: true,
 				beforeSubmit: function() {
@@ -234,13 +234,13 @@ $searchInstance = Loader::helper('text')->entities($_REQUEST['searchInstance']);
 					ccm_parseJSON(r, function() {
 						jQuery.fn.dialog.closeTop();
 						jQuery.fn.dialog.hideLoader();
-						ccm_deactivateSearchResults('<?=$searchInstance?>');
+						ccm_deactivateSearchResults('<?php echo $searchInstance?>');
 						ConcreteAlert.notify({
 						'message': ccmi18n.saveSpeedSettingsMsg,
 						'title': ccmi18n.properties
 						});
-						$("#ccm-<?=$searchInstance?>-advanced-search").ajaxSubmit(function(r) {
-							ccm_parseAdvancedSearchResponse(r, '<?=$searchInstance?>');
+						$("#ccm-<?php echo $searchInstance?>-advanced-search").ajaxSubmit(function(r) {
+							ccm_parseAdvancedSearchResponse(r, '<?php echo $searchInstance?>');
 						});
 					});
 				}

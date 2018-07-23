@@ -2,9 +2,9 @@
 namespace Concrete\Core\Gathering\DataSource\Configuration;
 
 use Loader;
-use Concrete\Core\Foundation\ConcreteObject;
+use Concrete\Core\Foundation\Object;
 
-class Configuration extends ConcreteObject
+class Configuration extends Object
 {
     protected $dataSource;
 

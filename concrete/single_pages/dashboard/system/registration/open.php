@@ -1,5 +1,5 @@
 <?php defined('C5_EXECUTE') or die("Access Denied."); ?>
-<?= Loader::helper('concrete/dashboard')->getDashboardPaneHeaderWrapper(
+<?php echo Loader::helper('concrete/dashboard')->getDashboardPaneHeaderWrapper(
     t('Public Registration'),
     t(
         'Control the options available for Public Registration.'),
@@ -10,7 +10,7 @@ $h = Loader::helper('concrete/ui');
 ?>
 <form method="post" id="registration-type-form"
       action="<?php echo $view->action('update_registration_type') ?>">
-        <?=$token->output('update_registration_type')?>
+        <?php echo $token->output('update_registration_type')?>
 
     <div class="form-group">
         <label class="control-label"><?php echo t('Allow visitors to signup as site members?') ?></label>
@@ -56,42 +56,7 @@ $h = Loader::helper('concrete/ui');
             value="<?php echo h($register_notification_email); ?>"/>
     </div>
     <div class="form-group">
-        <label class="control-label"><?php echo t('Login form') ?></label>
-        <div class="radio">
-            <label>
-                <input type="radio" name="email_as_username" value="0" id="display_username_on_login"
-                       style="" <?php echo (!$email_as_username) ? 'checked' : '' ?> />
-                    <span>
-                        <?php echo t('Ask for username & password') ?>
-                    </span>
-            </label>
-        </div>
-        <div class="radio">
-            <label>
-                <input type="radio" name="email_as_username" value="1"
-                       style="" <?php echo ($email_as_username) ? 'checked' : '' ?> />
-                    <span>
-                        <?php echo t('Ask for email & password') ?>
-                    </span>
-            </label>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="control-label"><?php echo t('Registration form') ?></label>
-        <div class="checkbox">
-            <label>
-                <input type="checkbox" name="display_username_field" value="1"
-                       style="" <?php echo ($display_username_field) ? 'checked' : '' ?> />
-                <span><?php echo t('Username required') ?></span>
-            </label>
-        </div>
-        <div class="checkbox">
-            <label>
-                <input type="checkbox" name="display_confirm_password_field" value="1"
-                       style="" <?php echo ($display_confirm_password_field) ? 'checked' : '' ?> />
-                <span><?php echo t('Confirm Password required') ?></span>
-            </label>
-        </div>
+        <label class="control-label"><?php echo t('Spam') ?></label>
         <div class="checkbox">
             <label>
                 <input type="checkbox" name="enable_registration_captcha" value="1"
@@ -100,20 +65,35 @@ $h = Loader::helper('concrete/ui');
             </label>
         </div>
     </div>
+    <div class="form-group">
+        <label class="control-label"><?php echo t('Username') ?></label>
+        <div class="radio">
+            <label>
+                <input type="radio" name="email_as_username" value="0"
+                       style="" <?php echo (!$email_as_username) ? 'checked' : '' ?> />
+                    <span>
+                        <?php echo t('Ask for Username & password on login form') ?>
+                    </span>
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="email_as_username" value="1"
+                       style="" <?php echo ($email_as_username) ? 'checked' : '' ?> />
+                    <span>
+                        <?php echo t('Ask for Email & password on login form') ?>
+                    </span>
+            </label>
+        </div>
+    </div>
+
     <div class="ccm-dashboard-form-actions-wrapper">
         <div class="ccm-dashboard-form-actions">
-            <?= $h->submit(t('Save'), 'registration-type-form', 'right', 'btn-primary'); ?>
+            <?php echo $h->submit(t('Save'), 'registration-type-form', 'right', 'btn-primary'); ?>
         </div>
     </div>
 </form>
 
-<div id="dialog-confirm" style="display: none" title="<?= t('Do you want to apply?') ?>">
-    <p><?=t('You have to disable ask for Username on login form, if you want to disable it.') ?></p>
-    <div class="dialog-buttons">
-        <button class="btn btn-default" onclick="jQuery.fn.dialog.closeTop()"><?= t('Cancel') ?></button>
-        <button class="btn btn-success pull-right" onclick="enableEmailAsUsername()"><?php echo  t('Apply') ?></button>
-    </div>
-</div>
 
 <script type="text/javascript">
 
@@ -147,21 +127,4 @@ $h = Loader::helper('concrete/ui');
             $('.notify_email').hide();
         }
     });
-
-    $("input[name=display_username_field]").click(function (e) {
-        if (!$(this).is(':checked') && $("#display_username_on_login").is(":checked")) {
-            $.fn.dialog.open({
-                width: 500,
-                height: 100,
-                element: $("#dialog-confirm"),
-            });
-            return false;
-        }
-    });
-
-    function enableEmailAsUsername() {
-        $('input[name=display_username_field]').prop('checked', false);
-        $('input[name=email_as_username]').prop('checked', true);
-        $.fn.dialog.closeTop();
-    }
 </script>

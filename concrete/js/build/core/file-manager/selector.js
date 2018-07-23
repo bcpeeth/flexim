@@ -1,17 +1,19 @@
-/* jshint unused:vars, undef:true, browser:true, jquery:true */
-/* global _, ccmi18n_filemanager, CCM_IMAGE_PATH, ConcreteFileManager, ConcreteFileMenu, ConcreteEvent */
+/**
+ * block ajax
+ */
 
-;(function(global, $) {
+!function(global, $) {
     'use strict';
 
     function ConcreteFileSelector($element, options) {
-        var my = this;
-        options = $.extend({
-            'chooseText': ccmi18n_filemanager.chooseNew,
-            'inputName': 'concreteFile',
-            'fID': false,
-            'filters': []
-        }, options);
+        'use strict';
+        var my = this,
+            options = $.extend({
+                'chooseText': ccmi18n_filemanager.chooseNew,
+                'inputName': 'concreteFile',
+                'fID': false,
+                'filters': []
+            }, options);
 
         var dialogOpts = {};
         dialogOpts.filters = options.filters;
@@ -68,32 +70,21 @@
                         concreteMenu.show(event);
                     }
                 });
-                ConcreteEvent.unsubscribe('ConcreteTreeDeleteTreeNode');
-                ConcreteEvent.subscribe('ConcreteTreeDeleteTreeNode', function(e, data) {
-                    if (data.node && data.node.treeJSONObject) {
-                        var fID = data.node.treeJSONObject.fID;
-                        if (fID) {
-                            $('[data-file-selector]').find('.ccm-file-selector-file-selected input[value=' + fID + ']').each(function(index, element) {
-                                _.defer(function() { my.$element.html(my._chooseTemplate); });
-                            });
-                        }
-                    }
-                });
                 if (callback) {
                     callback(r);
                 }
             });
         }
 
-    };
+    }
 
     // jQuery Plugin
     $.fn.concreteFileSelector = function(options) {
         return $.each($(this), function(i, obj) {
             new ConcreteFileSelector($(this), options);
         });
-    };
+    }
 
     global.ConcreteFileSelector = ConcreteFileSelector;
 
-})(this, jQuery);
+}(this, $);

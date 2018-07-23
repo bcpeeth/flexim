@@ -8,8 +8,8 @@
     $manage->render();
     ?>
 
-    <a href="<?=URL::to('/dashboard/system/express/entities/forms', 'add', $entity->getId())?>" class="btn btn-primary">
-        <?=t("Add Form")?>
+    <a href="<?php echo URL::to('/dashboard/system/express/entities/forms', 'add', $entity->getId())?>" class="btn btn-primary">
+        <?php echo t("Add Form")?>
     </a>
 
 </div>
@@ -26,8 +26,8 @@
                 <?php foreach ($forms as $form) {
     ?>
                     <li>
-                        <a href="<?=URL::to('/dashboard/system/express/entities/forms', 'view_form_details', $form->getID())?>">
-                            <i class="fa fa-list-alt"></i> <?=h($form->getName())?>
+                        <a href="<?php echo URL::to('/dashboard/system/express/entities/forms', 'view_form_details', $form->getID())?>">
+                            <i class="fa fa-list-alt"></i> <?php echo h($form->getName())?>
                         </a>
                     </li>
                 <?php 
@@ -39,7 +39,7 @@
 
 } else {
     ?>
-            <p><?=t('You have not created any forms.')?></p>
+            <p><?php echo t('You have not created any forms.')?></p>
         <?php
 
 } ?>

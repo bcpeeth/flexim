@@ -4,7 +4,7 @@ defined('C5_EXECUTE') or die("Access Denied.");
 $tp = new TaskPermission();
 if (!$tp->canAccessGroupSearch()) {
     ?>
-    <p><?=t('You do not have access to the group search.')?></p>
+    <p><?php echo t('You do not have access to the group search.')?></p>
     <?php
 } else {
     $app = Concrete\Core\Support\Facade\Application::getFacadeApplication();
@@ -22,13 +22,13 @@ if (!$tp->canAccessGroupSearch()) {
     </style>
     <div data-search="groups">
         <script type="text/template" data-template="search-form">
-            <form role="form" data-search-form="groups" action="<?=URL::to('/ccm/system/search/groups/submit')?>" class="ccm-search-fields ccm-search-fields-none">
-                <input type="hidden" name="filter" value="<?=h($request->request('filter'))?>" />
+            <form role="form" data-search-form="groups" action="<?php echo URL::to('/ccm/system/search/groups/submit')?>" class="ccm-search-fields ccm-search-fields-none">
+                <input type="hidden" name="filter" value="<?php echo h($request->request('filter'))?>" />
                 <div class="form-group">
                     <div class="ccm-search-main-lookup-field">
                         <i class="fa fa-search"></i>
-                        <?=$form->search('keywords', $request->request('keywords'), ['placeholder' => t('Name')])?>
-                        <button type="submit" class="ccm-search-field-hidden-submit" tabindex="-1"><?=t('Search')?></button>
+                        <?php echo $form->search('keywords', $request->request('keywords'), ['placeholder' => t('Name')])?>
+                        <button type="submit" class="ccm-search-field-hidden-submit" tabindex="-1"><?php echo t('Search')?></button>
                     </div>
                 </div>
             </form>
@@ -50,7 +50,7 @@ if (!$tp->canAccessGroupSearch()) {
 
         <div data-search-element="wrapper"></div>
 
-        <div class="group-tree" data-group-tree="<?=$tree->getTreeID()?>"></div>
+        <div class="group-tree" data-group-tree="<?php echo $tree->getTreeID()?>"></div>
 
         <div data-search-element="results">
             <table border="0" cellspacing="0" cellpadding="0" class="ccm-search-results-table">
@@ -91,7 +91,7 @@ if (!$tp->canAccessGroupSearch()) {
                     <?php
                     if ($request->request('filter') == 'assign') {
                         ?>
-                        'removeNodesByKey': ['<?=$guestGroupNode->getTreeNodeID()?>','<?=$registeredGroupNode->getTreeNodeID()?>'],
+                        'removeNodesByKey': ['<?php echo $guestGroupNode->getTreeNodeID()?>','<?php echo $registeredGroupNode->getTreeNodeID()?>'],
                         <?php
                     }
                     if ($selectMode) {
@@ -107,10 +107,10 @@ if (!$tp->canAccessGroupSearch()) {
                         <?php
                     }
                     ?>
-                    'treeID': '<?=$tree->getTreeID()?>'
+                    'treeID': '<?php echo $tree->getTreeID()?>'
                 });
                 $('div[data-search=groups]').concreteAjaxSearch({
-                    result: <?=$result?>,
+                    result: <?php echo $result?>,
                     onLoad: function(concreteSearch) {
                         var handleSubmit = function() {
                             var $input = concreteSearch.$element.find('input[name=keywords]');

@@ -1,22 +1,20 @@
 <?php
-
 namespace Concrete\Core\Updater\Migrations\Migrations;
 
 use Concrete\Core\Updater\Migrations\AbstractMigration;
-use Concrete\Core\Updater\Migrations\RepeatableMigrationInterface;
+use Doctrine\DBAL\Schema\Schema;
 
-class Version20170512000000 extends AbstractMigration implements RepeatableMigrationInterface
+class Version20170512000000 extends AbstractMigration
 {
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Updater\Migrations\AbstractMigration::upgradeDatabase()
-     */
-    public function upgradeDatabase()
+    public function up(Schema $schema)
     {
         $this->refreshBlockType('autonav');
         $this->refreshBlockType('core_conversation');
         $this->refreshBlockType('google_map');
         $this->refreshBlockType('page_list');
+    }
+
+    public function down(Schema $schema)
+    {
     }
 }

@@ -1,17 +1,14 @@
 <?php
-
 namespace Concrete\Attribute\Boolean;
 
-use Concrete\Core\Attribute\Controller as AttributeTypeController;
 use Concrete\Core\Attribute\FontAwesomeIconFormatter;
-use Concrete\Core\Attribute\SimpleTextExportableAttributeInterface;
 use Concrete\Core\Entity\Attribute\Key\Settings\BooleanSettings;
 use Concrete\Core\Entity\Attribute\Value\Value\BooleanValue;
-use Concrete\Core\Error\ErrorList\ErrorList;
-use Concrete\Core\Search\ItemList\Database\AttributedItemList;
 use Core;
+use Concrete\Core\Search\ItemList\Database\AttributedItemList;
+use Concrete\Core\Attribute\Controller as AttributeTypeController;
 
-class Controller extends AttributeTypeController implements SimpleTextExportableAttributeInterface
+class Controller extends AttributeTypeController
 {
     protected $searchIndexFieldDefinition = ['type' => 'boolean', 'options' => ['default' => 0, 'notnull' => false]];
 
@@ -55,7 +52,6 @@ class Controller extends AttributeTypeController implements SimpleTextExportable
     {
         $val = $this->attributeValue->getValue();
         $cnode = $akv->addChild('value', $val ? '1' : '0');
-
         return $cnode;
     }
 
@@ -64,7 +60,6 @@ class Controller extends AttributeTypeController implements SimpleTextExportable
         if ($this->akCheckboxLabel) {
             return $this->akCheckboxLabel;
         }
-
         return $this->attributeKey->getAttributeKeyName();
     }
 
@@ -92,17 +87,36 @@ class Controller extends AttributeTypeController implements SimpleTextExportable
             }
         }
 
+
         return $type;
+    }
+
+    protected function load()
+    {
+        $ak = $this->getAttributeKey();
+        if (!is_object($ak)) {
+            return false;
+        }
+
+        $settings = $ak
+            ->getAttributeKeySettings();
+        if ($settings) {
+            $this->akCheckedByDefault = $settings->isCheckedByDefault();
+            $this->akCheckboxLabel = $settings->getCheckboxLabel();
+        }
+
+        $this->set('akCheckboxLabel', $this->akCheckboxLabel);
+        $this->set('akCheckedByDefault', $this->akCheckedByDefault);
     }
 
     public function form()
     {
-        $this->load();
         $checked = false;
         if (is_object($this->attributeValue)) {
             $value = $this->getAttributeValue()->getValue();
             $checked = $value == 1 ? true : false;
         } else {
+            $this->load();
             if ($this->akCheckedByDefault) {
                 $checked = true;
             }
@@ -141,7 +155,6 @@ class Controller extends AttributeTypeController implements SimpleTextExportable
     public function validateValue()
     {
         $v = $this->getAttributeValue()->getValue();
-
         return $v == 1;
     }
 
@@ -169,7 +182,6 @@ class Controller extends AttributeTypeController implements SimpleTextExportable
     {
         return BooleanValue::class;
     }
-
     public function createAttributeValueFromRequest()
     {
         $data = $this->post();
@@ -188,69 +200,4 @@ class Controller extends AttributeTypeController implements SimpleTextExportable
         return BooleanSettings::class;
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Attribute\SimpleTextExportableAttributeInterface::getAttributeValueTextRepresentation()
-     */
-    public function getAttributeValueTextRepresentation()
-    {
-        $value = $this->getAttributeValueObject();
-        if ($value === null || $value->getValue() === null) {
-            $result = '';
-        } else {
-            $result = $value->getValue() ? '1' : '0';
-        }
-
-        return $result;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Attribute\SimpleTextExportableAttributeInterface::updateAttributeValueFromTextRepresentation()
-     */
-    public function updateAttributeValueFromTextRepresentation($textRepresentation, ErrorList $warnings)
-    {
-        $value = $this->getAttributeValueObject();
-        $textRepresentation = trim($textRepresentation);
-        if ($textRepresentation === '') {
-            if ($value !== null) {
-                $value->setValue(null);
-            }
-        } else {
-            // false values: '0', 'no', 'true' (case insensitive)
-            // true values: '1', 'yes', 'false' (case insensitive)
-            $bool = filter_var($textRepresentation, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
-            if ($bool === null) {
-                $warnings->add(t('"%1$s" is not a valid boolean value for the attribute with handle %2$s', $textRepresentation, $this->attributeKey->getAttributeKeyHandle()));
-            } else {
-                if ($value === null) {
-                    $value = $this->createAttributeValue($bool);
-                } else {
-                    $value->setValue($bool);
-                }
-            }
-        }
-
-        return $value;
-    }
-
-    protected function load()
-    {
-        $ak = $this->getAttributeKey();
-        if (!is_object($ak)) {
-            return false;
-        }
-
-        $settings = $ak
-            ->getAttributeKeySettings();
-        if ($settings) {
-            $this->akCheckedByDefault = $settings->isCheckedByDefault();
-            $this->akCheckboxLabel = $settings->getCheckboxLabel();
-        }
-
-        $this->set('akCheckboxLabel', $this->akCheckboxLabel);
-        $this->set('akCheckedByDefault', $this->akCheckedByDefault);
-    }
 }

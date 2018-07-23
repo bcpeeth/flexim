@@ -8,7 +8,6 @@ use Concrete\Core\Error\ErrorList\Field\Field;
 use Concrete\Core\Error\ErrorList\Field\FieldInterface;
 use Concrete\Core\Error\ErrorList\Formatter\JsonFormatter;
 use Concrete\Core\Error\ErrorList\Formatter\StandardFormatter;
-use Concrete\Core\Error\ErrorList\Formatter\TextFormatter;
 
 class ErrorList implements \ArrayAccess, \JsonSerializable
 {
@@ -173,13 +172,6 @@ class ErrorList implements \ArrayAccess, \JsonSerializable
         return $formatter->asArray();
     }
 
-    public function toText()
-    {
-        $formatter = new TextFormatter($this);
-
-        return $formatter->getText();
-    }
-
     public function containsField($field)
     {
         $identifier = ($field instanceof FieldInterface) ? $field->getFieldElementName() : $field;
@@ -187,22 +179,6 @@ class ErrorList implements \ArrayAccess, \JsonSerializable
             $field = $error->getField();
             if (is_object($field) && $field->getFieldElementName() == $identifier) {
                 return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * @param $field
-     * @return string | bool
-     */
-    public function getMessage($field)
-    {
-        $identifier = ($field instanceof FieldInterface) ? $field->getFieldElementName() : $field;
-        foreach($this->getList() as $error) {
-            $field = $error->getField();
-            if (is_object($field) && $field->getFieldElementName() == $identifier) {
-                return $error->getMessage();
             }
         }
         return false;

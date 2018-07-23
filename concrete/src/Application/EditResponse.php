@@ -92,17 +92,9 @@ class EditResponse implements \JsonSerializable
         return $this->getJSONObject();
     }
 
-    public function hasError()
-    {
-        if ($this->error && is_object($this->error) && (($this->error instanceof \Exception) || $this->error->has())) {
-            return true;
-        }
-        return false;
-    }
-
     public function outputJSON()
     {
-        if ($this->hasError()) {
+        if ($this->error && is_object($this->error) && (($this->error instanceof \Exception) || $this->error->has())) {
             Core::make('helper/ajax')->sendError($this->error);
         } else {
             Core::make('helper/ajax')->sendResult($this->getJSONObject());

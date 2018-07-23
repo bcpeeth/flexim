@@ -1,8 +1,8 @@
-/* jshint unused:vars, undef:true, browser:true, jquery:true */
-/* global _, ccmi18n, CKEDITOR, ConcreteAlert, ConcreteAjaxRequest */
+/**
+ * Base search class for AJAX forms in the UI
+ */
 
-/* Base search class for AJAX forms in the UI */
-;(function(global, $) {
+!function(global, $) {
 	'use strict';
 
 	function ConcreteEditableFieldContainer($element, options) {
@@ -89,30 +89,12 @@
 		        		return '';
 		        	}
 				},
-				pk: '_x', // we have to include this otherwise xeditable doesn't work.
-				error: function(xhr, newValue) {
-					var result = '';
-					var json = xhr ? xhr.responseJSON : null;
-					if (json) {
-						if (result === '' && typeof json.error === 'string') {
-							result = json.error;
-						}
-						if (result === '' && json.error && typeof json.error.message === 'string') {
-							result = json.error.message;
-						}
-						if (result === '' && json.errors && json.errors.join) {
-							result = json.errors.join('\n');
-						}
-					}
-					if (result === '') {
-						result = typeof xhr === 'string' ? xhr : xhr.responseText || xhr.statusText || 'Unknown error!';
-					}
-					return result;
-				}
+				pk: '_x' // we have to include this otherwise xeditable doesn't work.
 			});
 			$field.on('hidden', function() {
+				var $parent = $field.parent();
 				if (typeof CKEDITOR != 'undefined') {
-					for (var name in CKEDITOR.instances) {
+					for (name in CKEDITOR.instances) {
 						var instance = CKEDITOR.instances[name];
 						instance.destroy(true);
 					}
@@ -131,7 +113,7 @@
 		        dataType: 'json',
 		        formData: my.options.data,
 		        start: function() {
-		        	$.fn.dialog.showLoader();
+		        	jQuery.fn.dialog.showLoader();
 		        	//ConcreteAlert.showLoader();
 		        },
 		        success: function(r) {
@@ -141,7 +123,7 @@
 					ConcreteAlert.dialog(ccmi18n.error, r.responseText);
 		        },
 		        complete: function(r) {
-		        	$.fn.dialog.hideLoader();
+		        	jQuery.fn.dialog.hideLoader();
 		        	//ConcreteAlert.hideLoader()
 		        }
 		    });
@@ -218,15 +200,15 @@
 			});
 		}
 
-	};
+	}
 
 	// jQuery Plugin
 	$.fn.concreteEditableFieldContainer = function(options) {
 		return $.each($(this), function(i, obj) {
 			new ConcreteEditableFieldContainer($(this), options);
 		});
-	};
+	}
 
 	global.ConcreteEditableFieldContainer = ConcreteEditableFieldContainer;
 
-})(this, jQuery);
+}(this, $);

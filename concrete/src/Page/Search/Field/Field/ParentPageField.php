@@ -38,7 +38,6 @@ class ParentPageField extends AbstractField
                 $list->includeSystemPages();
                 $list->includeInactivePages();
             }
-            $list->setSiteTreeObject($pc->getSiteTreeObject());
             if ($this->data['cParentAll'] == 1) {
                 $cPath = $pc->getCollectionPath();
                 $list->filterByPath($cPath);

@@ -68,6 +68,8 @@ abstract class EntityItemList extends ItemList
     {
         if (in_array(strtolower($direction), array('asc','desc'))) {
             $this->query->orderBy($column, $direction);
+        } else {
+            throw new \Exception(t('Invalid SQL in order by'));
         }
     }
 

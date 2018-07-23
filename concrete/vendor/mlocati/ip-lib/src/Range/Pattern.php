@@ -5,8 +5,6 @@ namespace IPLib\Range;
 use IPLib\Address\AddressInterface;
 use IPLib\Address\IPv4;
 use IPLib\Address\IPv6;
-use IPLib\Address\Type as AddressType;
-use IPLib\Factory;
 
 /**
  * Represents an address range in pattern format (only ending asterisks are supported).
@@ -36,13 +34,6 @@ class Pattern implements RangeInterface
      * @var int
      */
     protected $asterisksCount;
-
-    /**
-     * The type of the range of this IP range.
-     *
-     * @var int|null|false false if this range crosses multiple range types, null if yet to be determined
-     */
-    protected $rangeType;
 
     /**
      * Initializes the instance.
@@ -126,7 +117,7 @@ class Pattern implements RangeInterface
                 }
                 break;
             default:
-                throw new \Exception('@todo'); // @codeCoverageIgnore
+                throw new \Exception('@todo');
         }
 
         return $result;
@@ -155,44 +146,6 @@ class Pattern implements RangeInterface
     /**
      * {@inheritdoc}
      *
-     * @see RangeInterface::getRangeType()
-     */
-    public function getRangeType()
-    {
-        if ($this->rangeType === null) {
-            $addressType = $this->getAddressType();
-            if ($addressType === AddressType::T_IPv6 && Subnet::get6to4()->containsRange($this)) {
-                $this->rangeType = Factory::rangeFromBoundaries($this->fromAddress->toIPv4(), $this->toAddress->toIPv4())->getRangeType();
-            } else {
-                switch ($addressType) {
-                    case AddressType::T_IPv4:
-                        $defaultType = IPv4::getDefaultReservedRangeType();
-                        $reservedRanges = IPv4::getReservedRanges();
-                        break;
-                    case AddressType::T_IPv6:
-                        $defaultType = IPv6::getDefaultReservedRangeType();
-                        $reservedRanges = IPv6::getReservedRanges();
-                        break;
-                    default:
-                        throw new \Exception('@todo'); // @codeCoverageIgnore
-                }
-                $rangeType = null;
-                foreach ($reservedRanges as $reservedRange) {
-                    $rangeType = $reservedRange->getRangeType($this);
-                    if ($rangeType !== null) {
-                        break;
-                    }
-                }
-                $this->rangeType = $rangeType === null ? $defaultType : $rangeType;
-            }
-        }
-
-        return $this->rangeType === false ? null : $this->rangeType;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
      * @see RangeInterface::contains()
      */
     public function contains(AddressInterface $address)
@@ -201,58 +154,15 @@ class Pattern implements RangeInterface
         if ($address->getAddressType() === $this->getAddressType()) {
             $cmp = $address->getComparableString();
             $from = $this->getComparableStartString();
-            if ($cmp >= $from) {
+            if (strcmp($cmp, $from) >= 0) {
                 $to = $this->getComparableEndString();
-                if ($cmp <= $to) {
+                if (strcmp($cmp, $to) <= 0) {
                     $result = true;
                 }
             }
         }
 
         return $result;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see RangeInterface::containsRange()
-     */
-    public function containsRange(RangeInterface $range)
-    {
-        $result = false;
-        if ($range->getAddressType() === $this->getAddressType()) {
-            $myStart = $this->getComparableStartString();
-            $itsStart = $range->getComparableStartString();
-            if ($itsStart >= $myStart) {
-                $myEnd = $this->getComparableEndString();
-                $itsEnd = $range->getComparableEndString();
-                if ($itsEnd <= $myEnd) {
-                    $result = true;
-                }
-            }
-        }
-
-        return $result;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see RangeInterface::getStartAddress()
-     */
-    public function getStartAddress()
-    {
-        return $this->fromAddress;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see RangeInterface::getEndAddress()
-     */
-    public function getEndAddress()
-    {
-        return $this->toAddress;
     }
 
     /**

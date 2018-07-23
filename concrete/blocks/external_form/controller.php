@@ -2,13 +2,14 @@
 namespace Concrete\Block\ExternalForm;
 
 use Concrete\Core\Block\BlockController;
+use Core;
 
 class Controller extends BlockController
 {
-    public $helpers = ['file', 'form'];
+    public $helpers = array('file');
     protected $btTable = 'btExternalForm';
-    protected $btInterfaceWidth = 420;
-    protected $btInterfaceHeight = 175;
+    protected $btInterfaceWidth = "370";
+    protected $btInterfaceHeight = "175";
     protected $btCacheBlockRecord = true;
     protected $btWrapperClass = 'ccm-ui';
 
@@ -17,17 +18,17 @@ class Controller extends BlockController
      */
     public function getBlockTypeDescription()
     {
-        return t('Include external forms in the filesystem and place them on pages.');
+        return t("Include external forms in the filesystem and place them on pages.");
     }
 
     public function getBlockTypeName()
     {
-        return t('External Form');
+        return t("External Form");
     }
 
     public function getJavaScriptStrings()
     {
-        return ['form-required' => t('You must select a form.')];
+        return array('form-required' => t('You must select a form.'));
     }
 
     public function getFilename()
@@ -51,7 +52,7 @@ class Controller extends BlockController
         }
     }
 
-    public function isValidControllerTask($method, $parameters = [])
+    public function isValidControllerTask($method, $parameters = array())
     {
         $controller = $this->getController();
         if ($controller) {
@@ -65,7 +66,7 @@ class Controller extends BlockController
 
     public function validate($args)
     {
-        $e = $this->app->make('helper/validation/error');
+        $e = \Core::make('helper/validation/error');
         if (!$args['filename']) {
             $e->add(t('You must specify an external form.'));
         }
@@ -77,7 +78,7 @@ class Controller extends BlockController
     {
         try {
             $class = camelcase(substr($this->filename, 0, strrpos($this->filename, '.php')));
-            $cl = $this->app->make(
+            $cl = \Core::make(
                 overrideable_core_class(
                     'Block\\ExternalForm\\Form\\Controller\\' . $class,
                     DIRNAME_BLOCKS . '/external_form/form/controller/' . $this->filename
@@ -90,9 +91,9 @@ class Controller extends BlockController
         }
     }
 
-    public function runAction($method, $parameters = [])
+    public function runAction($method, $parameters = array())
     {
-        if (in_array($method, ['add', 'edit'])) {
+        if (in_array($method, array('add', 'edit'))) {
             parent::runAction($method, $parameters);
 
             return;
@@ -114,18 +115,18 @@ class Controller extends BlockController
 
     public function getFormList()
     {
-        $forms = [];
-        $fh = $this->app->make('helper/file');
+        $forms = array();
+        $fh = Core::make('helper/file');
 
         if (file_exists(DIR_FILES_BLOCK_TYPES_FORMS_EXTERNAL)) {
             $forms = array_merge(
                 $forms,
-                $fh->getDirectoryContents(DIR_FILES_BLOCK_TYPES_FORMS_EXTERNAL, ['controller']));
+                $fh->getDirectoryContents(DIR_FILES_BLOCK_TYPES_FORMS_EXTERNAL, array('controller')));
         }
         if (file_exists(DIR_FILES_BLOCK_TYPES_FORMS_EXTERNAL_CORE)) {
             $forms = array_merge(
                 $forms,
-                $fh->getDirectoryContents(DIR_FILES_BLOCK_TYPES_FORMS_EXTERNAL_CORE, ['controller']));
+                $fh->getDirectoryContents(DIR_FILES_BLOCK_TYPES_FORMS_EXTERNAL_CORE, array('controller')));
         }
 
         return $forms;

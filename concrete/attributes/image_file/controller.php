@@ -1,25 +1,21 @@
 <?php
-
 namespace Concrete\Attribute\ImageFile;
 
-use Concrete\Core\Attribute\Controller as AttributeTypeController;
 use Concrete\Core\Attribute\FontAwesomeIconFormatter;
-use Concrete\Core\Attribute\SimpleTextExportableAttributeInterface;
-use Concrete\Core\Backup\ContentExporter;
 use Concrete\Core\Entity\Attribute\Key\Settings\ImageFileSettings;
 use Concrete\Core\Entity\Attribute\Value\Value\ImageFileValue;
-use Concrete\Core\Entity\File\File as FileEntity;
 use Concrete\Core\Error\ErrorList\Error\Error;
 use Concrete\Core\Error\ErrorList\Error\FieldNotPresentError;
-use Concrete\Core\Error\ErrorList\ErrorList;
 use Concrete\Core\Error\ErrorList\Field\AttributeField;
 use Concrete\Core\File\Importer;
 use Core;
 use File;
+use Concrete\Core\Backup\ContentExporter;
+use Concrete\Core\Attribute\Controller as AttributeTypeController;
 
-class Controller extends AttributeTypeController implements SimpleTextExportableAttributeInterface
+class Controller extends AttributeTypeController
 {
-    protected $searchIndexFieldDefinition = ['type' => 'integer', 'options' => ['default' => 0, 'notnull' => false]];
+    protected $searchIndexFieldDefinition = array('type' => 'integer', 'options' => array('default' => 0, 'notnull' => false));
 
     public function getIconFormatter()
     {
@@ -29,19 +25,18 @@ class Controller extends AttributeTypeController implements SimpleTextExportable
     public function saveKey($data)
     {
         /**
-         * @var ImageFileSettings
+         * @var $type ImageFileSettings
          */
         $type = $this->getAttributeKeySettings();
-        $data += [
+        $data += array(
             'mode' => null,
-        ];
+        );
         $mode = $data['mode'];
         if ($mode == ImageFileSettings::TYPE_HTML_INPUT) {
             $type->setModeToHtmlInput();
         } else {
             $type->setModeToFileManager();
         }
-
         return $type;
     }
 
@@ -51,10 +46,11 @@ class Controller extends AttributeTypeController implements SimpleTextExportable
         $this->set('mode', $this->getAttributeKeySettings()->getMode());
     }
 
+
     public function exportKey($akey)
     {
         /**
-         * @var ImageFileSettings
+         * @var $type ImageFileSettings
          */
         $type = $this->getAttributeKeySettings();
         if ($type->isModeHtmlInput()) {
@@ -63,7 +59,6 @@ class Controller extends AttributeTypeController implements SimpleTextExportable
             $mode = 'file_manager';
         }
         $akey->addChild('type')->addAttribute('mode', $mode);
-
         return $akey;
     }
 
@@ -71,9 +66,7 @@ class Controller extends AttributeTypeController implements SimpleTextExportable
     {
         $f = $this->getAttributeValue()->getValue();
         if (is_object($f)) {
-            $type = strtolower($f->getTypeObject()->getGenericDisplayType());
-
-            return '<a target="_blank" href="' . $f->getDownloadURL() . '" class="ccm-attribute-image-file ccm-attribute-image-file-' . $type . '">' . $f->getTitle() . '</a>';
+            return '<a href="' . $f->getDownloadURL() . '">' . $f->getTitle() . '</a>';
         }
     }
 
@@ -122,12 +115,13 @@ class Controller extends AttributeTypeController implements SimpleTextExportable
         }
         $this->set('mode', $this->getAttributeKeySettings()->getMode());
         $this->set('file', $bf);
+
     }
 
     public function importKey(\SimpleXMLElement $akey)
     {
         $type = $this->getAttributeKeySettings();
-        /*
+        /**
          * @var $type ImageFileSettings
          */
         if (isset($akey->type)) {
@@ -183,8 +177,8 @@ class Controller extends AttributeTypeController implements SimpleTextExportable
     public function validateForm($data)
     {
         if ($this->getAttributeKeySettings()->isModeFileManager()) {
-            if ((int) ($data['value']) > 0) {
-                $f = File::getByID((int) ($data['value']));
+            if (intval($data['value']) > 0) {
+                $f = File::getByID(intval($data['value']));
                 if (is_object($f) && !$f->isError()) {
                     return true;
                 } else {
@@ -226,7 +220,6 @@ class Controller extends AttributeTypeController implements SimpleTextExportable
         if ($this->getAttributeKeySettings()->isModeFileManager()) {
             if ($data['value'] > 0) {
                 $f = File::getByID($data['value']);
-
                 return $this->createAttributeValue($f);
             }
         }
@@ -242,7 +235,6 @@ class Controller extends AttributeTypeController implements SimpleTextExportable
                 }
             }
         }
-
         return $this->createAttributeValue(null);
     }
 
@@ -256,53 +248,4 @@ class Controller extends AttributeTypeController implements SimpleTextExportable
         return ImageFileSettings::class;
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Attribute\SimpleTextExportableAttributeInterface::getAttributeValueTextRepresentation()
-     */
-    public function getAttributeValueTextRepresentation()
-    {
-        $result = '';
-        $value = $this->getAttributeValueObject();
-        if ($value !== null) {
-            $file = $value->getFileObject();
-            if ($file !== null) {
-                $result = 'fid:' . $file->getFileID();
-            }
-        }
-
-        return $result;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Attribute\SimpleTextExportableAttributeInterface::updateAttributeValueFromTextRepresentation()
-     */
-    public function updateAttributeValueFromTextRepresentation($textRepresentation, ErrorList $warnings)
-    {
-        $value = $this->getAttributeValueObject();
-        if ($textRepresentation === '') {
-            if ($value !== null) {
-                $value->setFileObject(null);
-            }
-        } elseif (preg_match('/^fid:(\d+)$/', $textRepresentation, $matches)) {
-            $fID = (int) $matches[1];
-            $file = $this->entityManager->find(FileEntity::class, $fID);
-            if ($file !== null) {
-                if ($value === null) {
-                    $value = $this->createAttributeValue($file);
-                } else {
-                    $value->setFileObject($file);
-                }
-            } else {
-                $warnings->add(t('The file with ID %1$s has not been found for the attribute with handle %2$s', $file, $this->attributeKey->getAttributeKeyHandle()));
-            }
-        } else {
-            $warnings->add(t('"%1$s" is not a valid representation of a file for the attribute with handle %2$s', $textRepresentation, $this->attributeKey->getAttributeKeyHandle()));
-        }
-
-        return $value;
-    }
 }

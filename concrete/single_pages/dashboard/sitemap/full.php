@@ -5,20 +5,20 @@ $sh = Loader::helper('concrete/dashboard/sitemap');
 
 <div class="ccm-dashboard-header-buttons btn-group">
     <button type="button" class="btn btn-default dropdown-toggle" data-button="attribute-type" data-toggle="dropdown">
-        <?=t('Options')?> <span class="caret"></span>
+        <?php echo t('Options')?> <span class="caret"></span>
     </button>
     <ul class="dropdown-menu">
         <?php if ($includeSystemPages) { ?>
-            <li><a href="<?=$view->action('include_system_pages', 0)?>"><span class="text-success"><i class="fa fa-check"></i> <?=t('Include System Pages in Sitemap')?></span></a></li>
+            <li><a href="<?php echo $view->action('include_system_pages', 0)?>"><span class="text-success"><i class="fa fa-check"></i> <?php echo t('Include System Pages in Sitemap')?></span></a></li>
         <?php } else { ?>
-            <li><a href="<?=$view->action('include_system_pages', 1)?>"><?=t('Include System Pages in Sitemap')?></a></li>
+            <li><a href="<?php echo $view->action('include_system_pages', 1)?>"><?php echo t('Include System Pages in Sitemap')?></a></li>
         <?php } ?>
 
 
         <?php if ($displayDoubleSitemap) { ?>
-            <li><a href="<?=$view->action('display_double_sitemap', 0)?>"><span class="text-success"><i class="fa fa-check"></i> <?=t('View 2-Up Sitemap')?></span></a></li>
+            <li><a href="<?php echo $view->action('display_double_sitemap', 0)?>"><span class="text-success"><i class="fa fa-check"></i> <?php echo t('View 2-Up Sitemap')?></span></a></li>
         <?php } else { ?>
-            <li><a href="<?=$view->action('display_double_sitemap', 1)?>"><?=t('View 2-Up Sitemap')?></a></li>
+            <li><a href="<?php echo $view->action('display_double_sitemap', 1)?>"><?php echo t('View 2-Up Sitemap')?></a></li>
         <?php } ?>
     </ul>
 </div>
@@ -33,8 +33,8 @@ if ($u->isSuperUser()) {
         $q = Queue::get('copy_page');
         if ($q->count() > 0) { ?>
 		<div class="alert alert-warning">
-			<?=t('Page copy operations pending.')?>
-			<button class="btn btn-xs btn-default pull-right" onclick="ConcreteSitemap.refreshCopyOperations()"><?=t('Resume Copy')?></button>
+			<?php echo t('Page copy operations pending.')?>
+			<button class="btn btn-xs btn-default pull-right" onclick="ConcreteSitemap.refreshCopyOperations()"><?php echo t('Resume Copy')?></button>
 		</div>
 	<?php }
     }
@@ -60,7 +60,7 @@ if ($u->isSuperUser()) {
 <?php
 } else {
 ?>
-<p><?=t("You do not have access to the sitemap."); ?></p>
+<p><?php echo t("You do not have access to the sitemap."); ?></p>
 <?php
 }
 ?>

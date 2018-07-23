@@ -1,9 +1,9 @@
 <?php
 namespace Concrete\Core\Workflow\Progress;
 
-use Concrete\Core\Foundation\ConcreteObject;
+use Concrete\Core\Foundation\Object;
 
-class Response extends ConcreteObject
+class Response extends Object
 {
     protected $wprURL = '';
 

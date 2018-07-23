@@ -7,7 +7,6 @@ use Concrete\Core\File\Event\FileVersion;
 use Concrete\Core\File\Image\Thumbnail\Type\Type;
 use Concrete\Core\File\Importer;
 use Concrete\Core\File\Set\Set;
-use Concrete\Core\Support\Facade\Application;
 use Concrete\Core\Support\Facade\Database;
 use Concrete\Core\Tree\Node\Node;
 use Concrete\Core\Tree\Node\NodeType;
@@ -328,31 +327,16 @@ class File implements \Concrete\Core\Permission\ObjectInterface
     }
 
     /**
-     * Get the IDs of the file sets that this file belongs to.
-     *
-     * @return int[]
-     */
-    public function getFileSetIDs()
-    {
-        $app = Application::getFacadeApplication();
-        $db = $app->make(Connection::class);
-        $rows = $db->fetchAll('select fsID from FileSetFiles where fID = ?', [$this->getFileID()]);
-        $ids = array_map('intval', array_map('array_pop', $rows));
-
-        return $ids;
-    }
-
-    /**
-     * Get the file sets that this file belongs to.
-     *
      * @return FileSet[]
      */
     public function getFileSets()
     {
+        $db = Loader::db();
+        $fsIDs = $db->Execute('select fsID from FileSetFiles where fID = ?', [$this->getFileID()]);
         $filesets = [];
-        foreach ($this->getFileSetIDs() as $fsID) {
-            $fs = FileSet::getByID($fsID);
-            if ($fs !== null) {
+        while ($row = $fsIDs->FetchRow()) {
+            $fs = FileSet::getByID($row['fsID']);
+            if (is_object($fs)) {
                 $filesets[] = $fs;
             }
         }
@@ -521,8 +505,7 @@ class File implements \Concrete\Core\Permission\ObjectInterface
         $em = \ORM::entityManager();
 
         $versions = $this->versions;
-        $thumbs = Type::getVersionList();
-        
+
         // duplicate the core file object
         $nf = clone $this;
         $dh = Loader::helper('date');
@@ -534,7 +517,7 @@ class File implements \Concrete\Core\Permission\ObjectInterface
 
         $folder = $this->getFileFolderObject();
         $folderNode = \Concrete\Core\Tree\Node\Type\File::add($nf, $folder);
-        $nf->folderTreeNodeID = $folder->getTreeNodeID();
+        $nf->folderTreeNodeID = $folderNode->getTreeNodeID();
 
         $em->persist($nf);
         $em->flush();
@@ -565,10 +548,16 @@ class File implements \Concrete\Core\Permission\ObjectInterface
 
                 $em->flush();
 
+                do {
+                    $prefix = $importer->generatePrefix();
+                    $path = $cf->prefix($prefix, $version->getFilename());
+                } while ($filesystem->has($path));
+                $filesystem->write($path, $version->getFileResource()->read(), [
+                    'visibility' => AdapterInterface::VISIBILITY_PUBLIC,
+                    'mimetype' => Core::make('helper/mime')->mimeFromExtension($fi->getExtension($version->getFilename())),
+                ]);
+                $cloneVersion->updateFile($version->getFilename(), $prefix);
                 $nf->versions->add($cloneVersion);
-                foreach ($thumbs as $type) {
-                    $cloneVersion->duplicateUnderlyingThumbnailFiles($type, $version);
-                }
             }
         }
 
@@ -591,9 +580,6 @@ class File implements \Concrete\Core\Permission\ObjectInterface
         return $nf;
     }
 
-    /**
-     * @return \Concrete\Core\Entity\File\Version|null
-     */
     public function getApprovedVersion()
     {
         // Ideally, doctrine's caching would handle this. Unfortunately, something is wrong with the $file

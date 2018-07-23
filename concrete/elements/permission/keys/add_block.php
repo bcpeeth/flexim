@@ -13,7 +13,7 @@ $blockTypes = $btl->get();
 <?php if (count($included) > 0) {
     ?>
 
-<h4><?=t('Who can add what?')?></h4>
+<h4><?php echo t('Who can add what?')?></h4>
 
 <?php foreach ($included as $assignment) {
     $entity = $assignment->getAccessEntityObject();
@@ -21,18 +21,18 @@ $blockTypes = $btl->get();
 
 
 <div class="form-group">
-	<label class="control-label"><?=$entity->getAccessEntityLabel()?></label>
-	<?=$form->select('blockTypesIncluded[' . $entity->getAccessEntityID() . ']', array('A' => t('All Block Types'), 'C' => t('Custom')), $assignment->getBlockTypesAllowedPermission())?>
+	<label class="control-label"><?php echo $entity->getAccessEntityLabel()?></label>
+	<?php echo $form->select('blockTypesIncluded[' . $entity->getAccessEntityID() . ']', array('A' => t('All Block Types'), 'C' => t('Custom')), $assignment->getBlockTypesAllowedPermission())?>
 	<div class="inputs-list" <?php if ($assignment->getBlockTypesAllowedPermission() != 'C') {
     ?>style="display: none"<?php 
 }
     ?>>
 		<?php foreach ($blockTypes as $bt) {
     ?>
-			<div class="checkbox"><label><input type="checkbox" name="btIDInclude[<?=$entity->getAccessEntityID()?>][]" value="<?=$bt->getBlockTypeID()?>" <?php if (in_array($bt->getBlockTypeID(), $assignment->getBlockTypesAllowedArray())) {
+			<div class="checkbox"><label><input type="checkbox" name="btIDInclude[<?php echo $entity->getAccessEntityID()?>][]" value="<?php echo $bt->getBlockTypeID()?>" <?php if (in_array($bt->getBlockTypeID(), $assignment->getBlockTypesAllowedArray())) {
     ?> checked="checked" <?php 
 }
-    ?> /> <?=t($bt->getBlockTypeName())?></label></div>
+    ?> /> <?php echo t($bt->getBlockTypeName())?></label></div>
 		<?php 
 }
     ?>
@@ -48,7 +48,7 @@ $blockTypes = $btl->get();
 <?php if (count($excluded) > 0) {
     ?>
 
-<h3><?=t('Who can\'t add what?')?></h3>
+<h3><?php echo t('Who can\'t add what?')?></h3>
 
 <?php foreach ($excluded as $assignment) {
     $entity = $assignment->getAccessEntityObject();
@@ -56,18 +56,18 @@ $blockTypes = $btl->get();
 
 
 <div class="form-group">
-    <label class="control-label"><?=$entity->getAccessEntityLabel()?></label>
-	<?=$form->select('blockTypesExcluded[' . $entity->getAccessEntityID() . ']', array('N' => t('No Block Types'), 'C' => t('Custom')), $assignment->getBlockTypesAllowedPermission())?>
+    <label class="control-label"><?php echo $entity->getAccessEntityLabel()?></label>
+	<?php echo $form->select('blockTypesExcluded[' . $entity->getAccessEntityID() . ']', array('N' => t('No Block Types'), 'C' => t('Custom')), $assignment->getBlockTypesAllowedPermission())?>
 	<div class="inputs-list" <?php if ($assignment->getBlockTypesAllowedPermission() != 'C') {
     ?>style="display: none"<?php 
 }
     ?>>
 		<?php foreach ($blockTypes as $bt) {
     ?>
-        <div class="checkbox"><label><input type="checkbox" name="btIDExclude[<?=$entity->getAccessEntityID()?>][]" value="<?=$bt->getBlockTypeID()?>" <?php if (in_array($bt->getBlockTypeID(), $assignment->getBlockTypesAllowedArray())) {
+        <div class="checkbox"><label><input type="checkbox" name="btIDExclude[<?php echo $entity->getAccessEntityID()?>][]" value="<?php echo $bt->getBlockTypeID()?>" <?php if (in_array($bt->getBlockTypeID(), $assignment->getBlockTypesAllowedArray())) {
     ?> checked="checked" <?php 
 }
-    ?> /> <span><?=t($bt->getBlockTypeName())?></span></label></div>
+    ?> /> <span><?php echo t($bt->getBlockTypeName())?></span></label></div>
 		<?php 
 }
     ?>
@@ -84,7 +84,7 @@ $blockTypes = $btl->get();
 <?php 
 } else {
     ?>
-	<p><?=t('No users or groups selected.')?></p>
+	<p><?php echo t('No users or groups selected.')?></p>
 <?php 
 } ?>
 

@@ -8,13 +8,13 @@ use \Concrete\Core\Sharing\SocialNetwork\Service as Service;
     ?>
 	<div class="ccm-social-link-attribute ">
         <div class="form-group">
-            <select name="<?=$this->field('service')?>[]" class="ccm-social-link-service-selector form-control">
+            <select name="<?php echo $this->field('service')?>[]" class="ccm-social-link-service-selector form-control">
                 <?php foreach ($services as $s) {
     ?>
-                    <option value="<?=$s->getHandle()?>" data-icon="<?php echo $s->getIcon() ?>" <?php if ($s->getHandle() == $data['service'][$i]) {
+                    <option value="<?php echo $s->getHandle()?>" data-icon="<?php echo $s->getIcon() ?>" <?php if ($s->getHandle() == $data['service'][$i]) {
     ?> selected="selected" <?php
 }
-    ?>><?= $s->getDisplayName() ?></option>
+    ?>><?php echo $s->getDisplayName() ?></option>
                 <?php
 }
     ?>
@@ -30,7 +30,7 @@ use \Concrete\Core\Sharing\SocialNetwork\Service as Service;
                        }
     ?>
                     </span>
-                    <input name="<?=$this->field('serviceInfo')?>[]" type="text" value="<?=$data['serviceInfo'][$i]?>" />
+                    <input name="<?php echo $this->field('serviceInfo')?>[]" type="text" value="<?php echo $data['serviceInfo'][$i]?>" />
                     <button type="button" class="ccm-social-link-attribute-remove-line btn btn-link"><i class="fa fa-trash-o"></i></button>
                 </span>
             </span>
@@ -42,7 +42,7 @@ use \Concrete\Core\Sharing\SocialNetwork\Service as Service;
 </div>
 
 <div>
-	<button type="button" class="btn btn-small btn-primary ccm-social-link-attribute-add-service"><?=t("Add Link")?> <i class="fa fa-plus"></i></button>
+	<button type="button" class="btn btn-small btn-primary ccm-social-link-attribute-add-service"><?php echo t("Add Link")?> <i class="fa fa-plus"></i></button>
 </div>
 
 <script type="text/javascript">$(function() { ConcreteSocialLinksAttribute.init(); });</script>

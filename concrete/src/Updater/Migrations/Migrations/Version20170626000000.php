@@ -1,22 +1,22 @@
 <?php
-
 namespace Concrete\Core\Updater\Migrations\Migrations;
 
+use Concrete\Core\File\Image\Thumbnail\Type\Type;
 use Concrete\Core\Updater\Migrations\AbstractMigration;
-use Concrete\Core\Updater\Migrations\RepeatableMigrationInterface;
+use Doctrine\DBAL\Schema\Schema;
 
-class Version20170626000000 extends AbstractMigration implements RepeatableMigrationInterface
+class Version20170626000000 extends AbstractMigration
 {
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Updater\Migrations\AbstractMigration::upgradeDatabase()
-     */
-    public function upgradeDatabase()
+    public function up(Schema $schema)
     {
+
         $this->refreshEntities([
             'Concrete\Core\Entity\Notification\NewFormSubmissionNotification',
             'Concrete\Core\Entity\Express\Entry',
         ]);
+    }
+
+    public function down(Schema $schema)
+    {
     }
 }

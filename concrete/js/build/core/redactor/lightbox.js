@@ -1,20 +1,13 @@
-/* jshint unused:vars, undef:true */
+// concrete5 Redactor functionality
+if (typeof RedactorPlugins === 'undefined') var RedactorPlugins = {};
 
-/* concrete5 Redactor functionality */
-;(function(global) {
-    'use strict';
+RedactorPlugins.concrete5lightbox = function() {
 
-    if (typeof global.RedactorPlugins === 'undefined') global.RedactorPlugins = {};
+    return {
+        init: function()
+        {
+            this.opts.concrete5.lightbox = true;
+        }
 
-    global.RedactorPlugins.concrete5lightbox = function() {
-
-        return {
-            init: function()
-            {
-                this.opts.concrete5.lightbox = true;
-            }
-    
-        };
     };
-
-})(this);
+}

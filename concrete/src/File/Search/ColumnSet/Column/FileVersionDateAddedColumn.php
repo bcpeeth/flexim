@@ -29,8 +29,7 @@ class FileVersionDateAddedColumn extends Column implements PagerColumnInterface
         $query = $itemList->getQueryObject();
         $sort = $this->getColumnSortDirection() == 'desc' ? '<' : '>';
         $where = sprintf('(fv.fvDateAdded, f.fID) %s (:sortDate, :sortID)', $sort);
-        $fv = $mixed->getApprovedVersion();
-        $query->setParameter('sortDate', $fv->getDateAdded()->format('Y-m-d H:i:s'));
+        $query->setParameter('sortDate', $mixed->getDateAdded()->format('Y-m-d H:i:s'));
         $query->setParameter('sortID', $mixed->getFileID());
         $query->andWhere($where);
     }

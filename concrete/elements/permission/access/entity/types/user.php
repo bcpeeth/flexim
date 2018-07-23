@@ -8,7 +8,7 @@
         Concrete.event.bind('UserSearchDialogSelectUser.core', function(event, data) {
             Concrete.event.unbind(event);
             $('#ccm-permissions-access-entity-form .btn-group').removeClass('open');
-            $.getJSON('<?=$url?>', {
+            $.getJSON('<?php echo $url?>', {
                 'uID': data.uID
             }, function(r) {
                 $.fn.dialog.closeTop();

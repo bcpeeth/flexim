@@ -5,8 +5,6 @@ use Concrete\Core\Controller\AbstractController;
 use Concrete\Core\Entity\Express\Entity;
 use Concrete\Core\Express\Entry\Search\Result\Result;
 use Concrete\Core\Express\EntryList;
-use Concrete\Core\Express\Search\SearchProvider;
-use Concrete\Core\Support\Facade\Facade;
 
 class Entries extends AbstractController
 {
@@ -29,37 +27,28 @@ class Entries extends AbstractController
         $this->entryList = new EntryList($entity);
         $this->entity = $entity;
 
-        $app = Facade::getFacadeApplication();
-        $provider = $app->make(SearchProvider::class, ['entity' => $entity]);
-        $query = $provider->getSessionCurrentQuery();
-        if (is_object($query)) {
-            $this->result = $provider->getSearchResultFromQuery($query);
-            $this->result->setBaseURL(\URL::to('/ccm/system/search/express/entries/submit', $this->entity->getID()));
-        } else {
-
-            $set = $this->entity->getResultColumnSet();
-            if ($set) {
-                $defaultSortColumn = $set->getDefaultSortColumn();
-                if ($this->request->query->has($this->entryList->getQuerySortDirectionParameter())) {
-                    $direction = $this->request->query->get($this->entryList->getQuerySortDirectionParameter());
-                } else {
-                    $direction = $defaultSortColumn->getColumnDefaultSortDirection();
-                }
-                if ($this->request->query->has($this->entryList->getQuerySortColumnParameter())) {
-                    $value = $this->request->query->get($this->entryList->getQuerySortColumnParameter());
-                    $column = $this->entity->getResultColumnSet();
-                    $value = $column->getColumnByKey($value);
-                    if (is_object($value)) {
-                        $this->entryList->sanitizedSortBy($value->getColumnKey(), $direction);
-                    }
-                } else {
-                    $this->entryList->sanitizedSortBy($defaultSortColumn->getColumnKey(), $direction);
-                }
-
-                $result = new Result($this->entity->getResultColumnSet(), $this->entryList,
-                    \URL::to('/ccm/system/search/express/entries/submit', $this->entity->getID()));
-                $this->result = $result;
+        $set = $this->entity->getResultColumnSet();
+        if ($set) {
+            $defaultSortColumn = $set->getDefaultSortColumn();
+            if ($this->request->query->has($this->entryList->getQuerySortDirectionParameter())) {
+                $direction = $this->request->query->get($this->entryList->getQuerySortDirectionParameter());
+            } else {
+                $direction = $defaultSortColumn->getColumnDefaultSortDirection();
             }
+            if ($this->request->query->has($this->entryList->getQuerySortColumnParameter())) {
+                $value = $this->request->query->get($this->entryList->getQuerySortColumnParameter());
+                $column = $this->entity->getResultColumnSet();
+                $value = $column->getColumnByKey($value);
+                if (is_object($value)) {
+                    $this->entryList->sanitizedSortBy($value->getColumnKey(), $direction);
+                }
+            } else {
+                $this->entryList->sanitizedSortBy($defaultSortColumn->getColumnKey(), $direction);
+            }
+
+            $result = new Result($this->entity->getResultColumnSet(), $this->entryList,
+                \URL::to('/ccm/system/search/express/entries/submit', $this->entity->getID()));
+            $this->result = $result;
         }
     }
 

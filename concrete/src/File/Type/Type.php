@@ -317,7 +317,7 @@ class Type
     /**
      * Get the inspector for this file type (if available).
      *
-     * @return \Concrete\Core\File\Type\Inspector\Inspector|null
+     * @return \Concrete\Core\File\Type\Inspector|null
      */
     public function getCustomInspector()
     {
@@ -408,13 +408,7 @@ class Type
             $url = AL_ICON_DEFAULT;
         }
         if ($fullImageTag == true) {
-            return sprintf(
-                '<img src="%s" width="%s" height="%s" class="img-responsive ccm-generic-thumbnail" alt="%s">',
-                $url,
-                $type->getWidth(),
-                $type->getHeight(),
-                t(/* i18n: %s is a file type */ '%s file icon', mb_strtoupper($this->getExtension()))
-            );
+            return sprintf('<img src="%s" width="%s" height="%s" class="img-responsive ccm-generic-thumbnail">', $url, $type->getWidth(), $type->getHeight());
         } else {
             return $url;
         }

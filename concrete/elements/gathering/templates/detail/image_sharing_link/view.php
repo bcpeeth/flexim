@@ -6,15 +6,15 @@ if (is_array($image)) {
 
 <div class="ccm-gathering-overlay image-sharing-link" id="image-sharing-link-<?php echo $this->gaiID; ?>">
 	<div class="image-sharing-link-controls">
-		<img class="overlay-header-image" src="<?=$image->getSrc()?>" style="max-width: 600px" />
+		<img class="overlay-header-image" src="<?php echo $image->getSrc()?>" style="max-width: 600px" />
 		<div class="ccm-gathering-overlay-title ccm-gathering-thumbnail-caption">
-			<a href="<?=$link?>"><?=t('Full Article') ?></a>
+			<a href="<?php echo $link?>"><?php echo t('Full Article') ?></a>
 			<a href="#" class="gathering-full-screen"><i class="icon-fullscreen icon-white"></i></a>
 			<a href="#" class="gathering-detail-share"><i class="icon-share-alt icon-white"></i></a>
 			<?php if ($description) {
     ?>
 			<div class="description">
-				<p><?=$description?></p>
+				<p><?php echo $description?></p>
 			</div>
 			<?php 
 } ?>

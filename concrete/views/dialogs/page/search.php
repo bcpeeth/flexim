@@ -15,7 +15,7 @@ defined('C5_EXECUTE') or die("Access Denied.");
 <script type="text/javascript">
 	$(function() {
 		$('div[data-search=pages]').concretePageAjaxSearch({
-			result: <?=json_encode($result->getJSONObject())?>,
+			result: <?php echo json_encode($result->getJSONObject())?>,
 			mode: 'choose'
 		});
 	});

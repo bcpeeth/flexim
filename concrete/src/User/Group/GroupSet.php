@@ -1,11 +1,11 @@
 <?php
 namespace Concrete\Core\User\Group;
 
-use Concrete\Core\Foundation\ConcreteObject;
+use Concrete\Core\Foundation\Object;
 use Gettext\Translations;
 use Loader;
 
-class GroupSet extends ConcreteObject
+class GroupSet extends Object
 {
     public static function getList()
     {

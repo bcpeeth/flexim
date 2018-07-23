@@ -5,11 +5,12 @@ use Concrete\Core\Authentication\AuthenticationType;
 use Concrete\Core\Authentication\AuthenticationTypeFailureException;
 use Concrete\Core\Http\ResponseFactoryInterface;
 use Concrete\Core\Localization\Localization;
+use Concrete\Core\Page\Desktop\DesktopList;
 use Concrete\Core\Routing\RedirectResponse;
-use Concrete\Core\User\PostLoginLocation;
 use Exception;
+use Page;
 use PageController;
-use Concrete\Core\User\User;
+use User;
 use UserAttributeKey;
 use UserInfo;
 
@@ -30,8 +31,7 @@ class Login extends PageController
 
     public function account_deactivated()
     {
-        $config = $this->app->make('config');
-        $this->error->add(t($config->get('concrete.user.deactivation.message')));
+        $this->error->add(t('This user is inactive. Please contact us regarding this account.'));
     }
 
     public function session_invalidated()
@@ -109,8 +109,8 @@ class Login extends PageController
             try {
                 $at = AuthenticationType::getByHandle($type);
                 $user = $at->controller->authenticate();
-                if ($user && $user->isRegistered()) {
-                    return $this->finishAuthentication($at, $user);
+                if ($user && $user->isLoggedIn()) {
+                    return $this->finishAuthentication($at);
                 }
             } catch (Exception $e) {
                 $this->error->add($e->getMessage());
@@ -129,13 +129,13 @@ class Login extends PageController
      *
      * @throws Exception
      */
-    public function finishAuthentication(
-        AuthenticationType $type,
-        User $u
+    public function finishAuthentication(/* AuthenticationType */
+        $type = null
     ) {
         if (!$type || !($type instanceof AuthenticationType)) {
             return $this->view();
         }
+        $u = new User();
         $config = $this->app->make('config');
         if ($config->get('concrete.i18n.choose_language_login')) {
             $userLocale = $this->post('USER_LOCALE');
@@ -189,29 +189,7 @@ class Login extends PageController
         $ue = new \Concrete\Core\User\Event\User($u);
         $this->app->make('director')->dispatch('on_user_login', $ue);
 
-        return new RedirectResponse(
-            $this->app->make('url/manager')->resolve(['/login', 'login_complete'])
-        );
-    }
-
-    public function login_complete()
-    {
-        // Move this functionality to a redirected endpoint rather than from within the previous method because
-        // session isn't set until we redirect and reload.
-        $u = new User();
-        if (!$this->error) {
-            $this->error = $this->app->make('helper/validation/error');
-        }
-
-        if ($u->isRegistered()) {
-            $pll = $this->app->make(PostLoginLocation::class);
-            $response = $pll->getPostLoginRedirectResponse(true);
-
-            return $response;
-        } else {
-            $this->error->add(t('User is not registered. Check your authentication controller.'));
-            $u->logout();
-        }
+        return $this->chooseRedirect();
     }
 
     public function on_start()
@@ -253,34 +231,104 @@ class Login extends PageController
         $this->set('locales', $locales);
     }
 
+    public function chooseRedirect()
+    {
+        if (!$this->error) {
+            $this->error = $this->app->make('helper/validation/error');
+        }
+
+        $u = new User(); // added for the required registration attribute change above. We recalc the user and make sure they're still logged in
+        if ($u->isRegistered()) {
+            if ($u->config('NEWSFLOW_LAST_VIEWED') === 'FIRSTRUN') {
+                $u->saveConfig('NEWSFLOW_LAST_VIEWED', 0);
+            }
+
+            $response = new RedirectResponse(
+                $this->getRedirectUrl()
+            );
+
+            // Disable caching for response
+            $response = $response->setMaxAge(0)->setSharedMaxAge(0)->setPrivate();
+            $response->headers->addCacheControlDirective('must-revalidate', true);
+            $response->headers->addCacheControlDirective('no-store', true);
+
+            return $response;
+        } else {
+            $this->error->add(t('User is not registered. Check your authentication controller.'));
+            $u->logout();
+        }
+    }
+
     /**
-     * @deprecated Use the getPostLoginUrl method of \Concrete\Core\User\PostLoginLocation
-     *
-     * @see \Concrete\Core\User\PostLoginLocation::getPostLoginUrl()
-     *
      * @return string
      */
     public function getRedirectUrl()
     {
-        $pll = $this->app->make(PostLoginLocation::class);
-        $url = $pll->getPostLoginUrl(true);
-        
-        return $url;
+        $config = $this->app->make('config');
+        $login_redirect_mode = (string) $config->get('concrete.misc.login_redirect');
+
+        // Redirect to a page from the session
+        $rUrl = $this->getRedirectUrlFromSession();
+        if ($rUrl) {
+            return $rUrl;
+        }
+
+        // Redirect to custom page
+        $login_redirect_cid = (int) $config->get('concrete.misc.login_redirect_cid');
+        if ($login_redirect_mode === 'CUSTOM' && $login_redirect_cid > 0) {
+            $rc = Page::getByID($login_redirect_cid);
+            if ($rc instanceof Page && !$rc->isError()) {
+                $rUrl = $rc->getCollectionLink();
+                if ($rUrl) {
+                    return $rUrl;
+                }
+            }
+        }
+
+        // Redirect to desktop
+        if ($login_redirect_mode === 'DESKTOP') {
+            $desktop = DesktopList::getMyDesktop();
+            if (is_object($desktop)) {
+                return $desktop->getCollectionLink();
+            }
+        }
+
+        // Return to home page
+        return Page::getByID(HOME_CID)->getCollectionLink();
     }
 
     /**
-     * @deprecated Use the getSessionPostLoginUrl method of \Concrete\Core\User\PostLoginLocation
-     *
-     * @see \Concrete\Core\User\PostLoginLocation::getSessionPostLoginUrl()
-     *
      * @return string|false
      */
     public function getRedirectUrlFromSession()
     {
-        $pll = $this->app->make(PostLoginLocation::class);
-        $url = $pll->getSessionPostLoginUrl(true);
+        $nh = $this->app->make('helper/validation/numbers');
+        $session = $this->app->make('session');
 
-        return $url === '' ? false : $url;
+        // Redirect to original destination
+        if ($session->has('rUri')) {
+            $rUrl = $session->get('rUri');
+            $session->remove('rUri');
+            if ($rUrl) {
+                return $rUrl;
+            }
+        }
+
+        if ($session->has('rcID')) {
+            $rcID = $session->get('rcID');
+            if ($nh->integer($rcID)) {
+                $rc = Page::getByID($rcID);
+            } elseif (strlen($rcID)) {
+                $rcID = trim($rcID, '/');
+                $rc = Page::getByPath('/' . $rcID);
+            }
+
+            if ($rc instanceof Page && !$rc->isError()) {
+                return $rc->getCollectionLink();
+            }
+        }
+
+        return false;
     }
 
     public function view($type = null, $element = 'form')
@@ -288,13 +336,9 @@ class Login extends PageController
         $this->requireAsset('javascript', 'backstretch');
         $this->set('authTypeParams', $this->getSets());
         if (strlen($type)) {
-            try {
-                $at = AuthenticationType::getByHandle($type);
-                $this->set('authType', $at);
-                $this->set('authTypeElement', $element);
-            } catch (\Exception $e) {
-                // Don't fail loudly
-            }
+            $at = AuthenticationType::getByHandle($type);
+            $this->set('authType', $at);
+            $this->set('authTypeElement', $element);
         }
     }
 
@@ -348,7 +392,7 @@ class Login extends PageController
                 $ui->saveUserAttributesForm($saveAttributes);
             }
 
-            return $this->finishAuthentication($at, $u);
+            return $this->finishAuthentication($at);
         } catch (Exception $e) {
             $this->error->add($e->getMessage());
         }
@@ -395,11 +439,9 @@ class Login extends PageController
     public function forward($cID = 0)
     {
         $nh = $this->app->make('helper/validation/numbers');
-        if ($nh->integer($cID, 1)) {
-            $rcID = (int) $cID;
-            $this->set('rcID', $rcID);
-            $pll = $this->app->make(PostLoginLocation::class);
-            $pll->setSessionPostLoginUrl($rcID);
+        if ($nh->integer($cID) && intval($cID) > 0) {
+            $this->set('rcID', intval($cID));
+            $this->app->make('session')->set('rcID', intval($cID));
         }
     }
 }

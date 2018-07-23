@@ -1,7 +1,4 @@
-/* jshint unused:vars, undef:true, browser:true, jquery:true */
-/* global _, Concrete */
-
-;(function(window, $) {
+(function (window, $, _, Concrete) {
     'use strict';
 
     var Layout = Concrete.Layout = function Layout(elem, edit_mode) {
@@ -41,4 +38,4 @@
 
     });
 
-})(window, jQuery);
+}(window, jQuery, _, Concrete));

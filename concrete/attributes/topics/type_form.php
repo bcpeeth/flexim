@@ -46,16 +46,16 @@
         });
         </script>
     <fieldset>
-    <legend><?=t('Topic Tree')?></legend>
+    <legend><?php echo t('Topic Tree')?></legend>
     <div class="clearfix"></div>
         <div class="form-group">
         <select class="form-control" name="topicTreeIDSelect">
             <?php foreach ($trees as $stree) {
     ?>
-                <option value="<?=$stree->getTreeID()?>" <?php if ($tree->getTreeID() == $stree->getTreeID()) {
+                <option value="<?php echo $stree->getTreeID()?>" <?php if ($tree->getTreeID() == $stree->getTreeID()) {
     ?>selected<?php 
 }
-    ?>><?=$stree->getTreeDisplayName()?></option>
+    ?>><?php echo $stree->getTreeDisplayName()?></option>
             <?php 
 }
     ?>
@@ -63,14 +63,14 @@
         </div>
     <div class="tree-view-container">
         <div class="tree-view-template">
-            <legend><?=t('Topic Default Parent Node')?></legend>
+            <legend><?php echo t('Topic Default Parent Node')?></legend>
         </div>
     </div>
-        <legend><?= t('Select Mode'); ?></legend>
+        <legend><?php echo t('Select Mode'); ?></legend>
         <div class="form-group">
             <div class="checkbox">
                 <label>
-                    <?= $form->checkbox('akTopicAllowMultipleValues', 1, $allowMultipleValues)?> <span><?=t('Allow multiple nodes to be chosen.') ?></span>
+                    <?php echo $form->checkbox('akTopicAllowMultipleValues', 1, $allowMultipleValues)?> <span><?php echo t('Allow multiple nodes to be chosen.') ?></span>
                 </label>
             </div>
         </div>
@@ -83,7 +83,7 @@
 } else {
     ?>
 
-    <div class="alert alert-danger"><?=t('You have not created a topic tree.
+    <div class="alert alert-danger"><?php echo t('You have not created a topic tree.
 You must create a topic tree from the <a href="%s">Topics Page</a>
 before you can use this attribute type.', URL::to('/dashboard/system/attributes/topics'))?></div>
 

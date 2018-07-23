@@ -1,12 +1,10 @@
 <?php
-
 namespace Concrete\Core\Http;
 
 use Concrete\Core\Application\Application;
 use Concrete\Core\Routing\DispatcherRouteCallback;
 use Concrete\Core\Routing\Redirect;
 use Concrete\Core\Routing\RouterInterface;
-use Concrete\Core\Session\SessionValidator;
 use Concrete\Core\User\User;
 use Concrete\Core\View\View;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
@@ -15,7 +13,6 @@ use Symfony\Component\Routing\Exception\MethodNotAllowedException;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
-use Symfony\Component\Routing\RouteCollection;
 
 class DefaultDispatcher implements DispatcherInterface
 {
@@ -62,17 +59,15 @@ class DefaultDispatcher implements DispatcherInterface
 
     private function getEarlyDispatchResponse()
     {
-        $validator = $this->app->make(SessionValidator::class);
-        if ($validator->hasActiveSession()) {
-            $session = $this->app['session'];
-            if (!$session->has('uID')) {
-                User::verifyAuthTypeCookie();
-            }
+        $session = $this->app['session'];
 
-            // User may have been logged in, so lets check status again.
-            if ($session->has('uID') && $session->get('uID') > 0 && $response = $this->validateUser()) {
-                return $response;
-            }
+        if (!$session->has('uID')) {
+            User::verifyAuthTypeCookie();
+        }
+
+        // User may have been logged in, so lets check status again.
+        if ($session->has('uID') && $session->get('uID') > 0 && $response = $this->validateUser()) {
+            return $response;
         }
     }
 
@@ -103,27 +98,24 @@ class DefaultDispatcher implements DispatcherInterface
 
     private function handleDispatch($request)
     {
-        $path = rtrim($request->getPathInfo(), '/') . '/';
         $collection = $this->router->getList();
-        $collection = $this->filterRouteCollectionForPath($collection, $path);
-        if ($collection->count() === 0) {
+        $context = new RequestContext();
+        $context->fromRequest($request);
+        $matcher = new UrlMatcher($collection, $context);
+        $path = rtrim($request->getPathInfo(), '/') . '/';
+
+        $callDispatcher = false;
+        try {
+            $request->attributes->add($matcher->match($path));
+            $matched = $matcher->match($path);
+            $route = $collection->get($matched['_route']);
+
+            $this->router->setRequest($request);
+            $response = $this->router->execute($route, $matched);
+        } catch (ResourceNotFoundException $e) {
             $callDispatcher = true;
-        } else {
-            $context = new RequestContext();
-            $context->fromRequest($request);
-            $matcher = new UrlMatcher($collection, $context);
-            $callDispatcher = false;
-            try {
-                $matched = $matcher->match($path);
-                $request->attributes->add($matched);
-                $route = $collection->get($matched['_route']);
-                $this->router->setRequest($request);
-                $response = $this->router->execute($route, $matched);
-            } catch (ResourceNotFoundException $e) {
-                $callDispatcher = true;
-            } catch (MethodNotAllowedException $e) {
-                $callDispatcher = true;
-            }
+        } catch (MethodNotAllowedException $e) {
+            $callDispatcher = true;
         }
         if ($callDispatcher) {
             $callback = $this->app->make(DispatcherRouteCallback::class, ['dispatcher']);
@@ -131,39 +123,5 @@ class DefaultDispatcher implements DispatcherInterface
         }
 
         return $response;
-    }
-
-    /**
-     * @param \Symfony\Component\Routing\RouteCollection $routes
-     * @param string $path
-     *
-     * @return \Symfony\Component\Routing\RouteCollection
-     */
-    private function filterRouteCollectionForPath(RouteCollection $routes, $path)
-    {
-        $result = new RouteCollection();
-        foreach ($routes->getResources() as $resource) {
-            $result->addResource($resource);
-        }
-        foreach ($routes->all() as $name => $route) {
-            $routePath = $route->getPath();
-            $p = strpos($routePath, '{');
-            $skip = false;
-            if ($p === false) {
-                if ($routePath !== $path) {
-                    $skip = true;
-                }
-            } elseif ($p > 0) {
-                $routeFixedPath = substr($routePath, 0, $p);
-                if (strpos($path, $routeFixedPath) !== 0) {
-                    $skip = true;
-                }
-            }
-            if ($skip === false) {
-                $result->add($name, $route);
-            }
-        }
-
-        return $result;
     }
 }

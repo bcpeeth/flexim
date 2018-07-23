@@ -31,18 +31,11 @@ class Multilingual extends Page
 
     public function unmap()
     {
-        $section = Section::getByID((int) $this->request->request('section'));
-        if (is_object($section)) {
-            $relatedID = $section->getTranslatedPageID($this->page);
-            $relatedPage = \Page::getByID((int) $relatedID);
-            $r = new PageEditResponse();
-            $r->setPage($relatedPage);
-            if (!$relatedPage->isError()) {
-                Section::unregisterPage($relatedPage);
-                $r->setMessage(t('Page unmapped.'));
-            }
-            $r->outputJSON();
-        }
+        Section::unregisterPage($this->page);
+        $r = new PageEditResponse();
+        $r->setPage($this->page);
+        $r->setMessage(t('Page unmapped.'));
+        $r->outputJSON();
     }
 
     public function assign()
@@ -103,7 +96,7 @@ class Multilingual extends Page
             $cp = new \Permissions($newParent);
             if ($cp->canAddSubCollection($ct)) {
                 if ($this->page->isPageDraft()) {
-                    $targetParent = \Page::getDraftsParentPage();
+                    $targetParent = \Page::getByPath(\Config::get('concrete.paths.drafts'));
                 } else {
                     $targetParent = $newParent;
                 }
@@ -123,7 +116,6 @@ class Multilingual extends Page
                     }
                     $ih = Core::make('multilingual/interface/flag');
                     $icon = (string) $ih->getSectionFlagIcon($ms);
-                    $pr->setPage($newPage);
                     $pr->setAdditionalDataAttribute('name', $newPage->getCollectionName());
                     $pr->setAdditionalDataAttribute('link', $newPage->getCollectionLink());
                     $pr->setAdditionalDataAttribute('icon', $icon);

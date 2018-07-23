@@ -18,7 +18,7 @@ class DirectFileSaver extends FileSaver
 
     protected function getStorageDirectory()
     {
-        return DIR_CONFIG_SITE;
+        return DIR_APPLICATION . '/config';
     }
 
     protected function getFilename($group, $path = null)

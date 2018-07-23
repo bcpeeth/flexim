@@ -1,7 +1,4 @@
-/* jshint unused:vars, undef:true, browser:true, jquery:true */
-/* global _, Concrete, ConcreteEvent */
-
-;(function(global, $) {
+!function (global, $, _) {
     'use strict';
 
     function ConcreteMenu($element, options) {
@@ -89,7 +86,7 @@
         },
 
         destroy: function () {
-            var my = this;
+            var my = this, global = ConcreteMenuManager;
             my.hide();
             my.$launcher.each(function () {
                 $(this).unbind('mousemove.concreteMenu');
@@ -154,8 +151,6 @@
 
         show: function (e) {
             var my = this,
-                isTouch = e.type.substr(0, 5).toLowerCase() === 'touch',
-                touch = isTouch ? e.originalEvent.touches[0] : null,
                 global = ConcreteMenuManager,
                 options = my.options,
                 $launcher = my.$launcher,
@@ -163,10 +158,8 @@
                 $container = global.$container,
                 $highlighter = global.$highlighter,
                 $menu = my.$menu.clone(true, true),
-                pageX = (touch ? touch.pageX : e.pageX) + 2,
-                pageY = (touch ? touch.pageY : e.pageY) + 2,
-                clientX = touch ? touch.clientX : e.clientX,
-                clientY = touch ? touch.clientY : e.clientY;
+                posX = e.pageX + 2,
+                posY = e.pageY + 2;
 
             if (global.getActiveMenu() == my) {
                 return false;
@@ -180,7 +173,7 @@
                 $highlighter.removeClass();
                 my.positionAt($highlighter, $launcher);
                 _.defer(function () {
-                    $highlighter.addClass(options.highlightClassName);
+                    $highlighter.addClass(options.highlightClassName)
                 });
             }
 
@@ -204,26 +197,26 @@
 
             var available = ['bottom', 'top', 'right', 'left'], all = available.slice(0);
 
-            if (clientX < mwidth + 30) {
+            if (e.clientX < mwidth + 30) {
                 available = _(available).without('left');
             }
-            if (wwidth < (clientX + mwidth + 30)) {
+            if (wwidth < (e.clientX + mwidth + 30)) {
                 available = _(available).without('right');
             }
-            if (wheight < (clientY + mheight + 30)) {
+            if (wheight < (e.clientY + mheight + 30)) {
                 available = _(available).without('bottom');
             }
-            if (clientY < mheight + 30) {
+            if (e.clientY < mheight + 30) {
                 available = _(available).without('top');
             }
 
-            if (wwidth < clientX + hshift ||
-                clientX < hshift) {
+            if (wwidth < e.clientX + hshift ||
+                e.clientX < hshift) {
                 available = _(available).without('top', 'bottom');
             }
 
-            if (wheight < clientY + vshift ||
-                clientY < vshift) {
+            if (wheight < e.clientY + vshift ||
+                e.clientY < vshift) {
                 available = _(available).without('left', 'right');
             }
 
@@ -231,26 +224,28 @@
             var placement = available.shift();
             $menu.removeClass(all).addClass(placement);
 
-            pageX -= 2;
-            pageY -= 2;
+            e.pageX -= 2;
+            e.pageY -= 2;
             switch (placement) {
                 case 'left':
-                    pageX = pageX - mwidth;
-                    pageY = pageY - mheight / 2;
+                    posX = e.pageX - mwidth;
+                    posY = e.pageY - mheight / 2;
                     break;
                 case 'right':
-                    pageY = pageY - mheight / 2;
+                    posX = e.pageX;
+                    posY = e.pageY - mheight / 2;
                     break;
                 case 'top':
-                    pageY = pageY - mheight;
-                    pageX = pageX - (mwidth / 2);
+                    posY = e.pageY - mheight;
+                    posX = e.pageX - (mwidth / 2);
                     break;
                 case 'bottom':
-                    pageX = pageX - (mwidth / 2);
+                    posY = e.pageY;
+                    posX = e.pageX - (mwidth / 2);
                     break;
             }
 
-            $menu.css({'top': pageY, 'left': pageX});
+            $menu.css({'top': posY, 'left': posX});
             _.defer(function () {
                 $menu.css('opacity', 1);
             });
@@ -350,4 +345,4 @@
     global.ConcreteMenu = ConcreteMenu;
     global.ConcreteMenuManager = ConcreteMenuManager;
 
-})(window, jQuery);
+}(this, $, _);

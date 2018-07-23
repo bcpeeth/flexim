@@ -13,14 +13,14 @@ if (!$fp->canEditFileContents()) {
     die(t('Access Denied.'));
 }
 
-$searchInstance = isset($_REQUEST['searchInstance']) ? $app->make('helper/text')->entities($_REQUEST['searchInstance']) : '';
+$searchInstance = $app->make('helper/text')->entities($_REQUEST['searchInstance']);
 ?>
 
 <div class="ccm-ui">
     <ul class="nav nav-tabs" id="ccm-file-import-tabs">
-        <li class="active"><a href="javascript:void(0)" id="ccm-file-add-computer"><?=t('Add From Computer')?></a></li>
-        <li><a href="javascript:void(0)" id="ccm-file-add-incoming"><?=t('Add From Incoming')?></a></li>
-        <li><a href="javascript:void(0)" id="ccm-file-add-remote"><?=t('Add Remote Files')?></a></li>
+        <li class="active"><a href="javascript:void(0)" id="ccm-file-add-computer"><?php echo t('Add From Computer')?></a></li>
+        <li><a href="javascript:void(0)" id="ccm-file-add-incoming"><?php echo t('Add From Incoming')?></a></li>
+        <li><a href="javascript:void(0)" id="ccm-file-add-remote"><?php echo t('Add Remote Files')?></a></li>
     </ul>
 
     <script>
@@ -38,17 +38,17 @@ $searchInstance = isset($_REQUEST['searchInstance']) ? $app->make('helper/text')
     </script>
 
     <div id="ccm-file-add-computer-tab">
-        <form method="post" class="form-inline" id="ccm-file-manager-replace-upload" data-dialog-form="replace-file" action="<?=REL_DIR_FILES_TOOLS_REQUIRED?>/files/importers/single">
+        <form method="post" class="form-inline" id="ccm-file-manager-replace-upload" data-dialog-form="replace-file" action="<?php echo REL_DIR_FILES_TOOLS_REQUIRED?>/files/importers/single">
             <br/>
             <table style="width: 100%;">
                 <tr>
                     <td style="width: 100%;">
                         <input type="file" name="Filedata" class="form-control" style="width: 100%; height: auto;">
-                        <?=$valt->output('upload');?>
-                        <?= $form->hidden('fID', $f->getFileID()); ?>
+                        <?php echo $valt->output('upload');?>
+                        <?php echo $form->hidden('fID', $f->getFileID()); ?>
                     </td>
                     <td>
-                        <button type="submit" class="btn btn-warning" style="margin-left: 4px;"><?=t('Upload')?></button>
+                        <button type="submit" class="btn btn-warning" style="margin-left: 4px;"><?php echo t('Upload')?></button>
                     </td>
                 </tr>
             </table>
@@ -74,16 +74,16 @@ $searchInstance = isset($_REQUEST['searchInstance']) ? $app->make('helper/text')
                 $contents[$con['basename']] = $con['basename'];
             }
             if (count($contents) > 0) { ?>
-                <form method="post" id="ccm-file-manager-replace-incoming" class="form-inline" data-dialog-form="replace-file" action="<?=REL_DIR_FILES_TOOLS_REQUIRED?>/files/importers/incoming">
+                <form method="post" id="ccm-file-manager-replace-incoming" class="form-inline" data-dialog-form="replace-file" action="<?php echo REL_DIR_FILES_TOOLS_REQUIRED?>/files/importers/incoming">
                     <table style="width: 100%;">
                         <tr>
                             <td style="width: 100%;">
-                                <?= $form->select('send_file', $contents, array('style' => 'width: 100%;'));?>
+                                <?php echo $form->select('send_file', $contents, array('style' => 'width: 100%;'));?>
                             </td>
                             <td>
-                                <button type="submit" class="btn btn-warning" style="margin-left: 4px;"><?=t('Replace')?></button>
-                                <?= $form->hidden('fID', $f->getFileID()); ?>
-                                <?=$valt->output('import_incoming'); ?>
+                                <button type="submit" class="btn btn-warning" style="margin-left: 4px;"><?php echo t('Replace')?></button>
+                                <?php echo $form->hidden('fID', $f->getFileID()); ?>
+                                <?php echo $valt->output('import_incoming'); ?>
                             </td>
                         </tr>
                     </table>
@@ -105,18 +105,18 @@ $searchInstance = isset($_REQUEST['searchInstance']) ? $app->make('helper/text')
 
     <div id="ccm-file-add-remote-tab" style="display: none">
 
-        <form method="post" id="ccm-file-manager-replace-remote" class="form-inline" data-dialog-form="replace-file" action="<?=REL_DIR_FILES_TOOLS_REQUIRED?>/files/importers/remote">
+        <form method="post" id="ccm-file-manager-replace-remote" class="form-inline" data-dialog-form="replace-file" action="<?php echo REL_DIR_FILES_TOOLS_REQUIRED?>/files/importers/remote">
             <br/>
             <table style="width: 100%;">
                 <tr>
                     <td style="width: 100%;">
-                        <?=$valt->output('import_remote');?>
-                        <input type="hidden" name="searchInstance" value="<?=$searchInstance?>" />
-                        <?= $form->hidden('fID', $f->getFileID()); ?>
-                        <?=$form->text('url_upload_1', array('style' => 'width: 100%;'))?>
+                        <?php echo $valt->output('import_remote');?>
+                        <input type="hidden" name="searchInstance" value="<?php echo $searchInstance?>" />
+                        <?php echo $form->hidden('fID', $f->getFileID()); ?>
+                        <?php echo $form->text('url_upload_1', array('style' => 'width: 100%;'))?>
                     </td>
                     <td>
-                        <button type="submit" class="btn btn-warning" style="margin-left: 4px;"><?=t('Replace')?></button>
+                        <button type="submit" class="btn btn-warning" style="margin-left: 4px;"><?php echo t('Replace')?></button>
                     </td>
                 </tr>
             </table>

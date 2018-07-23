@@ -209,17 +209,6 @@ class NewConversationMessageNotification extends \Concrete\Core\Entity\Notificat
     /**
      * {@inheritDoc}
      */
-    public function getNotificationDateTimeZone()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getNotificationDateTimeZone', []);
-
-        return parent::getNotificationDateTimeZone();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function setNotificationDate($nDate)
     {
 

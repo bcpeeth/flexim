@@ -1,6 +1,4 @@
-/* jshint unused:vars, undef:true, browser:true, jquery:true */
-
-;(function(global, $) {
+!function(global, $) {
 	'use strict';
 
 	$('table tr[data-search-row-url]').each(function() {
@@ -16,4 +14,4 @@
 
 	});
 
-})(window, jQuery);
+}(this, $);

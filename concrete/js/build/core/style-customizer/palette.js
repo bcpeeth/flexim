@@ -1,7 +1,11 @@
-/* jshint unused:vars, undef:true, browser:true, jquery:true */
-/* global _, ConcreteEvent, ccmi18n */
+/**
+ * block ajax
+ */
 
-;(function(global, $) {
+/* jshint unused:vars, undef:true, browser:true */
+/* global $, _, alert, ConcreteEvent, ccmi18n */
+
+(function(global, $) {
     'use strict';
 
     function ConcreteStyleCustomizerPalette($element, options) {
@@ -97,7 +101,7 @@
         },
 
         updateSwatch: function() {
-            window.alert('You must implement this method updateSwatch.');
+            alert('You must implement this method updateSwatch.');
         },
 
         save: function (e) {
@@ -110,4 +114,4 @@
 
     global.ConcreteStyleCustomizerPalette = ConcreteStyleCustomizerPalette;
 
-})(this, jQuery);
+})(this, $);

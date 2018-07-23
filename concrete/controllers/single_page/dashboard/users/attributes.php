@@ -39,7 +39,7 @@ class Attributes extends DashboardAttributesPageController
     {
         $type = Type::getByID($type);
         $this->renderAdd($type,
-            \URL::to('/dashboard/users/attributes', 'view')
+            \URL::to('/dashboard/users/attributes', 'view', $id)
         );
     }
 

@@ -1,7 +1,4 @@
-/* jshint unused:vars, undef:true, browser:true, jquery:true */
-/* global _, Concrete, ConcreteAlert, ConcreteToolbar, ConcreteMenu, ccmi18n, CCM_CID, CCM_DISPATCHER_FILENAME */
-
-;(function(window, $) {
+(function (window, $, _, Concrete) {
     'use strict';
 
     /**
@@ -184,7 +181,7 @@
                 .on('click.edit-mode', function (e) {
                     // we are going to place this at the END of the list.
                     var $link = $(this);
-                    var bID = parseInt($link.attr('data-container-layout-block-id'));
+                    var bID = parseInt($(this).attr('data-container-layout-block-id'));
                     var editor = Concrete.getEditMode();
                     var block = _.findWhere(editor.getBlocks(), {id: bID});
                     Concrete.event.fire('EditModeBlockEditInline', {
@@ -201,7 +198,7 @@
                     e.preventDefault();
                     // we are going to place this at the END of the list.
                     var $link = $(this);
-                    var bID = parseInt($link.attr('data-container-layout-block-id'));
+                    var bID = parseInt($(this).attr('data-container-layout-block-id'));
                     var editor = Concrete.getEditMode();
                     var block = _.findWhere(editor.getBlocks(), {id: bID});
                     Concrete.event.fire('EditModeBlockEditInline', {
@@ -417,4 +414,4 @@
         }
     };
 
-})(window, jQuery);
+}(window, jQuery, _, Concrete));

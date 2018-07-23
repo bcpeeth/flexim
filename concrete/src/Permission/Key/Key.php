@@ -1,7 +1,7 @@
 <?php
 namespace Concrete\Core\Permission\Key;
 
-use Concrete\Core\Foundation\ConcreteObject;
+use Concrete\Core\Foundation\Object;
 use Gettext\Translations;
 use Database;
 use CacheLocal;
@@ -13,7 +13,7 @@ use Concrete\Core\Permission\Category as PermissionKeyCategory;
 use Environment;
 use Core;
 
-abstract class Key extends ConcreteObject
+abstract class Key extends Object
 {
     const ACCESS_TYPE_INCLUDE = 10;
     const ACCESS_TYPE_EXCLUDE = -1;

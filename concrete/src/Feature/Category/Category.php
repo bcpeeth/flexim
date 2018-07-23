@@ -1,12 +1,12 @@
 <?php
 namespace Concrete\Core\Feature\Category;
 
-use Concrete\Core\Foundation\ConcreteObject;
+use Concrete\Core\Foundation\Object;
 use Loader;
 use Concrete\Core\Package\PackageList;
 use Core;
 
-abstract class Category extends ConcreteObject
+abstract class Category extends Object
 {
     abstract public function assignmentIsInUse(\Concrete\Core\Feature\Assignment\Assignment $fa);
 

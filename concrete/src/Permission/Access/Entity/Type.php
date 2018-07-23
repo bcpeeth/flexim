@@ -1,14 +1,14 @@
 <?php
 namespace Concrete\Core\Permission\Access\Entity;
 
-use Concrete\Core\Foundation\ConcreteObject;
+use Concrete\Core\Foundation\Object;
 use Concrete\Core\Permission\Category;
 use Gettext\Translations;
 use Loader;
 use Core;
 use Concrete\Core\Package\PackageList;
 
-class Type extends ConcreteObject
+class Type extends Object
 {
     public function getAccessEntityTypeID()
     {

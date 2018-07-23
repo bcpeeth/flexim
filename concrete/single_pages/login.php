@@ -36,11 +36,11 @@ $attribute_mode = (isset($required_attributes) && count($required_attributes));
     $disclaimer = new Area('Disclaimer');
     if ($disclaimer->getTotalBlocksInArea($c) || $c->isEditMode()) { ?>
         <div class="ccm-login-disclaimer">
-            <?=$disclaimer->display($c);?>
+            <?php echo $disclaimer->display($c);?>
         </div>
     <?php } ?>
     <div class="col-sm-6 col-sm-offset-3">
-        <h1><?= !$attribute_mode ? t('Sign In.') : t('Required Attributes') ?></h1>
+        <h1><?php echo !$attribute_mode ? t('Sign In.') : t('Required Attributes') ?></h1>
     </div>
     <div class="col-sm-6 col-sm-offset-3 login-form">
         <div class="row">
@@ -49,7 +49,7 @@ $attribute_mode = (isset($required_attributes) && count($required_attributes));
                 if ($attribute_mode) {
                     ?>
                     <i class="fa fa-question"></i>
-                    <span><?= t('Attributes') ?></span>
+                    <span><?php echo t('Attributes') ?></span>
                 <?php
 
                 } elseif (count($activeAuths) > 1) {
@@ -58,8 +58,8 @@ $attribute_mode = (isset($required_attributes) && count($required_attributes));
                         <?php
                         foreach ($activeAuths as $auth) {
                             ?>
-                            <option value="<?= $auth->getAuthenticationTypeHandle() ?>">
-                                <?= $auth->getAuthenticationTypeDisplayName() ?>
+                            <option value="<?php echo $auth->getAuthenticationTypeHandle() ?>">
+                                <?php echo $auth->getAuthenticationTypeDisplayName() ?>
                             </option>
                         <?php
 
@@ -84,7 +84,7 @@ $attribute_mode = (isset($required_attributes) && count($required_attributes));
                         ?>
                         <li data-handle="required_attributes">
                             <i class="fa fa-question"></i>
-                            <span><?= t('Attributes') ?></span>
+                            <span><?php echo t('Attributes') ?></span>
                         </li>
                         <?php
 
@@ -92,9 +92,9 @@ $attribute_mode = (isset($required_attributes) && count($required_attributes));
                         /** @var AuthenticationType[] $activeAuths */
                         foreach ($activeAuths as $auth) {
                             ?>
-                            <li data-handle="<?= $auth->getAuthenticationTypeHandle() ?>">
-                                <?= $auth->getAuthenticationTypeIconHTML() ?>
-                                <span><?= $auth->getAuthenticationTypeDisplayName() ?></span>
+                            <li data-handle="<?php echo $auth->getAuthenticationTypeHandle() ?>">
+                                <?php echo $auth->getAuthenticationTypeIconHTML() ?>
+                                <span><?php echo $auth->getAuthenticationTypeDisplayName() ?></span>
                             </li>
                         <?php
 
@@ -112,7 +112,7 @@ $attribute_mode = (isset($required_attributes) && count($required_attributes));
                 if ($attribute_mode) {
                     $attribute_helper = new Concrete\Core\Form\Service\Widget\Attribute();
                     ?>
-                    <form action="<?= View::action('fill_attributes') ?>" method="POST">
+                    <form action="<?php echo View::action('fill_attributes') ?>" method="POST">
                         <div data-handle="required_attributes"
                              class="authentication-type authentication-type-required-attributes">
                             <div class="ccm-required-attribute-form"
@@ -124,7 +124,7 @@ $attribute_mode = (isset($required_attributes) && count($required_attributes));
                     ?>
                             </div>
                             <div class="form-group">
-                                <button class="btn btn-primary pull-right"><?= t('Submit') ?></button>
+                                <button class="btn btn-primary pull-right"><?php echo t('Submit') ?></button>
                             </div>
 
                         </div>
@@ -135,8 +135,8 @@ $attribute_mode = (isset($required_attributes) && count($required_attributes));
                     /** @var AuthenticationType[] $activeAuths */
                     foreach ($activeAuths as $auth) {
                         ?>
-                        <div data-handle="<?= $auth->getAuthenticationTypeHandle() ?>"
-                             class="authentication-type authentication-type-<?= $auth->getAuthenticationTypeHandle() ?>">
+                        <div data-handle="<?php echo $auth->getAuthenticationTypeHandle() ?>"
+                             class="authentication-type authentication-type-<?php echo $auth->getAuthenticationTypeHandle() ?>">
                             <?php $auth->renderForm($authTypeElement ?: 'form', $authTypeParams ?: array()) ?>
                         </div>
                     <?php
@@ -234,7 +234,7 @@ $attribute_mode = (isset($required_attributes) && count($required_attributes));
             <?php
             if (isset($lastAuthType)) {
                 ?>
-                $("ul.auth-types > li[data-handle='<?= $lastAuthType->getAuthenticationTypeHandle() ?>']")
+                $("ul.auth-types > li[data-handle='<?php echo $lastAuthType->getAuthenticationTypeHandle() ?>']")
                     .trigger("click");
                 <?php
 

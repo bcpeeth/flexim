@@ -29,21 +29,23 @@ class PageOwnerEntity extends Entity
         }
         if (is_object($c) && ($c instanceof Page)) {
             $ui = UserInfo::getByID($c->getCollectionUserID());
-            if ($ui) {
-                return [$ui];
-            }
+            $users = array($ui);
+
+            return $users;
         }
     }
 
     public function validate(PermissionAccess $pae)
     {
         $users = $this->getAccessEntityUsers($pae);
-        if (empty($users)) {
+        if (count($users) == 0) {
             return false;
         } else {
-            $u = new \User();
+            if (is_object($users[0])) {
+                $u = new \User();
 
-            return $users[0]->getUserID() == $u->getUserID();
+                return $users[0]->getUserID() == $u->getUserID();
+            }
         }
     }
 

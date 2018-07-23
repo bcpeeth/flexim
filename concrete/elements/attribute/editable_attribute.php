@@ -36,14 +36,14 @@ $canEdit = $permissionsCallback($ak, $permissionsArguments);
 <div class="row">
     <div class="editable-attribute-wrapper">
         <div class="col-md-3">
-            <p class="editable-attribute-display-name"><?= $ak->getAttributeKeyDisplayName() ?></p>
+            <p class="editable-attribute-display-name"><?php echo $ak->getAttributeKeyDisplayName() ?></p>
         </div>
         <div class="col-md-9"<?php if ($canEdit) { ?> data-editable-field-inline-commands="true"<?php } ?>>
             <div class="editable-attribute-field-inline">
                 <?php if ($canEdit) { ?>
                     <ul class="ccm-edit-mode-inline-commands">
                         <li>
-                            <a href="#" data-key-id="<?= $ak->getAttributeKeyID() ?>" data-url="<?= $clearAction ?>" data-editable-field-command="clear_attribute">
+                            <a href="#" data-key-id="<?php echo $ak->getAttributeKeyID() ?>" data-url="<?php echo $clearAction ?>" data-editable-field-command="clear_attribute">
                                 <i class="fa fa-trash-o"></i>
                             </a>
                         </li>
@@ -51,15 +51,15 @@ $canEdit = $permissionsCallback($ak, $permissionsArguments);
                 <?php } ?>
                 <span
                     <?php if ($canEdit) { ?>
-                        data-title="<?= $ak->getAttributeKeyDisplayName() ?>"
-                        data-key-id="<?= $ak->getAttributeKeyID() ?>"
-                        data-name="<?= $ak->getAttributeKeyID() ?>"
+                        data-title="<?php echo $ak->getAttributeKeyDisplayName() ?>"
+                        data-key-id="<?php echo $ak->getAttributeKeyID() ?>"
+                        data-name="<?php echo $ak->getAttributeKeyID() ?>"
                         data-editable-field-type="xeditableAttribute"
-                        data-url="<?= $saveAction ?>"
+                        data-url="<?php echo $saveAction ?>"
                         data-type="concreteattribute"
                         <?php echo $ak->getAttributeTypeHandle() === 'textarea' ? "data-editableMode='inline'" : ''; ?>
                     <?php } ?>
-                    ><?= $display ?></span>
+                    ><?php echo $display ?></span>
             </div>
         </div>
     </div>
@@ -68,7 +68,7 @@ $canEdit = $permissionsCallback($ak, $permissionsArguments);
 if ($canEdit) {
     ?>
     <div style="display: none">
-        <div data-editable-attribute-key-id="<?= $ak->getAttributeKeyID() ?>">
+        <div data-editable-attribute-key-id="<?php echo $ak->getAttributeKeyID() ?>">
             <?php
             $value = $object->getAttributeValueObject($ak);
             $ak->render(new \Concrete\Core\Attribute\Context\DashboardFormContext(), $value);

@@ -47,15 +47,15 @@ if (count($assignments) > 0) {
 ?>
 <?php if (!$str) {
     ?>
-	<span style="color: #ccc"><?=t('None')?></span>
+	<span style="color: #ccc"><?php echo t('None')?></span>
 <?php 
 } else {
     ?>
-	<?=$str?>
+	<?php echo $str?>
 <?php 
 } ?>
 
-<input type="hidden" name="pkID[<?=$pk->getPermissionKeyID()?>]" value="<?=$paID?>" data-pkID="<?=$pk->getPermissionKeyID()?>" />
+<input type="hidden" name="pkID[<?php echo $pk->getPermissionKeyID()?>]" value="<?php echo $paID?>" data-pkID="<?php echo $pk->getPermissionKeyID()?>" />
 </div>
 
 <script type="text/javascript">

@@ -11,6 +11,6 @@ if ($dh->canRead()) {
 <?php
 } else {
     ?>
-	<p><?=t("You must have access to the dashboard sitemap to search pages.")?></p>
+	<p><?php echo t("You must have access to the dashboard sitemap to search pages.")?></p>
 <?php
 } ?>

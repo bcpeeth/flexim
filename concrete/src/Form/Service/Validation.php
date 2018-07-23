@@ -166,10 +166,9 @@ class Validation
         foreach ($this->fields as $f) {
             $validate = $f->validate;
             $field = $f->field;
-            $fieldValue = isset($this->data[$field]) ? $this->data[$field] : null;
             switch ($validate) {
                 case self::VALID_NOT_EMPTY:
-                    if (!$val->notempty($fieldValue)) {
+                    if (!$val->notempty($this->data[$field])) {
                         $this->fieldsInvalid[] = $f;
                     }
                     break;
@@ -180,12 +179,12 @@ class Validation
                     }
                     break;
                 case self::VALID_INTEGER:
-                    if ((!$num->integer($fieldValue)) && ($val->notempty($fieldValue))) {
+                    if ((!$num->integer($this->data[$field])) && ($val->notempty($this->data[$field]))) {
                         $this->fieldsInvalid[] = $f;
                     }
                     break;
                 case self::VALID_INTEGER_REQUIRED:
-                    if (!$num->integer($fieldValue)) {
+                    if (!$num->integer($this->data[$field])) {
                         $this->fieldsInvalid[] = $f;
                     }
                     break;
@@ -210,7 +209,7 @@ class Validation
                     }
                     break;
                 case self::VALID_EMAIL:
-                    if (!$val->email($fieldValue)) {
+                    if (!$val->email($this->data[$field])) {
                         $this->fieldsInvalid[] = $f;
                     }
                     break;

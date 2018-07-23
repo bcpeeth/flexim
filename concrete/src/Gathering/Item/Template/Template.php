@@ -7,9 +7,9 @@ use Concrete\Core\Gathering\Item\Item;
 use Database;
 use Concrete\Core\Package\PackageList;
 use Core;
-use Concrete\Core\Foundation\ConcreteObject;
+use Concrete\Core\Foundation\Object;
 
-abstract class Template extends ConcreteObject
+abstract class Template extends Object
 {
     abstract public function gatheringItemTemplateControlsSlotDimensions();
 

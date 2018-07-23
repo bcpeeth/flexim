@@ -3,11 +3,11 @@
 
 <?php if (count($frequentPageTypes) || count($otherPageTypes)) {
     ?>
-	<h5><?=t('New Page')?></h5>
+	<h5><?php echo t('New Page')?></h5>
 	<ul class="ccm-panel-sitemap-list">
 	<?php foreach ($frequentPageTypes as $pt) {
     ?>
-		<li><a href="<?=URL::to('/ccm/system/page/', 'create', $pt->getPageTypeID())?>"><?=$pt->getPageTypeDisplayName()?></a></li>
+		<li><a href="<?php echo URL::to('/ccm/system/page/', 'create', $pt->getPageTypeID())?>"><?php echo $pt->getPageTypeDisplayName()?></a></li>
 	<?php 
 }
     ?>
@@ -16,14 +16,14 @@
         <li data-page-type="other" <?php if (count($frequentPageTypes)) {
     ?>style="display: none"<?php 
 }
-    ?>><a href="<?=URL::to('/ccm/system/page/', 'create', $pt->getPageTypeID())?>"><?=$pt->getPageTypeDisplayName()?></a></li>
+    ?>><a href="<?php echo URL::to('/ccm/system/page/', 'create', $pt->getPageTypeID())?>"><?php echo $pt->getPageTypeDisplayName()?></a></li>
     <?php 
 }
     ?>
 
     <?php if (count($frequentPageTypes) && count($otherPageTypes)) {
     ?>
-        <li class="ccm-panel-sitemap-more-page-types"><a href="#" data-sitemap="show-more"><i class="fa fa-caret-down"></i> <?=t('More')?></a></li>
+        <li class="ccm-panel-sitemap-more-page-types"><a href="#" data-sitemap="show-more"><i class="fa fa-caret-down"></i> <?php echo t('More')?></a></li>
     <?php 
 }
     ?>
@@ -43,11 +43,11 @@
 
     <?php if (count($drafts)) {
         ?>
-        <h5><?=t('Page Drafts')?></h5>
+        <h5><?php echo t('Page Drafts')?></h5>
         <ul class="ccm-panel-sitemap-list">
             <?php foreach ($drafts as $dc) {
                 ?>
-                <li><a href="<?=Loader::helper('navigation')->getLinkToCollection($dc)?>"><?php
+                <li><a href="<?php echo Loader::helper('navigation')->getLinkToCollection($dc)?>"><?php
                         if ($dc->getCollectionName()) {
                             echo $dc->getCollectionName() . ' ' . Core::make('date')->formatDateTime($dc->getCollectionDateAdded(), false);
                         } else {
@@ -64,11 +64,12 @@
     <?php
 if ($canViewSitemap) {
     ?>
-	<h5><?=t('Sitemap')?></h5>
+	<h5><?php echo t('Sitemap')?></h5>
 	<div id="ccm-sitemap-panel-sitemap"></div>
 	<script type="text/javascript">
 	$(function() {
 		$('#ccm-sitemap-panel-sitemap').concreteSitemap({
+            siteTreeID: <?php echo $siteTreeID?>,
 			onClickNode: function(node) {
 				window.location.href = CCM_DISPATCHER_FILENAME + '?cID=' + node.data.cID;
 			}

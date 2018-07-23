@@ -10,19 +10,19 @@
 <?php
 if ($_REQUEST['message'] == 'custom_options_saved') {
     ?>
-	<?=t('Custom Options saved.')?>
+	<?php echo t('Custom Options saved.')?>
 <?php 
 } elseif ($_REQUEST['message'] == 'workflows_saved') {
     ?>
-	<?=t('Workflow Options saved.')?>
+	<?php echo t('Workflow Options saved.')?>
 <?php 
 } elseif ($_REQUEST['message'] == 'entity_removed') {
     ?>
-	<?=t('User/Group Removed')?>
+	<?php echo t('User/Group Removed')?>
 <?php 
 } elseif ($_REQUEST['message'] == 'entity_added') {
     ?>
-	<?=t('User/Group Added')?>
+	<?php echo t('User/Group Added')?>
 <?php 
 }
     ?>

@@ -16,40 +16,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class InstallLanguageCommand extends Command
 {
-    /**
-     * @var \Concrete\Core\Application\Application|null
-     */
-    protected $app;
-
-    /**
-     * @var TranslationsChecker|null
-     */
-    protected $translationsChecker;
-
-    /**
-     * @var TranslationsInstaller|null
-     */
-    protected $translationsInstaller;
-
-    /**
-     * @var OutputInterface|null
-     */
-    protected $output;
-
-    /**
-     * @var bool|null
-     */
-    protected $shouldClearLocalizationCache;
-
     protected function configure()
     {
         $errExitCode = static::RETURN_CODE_ON_FAILURE;
         $this
         ->setName('c5:language-install')
-        ->setAliases(['c5:install-language'])
         ->setDescription('Install or update concrete5 languages')
         ->addEnvOption()
-        ->setCanRunAsRoot(false)
         ->addOption('--update', 'u', InputOption::VALUE_NONE, 'Update any outdated language files')
         ->addOption('--add', 'a', InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'Add new language files')
         ->addOption('--core', 'c', InputOption::VALUE_NONE, 'Process only a the concrete5 core')
@@ -84,6 +57,31 @@ EOT
             );
     }
 
+    /**
+     * @var \Concrete\Core\Application\Application|null
+     */
+    protected $app;
+
+    /**
+     * @var TranslationsChecker|null
+     */
+    protected $translationsChecker;
+
+    /**
+     * @var TranslationsInstaller|null
+     */
+    protected $translationsInstaller;
+
+    /**
+     * @var OutputInterface|null
+     */
+    protected $output;
+
+    /**
+     * @var bool|null
+     */
+    protected $shouldClearLocalizationCache;
+
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         if (!$input->getOption('update') && count($input->getOption('add')) === 0) {
@@ -97,9 +95,9 @@ EOT
         $this->shouldClearLocalizationCache = false;
 
         $processCore = $this->checkCoreFlag($input);
-        $packagesToProcess = $this->checkPackagesFlag($input);
+        $processPackages = $this->checkPackagesFlag($input);
 
-        $data = $this->getTranslationsData($processCore, $packagesToProcess);
+        $data = $this->getTranslationsData($processCore, $processPackages);
 
         if ($input->getOption('update')) {
             $this->updateLanguages($data);
@@ -125,22 +123,12 @@ EOT
     /**
      * @param InputInterface $input
      *
-     * @return Package[]
+     * @return Package
      */
     private function checkPackagesFlag(InputInterface $input)
     {
         $result = [];
-        if (count($input->getOption('packages')) > 0) {
-            if (!$this->app->isInstalled()) {
-                throw new Exception('concrete5 is not installed: you can only work with core language files.');
-            }
-            $proceed = true;
-        } elseif (!$input->getOption('core')) {
-            $proceed = $this->app->isInstalled();
-        } else {
-            $proceed = false;
-        }
-        if ($proceed) {
+        if (!$input->getOption('core') || count($input->getOption('packages')) > 0) {
             $pkgList = $input->getOption('packages');
             if ($pkgList === [null]) {
                 $pkgList = [];
@@ -174,11 +162,11 @@ EOT
 
     /**
      * @param bool $processCore
-     * @param Package[] $packagesToProcess
+     * @param Package[] $processPackages
      *
      * @return \Concrete\Core\Localization\Translation\LocaleStatus[]
      */
-    private function getTranslationsData($processCore, array $packagesToProcess)
+    private function getTranslationsData($processCore, array $processPackages)
     {
         if ($this->output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
             $this->output->write('# Fetching list of translations... ');
@@ -187,7 +175,7 @@ EOT
         if ($processCore) {
             $result[] = $this->translationsChecker->getCoreTranslations();
         }
-        foreach ($packagesToProcess as $package) {
+        foreach ($processPackages as $package) {
             $result[] = $this->translationsChecker->getPackageTranslations($package);
         }
         if ($this->output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
@@ -216,7 +204,7 @@ EOT
 
     /**
      * @param \Concrete\Core\Localization\Translation\LocalRemoteCouple[] $installedOutdated
-     * @param Package|null $package
+     * @param Package $package
      *
      * @return int
      */
@@ -272,7 +260,7 @@ EOT
 
     /**
      * @param \Concrete\Core\Localization\Translation\LocaleStatus[] $data
-     * @param string $localeID
+     * @param string $localeIDs
      */
     private function addLanguage(array $data, $localeID)
     {
@@ -292,8 +280,7 @@ EOT
 
     /**
      * @param \Concrete\Core\Localization\Translation\Remote\Stats[] $availableRemoteStats
-     * @param string $localeID
-     * @param Package|null $package
+     * @param Package $package
      *
      * @return bool
      */

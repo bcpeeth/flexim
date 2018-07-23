@@ -1,7 +1,5 @@
-/* jshint unused:vars, undef:true, browser:true, jquery:true */
-
-;(function(global, $) {
-    'use strict';
+(function (window, $) {
+    "use strict";
 
     /**
      * Parallax class
@@ -34,7 +32,7 @@
          */
         if (this.settings.variation) {
             // Always override speed if the variation is set.
-            this.settings.speed = this.settings.variation / this.$element.height() / 5;
+            this.settings.speed = this.settings.variation / this.$element.height() / 5
         }
 
         this.$window = $(this.settings.window);
@@ -266,4 +264,4 @@
         return parallax;
     };
 
-})(this, jQuery);
+}(this, jQuery));

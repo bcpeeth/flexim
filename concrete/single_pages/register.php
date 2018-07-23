@@ -5,7 +5,7 @@ $token = \Core::make('Concrete\Core\Validation\CSRF\Token');
 <div class="row">
     <div class="col-sm-10 col-sm-offset-1">
         <div class="page-header">
-            <h1><?= t('Site Registration') ?></h1>
+            <h1><?php echo t('Site Registration') ?></h1>
         </div>
     </div>
 </div>
@@ -20,21 +20,21 @@ if ($registerSuccess) {
             <?php switch ($registerSuccess) {
                 case "registered":
                     ?>
-                    <p><strong><?= $successMsg ?></strong><br/><br/>
-                        <a href="<?= $view->url('/') ?>"><?= t('Return to Home') ?></a></p>
+                    <p><strong><?php echo $successMsg ?></strong><br/><br/>
+                        <a href="<?php echo $view->url('/') ?>"><?php echo t('Return to Home') ?></a></p>
                     <?php
                     break;
                 case "validate":
                     ?>
-                    <p><?= $successMsg[0] ?></p>
-                    <p><?= $successMsg[1] ?></p>
-                    <p><a href="<?= $view->url('/') ?>"><?= t('Return to Home') ?></a></p>
+                    <p><?php echo $successMsg[0] ?></p>
+                    <p><?php echo $successMsg[1] ?></p>
+                    <p><a href="<?php echo $view->url('/') ?>"><?php echo t('Return to Home') ?></a></p>
                     <?php
                     break;
                 case "pending":
                     ?>
-                    <p><?= $successMsg ?></p>
-                    <p><a href="<?= $view->url('/') ?>"><?= t('Return to Home') ?></a></p>
+                    <p><?php echo $successMsg ?></p>
+                    <p><a href="<?php echo $view->url('/') ?>"><?php echo t('Return to Home') ?></a></p>
                     <?php
                     break;
             }
@@ -45,40 +45,35 @@ if ($registerSuccess) {
 
 } else {
     ?>
-    <form method="post" action="<?= $view->url('/register', 'do_register') ?>" class="form-stacked">
+    <form method="post" action="<?php echo $view->url('/register', 'do_register') ?>" class="form-stacked">
         <?php $token->output('register.do_register') ?>
         <div class="row">
             <div class="col-sm-10 col-sm-offset-1">
                 <fieldset>
-                    <legend><?= t('Your Details') ?></legend>
+                    <legend><?php echo t('Your Details') ?></legend>
                     <?php
                     if ($displayUserName) {
                         ?>
                         <div class="form-group">
-                            <?= $form->label('uName', t('Username')) ?>
-                            <?= $form->text('uName') ?>
+                            <?php echo $form->label('uName', t('Username')) ?>
+                            <?php echo $form->text('uName') ?>
                         </div>
                         <?php
+
                     }
                     ?>
                     <div class="form-group">
-                        <?= $form->label('uEmail', t('Email Address')) ?>
-                        <?= $form->text('uEmail') ?>
+                        <?php echo $form->label('uEmail', t('Email Address')) ?>
+                        <?php echo $form->text('uEmail') ?>
                     </div>
                     <div class="form-group">
-                        <?= $form->label('uPassword', t('Password')) ?>
-                        <?= $form->password('uPassword', array('autocomplete' => 'off')) ?>
+                        <?php echo $form->label('uPassword', t('Password')) ?>
+                        <?php echo $form->password('uPassword', array('autocomplete' => 'off')) ?>
                     </div>
-                    <?php
-                    if (Config::get('concrete.user.registration.display_confirm_password_field')) {
-                        ?>
-                        <div class="form-group">
-                            <?= $form->label('uPasswordConfirm', t('Confirm Password')) ?>
-                            <?= $form->password('uPasswordConfirm', array('autocomplete' => 'off')) ?>
-                        </div>
-                        <?php
-                    }
-                    ?>
+                    <div class="form-group">
+                        <?php echo $form->label('uPasswordConfirm', t('Confirm Password')) ?>
+                        <?php echo $form->password('uPasswordConfirm', array('autocomplete' => 'off')) ?>
+                    </div>
 
                 </fieldset>
             </div>
@@ -89,7 +84,7 @@ if ($registerSuccess) {
             <div class="row">
                 <div class="col-sm-10 col-sm-offset-1">
                     <fieldset>
-                        <legend><?= t('Options') ?></legend>
+                        <legend><?php echo t('Options') ?></legend>
                         <?php
                         foreach ($attribs as $ak) {
                             $renderer->buildView($ak)->setIsRequired($ak->isAttributeKeyRequiredOnRegister())->render();
@@ -125,9 +120,9 @@ if ($registerSuccess) {
         <div class="row">
             <div class="col-sm-10 col-sm-offset-1">
                 <div class="form-actions">
-                    <?= $form->hidden('rcID', $rcID);
+                    <?php echo $form->hidden('rcID', $rcID);
                     ?>
-                    <?= $form->submit('register', t('Register') . ' &gt;', array('class' => 'btn-lg btn-primary')) ?>
+                    <?php echo $form->submit('register', t('Register') . ' &gt;', array('class' => 'btn-lg btn-primary')) ?>
                 </div>
             </div>
         </div>

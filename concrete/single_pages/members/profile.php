@@ -8,21 +8,21 @@ $dh = Core::make('helper/date'); /* @var $dh \Concrete\Core\Localization\Service
 <?php echo $profile->getUserAvatar()->output(); ?>
 </div>
 
-<h1><?=$profile->getUserName()?></h1>
+<h1><?php echo $profile->getUserName()?></h1>
 
 <div id="ccm-profile-controls">
 	<?php if ($canEdit) {
     ?>
 		<div class="btn-group">
-			<a href="<?=$view->url('/account/edit_profile')?>" class="btn btn-sm btn-default"><i class="fa fa-cog"></i> <?=t('Edit')?></a>
-			<a href="<?=$view->url('/')?>" class="btn btn-sm btn-default"><i class="fa fa-home"></i> <?=t('Home')?></a>
+			<a href="<?php echo $view->url('/account/edit_profile')?>" class="btn btn-sm btn-default"><i class="fa fa-cog"></i> <?php echo t('Edit')?></a>
+			<a href="<?php echo $view->url('/')?>" class="btn btn-sm btn-default"><i class="fa fa-home"></i> <?php echo t('Home')?></a>
 		</div>
 	<?php 
 } else {
     ?>
 		<?php if ($profile->getAttribute('profile_private_messages_enabled')) {
     ?>
-			<a href="<?=$view->url('/account/messages', 'write', $profile->getUserID())?>" class="btn btn-sm btn-default"><i class="fa-user fa"></i> <?=t('Connect')?></a>
+			<a href="<?php echo $view->url('/account/messages', 'write', $profile->getUserID())?>" class="btn btn-sm btn-default"><i class="fa-user fa"></i> <?php echo t('Connect')?></a>
 		<?php 
 }
     ?>
@@ -35,13 +35,13 @@ $dh = Core::make('helper/date'); /* @var $dh \Concrete\Core\Localization\Service
 
 <div id="ccm-profile-statistics-bar">
 	<div class="ccm-profile-statistics-item">
-		<i class="icon-time"></i> <?=t(/*i18n: %s is a date */'Joined on %s', $dh->formatDate($profile->getUserDateAdded(), true))?>
+		<i class="icon-time"></i> <?php echo t(/*i18n: %s is a date */'Joined on %s', $dh->formatDate($profile->getUserDateAdded(), true))?>
 	</div>
 	<div class="ccm-profile-statistics-item">
-		<i class="icon-fire"></i> <?=number_format(\Concrete\Core\User\Point\Entry::getTotal($profile))?> <?=t('Community Points')?>
+		<i class="icon-fire"></i> <?php echo number_format(\Concrete\Core\User\Point\Entry::getTotal($profile))?> <?php echo t('Community Points')?>
 	</div>
 	<div class="ccm-profile-statistics-item">
-		<i class="icon-bookmark"></i> <a href="#badges"><?=number_format(count($badges))?> <?=t2('Badge', 'Badges', count($badges))?></a>
+		<i class="icon-bookmark"></i> <a href="#badges"><?php echo number_format(count($badges))?> <?php echo t2('Badge', 'Badges', count($badges))?></a>
 	</div>
 	<div class="clearfix"></div>
 </div>
@@ -70,7 +70,7 @@ $dh = Core::make('helper/date'); /* @var $dh \Concrete\Core\Localization\Service
         <?php 
         } ?>
 
-		<h4><?=t("Badges")?></h4>
+		<h4><?php echo t("Badges")?></h4>
 		<?php if (count($badges) > 0) {
     ?>
 
@@ -84,9 +84,9 @@ $dh = Core::make('helper/date'); /* @var $dh \Concrete\Core\Localization\Service
 
 			  <li class="span2">
 
-			    <div class="thumbnail launch-tooltip ccm-profile-badge-image" title="<?=h($ub->getGroupBadgeDescription())?>">
-			      <div><img src="<?=$uf->getRelativePath()?>" /></div>
-			      <div><?=t("Awarded %s", $dh->formatDate($ub->getGroupDateTimeEntered($profile)))?></div>
+			    <div class="thumbnail launch-tooltip ccm-profile-badge-image" title="<?php echo h($ub->getGroupBadgeDescription())?>">
+			      <div><img src="<?php echo $uf->getRelativePath()?>" /></div>
+			      <div><?php echo t("Awarded %s", $dh->formatDate($ub->getGroupDateTimeEntered($profile)))?></div>
 			    </div>
 
 			</li>
@@ -104,7 +104,7 @@ $dh = Core::make('helper/date'); /* @var $dh \Concrete\Core\Localization\Service
 		<?php 
 } else {
     ?>
-			<p><?=t("This user hasn't won any badges.")?></p>
+			<p><?php echo t("This user hasn't won any badges.")?></p>
 		<?php 
 } ?>
 

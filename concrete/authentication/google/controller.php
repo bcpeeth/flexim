@@ -8,7 +8,6 @@ use Concrete\Core\Authentication\Type\Google\Factory\GoogleServiceFactory;
 use Concrete\Core\Authentication\Type\OAuth\OAuth2\GenericOauth2TypeController;
 use OAuth\OAuth2\Service\Google;
 use Concrete\Core\User\User;
-use Concrete\Core\Routing\RedirectResponse;
 
 class Controller extends GenericOauth2TypeController
 {
@@ -48,41 +47,39 @@ class Controller extends GenericOauth2TypeController
 
     public function saveAuthenticationType($args)
     {
-        $config = $this->app->make('config');
-        $config->save('auth.google.appid', $args['apikey']);
-        $config->save('auth.google.secret', $args['apisecret']);
-        $config->save('auth.google.registration.enabled', (bool) $args['registration_enabled']);
-        $config->save('auth.google.registration.group', intval($args['registration_group'], 10));
+        \Config::save('auth.google.appid', $args['apikey']);
+        \Config::save('auth.google.secret', $args['apisecret']);
+        \Config::save('auth.google.registration.enabled', (bool) $args['registration_enabled']);
+        \Config::save('auth.google.registration.group', intval($args['registration_group'], 10));
 
-        $whitelist = [];
+        $whitelist = array();
         foreach (explode(PHP_EOL, $args['whitelist']) as $entry) {
             $whitelist[] = trim($entry);
         }
 
-        $blacklist = [];
+        $blacklist = array();
         foreach (explode(PHP_EOL, $args['blacklist']) as $entry) {
             $blacklist[] = json_decode(trim($entry), true);
         }
 
-        $config->save('auth.google.email_filters.whitelist', array_values(array_filter($whitelist)));
-        $config->save('auth.google.email_filters.blacklist', array_values(array_filter($blacklist)));
+        \Config::save('auth.google.email_filters.whitelist', array_values(array_filter($whitelist)));
+        \Config::save('auth.google.email_filters.blacklist', array_values(array_filter($blacklist)));
     }
 
     public function edit()
     {
-        $config=$this->app->make('config');
-        $this->set('form', $this->app->make('helper/form'));
-        $this->set('apikey', $config->get('auth.google.appid', ''));
-        $this->set('apisecret', $config->get('auth.google.secret', ''));
+        $this->set('form', \Loader::helper('form'));
+        $this->set('apikey', \Config::get('auth.google.appid', ''));
+        $this->set('apisecret', \Config::get('auth.google.secret', ''));
 
         $list = new \GroupList();
         $list->includeAllGroups();
         $this->set('groups', $list->getResults());
 
-        $this->set('whitelist', $config->get('auth.google.email_filters.whitelist', []));
+        $this->set('whitelist', \Config::get('auth.google.email_filters.whitelist', array()));
         $blacklist = array_map(function ($entry) {
             return json_encode($entry);
-        }, $config->get('auth.google.email_filters.blacklist', []));
+        }, \Config::get('auth.google.email_filters.blacklist', array()));
 
         $this->set('blacklist', $blacklist);
     }
@@ -105,16 +102,16 @@ class Controller extends GenericOauth2TypeController
 
     public function isValid()
     {
-        $filters = (array) $this->app->make('config')->get('auth.google.email_filters', []);
+        $filters = (array) \Config::get('auth.google.email_filters', array());
         $domain = $this->getExtractor()->getExtra('domain');
 
-        foreach (array_get($filters, 'whitelist', []) as $regex) {
+        foreach (array_get($filters, 'whitelist', array()) as $regex) {
             if (preg_match($regex, $domain)) {
                 return true;
             }
         }
 
-        foreach (array_get($filters, 'blacklist', []) as $arr) {
+        foreach (array_get($filters, 'blacklist', array()) as $arr) {
             list($regex, $error) = array_pad((array) $arr, 2, null);
             if (preg_match($regex, $domain)) {
                 if (trim($error)) {
@@ -126,40 +123,5 @@ class Controller extends GenericOauth2TypeController
         }
 
         return true;
-    }
-
-    public function handle_detach_attempt()
-    {
-
-        if (!User::isLoggedIn()) {
-            $response = new RedirectResponse(\URL::to('/login'), 302);
-            $response->send();
-            exit;
-        }
-        $user = new User();
-        $uID = $user->getUserID();
-        $namespace = $this->getHandle();
-
-
-        $binding = $this->getBindingForUser($user);
-        $accessToken = $this->getService()
-            ->getStorage()
-            ->retrieveAccessToken(
-                $this->getService()->service()
-            )
-            ->getAccessToken();
-        $this->getService()->request('https://accounts.google.com/o/oauth2/revoke?token='.$accessToken, 'GET');
-        try {
-            /* @var \Concrete\Core\Database\Connection\Connection $database */
-            $database = $this->app->make('database')->connection();
-            $database->delete('OauthUserMap', ['user_id' => $uID, 'namespace' => $namespace, 'binding' => $binding]);
-            $this->showSuccess(t('Successfully detached.'));
-
-            exit;
-        } catch (\Exception $e) {
-            \Log::error(t('Deattach Error %s', $e->getMessage()));
-            $this->showError(t('Unable to detach account.'));
-            exit;
-        }
     }
 }

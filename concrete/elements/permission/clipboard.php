@@ -4,17 +4,17 @@
 
     $uid = uniqid();
 ?>
-<button class="btn btn-xs btn-default" type="button" id="ccm-permissions-list-copy-permissions-<?= $uid ?>"><?=t('Copy')?></button>
+<button class="btn btn-xs btn-default" type="button" id="ccm-permissions-list-copy-permissions-<?php echo $uid ?>"><?php echo t('Copy')?></button>
 <?php if (is_object($set) && $set->getPermissionKeyCategory() == $pkCategory->getPermissionKeyCategoryHandle()) {
     ?>
-	<button class="btn btn-xs btn-default" type="button" id="ccm-permissions-list-paste-permissions-<?= $uid ?>"><?=t('Paste')?></button>
+	<button class="btn btn-xs btn-default" type="button" id="ccm-permissions-list-paste-permissions-<?php echo $uid ?>"><?php echo t('Paste')?></button>
 <?php
 } ?>
-<input type="hidden" name="pkCategoryHandle" value="<?=$pkCategory->getPermissionKeyCategoryHandle()?>" />
+<input type="hidden" name="pkCategoryHandle" value="<?php echo $pkCategory->getPermissionKeyCategoryHandle()?>" />
 <script type="text/javascript">
 
 $(function() {
-	$('#ccm-permissions-list-copy-permissions-<?= $uid ?>').click(function() {
+	$('#ccm-permissions-list-copy-permissions-<?php echo $uid ?>').click(function() {
 		var frm = $(this).closest('.ccm-permission-grid');
 
 		jQuery.fn.dialog.showLoader();
@@ -27,14 +27,14 @@ $(function() {
 			dataType: 'json',
 			type: 'post',
 			data: data,
-			url: '<?=REL_DIR_FILES_TOOLS_REQUIRED?>/permissions/set?task=copy_permission_set&<?=Loader::helper('validation/token')->getParameter('copy_permission_set')?>',
+			url: '<?php echo REL_DIR_FILES_TOOLS_REQUIRED?>/permissions/set?task=copy_permission_set&<?php echo Loader::helper('validation/token')->getParameter('copy_permission_set')?>',
 			success: function(r) {
 				jQuery.fn.dialog.hideLoader();
 			}
 		})
 	})
 
-	$('#ccm-permissions-list-paste-permissions-<?= $uid ?>').click(function() {
+	$('#ccm-permissions-list-paste-permissions-<?php echo $uid ?>').click(function() {
 		jQuery.fn.dialog.showLoader();
 		var frm = $(this).closest('.ccm-permission-grid');
 		var data = 'pkCategoryHandle=' + frm.find('input[name=pkCategoryHandle]').val();
@@ -42,7 +42,7 @@ $(function() {
 			dataType: 'json',
 			type: 'post',
 			data: data,
-			url: '<?=REL_DIR_FILES_TOOLS_REQUIRED?>/permissions/set?task=paste_permission_set&<?=Loader::helper('validation/token')->getParameter('paste_permission_set')?>',
+			url: '<?php echo REL_DIR_FILES_TOOLS_REQUIRED?>/permissions/set?task=paste_permission_set&<?php echo Loader::helper('validation/token')->getParameter('paste_permission_set')?>',
 			success: function(r) {
 				jQuery.fn.dialog.hideLoader();
 				for (i = 0; i < r.length; i++) {

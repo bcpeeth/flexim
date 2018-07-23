@@ -1,13 +1,12 @@
 <?php
-
 namespace Concrete\Core\Captcha;
 
-use Concrete\Core\Foundation\ConcreteObject;
+use Concrete\Core\Foundation\Object;
 use Concrete\Core\Package\PackageList;
-use Concrete\Core\Support\Facade\Facade;
 use Concrete\Core\Support\Facade\Package as PackageService;
+use Concrete\Core\Support\Facade\Facade;
 
-class Library extends ConcreteObject
+class Library extends Object
 {
     /**
      * The library handle.
@@ -89,7 +88,6 @@ class Library extends ConcreteObject
         if (!isset($this->pkgHandle)) {
             $this->pkgHandle = $this->pkgID ? PackageList::getHandle($this->pkgID) : false;
         }
-
         return $this->pkgHandle;
     }
 
@@ -120,7 +118,7 @@ class Library extends ConcreteObject
     /**
      * Get a library given its handle.
      *
-     * @param string $sclHandle the library handle
+     * @param string $sclHandle The library handle.
      *
      * @return static|null
      */
@@ -128,7 +126,7 @@ class Library extends ConcreteObject
     {
         $app = Facade::getFacadeApplication();
         $db = $app->make('database')->connection();
-        $r = $db->fetchAssoc('select sclHandle, sclIsActive, pkgID, sclName from SystemCaptchaLibraries where sclHandle = ?', [$sclHandle]);
+        $r = $db->fetchAssoc('select sclHandle, sclIsActive, pkgID, sclName from SystemCaptchaLibraries where sclHandle = ?', array($sclHandle));
         if ($r !== false) {
             $sc = new static();
             $sc->setPropertiesFromArray($r);
@@ -140,9 +138,9 @@ class Library extends ConcreteObject
     /**
      * Add a new library.
      *
-     * @param string $sclHandle the library handle
-     * @param string $sclName the library name
-     * @param \Concrete\Core\Entity\Package|int|false $pkg the package that installs this library
+     * @param string $sclHandle The library handle.
+     * @param string $sclName The library name.
+     * @param \Concrete\Core\Entity\Package|int|false $pkg The package that installs this library.
      *
      * @return static
      */
@@ -155,7 +153,7 @@ class Library extends ConcreteObject
         }
         $app = Facade::getFacadeApplication();
         $db = $app->make('database')->connection();
-        $db->executeQuery('insert into SystemCaptchaLibraries (sclHandle, sclName, pkgID) values (?, ?, ?)', [$sclHandle, $sclName, $pkgID]);
+        $db->executeQuery('insert into SystemCaptchaLibraries (sclHandle, sclName, pkgID) values (?, ?, ?)', array($sclHandle, $sclName, $pkgID));
 
         return static::getByHandle($sclHandle);
     }
@@ -173,7 +171,7 @@ class Library extends ConcreteObject
         }
         $app = Facade::getFacadeApplication();
         $db = $app->make('database')->connection();
-        $db->executeQuery('delete from SystemCaptchaLibraries where sclHandle = ?', [$this->sclHandle]);
+        $db->executeQuery('delete from SystemCaptchaLibraries where sclHandle = ?', array($this->sclHandle));
     }
 
     /**
@@ -184,7 +182,7 @@ class Library extends ConcreteObject
         $app = Facade::getFacadeApplication();
         $db = $app->make('database')->connection();
         $db->executeQuery('update SystemCaptchaLibraries set sclIsActive = 0');
-        $db->executeQuery('update SystemCaptchaLibraries set sclIsActive = 1 where sclHandle = ?', [$this->sclHandle]);
+        $db->executeQuery('update SystemCaptchaLibraries set sclIsActive = 1 where sclHandle = ?', array($this->sclHandle));
         $this->sclIsActive = 1;
     }
 
@@ -197,7 +195,7 @@ class Library extends ConcreteObject
     {
         $app = Facade::getFacadeApplication();
         $db = $app->make('database')->connection();
-        $libraries = [];
+        $libraries = array();
         foreach ($db->fetchAll('select sclHandle from SystemCaptchaLibraries order by sclHandle asc') as $row) {
             $scl = static::getByHandle($row['sclHandle']);
             $libraries[] = $scl;
@@ -209,7 +207,7 @@ class Library extends ConcreteObject
     /**
      * Retrieve the libraries installed by a package.
      *
-     * @param \Concrete\Core\Entity\Package|int $pkg the package instance (or its ID)
+     * @param \Concrete\Core\Entity\Package|int $pkg The package instance (or its ID).
      *
      * @return static[]
      */
@@ -222,8 +220,8 @@ class Library extends ConcreteObject
         }
         $app = Facade::getFacadeApplication();
         $db = $app->make('database')->connection();
-        $libraries = [];
-        foreach ($db->fetchAll('select sclHandle from SystemCaptchaLibraries where pkgID = ? order by sclHandle asc', [$pkgID]) as $row) {
+        $libraries = array();
+        foreach ($db->fetchAll('select sclHandle from SystemCaptchaLibraries where pkgID = ? order by sclHandle asc', array($pkgID)) as $row) {
             $scl = static::getByHandle($row['sclHandle']);
             $libraries[] = $scl;
         }
@@ -234,7 +232,7 @@ class Library extends ConcreteObject
     /**
      * Export the data of this library.
      *
-     * @param \SimpleXMLElement $xml the parent XML element
+     * @param \SimpleXMLElement $xml The parent XML element.
      */
     public function export(\SimpleXMLElement $xml)
     {
@@ -248,7 +246,7 @@ class Library extends ConcreteObject
     /**
      * Export the data of all the libraries.
      *
-     * @param \SimpleXMLElement $xml the parent XML element
+     * @param \SimpleXMLElement $xml The parent XML element.
      */
     public static function exportList(\SimpleXMLElement $xml)
     {

@@ -7,7 +7,7 @@ use Concrete\Core\Localization\Service\Date;
 use League\Csv\Writer;
 
 /**
- * @deprecated Use \Concrete\Core\Csv\Export\UserExporter
+ * A Writer class for user objects
  */
 class CsvWriter
 {

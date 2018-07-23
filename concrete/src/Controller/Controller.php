@@ -1,8 +1,6 @@
 <?php
 namespace Concrete\Core\Controller;
 
-use Concrete\Core\Application\Application;
-use Concrete\Core\Support\Facade\Facade;
 use Request;
 use PageTheme;
 use View;
@@ -86,12 +84,6 @@ class Controller extends AbstractController
             }
             $this->view->setController($this);
         }
-    }
-
-    public function flash($key, $value, $isHTML = false)
-    {
-        $session = Facade::getFacadeApplication()->make('session');
-        $session->getFlashBag()->add('page_message', array($key, $value, $isHTML));
     }
 
     public function getViewObject()

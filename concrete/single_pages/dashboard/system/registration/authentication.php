@@ -21,7 +21,7 @@ if (!isset($editmode)) {
 
 if ($editmode) {
     $pageTitle = t('Edit %s Authentication Type', $at->getAuthenticationTypeDisplayName());
-    ?><form class="form-stacked" method="post" action="<?=$view->action('save', $at->getAuthenticationTypeID())?>"><?php
+    ?><form class="form-stacked" method="post" action="<?php echo $view->action('save', $at->getAuthenticationTypeID())?>"><?php
 
     $token = \Core::make('token');
     $token->output("auth_type_save.{$at->getAuthenticationTypeID()}");
@@ -34,26 +34,26 @@ if (!$editmode) {
             <thead>
                 <tr>
                     <th></th>
-                    <th><?=t('ID')?></th>
-                    <th><?=t('Handle')?></th>
-                    <th><?=t('Display Name')?></th>
+                    <th><?php echo t('ID')?></th>
+                    <th><?php echo t('Handle')?></th>
+                    <th><?php echo t('Display Name')?></th>
                     <th></th>
                 </tr>
             </thead>
             <tbody><?php
                 foreach ($ats as $at) {
                     ?><tr
-                        data-authID="<?=$at->getAuthenticationTypeID()?>"
-                        data-editURL="<?=h($view->action('edit', $at->getAuthenticationTypeID()))?>"
-                        class="<?=$at->isEnabled() ? 'success' : 'error'?>">
+                        data-authID="<?php echo $at->getAuthenticationTypeID()?>"
+                        data-editURL="<?php echo h($view->action('edit', $at->getAuthenticationTypeID()))?>"
+                        class="<?php echo $at->isEnabled() ? 'success' : 'error'?>">
                         <td style="overflow:hidden; text-align: center; width: 50px">
                             <div style='height:15px'>
-                                <?=$at->getAuthenticationTypeIconHTML()?>
+                                <?php echo $at->getAuthenticationTypeIconHTML()?>
                             </div>
                         </td>
-                        <td style="width: 100px"><?=$at->getAuthenticationTypeID()?></td>
-                        <td><?=$at->getAuthenticationTypeHandle()?></td>
-                        <td><?=$at->getAuthenticationTypeDisplayName()?></td>
+                        <td style="width: 100px"><?php echo $at->getAuthenticationTypeID()?></td>
+                        <td><?php echo $at->getAuthenticationTypeHandle()?></td>
+                        <td><?php echo $at->getAuthenticationTypeDisplayName()?></td>
                         <td style="text-align:right"><i style="cursor: move" class="fa fa-arrows"></i></td>
                     </tr><?php
 
@@ -82,7 +82,7 @@ if (!$editmode) {
                        var me = $(this);
                        order.push(me.attr('data-authID'));
                    });
-                   $.post('<?=$view->action('reorder')?>', {order: order});
+                   $.post('<?php echo $view->action('reorder')?>', {order: order});
                }
             });
             $('tbody tr').click(function() {
@@ -95,7 +95,7 @@ if (!$editmode) {
 
 } else {
     ?>
-    <?=$at->renderTypeForm()?>
+    <?php echo $at->renderTypeForm()?>
     <?php
 
 }
@@ -107,12 +107,12 @@ if ($editmode) {
     ?>
     <div class="ccm-dashboard-form-actions-wrapper">
         <div class="ccm-dashboard-form-actions">
-            <a href="<?=$view->action('')?>" class="btn btn-default pull-left"><?=t('Cancel')?></a>
+            <a href="<?php echo $view->action('')?>" class="btn btn-default pull-left"><?php echo t('Cancel')?></a>
             <span class="pull-right">
-                <a href="<?= $url ?>" class="btn btn-<?=$at->isEnabled() ? 'danger' : 'success'?>">
-                    <?=$at->isEnabled() ? t('Disable') : t('Enable')?>
+                <a href="<?php echo $url ?>" class="btn btn-<?php echo $at->isEnabled() ? 'danger' : 'success'?>">
+                    <?php echo $at->isEnabled() ? t('Disable') : t('Enable')?>
                 </a>
-                <button class='btn btn-primary'><?=t('Save')?></button>
+                <button class='btn btn-primary'><?php echo t('Save')?></button>
             </span>
            </div>
         </div>

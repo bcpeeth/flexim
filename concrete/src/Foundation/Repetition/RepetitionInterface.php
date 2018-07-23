@@ -156,6 +156,11 @@ interface RepetitionInterface extends \JsonSerializable
     public function getTextRepresentation();
 
     /**
+     * @return bool Success or failure
+     */
+    public function save();
+
+    /**
      * Get all active time slots that start within two time periods.
      *
      * @param int $start

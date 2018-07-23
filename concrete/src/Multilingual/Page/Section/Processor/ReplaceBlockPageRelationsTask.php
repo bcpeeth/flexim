@@ -29,11 +29,11 @@ class ReplaceBlockPageRelationsTask implements TaskInterface
                     $data = array();
                     $record = $controller->getBlockControllerData();
                     foreach ($columns as $key) {
-                        $data[$key] = isset($record->{$key}) ? $record->{$key} : null;
+                        $data[$key] = $record->{$key};
                     }
 
                     foreach ($pageColumns as $column) {
-                        $cID = empty($data[$column]) ? 0 : $data[$column];
+                        $cID = $data[$column];
                         if ($cID > 0) {
                             $link = Page::getByID($cID, 'ACTIVE');
                             $section = $target->getSection();

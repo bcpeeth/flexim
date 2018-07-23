@@ -1,18 +1,12 @@
 <?php
-
 namespace Concrete\Core\Updater\Migrations\Migrations;
 
 use Concrete\Core\Updater\Migrations\AbstractMigration;
-use Concrete\Core\Updater\Migrations\RepeatableMigrationInterface;
+use Doctrine\DBAL\Schema\Schema;
 
-class Version20170313000000 extends AbstractMigration implements RepeatableMigrationInterface
+class Version20170313000000 extends AbstractMigration
 {
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Updater\Migrations\AbstractMigration::upgradeDatabase()
-     */
-    public function upgradeDatabase()
+    public function up(Schema $schema)
     {
         // Move all stacks to the root. Putting them in a site was a mistake.
         $this->connection->executeQuery('
@@ -23,5 +17,9 @@ class Version20170313000000 extends AbstractMigration implements RepeatableMigra
             or Pages.cFilename = ?',
             [STACK_CATEGORY_PAGE_TYPE, STACKS_PAGE_TYPE, '/!stacks/view.php']
         );
+    }
+
+    public function down(Schema $schema)
+    {
     }
 }

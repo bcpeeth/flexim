@@ -19,19 +19,19 @@
 </style>
 <div class="ccm-ui survey-block-edit">
     <div class="form-group">
-        <label for="questionEntry" class="control-label"><?= t('Question') ?></label>
-        <input type="text" name="question" value="<?= $controller->getQuestion() ?>"
+        <label for="questionEntry" class="control-label"><?php echo t('Question') ?></label>
+        <input type="text" name="question" value="<?php echo $controller->getQuestion() ?>"
                class="form-control"/>
     </div>
     <div class="form-group">
-        <label for="requiresRegistration" class="control-label"><?= t('Target Audience') ?></label>
+        <label for="requiresRegistration" class="control-label"><?php echo t('Target Audience') ?></label>
 
         <div class="radio">
             <label>
                 <input id="requiresRegistration" type="radio" value="0" name="requiresRegistration"
                        style="vertical-align: middle" <?php if (!$controller->requiresRegistration()) {
         ?> checked <?php
-    } ?> />&nbsp;<?= t(
+    } ?> />&nbsp;<?php echo t(
                     'Public') ?>
             </label>
         </div>
@@ -40,13 +40,13 @@
                 <input type="radio" value="1" name="requiresRegistration"
                        style="vertical-align: middle" <?php if ($controller->requiresRegistration()) {
         ?> checked <?php
-    } ?> />&nbsp;<?= t(
+    } ?> />&nbsp;<?php echo t(
                     'Only Registered Users') ?>
             </label>
         </div>
     </div>
     <div class="form-group">
-        <label class="control-label"><?= t('Survey Options') ?></label>
+        <label class="control-label"><?php echo t('Survey Options') ?></label>
 
         <div class="poll-options">
             <?php
@@ -54,7 +54,7 @@
             if (count($options) == 0) {
                 ?>
                 <div class="empty">
-                    <?= t('None') ?>
+                    <?php echo t('None') ?>
                 </div>
                 <?php
 
@@ -65,9 +65,9 @@
                         <a href="#" class="pull-right delete">
                             <i class="fa fa-trash-o"></i>
                         </a>
-                        <?= h($opt->getOptionName()) ?>
+                        <?php echo h($opt->getOptionName()) ?>
                         <input type="hidden" name="survivingOptionNames[]"
-                               value="<?= h($opt->getOptionName()) ?>"/>
+                               value="<?php echo h($opt->getOptionName()) ?>"/>
                     </div>
                 <?php
 
@@ -77,7 +77,7 @@
     </div>
 
     <div class="form-group">
-        <label for="optionEntry" class="control-label"><?= t('Add Option') ?></label>
+        <label for="optionEntry" class="control-label"><?php echo t('Add Option') ?></label>
 
         <div class="input-group">
             <input type="text" name="optionValue" class="option-value form-control"/>

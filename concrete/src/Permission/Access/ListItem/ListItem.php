@@ -1,12 +1,12 @@
 <?php
 namespace Concrete\Core\Permission\Access\ListItem;
 
-use Concrete\Core\Foundation\ConcreteObject;
+use Concrete\Core\Foundation\Object;
 use Concrete\Core\Permission\Access\Entity\Entity as PermissionAccessEntity;
 use Concrete\Core\Permission\Access\Entity\Entity;
 use Concrete\Core\Permission\Duration;
 
-class ListItem extends ConcreteObject
+class ListItem extends Object
 {
     /** @var Duration */
     public $duration;

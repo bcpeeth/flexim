@@ -29,8 +29,8 @@ $token = \Core::make('token');
         <?php echo $form->label('display_account_menu', t('Account Menu')); ?>
         <div class="checkbox">
             <label>
-                <input name="display_account_menu" id="display_account_menu" value="1" type="checkbox" <?= $display_account_menu ? 'checked' : '' ?> />
-                <span class="launch-tooltip" title="<?= h(t('Site themes may override this value.')) ?>"><?= t('Show the account menu when logged in.') ?></span>
+                <input name="display_account_menu" id="display_account_menu" value="1" type="checkbox" <?php echo $display_account_menu ? 'checked' : '' ?> />
+                <span class="launch-tooltip" title="<?php echo h(t('Site themes may override this value.')) ?>"><?php echo t('Show the account menu when logged in.') ?></span>
             </label>
         </div>
     </div>
@@ -49,7 +49,7 @@ $token = \Core::make('token');
 
     <div class="ccm-dashboard-form-actions-wrapper">
         <div class="ccm-dashboard-form-actions">
-            <button class="pull-right btn btn-primary" type="submit" ><?=t('Save')?></button>
+            <button class="pull-right btn btn-primary" type="submit" ><?php echo t('Save')?></button>
         </div>
     </div>
 </form>

@@ -1,19 +1,22 @@
 <?php
-
 namespace Concrete\Core\Updater\Migrations\Migrations;
 
-use Concrete\Core\Updater\Migrations\AbstractMigration;
-use Concrete\Core\Updater\Migrations\RepeatableMigrationInterface;
+use Concrete\Core\Page\Page;
+use Doctrine\DBAL\Migrations\AbstractMigration;
+use Doctrine\DBAL\Schema\Schema;
 
-class Version20150612000000 extends AbstractMigration implements RepeatableMigrationInterface
+class Version20150612000000 extends AbstractMigration
 {
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Updater\Migrations\AbstractMigration::upgradeDatabase()
-     */
-    public function upgradeDatabase()
+    public function up(Schema $schema)
     {
-        $this->createSinglePage('/dashboard/system/multilingual/copy', 'Copy Languages');
+        $sp = Page::getByPath('/dashboard/system/multilingual/copy');
+        if (!is_object($sp) || $sp->isError()) {
+            $sp = \Concrete\Core\Page\Single::add('/dashboard/system/multilingual/copy');
+            $sp->update(array('cName' => 'Copy Languages'));
+        }
+    }
+
+    public function down(Schema $schema)
+    {
     }
 }

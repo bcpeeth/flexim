@@ -25,10 +25,6 @@ class LabelFormatter implements EntryFormatterInterface
     public function format($mask, Entry $entry)
     {
         return $this->formatter->format($mask, function($key) use ($entry) {
-            if ($key === 'id') {
-                return $entry->getID();
-            }
-            
             $attribute = $entry->getAttribute($key);
             if ($attribute) {
                 return $attribute;

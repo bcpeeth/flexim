@@ -1,7 +1,11 @@
-/* jshint unused:vars, undef:true, browser:true, jquery:true */
-/* global ConcreteEvent, ConcreteStyleCustomizerPalette */
+/**
+ * block ajax
+ */
 
-;(function(global, $) {
+/* jshint unused:vars, undef:true, browser:true */
+/* global $, _, ConcreteEvent, ConcreteStyleCustomizerPalette */
+
+(function(global, $) {
     'use strict';
 
     function ConcreteFontFamily(display, css) {
@@ -285,4 +289,4 @@
 
     global.ConcreteTypographySelector = ConcreteTypographySelector;
 
-})(this, jQuery);
+})(this, $);

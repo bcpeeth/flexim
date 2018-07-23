@@ -1,7 +1,9 @@
-/* jshint unused:vars, undef:true, browser:true, jquery:true */
+/** 
+ * concrete5 Attribute type for X-Editable
+ */
 
-/* concrete5 Attribute type for X-Editable */
-;(function(global, $) {
+
+!function(global, $) {
 	'use strict';
 
 	function ConcreteEditableAttribute(options) {
@@ -31,4 +33,4 @@
 
     $.fn.editabletypes.concreteattribute = ConcreteEditableAttribute;
 
-})(this, jQuery);
+}(this, $);

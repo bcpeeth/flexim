@@ -11,5 +11,5 @@ $pk->setPermissionObject($conversation);
 <?php Loader::element("permission/detail", array('permissionKey' => $pk)); ?>
 
 <script type="text/javascript">
-var ccm_permissionDialogURL = '<?=REL_DIR_FILES_TOOLS_REQUIRED?>/permissions/dialogs/conversation';
+var ccm_permissionDialogURL = '<?php echo REL_DIR_FILES_TOOLS_REQUIRED?>/permissions/dialogs/conversation';
 </script>

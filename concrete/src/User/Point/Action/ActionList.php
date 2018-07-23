@@ -2,8 +2,6 @@
 namespace Concrete\Core\User\Point\Action;
 
 use Concrete\Core\Legacy\DatabaseItemList;
-use Concrete\Core\Support\Facade\Application;
-use Concrete\Core\Database\Connection\Connection;
 
 class ActionList extends DatabaseItemList
 {
@@ -14,8 +12,7 @@ class ActionList extends DatabaseItemList
 
     protected function setBaseQuery()
     {
-        $db = Application::getFacadeApplication()->make(Connection::class);
-        $this->setQuery('SELECT UserPointActions.*, Groups.gName FROM UserPointActions LEFT JOIN ' . $db->getDatabasePlatform()->quoteSingleIdentifier('Groups') . ' ON Groups.gID = UserPointActions.gBadgeID');
+        $this->setQuery('SELECT UserPointActions.*, Groups.gName FROM UserPointActions LEFT JOIN Groups ON Groups.gID = UserPointActions.gBadgeID');
     }
 
     public function filterByIsActive($active)

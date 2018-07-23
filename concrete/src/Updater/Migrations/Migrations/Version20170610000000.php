@@ -1,19 +1,13 @@
 <?php
-
 namespace Concrete\Core\Updater\Migrations\Migrations;
 
 use Concrete\Core\File\File;
 use Concrete\Core\Updater\Migrations\AbstractMigration;
-use Concrete\Core\Updater\Migrations\RepeatableMigrationInterface;
+use Doctrine\DBAL\Schema\Schema;
 
-class Version20170610000000 extends AbstractMigration implements RepeatableMigrationInterface
+class Version20170610000000 extends AbstractMigration
 {
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Updater\Migrations\AbstractMigration::upgradeDatabase()
-     */
-    public function upgradeDatabase()
+    public function up(Schema $schema)
     {
         // Find all files that have no FileVersions as these are invalid and are left over from a bug
         $query = 'SELECT F.fID FROM Files F WHERE F.fID NOT IN (SELECT FV.fID FROM FileVersions FV)';
@@ -24,5 +18,9 @@ class Version20170610000000 extends AbstractMigration implements RepeatableMigra
                 $f->delete();
             }
         }
+    }
+
+    public function down(Schema $schema)
+    {
     }
 }

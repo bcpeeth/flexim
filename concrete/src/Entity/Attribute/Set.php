@@ -29,7 +29,7 @@ class Set implements ExportableInterface
     protected $keys;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Category", inversedBy="sets")
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="set")
      * @ORM\JoinColumn(name="akCategoryID", referencedColumnName="akCategoryID")
      */
     protected $category;
@@ -218,10 +218,5 @@ class Set implements ExportableInterface
         $setKey->setAttributeSet($this);
         $setKey->setDisplayOrder(count($this->keys));
         $this->keys->add($setKey);
-    }
-
-    public function __toString()
-    {
-        return (string) $this->getAttributeSetID();
     }
 }

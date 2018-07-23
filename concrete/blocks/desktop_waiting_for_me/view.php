@@ -2,7 +2,7 @@
 <div class="ccm-block-desktop-waiting-for-me">
     <div data-list="notification">
 
-    <h3><?=t('Waiting For Me')?></h3>
+    <h3><?php echo t('Waiting For Me')?></h3>
 
     <?php
 
@@ -16,10 +16,10 @@
 
             ?>
 
-        <div class="ccm-block-desktop-waiting-for-me-item" data-notification-alert-id="<?=$item->getNotificationAlertID()?>"
-        data-token="<?=$token->generate()?>">
+        <div class="ccm-block-desktop-waiting-for-me-item" data-notification-alert-id="<?php echo $item->getNotificationAlertID()?>"
+        data-token="<?php echo $token->generate()?>">
             <?php if ($action) { ?>
-                <form action="<?=$action?>" method="post">
+                <form action="<?php echo $action?>" method="post">
             <?php }  ?>
 
                 <div class="ccm-block-desktop-waiting-for-me-icon">
@@ -46,7 +46,7 @@
 
         ?>
 
-        <p <?php if (count($items)) { ?> style="display: none"<?php }  ?> data-notification-description="empty"><?=t('There are no items that currently need your attention.')?></p>
+        <p <?php if (count($items)) { ?> style="display: none"<?php }  ?> data-notification-description="empty"><?php echo t('There are no items that currently need your attention.')?></p>
 
     </div>
 

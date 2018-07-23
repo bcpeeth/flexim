@@ -1,26 +1,24 @@
 <?php
-
 namespace Concrete\Core\Updater\Migrations\Migrations;
 
 use Concrete\Core\Page\Stack\StackList;
-use Concrete\Core\Updater\Migrations\AbstractMigration;
-use Concrete\Core\Updater\Migrations\RepeatableMigrationInterface;
+use Doctrine\DBAL\Migrations\AbstractMigration;
+use Doctrine\DBAL\Schema\Schema;
 
-class Version20150616000000 extends AbstractMigration implements RepeatableMigrationInterface
+class Version20150616000000 extends AbstractMigration
 {
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Updater\Migrations\AbstractMigration::upgradeDatabase()
-     */
-    public function upgradeDatabase()
+    public function up(Schema $schema)
     {
-        \Concrete\Core\Database\Schema\Schema::refreshCoreXMLSchema([
+        \Concrete\Core\Database\Schema\Schema::refreshCoreXMLSchema(array(
             'Stacks',
-        ]);
+        ));
 
         if (\Core::make('multilingual/detector')->isEnabled()) {
             StackList::rescanMultilingualStacks();
         }
+    }
+
+    public function down(Schema $schema)
+    {
     }
 }

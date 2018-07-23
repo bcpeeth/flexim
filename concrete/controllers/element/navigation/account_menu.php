@@ -31,13 +31,6 @@ class AccountMenu extends Menu
         }
     }
 
-    protected function getPageList($parent)
-    {
-        $list = parent::getPageList($parent);
-        $list->includeSystemPages();
-        return $list;
-    }
-
     public function getChildPages($parent)
     {
         $pages = array();

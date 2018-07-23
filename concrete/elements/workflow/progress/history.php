@@ -7,8 +7,8 @@ foreach ($records as $r) {
     ?>
 	
 	<div>
-		<strong><?=$dh->formatDateTime($r->getWorkflowProgressHistoryTimestamp(), true)?></strong>. 
-		<?=$r->getWorkflowProgressHistoryDescription();
+		<strong><?php echo $dh->formatDateTime($r->getWorkflowProgressHistoryTimestamp(), true)?></strong>. 
+		<?php echo $r->getWorkflowProgressHistoryDescription();
     ?>
 	</div>	
 	

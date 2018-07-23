@@ -2,103 +2,77 @@
 namespace Concrete\Core\File;
 
 use Carbon\Carbon;
-use Concrete\Core\Database\Connection\Connection;
-use Concrete\Core\Entity\File\File as FileEntity;
-use Concrete\Core\Entity\File\Version as FileVersion;
-use Concrete\Core\File\Event\FileVersion as FileVersionEvent;
-use Concrete\Core\File\StorageLocation\StorageLocationFactory;
-use Concrete\Core\Permission\Access\Entity\FileUploaderEntity as FileUploaderPermissionAccessEntity;
-use Concrete\Core\Support\Facade\Application;
-use Concrete\Core\Tree\Node\Type\File as FileNode;
+use Concrete\Core\Entity\File\Version;
+use Concrete\Core\Tree\Node\Node;
 use Concrete\Core\Tree\Node\Type\FileFolder;
-use Concrete\Core\User\UserInfoRepository;
-use Doctrine\ORM\EntityManagerInterface;
+use Concrete\Core\User\UserInfo;
+use Doctrine\Common\Collections\ArrayCollection;
+use FileSet;
+use League\Flysystem\AdapterInterface;
+use Loader;
+use CacheLocal;
+use Core;
 use User;
+use Events;
+use Page;
+use Database;
+use Concrete\Core\File\StorageLocation\StorageLocation;
+use PermissionKey;
+use Doctrine\ORM\Mapping as ORM;
 
-/**
- * Service class for the File entity
- */
 class File
 {
+
     /**
-     * Return a file object for the given file ID.
+     * returns a file object for the given file ID.
      *
-     * @param int $fID The file identifier
+     * @param int $fID
      *
-     * @return FileEntity|null
+     * @return \Concrete\Core\Entity\File\File
      */
     public static function getByID($fID)
     {
-        return $fID ? Application::getFacadeApplication()->make(EntityManagerInterface::class)->find(FileEntity::class, $fID) : null;
+        $em = \ORM::entityManager();
+        return $em->find('\Concrete\Core\Entity\File\File', $fID);
     }
 
-    /**
-     * Return the relative path for a file (may not exist).
-     *
-     * @param int $fID The file identifier
-     *
-     * @return string|false
-     */
     public static function getRelativePathFromID($fID)
     {
-        $result = false;
-        if ($fID) {
-            $cache = Application::getFacadeApplication()->make('cache/request');
-            /** @var \Concrete\Core\Cache\Cache $cache */
-            if ($cache->isEnabled()) {
-                $cacheItem = $cache->getItem('file_relative_path/' . $fID);
-                if (!$cacheItem->isMiss()) {
-                    return $cacheItem->get();
-                }
-            }
-            $f = static::getByID($fID);
-            if ($f !== null) {
-                $result = $f->getRelativePath();
-                if (isset($cacheItem)) {
-                    $cacheItem->set($result)->save();
-                }
-            }
+        $path = CacheLocal::getEntry('file_relative_path', $fID);
+        if ($path != false) {
+            return $path;
         }
 
-        return $result;
+        $f = static::getByID($fID);
+
+        if ($f) {
+            $path = $f->getRelativePath();
+
+            CacheLocal::set('file_relative_path', $fID, $path);
+
+            return $path;
+        }
+
+        return false;
     }
 
-    /**
-     * Create and persist a File entity and a File\Version entity (the filesystem file must already have been imported).
-     *
-     * @param string $filename The name of the file (without path, only the file name)
-     * @param string $prefix The concrete5 file prefix that has been used to store the file
-     * @param array $data {
-     *     @var int|null $uID The ID of the user to be set as the author of the file (if not specified, we'll use the currently logged in user)
-     *     @var string $fvTitle The file title (if not specified, we'll assume an empty string)
-     *     @var string $fvDescription The file description (if not specified, we'll assume an empty string)
-     *     @var string $fvTags The tags to be associated to the file (separate multiple tags with commas or new lines) (if not specified, we'll assume no tags)
-     *     @var bool $fvIsApproved The file title (if not specified, we'll assume an empty string)
-     * }
-     *
-     * @param \Concrete\Core\Entity\File\StorageLocation\StorageLocation|false $fsl The storage location to be used (we'll use the default one if it's falsy)
-     * @param FileFolder|false $folder The folder where the file must be added (we'll use the root folder if it's falsy)
-     *
-     * @return FileVersion
-     */
-    public static function add($filename, $prefix, $data = [], $fsl = false, $folder = false)
+    public static function add($filename, $prefix, $data = array(), $fsl = false, $folder = false)
     {
-        $app = Application::getFacadeApplication();
-        $db = $app->make(Connection::class);
-        $date = $app->make('helper/date')->getOverridableNow();
+        $db = Loader::db();
+        $dh = Loader::helper('date');
+        $date = $dh->getOverridableNow();
 
-        if (!$fsl) {
-            $fsl = $app->make(StorageLocationFactory::class)->fetchDefault();
+        if (!is_object($fsl)) {
+            $fsl = StorageLocation::getDefault();
         }
 
+        $uID = 0;
         $u = new User();
         if (isset($data['uID'])) {
-            $uID = (int) $data['uID'];
+            $uID = $data['uID'];
         } else {
             if ($u->isRegistered()) {
-                $uID = (int) $u->getUserID();
-            } else {
-                $uID = 0;
+                $uID = $u->getUserID();
             }
         }
 
@@ -107,38 +81,40 @@ class File
             $folder = $filesystem->getRootFolder();
         }
 
-        $f = new FileEntity();
+        $f = new \Concrete\Core\Entity\File\File();
         $f->storageLocation = $fsl;
         $f->fDateAdded = new Carbon($date);
         $f->folderTreeNodeID = $folder->getTreeNodeID();
+
+
+        $em = \ORM::entityManager();
+        $em->persist($f);
+        $em->flush();
+
         if ($uID > 0) {
-            $ui = $app->make(UserInfoRepository::class)->getByID($uID);
-            if ($ui !== null) {
+            $ui = UserInfo::getByID($uID);
+            if (is_object($ui)) {
                 $ue = $ui->getEntityObject();
-                if ($ue) {
+                if (is_object($ue)) {
                     $f->setUser($ue);
                 }
             }
         }
-        $em = $app->make(EntityManagerInterface::class);
-        $em->persist($f);
-        $em->flush();
 
-        $node = FileNode::add($f, $folder);
+        $node = \Concrete\Core\Tree\Node\Type\File::add($f, $folder);
 
-        $fv = FileVersion::add($f, $filename, $prefix, $data);
+        $fv = Version::add($f, $filename, $prefix, $data);
 
         $f->versions->add($fv);
 
-        $fve = new FileVersionEvent($fv);
-        $app->make('director')->dispatch('on_file_add', $fve);
+        $fve = new \Concrete\Core\File\Event\FileVersion($fv);
+        Events::dispatch('on_file_add', $fve);
 
         $entities = $u->getUserAccessEntityObjects();
         $hasUploader = false;
         foreach ($entities as $obj) {
             if ($obj instanceof FileUploaderPermissionAccessEntity) {
                 $hasUploader = true;
-                break;
             }
         }
         if (!$hasUploader) {
@@ -147,4 +123,5 @@ class File
 
         return $fv;
     }
+
 }

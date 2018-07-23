@@ -1,10 +1,6 @@
-/* jshint unused:vars, undef:true, browser:true, jquery:true */
-/* global ccmi18n_helpGuides, Tourist, ConcreteHelpGuideManager */
-
-;(function(global, $) {
+!function(global, $) {
 	'use strict';
-
-	var i18n = ccmi18n_helpGuides.toolbar;
+	var i18n = ccmi18n_helpGuides['toolbar'];
 	var steps = [{
 		content: '<p><span class="h5">' + i18n[0].title + '</span><br/>' + i18n[0].text + '</p>',
 		highlightTarget: true,
@@ -75,4 +71,4 @@
 
 	ConcreteHelpGuideManager.register('toolbar', tour);
 
-})(window, jQuery);
+}(window, jQuery);

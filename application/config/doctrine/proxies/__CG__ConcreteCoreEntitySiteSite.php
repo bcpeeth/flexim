@@ -477,17 +477,6 @@ class Site extends \Concrete\Core\Entity\Site\Site implements \Doctrine\ORM\Prox
     /**
      * {@inheritDoc}
      */
-    public function getTimezone()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getTimezone', []);
-
-        return parent::getTimezone();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function getThemeID()
     {
 
@@ -510,23 +499,23 @@ class Site extends \Concrete\Core\Entity\Site\Site implements \Doctrine\ORM\Prox
     /**
      * {@inheritDoc}
      */
-    public function getAttributeValue($ak)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getAttributeValue', [$ak]);
-
-        return parent::getAttributeValue($ak);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function getAttribute($ak, $mode = false)
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getAttribute', [$ak, $mode]);
 
         return parent::getAttribute($ak, $mode);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getAttributeValue($ak)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getAttributeValue', [$ak]);
+
+        return parent::getAttributeValue($ak);
     }
 
     /**

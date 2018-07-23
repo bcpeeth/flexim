@@ -1,9 +1,8 @@
 /* jshint unused:vars, undef:true, browser:true, jquery:true */
-
-;(function(global, $, undefined) {
+(function($, undefined) {
 'use strict';
 
-if (global.ccmTranslator) {
+if (window.ccmTranslator) {
   return;
 }
 
@@ -972,7 +971,7 @@ var Startup = (function() {
   };
 })();
 
-global.ccmTranslator = {
+window.ccmTranslator = {
   setI18NDictionart: function(i18nDictionary) {
     $.extend(true, i18n, i18nDictionary);
   },
@@ -993,4 +992,4 @@ $(document).ready(function() {
   Startup.setDomReady();
 });
 
-})(this, jQuery);
+})(jQuery);

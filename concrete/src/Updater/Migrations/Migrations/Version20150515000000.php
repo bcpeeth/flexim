@@ -1,38 +1,31 @@
 <?php
-
 namespace Concrete\Core\Updater\Migrations\Migrations;
 
-use Concrete\Core\Updater\Migrations\AbstractMigration;
-use Concrete\Core\Updater\Migrations\RepeatableMigrationInterface;
+use Doctrine\DBAL\Migrations\AbstractMigration;
+use Doctrine\DBAL\Schema\Schema;
 
-class Version20150515000000 extends AbstractMigration implements RepeatableMigrationInterface
+class Version20150515000000 extends AbstractMigration
 {
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Doctrine\DBAL\Migrations\AbstractMigration::getDescription()
-     */
     public function getDescription()
     {
         return '5.7.5a1';
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Updater\Migrations\AbstractMigration::upgradeDatabase()
-     */
-    public function upgradeDatabase()
+    public function up(Schema $schema)
     {
-        \Concrete\Core\Database\Schema\Schema::refreshCoreXMLSchema([
+        \Concrete\Core\Database\Schema\Schema::refreshCoreXMLSchema(array(
             'PageFeeds',
-        ]);
+        ));
 
         // I can't seem to get the doctrine cache to clear any other way.
         $cms = \Core::make('app');
         $cms->clearCaches();
 
         $this->purgeOrphanedScrapbooksBlocks();
+    }
+
+    public function down(Schema $schema)
+    {
     }
 
     protected function purgeOrphanedScrapbooksBlocks()
@@ -46,7 +39,7 @@ class Version20150515000000 extends AbstractMigration implements RepeatableMigra
                 inner join Blocks b on b.bID = btCSD.bOriginalID
                 left join BlockTypes bt on b.btID = bt.btID
             where bt.btID IS NULL',
-            []
+            array()
         );
         foreach ($orphanedCollectionVersionBlocks as $row) {
             $nc = \Page::getByID($row['cID'], $row['cvID']);

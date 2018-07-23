@@ -103,9 +103,8 @@ class CheckIn extends BackendInterfacePageController
 
                     if ($this->request->request->get('action') == 'schedule') {
                         $dateTime = new DateTime();
-                        $publishDateTime = $dateTime->translate('cvPublishDate');
-                        $publishEndDateTime = $dateTime->translate('cvPublishEndDate');
-                        $pkr->scheduleVersion($publishDateTime, $publishEndDateTime);
+                        $publishDateTime = $dateTime->translate('check-in-scheduler');
+                        $pkr->scheduleVersion($publishDateTime);
                     }
 
                     if ($c->isPageDraft()) {

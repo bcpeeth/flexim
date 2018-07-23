@@ -1,11 +1,12 @@
-/* jshint unused:vars, undef:true, jquery:true */
-/* global ConcreteAjaxForm, ConcreteEvent, CCM_CID, Concrete, CCM_DISPATCHER_FILENAME, ConcreteToolbar, ConcreteAlert, ccmi18n */
+/**
+ * block ajax
+ */
 
-/* Block ajax */
-;(function(global, $) {
+!function (global, $) {
     'use strict';
 
     function ConcreteAjaxBlockForm($form, options) {
+        'use strict';
         var my = this;
         options = $.extend({
             'iframe': true,
@@ -28,7 +29,7 @@
     ConcreteAjaxBlockForm.prototype = Object.create(ConcreteAjaxForm.prototype);
 
     ConcreteAjaxBlockForm.prototype.before = function (my) {
-        $.fn.dialog.showLoader();
+        jQuery.fn.dialog.showLoader();
         ConcreteEvent.fire('EditModeBeforeBlockSubmit', {
             'form': my
         });
@@ -42,7 +43,7 @@
             arEnableGridContainer = area.getEnableGridContainer() ? 1 : 0,
             action = CCM_DISPATCHER_FILENAME + '/ccm/system/block/render';
 
-        $.fn.dialog.closeTop();
+        jQuery.fn.dialog.closeTop();
 
         $.get(action, {
             arHandle: area.getHandle(),
@@ -54,7 +55,7 @@
             var block, edit_mode = Concrete.getEditMode(), local_area = area.inEditMode(edit_mode);
 
             ConcreteToolbar.disableDirectExit();
-            $.fn.dialog.hideLoader();
+            jQuery.fn.dialog.hideLoader();
 
             if (my.options.task == 'add') {
                 var $area = local_area.getElem(), $elem = $(r);
@@ -87,7 +88,7 @@
                     'message': ccmi18n.addBlockMsg,
                     'title': ccmi18n.addBlock
                 });
-                $.fn.dialog.closeAll();
+                jQuery.fn.dialog.closeAll();
 
                 if (my.options.btSupportsInlineAdd) {
                     editor.destroyInlineEditModeToolbars();
@@ -121,17 +122,9 @@
                 });
             }
         });
-    };
+    }
 
     ConcreteAjaxBlockForm.prototype.success = function (resp, my) {
-        var form = my.$form[0];
-        if (resp.newbID && form) {
-            // Replace old block id in form action
-            var actionURL = form.action;
-            var bIDParam = actionURL.substring(actionURL.indexOf('&bID='));
-            var newActionURL = actionURL.replace(bIDParam, '&bID=' + resp.newbID);
-            $(form).attr('action', newActionURL);
-        }
         if (my.options.progressiveOperation) {
             my.handleProgressiveOperation(resp, function(r) {
                 my.refreshBlock(r);
@@ -150,4 +143,4 @@
 
     global.ConcreteAjaxBlockForm = ConcreteAjaxBlockForm;
 
-})(this, jQuery);
+}(this, $);

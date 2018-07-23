@@ -29,12 +29,12 @@ $url = $app->make('url/manager');
 ?>
 <div style="display: none">
     <div class="btn-group" id="ccm-account-menu">
-        <a class="btn btn-default" href="<?=$desktop->getCollectionLink()?>"><i class="fa fa-user"></i> <?=$ui->getUserDisplayName()?></a>
+        <a class="btn btn-default" href="<?php echo $desktop->getCollectionLink()?>"><i class="fa fa-user"></i> <?php echo $ui->getUserDisplayName()?></a>
         <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
             <span class="caret"></span>
         </button>
         <ul class="dropdown-menu pull-right" role="menu">
-            <li><a href="<?=$url->resolve([$desktop])?>"><?=t('My Account')?></a></li>
+            <li><a href="<?php echo $url->resolve([$desktop])?>"><?php echo t('My Account')?></a></li>
             <li class="divider"></li>
             <?php
                 $categories = [];
@@ -47,12 +47,12 @@ $url = $app->make('url/manager');
                     }
                 }
                 foreach ($categories as $cc) {
-                    ?><li><a href="<?=$url->resolve([$cc])?>"><?=h(t($cc->getCollectionName()))?></a></li><?php
+                    ?><li><a href="<?php echo $url->resolve([$cc])?>"><?php echo h(t($cc->getCollectionName()))?></a></li><?php
                 }
             ?>
             <li class="divider"></li>
-            <li><a href="<?=$url->resolve(['/'])?>"><i class="fa fa-home"></i> <?=t('Home')?></a></li>
-            <li><a href="<?=$url->resolve(['/login', 'do_logout', $app->make('token')->generate('do_logout')])?>"><i class="fa fa-sign-out"></i> <?=t('Sign Out')?></a></li>
+            <li><a href="<?php echo $url->resolve(['/'])?>"><i class="fa fa-home"></i> <?php echo t('Home')?></a></li>
+            <li><a href="<?php echo $url->resolve(['/login', 'do_logout', $app->make('token')->generate('do_logout')])?>"><i class="fa fa-sign-out"></i> <?php echo t('Sign Out')?></a></li>
         </ul>
     </div>
 </div>

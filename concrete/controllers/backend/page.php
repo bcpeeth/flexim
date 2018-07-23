@@ -57,9 +57,9 @@ class Page extends Controller
 
     public function getJSON()
     {
-        $h = $this->app->make('helper/concrete/dashboard/sitemap');
+        $h = \Core::make('helper/concrete/dashboard/sitemap');
         if ($h->canRead()) {
-            $c = ConcretePage::getByID((int) $this->request->request->get('cID'));
+            $c = ConcretePage::getByID(intval($_POST['cID']));
             $cp = new Permissions($c);
             if ($cp->canViewPage()) {
                 $r = new PageEditResponse();

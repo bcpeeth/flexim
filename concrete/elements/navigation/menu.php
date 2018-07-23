@@ -3,9 +3,9 @@ defined('C5_EXECUTE') or die('Access Denied.');
 
 if (!empty($top)) {
     ?>
-    <div class="<?php if (isset($wrapperClass) && $wrapperClass) { ?><?=$wrapperClass?><?php } ?>">
+    <div class="<?php if (isset($wrapperClass) && $wrapperClass) { ?><?php echo $wrapperClass?><?php } ?>">
         <?php if (isset($title) && $title) {
-            ?><h3><?=$title?></h3><?php
+            ?><h3><?php echo $title?></h3><?php
         } ?>
         <ul class="nav">
             <?php
@@ -16,8 +16,8 @@ if (!empty($top)) {
                         $page = $pages[$i];
                         $next = ($i + 1 < $n) ? $pages[$i + 1] : null;
                         ?>
-                        <li class="<?=$view->controller->getMenuItemClass($page)?>">
-                            <a href="<?=$page->getCollectionLink()?>"><?=t($page->getCollectionName())?></a>
+                        <li class="<?php echo $view->controller->getMenuItemClass($page)?>">
+                            <a href="<?php echo $page->getCollectionLink()?>"><?php echo t($page->getCollectionName())?></a>
                             <?php
                             if ($view->controller->displayChildPages($page)) {
                                 $children = $view->controller->getChildPages($page);

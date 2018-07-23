@@ -1,9 +1,3 @@
-/* jshint unused:vars, undef:true, browser:true, jquery:true */
-/* global _, Kinetic, ccmi18n_imageeditor, CCM_IMAGE_PATH, CCM_REL, Concrete, ConcreteEvent */
-
-;(function(global, $) {
-    'use strict';
-
 /////////////////////////////
 //      Kinetic.Node       //
 /////////////////////////////
@@ -89,9 +83,9 @@ Kinetic.Image.prototype.getImageData = function() {
 /////////////////////////////
 //      Kinetic.Layer      //
 /////////////////////////////
-Kinetic.Layer.prototype._cacheddraw = (new Kinetic.Layer()).draw;
+Kinetic.Layer.prototype._cacheddraw = (new Kinetic.Layer).draw;
 Kinetic.Layer.prototype.draw = function() {
-  if (typeof global.im === 'undefined' || typeof global.im.trigger === 'undefined') {
+  if (typeof im === 'undefined' || typeof im.trigger === 'undefined') {
     return this._cacheddraw();
   }
   //im.trigger('beforeredraw',this);
@@ -122,33 +116,13 @@ Kinetic.Text.prototype.rasterize = function(e) {
     }
   });
 };
-// Patch the browser drawImage function
-(function() {
-  var contextPrototype, originalFunction;
-  try {
-    contextPrototype = Object.getPrototypeOf(document.createElement('canvas').getContext('2d'));
-    originalFunction = contextPrototype.drawImage;
-  } catch (e) {
-    originalFunction = null; 
-  }
-  if (originalFunction) {
-    contextPrototype.drawImage = function() {
-      if (arguments.length >= 4) {
-        this.imageSmoothingEnabled = true;
-        if (typeof this.imageSmoothingQuality === 'string') {
-          this.imageSmoothingQuality = 'high';
-        }
-      }
-      return originalFunction.apply(this, arguments);
-    };
-  }
-})();
-
+var control_sets = [], components = [], filters = [];
 var ImageEditor = function (settings) {
+    "use strict";
     if (settings === undefined) return this;
     settings.pixelRatio = 1;
-    var im = this, round = function (float) {
-        return Math.round(float);
+    var im = this, x, round = function (float) {
+        return Math.round(float)
     };
     im.saveData = settings.saveData || {};
     im.saveUrl = settings.saveUrl;
@@ -172,6 +146,7 @@ var ImageEditor = function (settings) {
     im.domContext = im.editorContext.parent();
     im.controlContext = im.domContext.children('div.controls');
     im.controlSetNamespaces = [];
+    debugger;
 
     im.showLoader = $.fn.dialog.showLoader;
     im.hideLoader = $.fn.dialog.hideLoader;
@@ -193,24 +168,24 @@ var ImageEditor = function (settings) {
             return $(selector, im.domContext);
         },
         log = function () {
-            if (settings.debug === true && typeof window.console !== 'undefined') {
+            if (settings.debug === true && typeof console !== 'undefined') {
                 var args = arguments;
                 if (args.length == 1) args = args[0];
-                window.console.log(args);
+                console.log(args);
             }
         },
         warn = function () {
-            if (settings.debug === true && typeof window.console !== 'undefined') {
+            if (settings.debug === true && typeof console !== 'undefined') {
                 var args = arguments;
                 if (args.length == 1) args = args[0];
-                window.console.warn(args);
+                console.warn(args);
             }
         },
         error = function () {
-            if (typeof window.console !== 'undefined') {
+            if (typeof console !== 'undefined') {
                 var args = arguments;
                 if (args.length == 1) args = args[0];
-                window.console.error("Image Editor Error: " + args);
+                console.error("Image Editor Error: " + args);
             }
         };
 
@@ -222,14 +197,14 @@ var ImageEditor = function (settings) {
 // Handle event binding.
 im.bindEvent = im.bind = im.on = function (type, handler, elem) {
   var element = elem || im.stage.getContainer();
-  if (element instanceof $) element = element[0];
+  if (element instanceof jQuery) element = element[0];
   ConcreteEvent.sub(type,handler,element);
 };
 
 // Handle event firing
 im.fireEvent = im.fire = im.trigger = function (type, data, elem) {
   var element = elem || im.stage.getContainer();
-  if (element instanceof $) element = element[0];
+  if (element instanceof jQuery) element = element[0];
   ConcreteEvent.pub(type,data,element);
 };
 im.addElement = function(object, type) {
@@ -292,8 +267,8 @@ zoom.zoomOut = getElem("<div class='bottombarbutton'><i class='fa fa-minus'></i>
 zoom.zoomIn.appendTo(controlBar);
 zoom.zoomOut.appendTo(controlBar);
 
-zoom.zoomIn.click(function(e){im.fire('zoomInClick',e);});
-zoom.zoomOut.click(function(e){im.fire('zoomOutClick',e);});
+zoom.zoomIn.click(function(e){im.fire('zoomInClick',e)});
+zoom.zoomOut.click(function(e){im.fire('zoomOutClick',e)});
 
 var scale = getElem('<div></div>').addClass('scale').text('100%');
 im.on('scaleChange',function(e){
@@ -311,7 +286,7 @@ scale.click(function(){
 });
 scale.appendTo(controlBar);
 
-var stepScale = 5/6;
+var minScale = 0, maxScale = 3000, stepScale = 5/6;
 
 im.on('zoomInClick',function(e){
   var centerx = (-im.stage.getX() + (im.stage.getWidth() / 2)) / im.scale,
@@ -474,7 +449,7 @@ im.save = function saveImage() {
                         $.fn.dialog.hideLoader();
                         var result = JSON.parse(res);
                         if (result.error === 1) {
-                            window.alert(result.message);
+                            alert(result.message);
                             $('button.save[disabled]').attr('disabled', false);
                         } else if (result.error === 0) {
                             im.fire('ImageEditorDidSave', _.extend(im.saveData, {
@@ -514,7 +489,7 @@ im.adjustSavers = function AdjustingSavers(fire) {
     if (im.activeElement.nodeType === 'Stage') return;
     im.foreground.autoCrop = false;
     im.background.autoCrop = false;
-    var u, score = {min: {x: false, y: false}, max: {x: false, y: false}};
+    var i, e, u, score = {min: {x: false, y: false}, max: {x: false, y: false}};
     /*
      for (var i = im.stage.children.length - 1; i >= 0; i--) {
      var layer = im.stage.children[i];
@@ -522,7 +497,7 @@ im.adjustSavers = function AdjustingSavers(fire) {
      for (var e = layer.children.length - 1; e >= 0; e--) {
      var child = layer.children[e],
      rect = im.getActualRect(0, 0, child);
-     window.console.log(child);
+     console.log(child);
 
      for (var u = rect.length - 1; u >= 0; u--) {
      var point = rect[u], x = point[0] + layer.getX(), y = point[1] + layer.getY();
@@ -537,7 +512,7 @@ im.adjustSavers = function AdjustingSavers(fire) {
     var child = im.activeElement,
         layer = child.parent,
         rect = im.getActualRect(0, 0, child),
-        size;
+        u, size;
 
     for (u = rect.length - 1; u >= 0; u--) {
         var point = rect[u], x = point[0] + layer.getX(), y = point[1] + layer.getY();
@@ -574,7 +549,7 @@ im.extend = function(property,value) {
 im.alterCore = function(property,value) {
   var nim = im, ns = 'core', i;
   if (im.namespace) {
-    ns = nim.namespace;
+    var ns = nim.namespace;
     nim = im.realIm;
   }
   im[property] = value;
@@ -600,9 +575,8 @@ im.clone = function(namespace) {
 };
 
 im.addControlSet = function(ns,js,elem) {
-  if ($ && elem instanceof $) elem = elem[0];
+  if (jQuery && elem instanceof jQuery) elem = elem[0];
   elem.controlSet = function(im,js) {
-    // jshint -W054
     im.disable = function() {
       im.enabled = false;
       $(elem).parent().parent().addClass('disabled');
@@ -617,7 +591,7 @@ im.addControlSet = function(ns,js,elem) {
     try {
       (new Function('im','$',js)).call(this, im, $);
     } catch(e) {
-      window.console.log(e.stack);
+      console.log(e.stack);
       var pos = e.stack.replace(/[\S\s]+at HTMLDivElement.eval.+?<anonymous>:(\d+:\d+)[\S\s]+/,'$1').split(':');
       if (pos[1] && !isNaN(parseInt(pos[1]))) {
         var jsstack = js.split("\n");
@@ -639,7 +613,6 @@ im.addControlSet = function(ns,js,elem) {
 
 im.addFilter = function(ns,js) {
   var filter = function(im,js) {
-     // jshint -W054
     this.namespace = im.namespace;
     this.im = im;
     try {
@@ -668,9 +641,8 @@ im.addFilter = function(ns,js) {
 };
 
 im.addComponent = function(ns,js,elem) {
-  if ($ && elem instanceof $) elem = elem[0];
+  if (jQuery && elem instanceof jQuery) elem = elem[0];
   elem.component = function(im,js) {
-    // jshint -W054
     im.disable = function() {
       $(this).parent().parent().addClass('disabled');
     };
@@ -733,7 +705,7 @@ im.buildBackground = function() {
   im.saveArea.setHeight(im.saveHeight);
 
   if (!im.coverLayer) {
-    im.coverLayer = new Kinetic.Rect();
+    im.coverLayer = new Kinetic.Rect;
     im.coverLayer.setStroke('rgba(150,150,150,.5)');
     im.coverLayer.setFill('transparent');
     im.coverLayer.setListening(false);
@@ -748,6 +720,7 @@ im.buildBackground = function() {
   //im.foreground.moveToTop();
   im.saveArea.draw();
   im.coverLayer.draw();
+    debugger;
 };
 
 im.buildBackground();
@@ -854,6 +827,7 @@ if (settings.src) {
                 im.buildBackground();
             }
         }
+        debugger;
         var center = {
             x: Math.floor(im.center.x - (img.width / 2)),
             y: Math.floor(im.center.y - (img.height / 2))
@@ -888,8 +862,7 @@ if (settings.src) {
     im.fire('imageload');
 }
 im.bind('imageload', function () {
-    // jshint -W083
-    var cs = settings.controlsets || {}, namespace;
+    var cs = settings.controlsets || {}, filters = settings.filters || {}, namespace, firstcs;
     var running = 0;
     log('Loading ControlSets');
     im.showLoader(ccmi18n_imageeditor.loadingControlSets);
@@ -897,7 +870,7 @@ im.bind('imageload', function () {
     for (namespace in cs) {
         var myns = "ControlSet_" + namespace;
         im.controlSetNamespaces.push(myns);
-        $.ajax(cs[namespace].src, {
+        $.ajax(cs[namespace]['src'], {
             dataType: 'text',
             cache: false,
             namespace: namespace,
@@ -907,7 +880,7 @@ im.bind('imageload', function () {
             },
             success: function (js) {
                 running--;
-                var nso = im.addControlSet(this.myns, js, cs[this.namespace].element);
+                var nso = im.addControlSet(this.myns, js, cs[this.namespace]['element']);
                 log(nso);
                 im.fire('controlSetLoad', nso);
                 if (0 == running) {
@@ -924,7 +897,6 @@ im.bind('imageload', function () {
     }
 });
 im.bind('ControlSetsLoaded', function () {
-    // jshint -W083
     im.fire('LoadingComponents');
     im.showLoader(ccmi18n_imageeditor.loadingComponents);
     var components = settings.components || {}, namespace, running = 0;
@@ -932,7 +904,7 @@ im.bind('ControlSetsLoaded', function () {
 
     for (namespace in components) {
         var myns = "Component_" + namespace;
-        $.ajax(components[namespace].src, {
+        $.ajax(components[namespace]['src'], {
             dataType: 'text',
             cache: false,
             namespace: namespace,
@@ -942,7 +914,7 @@ im.bind('ControlSetsLoaded', function () {
             },
             success: function (js) {
                 running--;
-                var nso = im.addComponent(this.myns, js, components[this.namespace].element);
+                var nso = im.addComponent(this.myns, js, components[this.namespace]['element']);
                 log(nso);
                 im.fire('ComponentLoad', nso);
                 if (0 == running) {
@@ -963,7 +935,6 @@ im.bind('ControlSetsLoaded', function () {
 });
 
 im.bind('ComponentsLoaded', function () { // do this when the control sets finish loading.
-    // jshint -W083
     log('Loading Filters');
     im.showLoader(ccmi18n_imageeditor.loadingFilters);
     var filters = settings.filters || {}, namespace, firstf, active = 0;
@@ -1023,7 +994,7 @@ im.bind('ChangeActiveAction', function (e, ns) {
         height = cs.show().height();
     if (cs.length == 0) return;
     cs.hide().height(height).slideDown(function () {
-        $(this).height('');
+        $(this).height('')
     });
 });
 
@@ -1039,7 +1010,7 @@ im.bind('ChangeActiveComponent', function (e, ns) {
         height = cs.show().height();
     if (cs.length == 0) return;
     cs.hide().height(height).slideDown(function () {
-        $(this).height('');
+        $(this).height('')
     });
 });
 
@@ -1079,11 +1050,11 @@ im.showSlideOut = function(contents,callback) {
   im.hideSlideOut(function(){
     im.slideOut.empty();
     im.slideOutContents = contents.width(300);
-    im.slideOut.append(im.slideOutContents);
+    im.slideOut.append(im.slideOutContents)
     im.slideOut.addClass('active').addClass('sliding');
     im.slideOut.stop(1).slideOut(300, function(){
       im.slideOut.removeClass('sliding');
-      if(typeof callback === 'function') callback();
+      ((typeof callback === 'function') && callback());
     });
   });
 };
@@ -1092,7 +1063,7 @@ im.hideSlideOut = function(callback) {
   im.slideOut.slideIn(300,function(){
     im.slideOut.css('border-right','0');
     im.slideOut.removeClass('active').removeClass('sliding');
-    if(typeof callback === 'function') callback();
+    ((typeof callback === 'function') && callback());
   });
 };
 im.controlContext.after(im.slideOut);
@@ -1100,13 +1071,13 @@ im.controlContext.after(im.slideOut);
 
     im.setActiveElement(im.stage);
 
-    global.c5_image_editor = im; // Safe keeping
-    global.im = im;
+    window.c5_image_editor = im; // Safe keeping
+    window.im = im;
     return im;
 };
 
 $.fn.ImageEditor = function (settings) {
-    if (settings === undefined) settings = {};
+    (settings === undefined && (settings = {}));
     settings.imageload = $.fn.dialog.hideLoader;
     var self = $(this);
     settings.container = self[0];
@@ -1120,8 +1091,8 @@ $.fn.ImageEditor = function (settings) {
     self.height("-=30");
     $('div.editorcontrols').height(self.height() - 90);
     self.width("-=330").parent().width("-=330").children('div.bottomBar').width("-=330");
-    if(settings.width === undefined) settings.width = self.width();
-    if(settings.height === undefined) settings.height = self.height();
+    (settings.width === undefined && (settings.width = self.width()));
+    (settings.height === undefined && (settings.height = self.height()));
     $.fn.dialog.showLoader();
     var im = new ImageEditor(settings);
 
@@ -1151,7 +1122,7 @@ $.fn.ImageEditor = function (settings) {
         $(this).attr('disabled', true);
         im.save();
     }).end().children('button.cancel').click(function () {
-        if (window.confirm(ccmi18n_imageeditor.areYouSure))
+        if (confirm(ccmi18n_imageeditor.areYouSure))
             $.fn.dialog.closeTop();
     });
 
@@ -1225,6 +1196,7 @@ ImageEditor.prototype = ImageEditor.fn = {
       }
     },
     restore: function (imageData,ob) {
+      var adjustment = ob.level;
         var d = imageData.data;
         var g = ob.imageData.data;
       for (var i=0; i<d.length; i+=4) {
@@ -1235,7 +1207,3 @@ ImageEditor.prototype = ImageEditor.fn = {
     }
   }
 };
-
-    global.ImageEditor = ImageEditor;
-
-})(window, jQuery);

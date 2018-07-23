@@ -1,19 +1,14 @@
 <?php
-
 namespace Concrete\Core\Updater\Migrations\Migrations;
 
 use Concrete\Core\Attribute\Key\CollectionKey;
+use Concrete\Core\File\File;
 use Concrete\Core\Updater\Migrations\AbstractMigration;
-use Concrete\Core\Updater\Migrations\RepeatableMigrationInterface;
+use Doctrine\DBAL\Schema\Schema;
 
-class Version20170611000000 extends AbstractMigration implements RepeatableMigrationInterface
+class Version20170611000000 extends AbstractMigration
 {
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Updater\Migrations\AbstractMigration::upgradeDatabase()
-     */
-    public function upgradeDatabase()
+    public function up(Schema $schema)
     {
         $this->refreshEntities([
             'Concrete\Core\Entity\Attribute\Key\Settings\BooleanSettings',
@@ -47,5 +42,9 @@ class Version20170611000000 extends AbstractMigration implements RepeatableMigra
             }
         }
         $em->flush();
+    }
+
+    public function down(Schema $schema)
+    {
     }
 }

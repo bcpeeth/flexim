@@ -7,19 +7,21 @@ defined('C5_EXECUTE') or die("Access Denied.");
 <?php $url = $ci->getBlockTypeJavaScriptURL($blockType);
 if ($url != '') {
     ?>
-	ConcreteAssetLoader.loadJavaScript("<?=$url?>");
+	ccm_addHeaderItem("<?php echo $url?>", 'JAVASCRIPT');
 <?php 
 }
 $identifier = strtoupper('BLOCK_CONTROLLER_' . $btHandle);
 if (isset($headerItems) && is_array($headerItems[$identifier])) {
     foreach ($headerItems[$identifier] as $item) {
-        if ($item instanceof CSSOutputObject) { ?>
-	        ConcreteAssetLoader.loadCSS("<?=$item->file?>");
-	        <?php
-        } else { ?>
-	        ConcreteAssetLoader.loadJavaScript("<?=$item->file?>");
-	        <?php
+        if ($item instanceof CSSOutputObject) {
+            $type = 'CSS';
+        } else {
+            $type = 'JAVASCRIPT';
         }
+        ?>
+		ccm_addHeaderItem("<?php echo $item->file?>", '<?php echo $type?>');
+	<?php
+
     }
 }
 ?>
@@ -66,23 +68,23 @@ if ($blockType->supportsInlineAdd()) {
 } ?>>
 
 
-<form method="post" action="<?=$controller->action('submit')?>" id="ccm-block-form" enctype="multipart/form-data" class="validate">
+<form method="post" action="<?php echo $controller->action('submit')?>" id="ccm-block-form" enctype="multipart/form-data" class="validate">
 
-<input type="hidden" name="btID" value="<?=$blockType->getBlockTypeID()?>">
-<input type="hidden" name="arHandle" value="<?=$area->getAreaHandle()?>">
-<input type="hidden" name="cID" value="<?=$c->getCollectionID()?>">
+<input type="hidden" name="btID" value="<?php echo $blockType->getBlockTypeID()?>">
+<input type="hidden" name="arHandle" value="<?php echo $area->getAreaHandle()?>">
+<input type="hidden" name="cID" value="<?php echo $c->getCollectionID()?>">
 
 <input type="hidden" name="dragAreaBlockID" value="0" />
 
 <?php foreach ($blockTypeController->getJavaScriptStrings() as $key => $val) {
     ?>
-	<input type="hidden" name="ccm-string-<?=$key?>" value="<?=h($val)?>" />
+	<input type="hidden" name="ccm-string-<?php echo $key?>" value="<?php echo h($val)?>" />
 <?php 
 } ?>
 
 <?php foreach ($area->getAreaCustomTemplates() as $btHandle => $template) {
     ?>
-	<input type="hidden" name="arCustomTemplates[<?=$btHandle?>]" value="<?=$template?>" />
+	<input type="hidden" name="arCustomTemplates[<?php echo $btHandle?>]" value="<?php echo $template?>" />
 <?php 
 } ?>
 
@@ -104,8 +106,8 @@ if ($blockType->supportsInlineAdd()) {
     ?>	
 
 	<div class="ccm-buttons dialog-buttons">
-	<a href="javascript:void(0)" onclick="jQuery.fn.dialog.closeTop()" class="btn btn-hover-danger btn-default pull-left"><?=t('Cancel')?></a>
-	<a href="javascript:void(0)" onclick="$('#ccm-form-submit-button').get(0).click()" class="pull-right btn btn-primary"><?=t('Add')?></a>
+	<a href="javascript:void(0)" onclick="jQuery.fn.dialog.closeTop()" class="btn btn-hover-danger btn-default pull-left"><?php echo t('Cancel')?></a>
+	<a href="javascript:void(0)" onclick="$('#ccm-form-submit-button').get(0).click()" class="pull-right btn btn-primary"><?php echo t('Add')?></a>
 	</div>
 
 <?php 

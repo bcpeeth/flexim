@@ -12,21 +12,21 @@ if (is_object($tree)) {
         $node->populateDirectChildrenOnly();
         ?>
         <ol class="breadcrumb">
-            <li><a href="<?=$view->controller->getTopicLink()?>"
+            <li><a href="<?php echo $view->controller->getTopicLink()?>"
                 <?php if (!$selectedTopicID) {
     ?>class="ccm-block-topic-list-topic-selected active"<?php 
 }
-        ?>><?=t('All')?></a></li>
+        ?>><?php echo t('All')?></a></li>
 
         <?php foreach ($node->getChildNodes() as $child) {
     ?>
-            <li><a href="<?=$view->controller->getTopicLink($child)?>"
+            <li><a href="<?php echo $view->controller->getTopicLink($child)?>"
                     <?php if (isset($selectedTopicID) && $selectedTopicID == $child->getTreeNodeID()) {
     ?>
                         class="ccm-block-topic-list-topic-selected active"
                     <?php 
 }
-    ?> ><?=$child->getTreeNodeDisplayName()?></a></li>
+    ?> ><?php echo $child->getTreeNodeDisplayName()?></a></li>
         <?php 
 }
         ?>

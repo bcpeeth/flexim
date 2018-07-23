@@ -2,14 +2,14 @@
 
 <div class="form-group">
     <div>
-    <label class="control-label"><?=$label?></label>
+    <label class="control-label"><?php echo $label?></label>
     </div>
     <?php
     if (count($entities)) {
         ?>
         <?php foreach ($entities as $entity) {
     ?>
-            <div><?=$formatter->getEntryDisplayName($control, $entity)?></div>
+            <div><?php echo $formatter->getEntryDisplayName($control, $entity)?></div>
         <?php 
 }
         ?>

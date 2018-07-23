@@ -1,7 +1,4 @@
-/* jshint unused:vars, undef:true, browser:true, jquery:true */
-/* global CCM_DISPATCHER_FILENAME, Concrete, ConcreteAlert, ConcreteEvent, ConcreteToolbar */
-
-;(function(global, $) {
+(function(global, $) {
     'use strict';
 
 
@@ -174,7 +171,7 @@
             editor.scanBlocks();
 
         });
-    };
+    }
 
     function ConcreteAreaInlineStyleCustomizer($element, options) {
         var my = this;
@@ -193,20 +190,20 @@
             area.getElem().addClass(resp.containerClass);
         }
         editor.destroyInlineEditModeToolbars();
-    };
+    }
 
     // jQuery Plugin
     $.fn.concreteBlockInlineStyleCustomizer = function (options) {
         return $.each($(this), function (i, obj) {
             new ConcreteBlockInlineStyleCustomizer($(this), options);
         });
-    };
+    }
 
     $.fn.concreteAreaInlineStyleCustomizer = function (options) {
         return $.each($(this), function (i, obj) {
             new ConcreteAreaInlineStyleCustomizer($(this), options);
         });
-    };
+    }
 
     $.fn.removeClassExcept = function (val) {
         return this.each(function (index, el) {
@@ -229,4 +226,4 @@
     global.ConcreteBlockInlineStyleCustomizer = ConcreteBlockInlineStyleCustomizer;
     global.ConcreteAreaInlineStyleCustomizer = ConcreteAreaInlineStyleCustomizer;
 
-})(this, jQuery);
+})(this, $);

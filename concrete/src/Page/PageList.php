@@ -175,14 +175,6 @@ class PageList extends DatabaseItemList implements PagerProviderInterface, Pagin
         $this->query->select('p.cID');
     }
 
-    public function filterBySite(Site $site)
-    {
-        $this->siteTree = array();
-        foreach($site->getLocales() as $locale) {
-            $this->siteTree[] = $locale->getSiteTree();
-        }
-    }
-
     public function finalizeQuery(\Doctrine\DBAL\Query\QueryBuilder $query)
     {
         if ($this->includeAliases) {
@@ -209,19 +201,24 @@ class PageList extends DatabaseItemList implements PagerProviderInterface, Pagin
 
         switch ($this->pageVersionToRetrieve) {
             case self::PAGE_VERSION_RECENT:
-                $query->andWhere('cv.cvID = (select max(cvID) from CollectionVersions where cID = cv.cID)');
+                $query->andWhere('cvID = (select max(cvID) from CollectionVersions where cID = cv.cID)');
                 break;
             case self::PAGE_VERSION_RECENT_UNAPPROVED:
                 $query
-                    ->andWhere('cv.cvID = (select max(cvID) from CollectionVersions where cID = cv.cID)')
+                    ->andWhere('cvID = (select max(cvID) from CollectionVersions where cID = cv.cID)')
                     ->andWhere('cvIsApproved = 0');
                 break;
             case self::PAGE_VERSION_ACTIVE:
             default:
                 $now = new \DateTime();
-                $query->andWhere('cv.cvID = (select cvID from CollectionVersions where cID = cv.cID and cvIsApproved = 1 and ((cvPublishDate <= :cvPublishDate or cvPublishDate is null) and (cvPublishEndDate >= :cvPublishDate or cvPublishEndDate is null)) order by cvPublishDate desc limit 1)');
+                $query->andWhere('cvIsApproved = 1');
+                $query->andWhere('(cvPublishDate <= :cvPublishDate or cvPublishDate is null)');
                 $query->setParameter('cvPublishDate', $now->format('Y-m-d H:i:s'));
                 break;
+        }
+
+        if ($this->isFulltextSearch) {
+            $query->addSelect('match(psi.cName, psi.cDescription, psi.content) against (:fulltext) as cIndexScore');
         }
 
         if (!$this->includeInactivePages) {
@@ -234,7 +231,7 @@ class PageList extends DatabaseItemList implements PagerProviderInterface, Pagin
             // The code above is set up to make it so that we don't filter by site tree
             // if we have a defined parent.
 
-            if (is_object($this->siteTree) || is_array($this->siteTree)) {
+            if (is_object($this->siteTree)) {
                 $tree = $this->siteTree;
             } else {
                 switch($this->siteTree) {
@@ -253,31 +250,12 @@ class PageList extends DatabaseItemList implements PagerProviderInterface, Pagin
             }
 
             if (isset($tree)) {
-                if (is_array($tree)) {
-                    $treeIDs = array();
-                    foreach($tree as $siteTree) {
-                        $treeIDs[] = $siteTree->getSiteTreeID();
-                    }
-                    if ($this->includeSystemPages) {
-                        $query->andWhere(
-                            $query->expr()->orX()->add(
-                                $query->expr()->in('p.siteTreeID', array_map([$query->getConnection(), 'quote'], $treeIDs))
-                            )->add('p.siteTreeID = 0')
-                        );
-                    } else {
-                        $query->andWhere(
-                            $query->expr()->in('p.siteTreeID', array_map([$query->getConnection(), 'quote'], $treeIDs))
-                        );
-                    }
-
+                // We have either passed in a specific tree or we are looking at the current site.
+                $query->setParameter('siteTreeID', $tree->getSiteTreeID());
+                if ($this->includeSystemPages) {
+                    $query->andWhere('(p.siteTreeID = :siteTreeID or p.siteTreeID = 0)');
                 } else {
-                    // We have either passed in a specific tree or we are looking at the current site.
-                    $query->setParameter('siteTreeID', $tree->getSiteTreeID());
-                    if ($this->includeSystemPages) {
-                        $query->andWhere('(p.siteTreeID = :siteTreeID or p.siteTreeID = 0)');
-                    } else {
-                        $query->andWhere('p.siteTreeID = :siteTreeID');
-                    }
+                    $query->andWhere('p.siteTreeID = :siteTreeID');
                 }
             }
 
@@ -567,7 +545,6 @@ class PageList extends DatabaseItemList implements PagerProviderInterface, Pagin
     {
         $this->isFulltextSearch = true;
         $this->autoSortColumns[] = 'cIndexScore';
-        $this->query->addSelect('match(psi.cName, psi.cDescription, psi.content) against (:fulltext) as cIndexScore');
         $this->query->where('match(psi.cName, psi.cDescription, psi.content) against (:fulltext)');
         $this->query->orderBy('cIndexScore', 'desc');
         $this->query->setParameter('fulltext', $keywords);
@@ -583,39 +560,22 @@ class PageList extends DatabaseItemList implements PagerProviderInterface, Pagin
         } else {
             $treeNodeID = $topic;
         }
-        $paramName = $this->query->createNamedParameter($treeNodeID, \PDO::PARAM_INT);
-        $query = $this->query->getConnection()->createQueryBuilder();
-        $query
-            ->select('cavTopics.cID', 'cavTopics.cvID')
-            ->from('CollectionAttributeValues', 'cavTopics')
-            ->innerJoin('cavTopics', 'AttributeValues', 'av', 'cavTopics.avID = av.avID')
-            ->innerJoin('av', 'atSelectedTopics', 'atst', 'av.avID = atst.avID')
-            ->where('atst.treeNodeID = ' . $paramName)
-        ;
-        $this->query
-            ->andWhere(
-                $this->query->expr()->in('(cv.cID,cv.cvID)', $query->getSQL())
-            )
-        ;
+        $this->query->innerJoin('cv', 'CollectionAttributeValues', 'cavTopics',
+            'cv.cID = cavTopics.cID and cv.cvID = cavTopics.cvID');
+        $this->query->innerJoin('cavTopics', 'AttributeValues', 'av', 'cavTopics.avID = av.avID');
+        $this->query->innerJoin('av', 'atSelectedTopics', 'atst', 'av.avID = atst.avID');
+        $this->query->andWhere('atst.treeNodeID = :TopicNodeID');
+        $this->query->setParameter('TopicNodeID', $treeNodeID);
     }
 
     public function filterByBlockType(BlockType $bt)
     {
+        $this->query->select('distinct p.cID');
         $btID = $bt->getBlockTypeID();
-
-        $query = $this->query->getConnection()->createQueryBuilder();
-        $query->select('distinct p2.cID')
-            ->from('Pages', 'p2')
-            ->innerJoin('p2', 'CollectionVersions', 'cv2', 'cv2.cID = p2.cID')
-            ->innerJoin('cv2', 'CollectionVersionBlocks', 'cvb2',
-                'cv2.cID = cvb2.cID and cv2.cvID = cvb2.cvID')
-            ->innerJoin('cvb2', 'Blocks', 'b', 'cvb2.bID = b.bID')
-            ->andWhere('b.btID = :btID');
-
-
-        $this->query->andWhere(
-            $this->query->expr()->in('p.cID', $query->getSQL())
-        );
+        $this->query->innerJoin('cv', 'CollectionVersionBlocks', 'cvb',
+            'cv.cID = cvb.cID and cv.cvID = cvb.cvID');
+        $this->query->innerJoin('cvb', 'Blocks', 'b', 'cvb.bID = b.bID');
+        $this->query->andWhere('b.btID = :btID');
         $this->query->setParameter('btID', $btID);
     }
 
@@ -633,22 +593,6 @@ class PageList extends DatabaseItemList implements PagerProviderInterface, Pagin
     public function sortByDisplayOrderDescending()
     {
         $this->query->orderBy('p.cDisplayOrder', 'desc');
-    }
-
-    /**
-     * Sorts this list by date modified ascending.
-     */
-    public function sortByDateModified()
-    {
-        $this->query->orderBy('c.cDateModified', 'asc');
-    }
-
-    /**
-     * Sorts this list by date modified descending.
-     */
-    public function sortByDateModifiedDescending()
-    {
-        $this->query->orderBy('c.cDateModified', 'desc');
     }
 
     /**
@@ -698,15 +642,6 @@ class PageList extends DatabaseItemList implements PagerProviderInterface, Pagin
     {
         if ($this->isFulltextSearch) {
             $this->sortBy('cIndexScore', 'desc');
-        }
-    }
-
-    protected function selectDistinct()
-    {
-        $selects = $this->query->getQueryPart('select');
-        if ($selects[0] === 'p.cID') {
-            $selects[0] = 'distinct p.cID';
-            $this->query->select($selects);
         }
     }
 

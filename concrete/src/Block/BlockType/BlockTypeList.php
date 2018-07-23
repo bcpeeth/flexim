@@ -2,7 +2,6 @@
 namespace Concrete\Core\Block\BlockType;
 
 use Concrete\Core\Entity\Block\BlockType\BlockType as BlockTypeEntity;
-use Concrete\Core\Support\Facade\Application;
 use Core;
 use Loader;
 use Package;
@@ -89,7 +88,7 @@ class BlockTypeList extends DatabaseItemList
                             $bt = new BlockTypeEntity();
                             $bt->setBlockTypeHandle($file);
                             $class = $bt->getBlockTypeClass();
-                            $bta = Application::getFacadeApplication()->build($class);
+                            $bta = new $class();
                             $bt->setBlockTypeName($bta->getBlockTypeName());
                             $bt->setBlockTypeDescription($bta->getBlockTypeDescription());
                             $bt->hasCustomViewTemplate = file_exists(DIR_FILES_BLOCK_TYPES . '/' . $file . '/' . FILENAME_BLOCK_VIEW);

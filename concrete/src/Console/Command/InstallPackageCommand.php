@@ -1,20 +1,14 @@
 <?php
-
 namespace Concrete\Core\Console\Command;
 
-use Concrete\Core\Console\Command;
-use Concrete\Core\Console\ConsoleAwareInterface;
 use Concrete\Core\Error\ErrorList\ErrorList;
-use Concrete\Core\Localization\Service\TranslationsInstaller;
-use Concrete\Core\Marketplace\Marketplace;
-use Concrete\Core\Package\PackageService;
-use Concrete\Core\Support\Facade\Application;
-use Exception;
-use Symfony\Component\Console\Exception\InvalidOptionException;
-use Symfony\Component\Console\Input\InputArgument;
+use Concrete\Core\Console\Command;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Exception;
+use Concrete\Core\Support\Facade\Package;
 
 class InstallPackageCommand extends Command
 {
@@ -22,16 +16,10 @@ class InstallPackageCommand extends Command
     {
         $errExitCode = static::RETURN_CODE_ON_FAILURE;
         $this
-            ->setName('c5:package:install')
-            ->setAliases([
-                'c5:package-install',
-                'c5:install-package',
-            ])
+            ->setName('c5:package-install')
             ->addOption('full-content-swap', null, InputOption::VALUE_NONE, 'If this option is specified a full content swap will be performed (if the package supports it)')
-            ->addOption('languages', 'l', InputOption::VALUE_REQUIRED, 'Force to install ("yes") or to not install ("no") language files. If "auto", language files will be installed if the package is connected to the project ("auto" requires that the canonical URL is set)', 'auto')
             ->setDescription('Install a concrete5 package')
             ->addEnvOption()
-            ->setCanRunAsRoot(false)
             ->addArgument('package', InputArgument::REQUIRED, 'The handle of the package to be installed')
             ->addArgument('package-options', InputArgument::IS_ARRAY, 'List of key-value pairs to pass to the package install routine (example: foo=bar baz=foo)')
             ->setHelp(<<<EOT
@@ -47,26 +35,7 @@ EOT
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $app = Application::getFacadeApplication();
-        $config = $app->make('config');
-        $packageService = $app->make(PackageService::class);
         $pkgHandle = $input->getArgument('package');
-        switch (strtolower($input->getOption('languages'))) {
-            case 'yes':
-            case 'y':
-                $getLanguages = true;
-                break;
-            case 'no':
-            case 'n':
-                $getLanguages = false;
-                break;
-            case 'auto':
-                $associatedPackages = Marketplace::getAvailableMarketplaceItems(false);
-                $getLanguages = isset($associatedPackages[$pkgHandle]);
-                break;
-            default:
-                throw new InvalidOptionException('Invalid value for the --languages option. Valid values are "yes", "no", "auto"');
-        }
         $packageOptions = [];
         foreach ($input->getArgument('package-options') as $keyValuePair) {
             list($key, $value) = explode('=', $keyValuePair, 2);
@@ -91,13 +60,13 @@ EOT
         }
 
         $output->write("Looking for package '$pkgHandle'... ");
-        foreach ($packageService->getInstalledList() as $installed) {
+        foreach (Package::getInstalledList() as $installed) {
             if ($installed->getPackageHandle() === $pkgHandle) {
                 throw new Exception(sprintf("The package '%s' (%s) is already installed", $pkgHandle, $installed->getPackageName()));
             }
         }
         $pkg = null;
-        foreach ($packageService->getAvailablePackages() as $available) {
+        foreach (Package::getAvailablePackages() as $available) {
             if ($available->getPackageHandle() === $pkgHandle) {
                 $pkg = $available;
                 break;
@@ -106,12 +75,6 @@ EOT
         if ($pkg === null) {
             throw new Exception(sprintf("No package with handle '%s' was found", $pkgHandle));
         }
-
-        // Provide the console objects to objects that are aware of the console
-        if ($pkg instanceof ConsoleAwareInterface) {
-            $pkg->setConsole($this->getApplication(), $output, $input);
-        }
-
         $output->writeln(sprintf('<info>found (%s).</info>', $pkg->getPackageName()));
 
         $output->write('Checking preconditions... ');
@@ -119,35 +82,17 @@ EOT
         if (is_object($test)) {
             throw new Exception(implode("\n", $test->getList()));
         }
-        $output->writeln('<info>passed.</info>');
 
-        $output->write('Installing...');
-        $r = $packageService->install($pkg, []);
+        $output->write('Preconditions good. Installing...');
+
+        $r = Package::install($pkg, []);
         if ($r instanceof ErrorList) {
             throw new Exception(implode("\n", $r->getList()));
         }
-        $output->writeln('<info>installed.</info>');
 
-        if ($getLanguages) {
-            $output->write('Fetching language files... ');
-            $languageResult = $app->make(TranslationsInstaller::class)->installMissingPackageTranslations($pkg);
-            if (count($languageResult) === 0) {
-                $output->writeln('<info>no languages downloaded.</info>');
-            } else {
-                $output->writeln('done. Results:');
-                foreach ($languageResult as $localeID => $result) {
-                    if ($result === true) {
-                        $output->writeln(" - {$localeID}: <info>downloaded</info>");
-                    } elseif ($result === false) {
-                        $output->writeln(" - {$localeID}: <error>non available</error>");
-                    } else {
-                        $output->writeln(" - $localeID: <error>" . ((string) $result) . '</error>');
-                    }
-                }
-            }
-        }
-
+        $output->writeln('<info>Package Installed.</info>');
         $swapper = $pkg->getContentSwapper();
+
         if ($swapper->allowsFullContentSwap($pkg) && $input->getOption('full-content-swap')) {
             $output->write('Performing full content swap... ');
             $swapper->swapContent($pkg, []);

@@ -1,14 +1,14 @@
 <?php defined('C5_EXECUTE') or die("Access Denied."); ?>
 
-<?=Loader::helper('concrete/dashboard')->getDashboardPaneHeaderWrapper(t('System &amp; Settings'));?>
+<?php echo Loader::helper('concrete/dashboard')->getDashboardPaneHeaderWrapper(t('System &amp; Settings'));?>
 <form>
 <?php
 foreach ($categories as $cat) {
     ?>
 
 	<div class="page-header">
-	<h3><a href="<?=Loader::helper('navigation')->getLinkToCollection($cat)?>"><?=$cat->getCollectionName()?></a>
-	<small><?=$cat->getCollectionDescription()?></small>
+	<h3><a href="<?php echo Loader::helper('navigation')->getLinkToCollection($cat)?>"><?php echo $cat->getCollectionName()?></a>
+	<small><?php echo $cat->getCollectionDescription()?></small>
 	</h3>
 	</div>
 	
@@ -32,7 +32,7 @@ foreach ($categories as $cat) {
     ?>
 	
 	<div class="span4">
-		<a href="<?=Loader::helper('navigation')->getLinkToCollection($cat)?>"><?=$subcat->getCollectionName()?></a>
+		<a href="<?php echo Loader::helper('navigation')->getLinkToCollection($cat)?>"><?php echo $subcat->getCollectionName()?></a>
 	</div>
 	
 	<?php 
@@ -48,4 +48,4 @@ foreach ($categories as $cat) {
 <?php 
 } ?>
 </form>
-<?=Loader::helper('concrete/dashboard')->getDashboardPaneFooterWrapper();?>
+<?php echo Loader::helper('concrete/dashboard')->getDashboardPaneFooterWrapper();?>

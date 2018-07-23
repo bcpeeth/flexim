@@ -6,27 +6,27 @@ $request = $controller->getRequest();
 ?>
 
 <?php if (isset($selectedGroups) && is_array($selectedGroups)) { ?>
-<label class="control-label"><?=t('Confirm')?></label>
+<label class="control-label"><?php echo t('Confirm')?></label>
 <?php if ($gParent instanceof Group) { ?>
-<p><?=t('Move the following group(s) beneath <strong>%s</strong>.', $gParent->getGroupDisplayName())?></p>
+<p><?php echo t('Move the following group(s) beneath <strong>%s</strong>.', $gParent->getGroupDisplayName())?></p>
 <?php } else { ?>
-<p><?=t('Move the following group(s) <strong>to the top level of groups</strong>.')?></p>
+<p><?php echo t('Move the following group(s) <strong>to the top level of groups</strong>.')?></p>
 <?php } ?>
 
 <ul>
     <?php foreach ($selectedGroups as $g) { ?>
-	<li><?=$g->getGroupDisplayName()?></li>
+	<li><?php echo $g->getGroupDisplayName()?></li>
     <?php } ?>
 </ul>
 
-<form method="post" action="<?=$view->action('confirm')?>" role="form">
-    <input type="hidden" name="gParentNodeID" value="<?=h($request->get('gParentNodeID'))?>" />
+<form method="post" action="<?php echo $view->action('confirm')?>" role="form">
+    <input type="hidden" name="gParentNodeID" value="<?php echo h($request->get('gParentNodeID'))?>" />
 
 	<?php foreach ($request->get('gID', []) as $gID) { ?>
-	<input type="hidden" name="gID[]" value="<?=h($gID)?>" />
+	<input type="hidden" name="gID[]" value="<?php echo h($gID)?>" />
 	<?php } ?>
 	<br/>
-	<input type="hidden" name="gName" value="<?=h($request->get('gName'))?>" />
+	<input type="hidden" name="gName" value="<?php echo h($request->get('gName'))?>" />
 
 	<div class="ccm-dashboard-form-actions-wrapper">
         <div class="ccm-dashboard-form-actions">
@@ -35,13 +35,13 @@ $request = $controller->getRequest();
     </div>
 </form>
 <?php } elseif (isset($groups) && is_array($groups)) { ?>
-<form action="<?=$view->action('move')?>" method="post" data-form="move-groups">
+<form action="<?php echo $view->action('move')?>" method="post" data-form="move-groups">
     <div class="row">
         <div class="col-md-6">
-            <label class="control-label"><?=t('Choose Groups to Move')?></label>
+            <label class="control-label"><?php echo t('Choose Groups to Move')?></label>
             <div class="checkbox">
                 <label style="user-select: none; -moz-user-select: none; -webkit-user-select: none">
-                    <input data-toggle="checkbox" type="checkbox" /> <strong><?=t('Select All')?></strong>
+                    <input data-toggle="checkbox" type="checkbox" /> <strong><?php echo t('Select All')?></strong>
                 </label>
             </div>
 
@@ -50,18 +50,18 @@ $request = $controller->getRequest();
                 <label>
                     <input name="gID[]" type="checkbox" <?php
                     if (is_array($request->request->get('gID')) && in_array($g->getGroupID(), $request->request->get('gID'))) {
-                    ?>checked<?php } ?> value="<?=$g->getGroupID()?>" />
-                    <?=$g->getGroupDisplayName()?>
+                    ?>checked<?php } ?> value="<?php echo $g->getGroupID()?>" />
+                    <?php echo $g->getGroupDisplayName()?>
                 </label>
             </div>
             <?php } ?>
         </div>
 
         <div class="col-md-6">
-            <label class="control-label"><?=t('Choose New Parent Location')?></label>
-            <?=$form->hidden('gParentNodeID')?>
+            <label class="control-label"><?php echo t('Choose New Parent Location')?></label>
+            <?php echo $form->hidden('gParentNodeID')?>
 
-            <div class="nested-groups-tree" data-groups-tree="<?=$tree->getTreeID()?>"></div>
+            <div class="nested-groups-tree" data-groups-tree="<?php echo $tree->getTreeID()?>"></div>
             <?php
             $guestGroupNode = GroupTreeNode::getTreeNodeByGroupID(GUEST_GROUP_ID);
             $registeredGroupNode = GroupTreeNode::getTreeNodeByGroupID(REGISTERED_GROUP_ID);
@@ -72,8 +72,8 @@ $request = $controller->getRequest();
 
     <div class="row">
         <div class="col-md-12">
-            <label class="control-label"><?=t('Move')?></label>
-            <p><?=t('Move selected groups (left column) beneath selected group (right column)')?></p>
+            <label class="control-label"><?php echo t('Move')?></label>
+            <p><?php echo t('Move selected groups (left column) beneath selected group (right column)')?></p>
 
             <div class="ccm-dashboard-form-actions-wrapper">
                 <div class="ccm-dashboard-form-actions">
@@ -83,7 +83,7 @@ $request = $controller->getRequest();
         </div>
     </div>
 
-	<input type="hidden" name="gName" value="<?=h($request->get('gName'))?>" />
+	<input type="hidden" name="gName" value="<?php echo h($request->get('gName'))?>" />
 </form>
 
 <script>
@@ -96,14 +96,14 @@ $(function() {
 		}
 	});
 
-   $('[data-groups-tree=<?=$tree->getTreeID()?>]').concreteTree({
-      'treeID': '<?=$tree->getTreeID()?>',
+   $('[data-groups-tree=<?php echo $tree->getTreeID()?>]').concreteTree({
+      'treeID': '<?php echo $tree->getTreeID()?>',
       'chooseNodeInForm': 'single',
 	  'enableDragAndDrop': false,
       <?php if ($this->controller->isPost()) { ?>
-         'selectNodesByKey': [<?=intval($request->request->get('gParentNodeID'))?>],
+         'selectNodesByKey': [<?php echo intval($request->request->get('gParentNodeID'))?>],
       <?php } ?>
-      'removeNodesByKey': ['<?=$guestGroupNode->getTreeNodeID()?>','<?=$registeredGroupNode->getTreeNodeID()?>'],
+      'removeNodesByKey': ['<?php echo $guestGroupNode->getTreeNodeID()?>','<?php echo $registeredGroupNode->getTreeNodeID()?>'],
       'onSelect': function(nodes) {
          if (nodes.length) {
             $('input[name=gParentNodeID]').val(nodes[0]);
@@ -115,10 +115,10 @@ $(function() {
 });
 </script>
 <?php } else { ?>
-<form method="POST" action="<?=$view->action('search')?>">
+<form method="POST" action="<?php echo $view->action('search')?>">
     <div class="form-group">
-        <?=$form->label('gName', t('Search for Groups to Move'))?>
-        <?=$form->text('gName')?>
+        <?php echo $form->label('gName', t('Search for Groups to Move'))?>
+        <?php echo $form->text('gName')?>
     </div>
 
     <div class="ccm-dashboard-form-actions-wrapper">
@@ -129,4 +129,4 @@ $(function() {
 </form>
 <?php } ?>
 
-<?=$app->make('helper/concrete/dashboard')->getDashboardPaneFooterWrapper(false);?>
+<?php echo $app->make('helper/concrete/dashboard')->getDashboardPaneFooterWrapper(false);?>

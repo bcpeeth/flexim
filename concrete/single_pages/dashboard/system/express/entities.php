@@ -1,7 +1,7 @@
 <?php defined('C5_EXECUTE') or die("Access Denied."); ?>
 
 <div class="ccm-dashboard-header-buttons">
-    <a href="<?=URL::to('/dashboard/system/express/entities', 'add')?>" class="btn btn-primary"><?=t("Add Object")?></a>
+    <a href="<?php echo URL::to('/dashboard/system/express/entities', 'add')?>" class="btn btn-primary"><?php echo t("Add Object")?></a>
 </div>
 
 <?php if (count($entities)) {
@@ -12,8 +12,8 @@
     ?>
 
             <li>
-                <a href="<?=URL::to('/dashboard/system/express/entities', 'view_entity', $entity->getID())?>">
-                    <i class="fa fa-database"></i> <?=$entity->getEntityDisplayName()?>
+                <a href="<?php echo URL::to('/dashboard/system/express/entities', 'view_entity', $entity->getID())?>">
+                    <i class="fa fa-database"></i> <?php echo $entity->getEntityDisplayName()?>
                 </a>
             </li>
         <?php 
@@ -25,7 +25,7 @@
 
 } else {
     ?>
-    <p><?=t('You have not created any data objects.')?></p>
+    <p><?php echo t('You have not created any data objects.')?></p>
 <?php
 
 } ?>

@@ -36,7 +36,7 @@ class Extractor
         $themesPresetsParser = new C5TLParserThemePresets();
         $configFilesParser = new C5TLParserConfigFiles();
 
-        $configFilesParser->parseDirectory(DIR_BASE, '', $translations);
+        $configFilesParser->parseDirectory(DIR_BASE, '');
 
         $processApplication = [
             DIRNAME_BLOCKS => [$phpParser, $blockTemplatesParser],
@@ -47,7 +47,6 @@ class Extractor
             DIRNAME_PAGES => [$phpParser],
             DIRNAME_THEMES => [$phpParser, $themesPresetsParser, $blockTemplatesParser],
             DIRNAME_VIEWS => [$phpParser],
-            DIRNAME_CLASSES => [$phpParser]
         ];
         foreach ($processApplication as $dirname => $parsers) {
             if (is_dir(DIR_APPLICATION.'/'.$dirname)) {
@@ -70,7 +69,7 @@ class Extractor
             foreach ($packages as $package) {
                 $fullDirname = DIR_PACKAGES.'/'.$package->getPackageHandle();
                 $phpParser->parseDirectory($fullDirname,
-                    DIRNAME_PACKAGES.'/'.$package->getPackageHandle(),
+                    DIRNAME_PACKAGES.'/'.$dirname,
                     $translations
                 );
                 $packageController = $package->getController();

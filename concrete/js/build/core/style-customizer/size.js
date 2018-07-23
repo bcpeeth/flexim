@@ -1,8 +1,11 @@
-/* jshint unused:vars, undef:true, browser:true, jquery:true */
+/**
+ * block ajax
+ */
 
-/* global ConcreteEvent, ConcreteStyleCustomizerPalette */
+/* jshint unused:vars, undef:true, browser:true */
+/* global $, ConcreteEvent, ConcreteStyleCustomizerPalette */
 
-;(function(global, $) {
+(function(global, $) {
     'use strict';
 
     function ConcreteSizeSelector($element, options) {
@@ -70,4 +73,4 @@
 
     global.ConcreteSizeSelector = ConcreteSizeSelector;
 
-})(this, jQuery);
+})(this, $);

@@ -1,7 +1,4 @@
-/* jshint unused:vars, undef:true, browser:true, jquery:true */
-/* global _, Concrete, ConcreteEvent, ConcretePanelManager, CCM_SECURITY_TOKEN, CCM_DISPATCHER_FILENAME */
-
-;(function(window, $) {
+(function (window, $, _, Concrete) {
     'use strict';
 
     /**
@@ -52,8 +49,8 @@
             }
 
             ConcretePanelManager.exitPanelMode();
-            $.fn.dialog.closeAll();
-            $.fn.dialog.showLoader();
+            jQuery.fn.dialog.closeAll();
+            jQuery.fn.dialog.showLoader();
 
             var settings = {
                 cID: cID,
@@ -79,4 +76,4 @@
         }
     });
 
-})(window, jQuery);
+}(window, jQuery, _, Concrete));

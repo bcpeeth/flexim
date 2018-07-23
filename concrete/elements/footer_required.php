@@ -1,5 +1,4 @@
 <?php
-use Concrete\Core\Localization\Localization;
 use Concrete\Core\Support\Facade\Application;
 
 defined('C5_EXECUTE') or die('Access Denied.');
@@ -12,16 +11,10 @@ $app = Application::getFacadeApplication();
 $c = Page::getCurrentPage();
 $site = $app->make('site')->getSite();
 $config = $site->getConfigRepository();
-$localization = Localization::getInstance();
 
 if (is_object($c)) {
     $cp = new Permissions($c);
-    $localization->pushActiveContext(Localization::CONTEXT_UI);
-    try {
-        View::element('page_controls_footer', ['cp' => $cp, 'c' => $c]);
-    } finally {
-        $localization->popActiveContext();
-    }
+    View::element('page_controls_footer', ['cp' => $cp, 'c' => $c]);
 }
 
 if (empty($disableTrackingCode)) {
@@ -36,11 +29,6 @@ if (!isset($display_account_menu)) {
 if ($display_account_menu) {
     $dh = $app->make('helper/concrete/dashboard');
     if (!$dh->inDashboard($c)) {
-        $localization->pushActiveContext(Localization::CONTEXT_UI);
-        try {
-            View::element('account/menu');
-        } finally {
-            $localization->popActiveContext();
-        }
+        View::element('account/menu');
     }
 }

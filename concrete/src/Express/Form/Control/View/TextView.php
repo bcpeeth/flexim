@@ -9,10 +9,6 @@ use Concrete\Core\Form\Context\ContextInterface;
 class TextView extends View
 {
 
-    public function getControlID()
-    {
-        return null;
-    }
 
     public function createTemplateLocator()
     {

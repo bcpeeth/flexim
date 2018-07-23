@@ -116,12 +116,8 @@ class Controller extends BlockController
     public function save($args)
     {
         $ak = $this->loadAttribute();
-        $cID = $this->request->request->get('cID');
-        if (!$cID) {
-            $cID = $this->request->query->get('cID');
-        }
-        if ($cID) {
-            $c = Page::getByID((int) $cID, 'RECENT');
+        if ($_REQUEST['cID']) {
+            $c = Page::getByID($_REQUEST['cID'], 'RECENT');
             // We cannot save the attribute in the Stack Dashboard page
             // as there is nothing to attach it to
             if (!$this->isValidStack($c)) {

@@ -74,7 +74,7 @@ if (is_object($item) && is_object($type)) {
     <?php
     foreach ($features as $f) {
         ?>
-      <li><a href="#" data-tab="<?=$f->getFeatureHandle()?>"><?=$f->getFeatureName()?></a></li>
+      <li><a href="#" data-tab="<?php echo $f->getFeatureHandle()?>"><?php echo $f->getFeatureName()?></a></li>
     <?php 
     }
         ?> 
@@ -100,16 +100,16 @@ if (is_object($item) && is_object($type)) {
 
     ?>
 
-        <li data-gathering-item-template-features="<?=$sets?>">
+        <li data-gathering-item-template-features="<?php echo $sets?>">
           <a href="javascript:void(0)" <?php if ($item->getGatheringItemTemplateID($type) == $t->getGatheringItemTemplateID()) {
     ?>class="ccm-gathering-item-template-selected"<?php 
 }
-    ?> onclick="$.fn.ccmgathering('updateItemTemplate', {gaiID: '<?=$gaiID?>', gatID: '<?=$t->getGatheringItemTemplateID()?>', gatTypeID: '<?=$gatTypeID?>', reloadItemTile: <?php if ($reloadItemTile) {
+    ?> onclick="$.fn.ccmgathering('updateItemTemplate', {gaiID: '<?php echo $gaiID?>', gatID: '<?php echo $t->getGatheringItemTemplateID()?>', gatTypeID: '<?php echo $gatTypeID?>', reloadItemTile: <?php if ($reloadItemTile) {
     ?>true<?php 
 } else {
     ?>false<?php 
 }
-    ?>, 'updateToken': '<?=Loader::helper('validation/token')->generate('edit_gathering_item_template')?>'})"><p><img src="<?=$t->getGatheringItemTemplateIconSRC()?>" /><span><?=$t->getGatheringItemTemplateName()?></span></p></a>
+    ?>, 'updateToken': '<?php echo Loader::helper('validation/token')->generate('edit_gathering_item_template')?>'})"><p><img src="<?php echo $t->getGatheringItemTemplateIconSRC()?>" /><span><?php echo $t->getGatheringItemTemplateName()?></span></p></a>
         </li>
         
       <?php 

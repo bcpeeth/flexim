@@ -4,7 +4,6 @@ namespace Concrete\Authentication\Concrete;
 use Concrete\Core\Authentication\AuthenticationTypeController;
 use Concrete\Core\Support\Facade\Application;
 use Concrete\Core\User\User;
-use Concrete\Core\User\ValidationHash;
 use Concrete\Core\Validation\CSRF\Token;
 use Config;
 use Core;
@@ -131,7 +130,7 @@ class Controller extends AuthenticationTypeController
 
     public function isAuthenticated(User $u)
     {
-        return $u->isRegistered();
+        return $u->isLoggedIn();
     }
 
     public function saveAuthenticationType($values)
@@ -201,7 +200,7 @@ class Controller extends AuthenticationTypeController
                     $mh->to($oUser->getUserEmail());
 
                     //generate hash that'll be used to authenticate user, allowing them to change their password
-                    $h = new ValidationHash();
+                    $h = new \Concrete\Core\User\ValidationHash();
                     $uHash = $h->add($oUser->getUserID(), intval(UVTYPE_CHANGE_PASSWORD), true);
                     $changePassURL = View::url(
                         '/login',
@@ -248,15 +247,18 @@ class Controller extends AuthenticationTypeController
     public function change_password($uHash = '')
     {
         $this->set('authType', $this->getAuthenticationType());
+        $db = Database::connection();
+        $h = Core::make('helper/validation/identifier');
         $e = Core::make('helper/validation/error');
-        if (is_string($uHash)) {
-            $ui = UserInfo::getByValidationHash($uHash);
-        } else {
-            $ui = null;
-        }
+        $ui = UserInfo::getByValidationHash($uHash);
         if (is_object($ui)) {
-            $vh = new ValidationHash();
-            if ($vh->isValid($uHash)) {
+            $hashCreated = $db->fetchColumn('SELECT uDateGenerated FROM UserValidationHashes WHERE uHash=?', [$uHash]);
+            if ($hashCreated < (time() - (USER_CHANGE_PASSWORD_URL_LIFETIME))) {
+                $h->deleteKey('UserValidationHashes', 'uHash', $uHash);
+                throw new \Exception(
+                    t(
+                        'Key Expired. Please visit the forgot password page again to have a new key generated.'));
+            } else {
                 if (isset($_POST['uPassword']) && strlen($_POST['uPassword'])) {
                     Core::make('validator/password')->isValid($_POST['uPassword'], $e);
 
@@ -266,21 +268,28 @@ class Controller extends AuthenticationTypeController
 
                     if (!$e->has()) {
                         $ui->changePassword($_POST['uPassword']);
-                        $h = Core::make('helper/validation/identifier');
                         $h->deleteKey('UserValidationHashes', 'uHash', $uHash);
                         $this->set('passwordChanged', true);
 
-                        $this->redirect('/login', $this->getAuthenticationType()->getAuthenticationTypeHandle(), 'password_changed');
+                        $this->redirect(
+                            '/login',
+                            $this->getAuthenticationType()->getAuthenticationTypeHandle(),
+                            'password_changed');
                     } else {
+                        $this->set('uHash', $uHash);
+                        $this->set('authTypeElement', 'change_password');
                         $this->set('error', $e);
                     }
+                } else {
+                    $this->set('uHash', $uHash);
+                    $this->set('authTypeElement', 'change_password');
                 }
-                $this->set('uHash', $uHash);
-                $this->set('authTypeElement', 'change_password');
-                return;
             }
+        } else {
+            throw new \Exception(
+                t(
+                    'Invalid Key. Please visit the forgot password page again to have a new key generated.'));
         }
-        $this->redirect('/login', $this->getAuthenticationType()->getAuthenticationTypeHandle(), 'invalid_token');
     }
 
     public function password_changed()
@@ -351,7 +360,7 @@ class Controller extends AuthenticationTypeController
                     }
                     break;
                 case USER_INACTIVE:
-                    throw new \Exception(t(Config::get('concrete.user.deactivation.message')));
+                    throw new \Exception(t('This user is inactive. Please contact us regarding this account.'));
                     break;
             }
         }
@@ -367,11 +376,7 @@ class Controller extends AuthenticationTypeController
         $app = Application::getFacadeApplication();
         $db = $app['database']->connection();
 
-        if (Config::get('concrete.user.registration.email_registration')) {
-            return $db->GetOne('select uIsPasswordReset from Users where uEmail = ?', [$this->post('uName')]);
-        } else {
-            return $db->GetOne('select uIsPasswordReset from Users where uName = ?', [$this->post('uName')]);
-        }
+        return $db->GetOne('select uIsPasswordReset from Users where uName = ?', [$this->post('uName')]);
     }
 
     public function v($hash = '')

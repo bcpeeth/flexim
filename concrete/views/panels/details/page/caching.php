@@ -29,34 +29,34 @@ switch (Config::get('concrete.cache.full_page_lifetime')) {
 }
 ?>
 <section class="ccm-ui">
-	<header><?=t('Page Caching')?></header>
-	<form method="post" action="<?=$controller->action('submit')?>" data-dialog-form="caching" data-panel-detail-form="caching">
-		<label class="control-label"><?=t('Enable Cache')?></label>
+	<header><?php echo t('Page Caching')?></header>
+	<form method="post" action="<?php echo $controller->action('submit')?>" data-dialog-form="caching" data-panel-detail-form="caching">
+		<label class="control-label"><?php echo t('Enable Cache')?></label>
 
 		<div class="radio">
 		<label>
-			<?=$form->radio('cCacheFullPageContent', -1, $c->getCollectionFullPageCaching(), array('enable-cache' => $enableCache))?>
-			<?=t('Use global setting - %s', $globalSetting)?>
+			<?php echo $form->radio('cCacheFullPageContent', -1, $c->getCollectionFullPageCaching(), array('enable-cache' => $enableCache))?>
+			<?php echo t('Use global setting - %s', $globalSetting)?>
 		</label>
 		</div>
 
 		<div class="radio">
 		<label>
-			<?=$form->radio('cCacheFullPageContent', 0, $c->getCollectionFullPageCaching(), array('enable-cache' => 0))?>
-			<?=t('Do not cache this page.')?>
+			<?php echo $form->radio('cCacheFullPageContent', 0, $c->getCollectionFullPageCaching(), array('enable-cache' => 0))?>
+			<?php echo t('Do not cache this page.')?>
 		</label>
 		</div>
 
 		<div class="radio">
 		<label>
-			<?=$form->radio('cCacheFullPageContent', 1, $c->getCollectionFullPageCaching(), array('enable-cache' => 1))?>
-			<?=t('Cache this page.')?>
+			<?php echo $form->radio('cCacheFullPageContent', 1, $c->getCollectionFullPageCaching(), array('enable-cache' => 1))?>
+			<?php echo t('Cache this page.')?>
 		</label>
 		</div>
 
 		<hr/>
 
-		<label class="control-label"><?=t('Duration')?></label>
+		<label class="control-label"><?php echo t('Duration')?></label>
 
 		<div class="ccm-properties-cache-lifetime input">
 		<?php $val = ($c->getCollectionFullPageCachingLifetimeCustomValue() > 0 && $c->getCollectionFullPageCachingLifetime()) ? $c->getCollectionFullPageCachingLifetimeCustomValue() : ''; ?>
@@ -66,30 +66,30 @@ switch (Config::get('concrete.cache.full_page_lifetime')) {
 			<input type="radio" name="cCacheFullPageContentOverrideLifetime" value="0" <?php if ($c->getCollectionFullPageCachingLifetime() == '0') {
     ?> checked="checked" <?php
 } ?> />
-			<?=t('Use global setting - %s', $globalSettingLifetime)?>
+			<?php echo t('Use global setting - %s', $globalSettingLifetime)?>
 		</label>
 		</div>
 
 		<div class="radio">
 		<label>
-			<?=$form->radio('cCacheFullPageContentOverrideLifetime', 'forever', $c->getCollectionFullPageCachingLifetime())?>
-			<?=t('Until manually cleared')?>
+			<?php echo $form->radio('cCacheFullPageContentOverrideLifetime', 'forever', $c->getCollectionFullPageCachingLifetime())?>
+			<?php echo t('Until manually cleared')?>
 		</label>
 		</div>
 
 		<div class="radio">
 		<label>
-			<?=$form->radio('cCacheFullPageContentOverrideLifetime', 'custom', $c->getCollectionFullPageCachingLifetime())?>
-			<?=t('Custom')?>
+			<?php echo $form->radio('cCacheFullPageContentOverrideLifetime', 'custom', $c->getCollectionFullPageCachingLifetime())?>
+			<?php echo t('Custom')?>
 		</label>
 		</div>
 
-		<div class="form-inline"><?=$form->number('cCacheFullPageContentLifetimeCustom', $val, array('style' => 'width: 110px', 'min' => 1))?> <?=t('minutes')?></div>
+		<div class="form-inline"><?php echo $form->number('cCacheFullPageContentLifetimeCustom', $val, array('style' => 'width: 110px', 'min' => 1))?> <?php echo t('minutes')?></div>
 
 		</div>
 
 		<hr/>
-		<label class="control-label"><?=t('Cache Status')?></label>
+		<label class="control-label"><?php echo t('Cache Status')?></label>
 
 		<?php
         $cache = PageCache::getLibrary();
@@ -97,29 +97,29 @@ switch (Config::get('concrete.cache.full_page_lifetime')) {
         if ($rec instanceof \Concrete\Core\Cache\Page\PageCacheRecord) {
             ?>
 			<div class="alert alert-success">
-				<?=t('This page currently exists in the full page cache. It expires %s.', Core::make('date')->formatDateTime($rec->getCacheRecordExpiration()))?>
-				&nbsp;&nbsp;<button type="button" class="btn btn-xs btn-default pull-right" id="ccm-button-remove-page-from-cache"><?=t('Purge')?></button>
+				<?php echo t('This page currently exists in the full page cache. It expires %s.', Core::make('date')->formatDateTime($rec->getCacheRecordExpiration()))?>
+				&nbsp;&nbsp;<button type="button" class="btn btn-xs btn-default pull-right" id="ccm-button-remove-page-from-cache"><?php echo t('Purge')?></button>
 			</div>
 		<?php
         } elseif ($rec instanceof \Concrete\Core\Cache\Page\UnknownPageCacheRecord) {
             ?>
 			<div class="alert alert-info">
-				<?=t('This page <strong>may</strong> exist in the page cache.')?>
-				&nbsp;&nbsp;<button type="button" class="btn btn-xs btn-default pull-right" id="ccm-button-remove-page-from-cache"><?=t('Purge')?></button>
+				<?php echo t('This page <strong>may</strong> exist in the page cache.')?>
+				&nbsp;&nbsp;<button type="button" class="btn btn-xs btn-default pull-right" id="ccm-button-remove-page-from-cache"><?php echo t('Purge')?></button>
 			</div>
 			<?php
         } else {
             ?>
-			<div class="alert alert-info"><?=t('This page is not currently in the full page cache.')?></div>
+			<div class="alert alert-info"><?php echo t('This page is not currently in the full page cache.')?></div>
 		<?php
         } ?>
 
-  		<span class="help-block"><?=t('Note: You can enable site-wide caching from the System & Settings area of the Dashboard.')?></span>
+  		<span class="help-block"><?php echo t('Note: You can enable site-wide caching from the System & Settings area of the Dashboard.')?></span>
 
 	</form>
 	<div class="ccm-panel-detail-form-actions dialog-buttons">
-		<button class="pull-left btn btn-default" type="button" data-dialog-action="cancel" data-panel-detail-action="cancel"><?=t('Cancel')?></button>
-		<button class="pull-right btn btn-success" type="button" data-dialog-action="submit" data-panel-detail-action="submit"><?=t('Save Changes')?></button>
+		<button class="pull-left btn btn-default" type="button" data-dialog-action="cancel" data-panel-detail-action="cancel"><?php echo t('Cancel')?></button>
+		<button class="pull-right btn btn-success" type="button" data-dialog-action="submit" data-panel-detail-action="submit"><?php echo t('Save Changes')?></button>
 	</div>
 
 </section>
@@ -146,7 +146,7 @@ switch (Config::get('concrete.cache.full_page_lifetime')) {
 	$(function() {
 		$('#ccm-button-remove-page-from-cache').on('click', function() {
 			jQuery.fn.dialog.showLoader();
-			$.getJSON('<?=$controller->action("purge")?>', function(r) {
+			$.getJSON('<?php echo $controller->action("purge")?>', function(r) {
 				jQuery.fn.dialog.hideLoader();
 				ConcreteAlert.notify({
 				'message': r.message

@@ -5,10 +5,7 @@
     <?php foreach($links as $link) {
         $service = $link->getServiceObject();
         ?>
-        <li>
-            <a target="_blank" href="<?php echo h($link->getURL()); ?>"
-                aria-label="<?php echo $service->getDisplayName(); ?>"><?php echo $service->getServiceIconHTML(); ?></a>
-        </li>
+        <li><a target="_blank" href="<?php echo h($link->getURL()); ?>"><?php echo $service->getServiceIconHTML(); ?></a></li>
     <?php } ?>
     </ul>
 </div>

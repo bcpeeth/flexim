@@ -12,21 +12,23 @@
   }
 
   li {
-    // display: flex;
-    // align-items: center;
+    display: flex;
+    align-items: flex-start;
     width: 100%;
   }
 
   li::before {
-    flex: 0 0 7px;
+    flex: 0 0 15px;
     display: inline-block;
     content: '';
     border-radius: 100%;
     margin-right: 7px;
-    height: 7px;
-    width: 7px;
+    height: 15px;
+    width: 15px;
     background-color: $color-red;
-    background-image: url(../images/check.png);
+    margin-top: 4px;
+    // background-image: url(../images/check.png);
+    // background-image: url(../images/check.png);
   }
 }
 

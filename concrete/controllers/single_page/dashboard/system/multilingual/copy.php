@@ -39,7 +39,7 @@ class Copy extends DashboardSitePageController
                 $section = Section::getByID($_REQUEST['locale']);
                 $target = new MultilingualProcessorTarget($section);
                 $processor = new Processor($target);
-                if (!empty($_POST['process'])) {
+                if ($_POST['process']) {
                     foreach ($processor->receive() as $task) {
                         $processor->execute($task);
                     }

@@ -10,7 +10,7 @@ $asl = $pk->getMyAssignment();
 $seoSet = AttributeSet::getByHandle('seo');
 ?>
 <section>
-    <header><?= t('Page Settings') ?></header>
+    <header><?php echo t('Page Settings') ?></header>
     <?php if ($cp->canEditPageContents()
         || $cp->canEditPageTheme()
         || $cp->canEditPageProperties()
@@ -24,9 +24,9 @@ $seoSet = AttributeSet::getByHandle('seo');
         ?>
             <li>
                 <a href="#" data-launch-panel-detail="page-composer"
-                   data-panel-detail-url="<?= URL::to('/ccm/system/panels/details/page/composer') ?>"
+                   data-panel-detail-url="<?php echo URL::to('/ccm/system/panels/details/page/composer') ?>"
                    data-panel-transition="fade">
-                    <?= t('Composer') ?>
+                    <?php echo t('Composer') ?>
                 </a>
             </li>
         <?php
@@ -36,11 +36,11 @@ $seoSet = AttributeSet::getByHandle('seo');
     if ($cp->canEditPageTheme() || $cp->canEditPageTemplate()) {
         ?>
             <li>
-                <a href="#" data-launch-sub-panel-url="<?= URL::to('/ccm/system/panels/page/design') ?>"
+                <a href="#" data-launch-sub-panel-url="<?php echo URL::to('/ccm/system/panels/page/design') ?>"
                    data-launch-panel-detail="page-design"
-                   data-panel-detail-url="<?= URL::to('/ccm/system/panels/details/page/preview') ?>"
+                   data-panel-detail-url="<?php echo URL::to('/ccm/system/panels/details/page/preview') ?>"
                    data-panel-transition="fade">
-                    <?= t('Design') ?>
+                    <?php echo t('Design') ?>
                 </a>
             </li>
         <?php
@@ -51,9 +51,9 @@ $seoSet = AttributeSet::getByHandle('seo');
         ?>
             <li>
                 <a href="#" data-launch-panel-detail="page-seo"
-                   data-panel-detail-url="<?= URL::to('/ccm/system/panels/details/page/seo') ?>"
+                   data-panel-detail-url="<?php echo URL::to('/ccm/system/panels/details/page/seo') ?>"
                    data-panel-transition="fade">
-                    <?= t('SEO') ?>
+                    <?php echo t('SEO') ?>
                 </a>
             </li>
         <?php
@@ -63,9 +63,9 @@ $seoSet = AttributeSet::getByHandle('seo');
         ?>
             <li>
                 <a href="#" data-launch-panel-detail="page-location"
-                   data-panel-detail-url="<?= URL::to('/ccm/system/panels/details/page/location') ?>"
+                   data-panel-detail-url="<?php echo URL::to('/ccm/system/panels/details/page/location') ?>"
                    data-panel-transition="fade">
-                    <?= t('Location') ?>
+                    <?php echo t('Location') ?>
                 </a>
             </li>
         <?php
@@ -85,11 +85,11 @@ $seoSet = AttributeSet::getByHandle('seo');
             if (is_array($allowedAKIDs) && count($allowedAKIDs) > 0) {
                 ?>
                 <li>
-                    <a href="#" data-launch-sub-panel-url="<?= URL::to('/ccm/system/panels/page/attributes') ?>"
+                    <a href="#" data-launch-sub-panel-url="<?php echo URL::to('/ccm/system/panels/page/attributes') ?>"
                        data-launch-panel-detail="page-attributes"
-                       data-panel-detail-url="<?= URL::to('/ccm/system/panels/details/page/attributes') ?>"
+                       data-panel-detail-url="<?php echo URL::to('/ccm/system/panels/details/page/attributes') ?>"
                        data-panel-transition="fade">
-                        <?= t('Attributes') ?>
+                        <?php echo t('Attributes') ?>
                     </a>
                 </li>
             <?php
@@ -101,9 +101,9 @@ $seoSet = AttributeSet::getByHandle('seo');
             ?>
             <li>
                 <a href="#" data-launch-panel-detail="page-caching"
-                   data-panel-detail-url="<?= URL::to('/ccm/system/panels/details/page/caching') ?>"
+                   data-panel-detail-url="<?php echo URL::to('/ccm/system/panels/details/page/caching') ?>"
                    data-panel-transition="fade">
-                    <?= t('Caching') ?>
+                    <?php echo t('Caching') ?>
                 </a>
             </li>
         <?php
@@ -114,9 +114,9 @@ $seoSet = AttributeSet::getByHandle('seo');
             ?>
             <li>
                 <a href="#" data-launch-panel-detail="page-permissions"
-                   data-panel-detail-url="<?= URL::to('/ccm/system/panels/details/page/permissions') ?>"
+                   data-panel-detail-url="<?php echo URL::to('/ccm/system/panels/details/page/permissions') ?>"
                    data-panel-transition="fade">
-                    <?= t('Permissions') ?>
+                    <?php echo t('Permissions') ?>
                 </a>
             </li>
         <?php
@@ -126,16 +126,16 @@ $seoSet = AttributeSet::getByHandle('seo');
         if ($cp->canViewPageVersions()) {
             ?>
             <li>
-                <a href="#" data-launch-sub-panel-url="<?= URL::to('/ccm/system/panels/page/versions') ?>">
-                    <?= t('Versions') ?>
+                <a href="#" data-launch-sub-panel-url="<?php echo URL::to('/ccm/system/panels/page/versions') ?>">
+                    <?php echo t('Versions') ?>
                 </a>
             </li>
             <li>
                 <a href="#" data-launch-panel-detail="mobile-preview"
-                   data-launch-sub-panel-url="<?= URL::to('/ccm/system/panels/page/devices') ?>"
-                   data-panel-detail-url="<?= URL::to('/ccm/system/panels/details/page/devices') ?>"
+                   data-launch-sub-panel-url="<?php echo URL::to('/ccm/system/panels/page/devices') ?>"
+                   data-panel-detail-url="<?php echo URL::to('/ccm/system/panels/details/page/devices') ?>"
                    data-panel-transition="fade">
-                    <?= t('Mobile Preview') ?>
+                    <?php echo t('Mobile Preview') ?>
                 </a>
             </li>
         <?php
@@ -145,11 +145,11 @@ $seoSet = AttributeSet::getByHandle('seo');
         if ($cp->canPreviewPageAsUser() && Config::get('concrete.permissions.model') == 'advanced') {
             ?>
             <li>
-                <a href="#" data-launch-sub-panel-url="<?= URL::to('/ccm/system/panels/page/preview_as_user') ?>"
+                <a href="#" data-launch-sub-panel-url="<?php echo URL::to('/ccm/system/panels/page/preview_as_user') ?>"
                    data-launch-panel-detail="preview-page"
-                   data-panel-detail-url="<?= URL::to('/ccm/system/panels/page/preview_as_user/preview') ?>"
+                   data-panel-detail-url="<?php echo URL::to('/ccm/system/panels/page/preview_as_user/preview') ?>"
                    data-panel-transition="fade">
-                    <?= t('View as User') ?>
+                    <?php echo t('View as User') ?>
                 </a>
             </li>
         <?php
@@ -160,9 +160,9 @@ $seoSet = AttributeSet::getByHandle('seo');
             ?>
             <li>
                 <a class="dialog-launch"
-                   href="<?= URL::to('/ccm/system/dialogs/page/delete') ?>?cID=<?= $c->getCollectionID() ?>"
-                   dialog-modal="true" dialog-title="<?= t('Delete Page') ?>" dialog-width="400" dialog-height="250">
-                    <?= t('Delete Page') ?>
+                   href="<?php echo URL::to('/ccm/system/dialogs/page/delete') ?>?cID=<?php echo $c->getCollectionID() ?>"
+                   dialog-modal="true" dialog-title="<?php echo t('Delete Page') ?>" dialog-width="400" dialog-height="250">
+                    <?php echo t('Delete Page') ?>
                 </a>
             </li>
         <?php

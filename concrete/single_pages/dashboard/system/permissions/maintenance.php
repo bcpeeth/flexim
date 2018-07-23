@@ -7,15 +7,14 @@ echo $h->getDashboardPaneHeaderWrapper(t('Maintenance Mode'), false, 'span6 offs
     <?php echo $this->controller->token->output('update_maintenance')?>
     <fieldset>
         <div class="form-group">
-            <label class="control-label"><?= t('Only Dashboard Works') ?></label>
-            <div class="radio"><label><?=$form->radio('site_maintenance_mode', '1', $site_maintenance_mode)?> <span><?=t('Enabled - for emergencies')?></span></label></div>
-            <div class="radio"><label><?=$form->radio('site_maintenance_mode', '0', $site_maintenance_mode)?> <span><?=t('Disabled')?></span></label></div>
+            <div class="radio"><label><?php echo $form->radio('site_maintenance_mode', '1', $site_maintenance_mode)?> <span><?php echo t('Enabled')?></span></label></div>
+            <div class="radio"><label><?php echo $form->radio('site_maintenance_mode', '0', $site_maintenance_mode)?> <span><?php echo t('Disabled')?></span></label></div>
         </div>
     </fieldset>	
 
     <div class="ccm-dashboard-form-actions-wrapper">
         <div class="ccm-dashboard-form-actions">    
-            <button class="pull-right btn btn-primary" type="submit" ><?=t('Save')?></button>
+            <button class="pull-right btn btn-primary" type="submit" ><?php echo t('Save')?></button>
         </div>
     </div>
 </form>

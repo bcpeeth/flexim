@@ -21,8 +21,6 @@ abstract class Page extends \Concrete\Controller\Backend\UserInterface
         }
         if ($cID) {
             $page = ConcretePage::getByID($cID);
-        } else {
-            $page = null;
         }
         if (is_object($page) && !$page->isError()) {
             $this->setPageObject($page);

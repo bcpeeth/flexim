@@ -6,7 +6,6 @@ use Concrete\Core\Entity\Site\Locale;
 use Concrete\Core\Entity\Site\Site;
 use Concrete\Core\Entity\Site\SiteTree;
 use Concrete\Core\Entity\Site\Tree;
-use Concrete\Core\Page\Page;
 use Concrete\Core\Site\Config\Liaison;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -38,7 +37,7 @@ class Factory
     public function createDefaultEntity()
     {
         $tree = new SiteTree();
-        $tree->setSiteHomePageID(Page::getHomePageID() ?: 1);
+        $tree->setSiteHomePageID(HOME_CID);
 
         $locale = new Locale();
         $locale->setLanguage('en');

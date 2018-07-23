@@ -1,12 +1,12 @@
 <?php defined('C5_EXECUTE') or die("Access Denied.");  ?>
 
 <div class="form-group">
-    <label class="control-label"><?=t('Choose Social Links to Show')?></label>
+    <label class="control-label"><?php echo t('Choose Social Links to Show')?></label>
     <div id="ccm-block-social-links-list">
     <?php
     if (count($links) == 0) {
         ?>
-        <p><?=t('You have not added any social links.')?></p>
+        <p><?php echo t('You have not added any social links.')?></p>
     <?php
     }
 
@@ -21,8 +21,8 @@
                 <?php
 }
         ?>
-            value="<?=$link->getID()?>" />
-            <?=$service->getDisplayName()?>
+            value="<?php echo $link->getID()?>" />
+            <?php echo $service->getDisplayName()?>
             </label>
 
             <i class="fa fa-arrows"></i>
@@ -32,7 +32,7 @@
     </div>
 </div>
 <div class="alert alert-info">
-    <?=t('Add social links <a href="%s">in the dashboard</a>', URL::to('/dashboard/system/basics/social'))?>
+    <?php echo t('Add social links <a href="%s">in the dashboard</a>', URL::to('/dashboard/system/basics/social'))?>
 </div>
 
 <style>

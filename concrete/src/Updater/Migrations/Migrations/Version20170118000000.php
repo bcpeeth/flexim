@@ -1,21 +1,12 @@
 <?php
-
 namespace Concrete\Core\Updater\Migrations\Migrations;
 
-use Concrete\Core\Updater\Migrations\AbstractMigration;
-use Concrete\Core\Updater\Migrations\RepeatableMigrationInterface;
+use Concrete\Core\Block\BlockType\BlockType;
+use Doctrine\DBAL\Migrations\AbstractMigration;
+use Doctrine\DBAL\Schema\Schema;
 
-class Version20170118000000 extends AbstractMigration implements RepeatableMigrationInterface
+class Version20170118000000 extends AbstractMigration
 {
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Updater\Migrations\AbstractMigration::upgradeDatabase()
-     */
-    public function upgradeDatabase()
-    {
-        $this->addVersionIdToPageTypeOutputBlocks();
-    }
 
     protected function output($message)
     {
@@ -26,9 +17,9 @@ class Version20170118000000 extends AbstractMigration implements RepeatableMigra
     {
         $this->output(t('Adding cvID to PageTypeComposerOutputBlocks...'));
         // Update tables that still exist in db.xml
-        \Concrete\Core\Database\Schema\Schema::refreshCoreXMLSchema([
+        \Concrete\Core\Database\Schema\Schema::refreshCoreXMLSchema(array(
             'PageTypeComposerOutputBlocks',
-        ]);
+        ));
 
         $db = $this->connection;
         $r = $db->executeQuery('select cID, bID, arHandle from PageTypeComposerOutputBlocks');
@@ -43,5 +34,14 @@ class Version20170118000000 extends AbstractMigration implements RepeatableMigra
                 [$cvID, $row['cID'], $row['bID'], $row['arHandle']]
             );
         }
+    }
+
+    public function up(Schema $schema)
+    {
+        $this->addVersionIdToPageTypeOutputBlocks();
+    }
+
+    public function down(Schema $schema)
+    {
     }
 }

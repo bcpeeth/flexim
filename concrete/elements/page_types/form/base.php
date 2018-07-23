@@ -20,7 +20,7 @@ $ptDefaultPageTemplateID = 0;
 $ptLaunchInComposer = 0;
 $ptIsFrequentlyAdded = 1;
 $token = 'add_page_type';
-if (isset($pagetype) && is_object($pagetype)) {
+if (is_object($pagetype)) {
     $token = 'update_page_type';
 	$siteType = $pagetype->getSiteTypeObject();
     $ptName = $pagetype->getPageTypeName();
@@ -33,54 +33,52 @@ if (isset($pagetype) && is_object($pagetype)) {
     foreach ($selectedtemplates as $pt) {
         $ptPageTemplateID[] = $pt->getPageTemplateID();
     }
-} else {
-    $pagetype = null;
 }
 ?>
 
-<?=Loader::helper('validation/token')->output($token)?>
-<input type="hidden" name="siteTypeID" value="<?=$siteType->getSiteTypeID()?>">
+<?php echo Loader::helper('validation/token')->output($token)?>
+<input type="hidden" name="siteTypeID" value="<?php echo $siteType->getSiteTypeID()?>">
 
 	<div class="form-group">
-		<?=$form->label('ptName', t('Page Type Name'))?>
-    	<?=$form->text('ptName', $ptName, array('class' => 'span5'))?>
+		<?php echo $form->label('ptName', t('Page Type Name'))?>
+    	<?php echo $form->text('ptName', $ptName, array('class' => 'span5'))?>
 	</div>
 
 	<div class="form-group">
-		<?=$form->label('ptHandle', t('Page Type Handle'))?>
-		<?=$form->text('ptHandle', $ptHandle, array('class' => 'span5'))?>
+		<?php echo $form->label('ptHandle', t('Page Type Handle'))?>
+		<?php echo $form->text('ptHandle', $ptHandle, array('class' => 'span5'))?>
 	</div>
 
 	<div class="form-group">
-		<?=$form->label('ptDefaultPageTemplateID', t('Default Page Template'))?>
-		<?=$form->select('ptDefaultPageTemplateID', $templates, $ptDefaultPageTemplateID, array('class' => 'span5'))?>
+		<?php echo $form->label('ptDefaultPageTemplateID', t('Default Page Template'))?>
+		<?php echo $form->select('ptDefaultPageTemplateID', $templates, $ptDefaultPageTemplateID, array('class' => 'span5'))?>
 	</div>
 
 	<div class="form-group">
-		<?=$form->label('ptLaunchInComposer', t('Launch in Composer?'))?>
-		<?=$form->select('ptLaunchInComposer', array('0' => t('No'), '1' => t('Yes')), $ptLaunchInComposer, array('class' => 'span5'))?>
+		<?php echo $form->label('ptLaunchInComposer', t('Launch in Composer?'))?>
+		<?php echo $form->select('ptLaunchInComposer', array('0' => t('No'), '1' => t('Yes')), $ptLaunchInComposer, array('class' => 'span5'))?>
 	</div>
 
     <div class="form-group">
-        <?=$form->label('ptIsFrequentlyAdded', t('Is this page type frequently added?'))?>
-        <?=$form->select('ptIsFrequentlyAdded', array('0' => t('No'), '1' => t('Yes')), $ptIsFrequentlyAdded, array('class' => 'span5'))?>
-        <div class="help-block"><?=t('Frequently added page types are always visible in the Pages panel.')?></div>
+        <?php echo $form->label('ptIsFrequentlyAdded', t('Is this page type frequently added?'))?>
+        <?php echo $form->select('ptIsFrequentlyAdded', array('0' => t('No'), '1' => t('Yes')), $ptIsFrequentlyAdded, array('class' => 'span5'))?>
+        <div class="help-block"><?php echo t('Frequently added page types are always visible in the Pages panel.')?></div>
     </div>
 
 	<div class="form-group">
-		<?=$form->label('ptAllowedPageTemplates', t('Allowed Page Templates'))?>
-		<?=$form->select('ptAllowedPageTemplates', array('A' => t('All'), 'C' => t('Selected Page Templates'), 'X' => t('Everything But Selected')), $ptAllowedPageTemplates, array('class' => 'span3'))?>
+		<?php echo $form->label('ptAllowedPageTemplates', t('Allowed Page Templates'))?>
+		<?php echo $form->select('ptAllowedPageTemplates', array('A' => t('All'), 'C' => t('Selected Page Templates'), 'X' => t('Everything But Selected')), $ptAllowedPageTemplates, array('class' => 'span3'))?>
 	</div>
 
 	<div class="form-group" data-form-row="page-templates">
-		<?=$form->label('ptPageTemplateID', t('Page Templates'))?>
+		<?php echo $form->label('ptPageTemplateID', t('Page Templates'))?>
         <div style="width: 100%">
-    		<?=$form->selectMultiple('ptPageTemplateID', $templates, $ptPageTemplateID, array('style' => 'width: 100%'))?>
+    		<?php echo $form->selectMultiple('ptPageTemplateID', $templates, $ptPageTemplateID, array('style' => 'width: 100%'))?>
         </div>
     </div>
 
 	<div class="form-group">
-		<?=$form->label('ptPublishTargetTypeID', t('Publish Method'))?>
+		<?php echo $form->label('ptPublishTargetTypeID', t('Publish Method'))?>
         <?php for ($i = 0; $i < count($targetTypes); ++$i) {
     $t = $targetTypes[$i];
     if (!is_object($pagetype)) {
@@ -89,7 +87,7 @@ if (isset($pagetype) && is_object($pagetype)) {
         $selected = $pagetype->getPageTypePublishTargetTypeID();
     }
     ?>
-            <div class="radio"><label><?=$form->radio('ptPublishTargetTypeID', $t->getPageTypePublishTargetTypeID(), $selected)?><?=$t->getPageTypePublishTargetTypeDisplayName()?></label></div>
+            <div class="radio"><label><?php echo $form->radio('ptPublishTargetTypeID', $t->getPageTypePublishTargetTypeID(), $selected)?><?php echo $t->getPageTypePublishTargetTypeDisplayName()?></label></div>
         <?php
 } ?>
 	</div>
@@ -98,7 +96,7 @@ if (isset($pagetype) && is_object($pagetype)) {
     if ($t->hasOptionsForm()) {
         ?>
 
-		<div style="display: none" data-page-type-publish-target-type-id="<?=$t->getPageTypePublishTargetTypeID()?>">
+		<div style="display: none" data-page-type-publish-target-type-id="<?php echo $t->getPageTypePublishTargetTypeID()?>">
 			<?php $t->includeOptionsForm($pagetype, $siteType);
         ?>
 		</div>

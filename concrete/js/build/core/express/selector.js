@@ -1,18 +1,16 @@
-/* jshint unused:vars, undef:true, browser:true, jquery:true */
-/* global _, ccmi18n, ccmi18n_express, ConcreteExpressEntryAjaxSearch */
-
-;(function(global, $) {
+!function(global, $) {
     'use strict';
 
     function ConcreteExpressEntrySelector($element, options) {
-        var my = this;
-        options = $.extend({
-            'chooseText': ccmi18n_express.chooseEntry,
-            'loadingText': ccmi18n.loadingText,
-            'inputName': 'entryID',
-            'entityID': false,
-            'entryID': 0
-        }, options);
+        'use strict';
+        var my = this,
+            options = $.extend({
+                'chooseText': ccmi18n_express.chooseEntry,
+                'loadingText': ccmi18n.loadingText,
+                'inputName': 'entryID',
+                'entityID': false,
+                'entryID': 0
+            }, options);
 
         my.$element = $element;
         my.options = options;
@@ -58,15 +56,15 @@
                 });
             });
         }
-    };
+    }
 
     // jQuery Plugin
     $.fn.concreteExpressEntrySelector = function(options) {
         return $.each($(this), function(i, obj) {
             new ConcreteExpressEntrySelector($(this), options);
         });
-    };
+    }
 
     global.ConcreteExpressEntrySelector = ConcreteExpressEntrySelector;
 
-})(this, jQuery);
+}(this, $);

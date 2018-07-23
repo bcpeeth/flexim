@@ -1,10 +1,9 @@
 <?php
 namespace Concrete\Core\User;
 
-use Concrete\Core\Foundation\ConcreteObject;
+use Concrete\Core\Foundation\Object;
 use Concrete\Core\Http\Request;
 use Concrete\Core\Permission\Access\Entity\GroupEntity;
-use Concrete\Core\Session\SessionValidator;
 use Concrete\Core\Support\Facade\Application;
 use Concrete\Core\User\Group\Group;
 use Concrete\Core\Authentication\AuthenticationType;
@@ -14,7 +13,7 @@ use Hautelook\Phpass\PasswordHash;
 use Concrete\Core\Permission\Access\Entity\Entity as PermissionAccessEntity;
 use Concrete\Core\User\Point\Action\Action as UserPointAction;
 
-class User extends ConcreteObject
+class User extends Object
 {
     public $uID = '';
     public $uName = '';
@@ -69,13 +68,16 @@ class User extends ConcreteObject
     }
 
     /**
-     * @deprecated
-     * Use isRegistered() instead
+     * Return true if user is logged in.
+     *
+     * @return bool
      */
     public static function isLoggedIn()
     {
-        $u = new User();
-        return $u->isRegistered();
+        $app = Application::getFacadeApplication();
+        $session = $app['session'];
+
+        return $session->has('uID') && $session->get('uID') > 0;
     }
 
     /**
@@ -145,10 +147,9 @@ class User extends ConcreteObject
     {
         $app = Application::getFacadeApplication();
         $args = func_get_args();
-        $config = $app['config'];
         $session = $app['session'];
-        $validator = $app->make(SessionValidator::class);
-        // We need to check for the cookie so that we don't auto create a session when this runs super early.
+        $config = $app['config'];
+
         if (isset($args[1])) {
             // first, we check to see if the username and password match the admin username and password
             // $username = uName normally, but if not it's email address
@@ -213,38 +214,44 @@ class User extends ConcreteObject
             }
         } else {
             $req = Request::getInstance();
-            $this->uID = null;
-            $this->uName = null;
-            $this->superUser = false;
-            $this->uDefaultLanguage = null;
-            $this->uTimezone = null;
-            if ($validator->hasActiveSession() || $this->uID) {
-                if ($req->hasCustomRequestUser()) {
-                    $ux = $req->getCustomRequestUser();
-                    if ($ux && is_object($ux)) {
-                        $this->uID = $ux->getUserID();
-                        $this->uName = $ux->getUserName();
-                        $this->superUser = $ux->getUserID() == USER_SUPER_ID;
-                        if ($ux->getUserDefaultLanguage()) {
-                            $this->uDefaultLanguage = $ux->getUserDefaultLanguage();
-                        }
-                        $this->uTimezone = $ux->getUserTimezone();
+            if ($req->hasCustomRequestUser()) {
+                $this->uID = null;
+                $this->uName = null;
+                $this->superUser = false;
+                $this->uDefaultLanguage = null;
+                $this->uTimezone = null;
+                $ux = $req->getCustomRequestUser();
+                if ($ux && is_object($ux)) {
+                    $this->uID = $ux->getUserID();
+                    $this->uName = $ux->getUserName();
+                    $this->superUser = $ux->getUserID() == USER_SUPER_ID;
+                    if ($ux->getUserDefaultLanguage()) {
+                        $this->uDefaultLanguage = $ux->getUserDefaultLanguage();
                     }
-                } else if ($session->has('uID')) {
-                    $this->uID = $session->get('uID');
-                    $this->uName = $session->get('uName');
-                    $this->uTimezone = $session->get('uTimezone');
-                    if ($session->has('uDefaultLanguage')) {
-                        $this->uDefaultLanguage = $session->get('uDefaultLanguage');
-                    }
-                    $this->superUser = ($session->get('uID') == USER_SUPER_ID) ? true : false;
+                    $this->uTimezone = $ux->getUserTimezone();
                 }
-                $this->uGroups = $this->_getUserGroups();
-                if (!isset($args[2]) && !$req->hasCustomRequestUser()) {
-                    $session->set('uGroups', $this->uGroups);
+            } elseif ($session->has('uID')) {
+                $this->uID = $session->get('uID');
+                $this->uName = $session->get('uName');
+                $this->uTimezone = $session->get('uTimezone');
+                if ($session->has('uDefaultLanguage')) {
+                    $this->uDefaultLanguage = $session->get('uDefaultLanguage');
                 }
+                $this->superUser = ($session->get('uID') == USER_SUPER_ID) ? true : false;
+            } else {
+                $this->uID = null;
+                $this->uName = null;
+                $this->superUser = false;
+                $this->uDefaultLanguage = null;
+                $this->uTimezone = null;
+            }
+            $this->uGroups = $this->_getUserGroups();
+            if (!isset($args[2]) && !$req->hasCustomRequestUser()) {
+                $session->set('uGroups', $this->uGroups);
             }
         }
+
+        return $this;
     }
 
     /**
@@ -262,6 +269,22 @@ class User extends ConcreteObject
         $iph = $app->make('helper/validation/ip');
         $ip = $iph->getRequestIP();
         $db->query("update Users set uLastIP = ?, uLastLogin = ?, uPreviousLogin = ?, uNumLogins = uNumLogins + 1 where uID = ?", array(($ip === false) ? ('') : ($ip->getIp()), time(), $uLastLogin, $this->uID));
+    }
+
+    /**
+     * Update PageStatistics
+     *
+     * @param Page $c
+     */
+    public function recordView($c)
+    {
+        $app = Application::getFacadeApplication();
+        $db = $app['database']->connection();
+
+        $uID = ($this->uID > 0) ? $this->uID : 0;
+        $cID = $c->getCollectionID();
+        $v = array($cID, $uID);
+        $db->query("insert into PageStatistics (cID, uID, date) values (?, ?, NOW())", $v);
     }
 
     /**
@@ -442,8 +465,6 @@ class User extends ConcreteObject
             $session->clear();
         } else {
             $session->invalidate();
-            // Really not sure why this doesn't happen with invalidate, but oh well.
-            $cookie->clear($config->get('concrete.session.name'));
         }
 
         if ($cookie->has('ccmAuthUserHash') && $cookie->get('ccmAuthUserHash')) {
@@ -574,32 +595,23 @@ class User extends ConcreteObject
     public function getUserAccessEntityObjects()
     {
         $app = Application::getFacadeApplication();
+        $req = Request::getInstance();
         $session = $app['session'];
-        $validator = $app->make(SessionValidator::class);
-        if ($validator->hasActiveSession()) {
-            $req = Request::getInstance();
 
-            if ($req->hasCustomRequestUser()) {
-                // we bypass session-saving performance
-                // and we don't save them in session.
-                return PermissionAccessEntity::getForUser($this);
-            }
-
-            if ($session->has('accessEntities')) {
-                $entities = $session->get('accessEntities');
-            } else {
-                $entities = PermissionAccessEntity::getForUser($this);
-                $session->set('accessEntities', $entities);
-                $session->set('accessEntitiesUpdated', time());
-            }
-        } else {
-            $group = Group::getByID(GUEST_GROUP_ID);
-            if ($group) {
-                $entities = [GroupEntity::getOrCreate($group)];
-            } else {
-                $entities = [];
-            }
+        if ($req->hasCustomRequestUser()) {
+            // we bypass session-saving performance
+            // and we don't save them in session.
+            return PermissionAccessEntity::getForUser($this);
         }
+
+        if ($session->has('accessEntities')) {
+            $entities = $session->get('accessEntities');
+        } else {
+            $entities = PermissionAccessEntity::getForUser($this);
+            $session->set('accessEntities', $entities);
+            $session->set('accessEntitiesUpdated', time());
+        }
+
         return $entities;
     }
 
@@ -722,7 +734,7 @@ class User extends ConcreteObject
         $db = $app['database']->connection();
 
         $v = array($this->uID);
-        $cnt = $db->GetOne("select Groups.gID from UserGroups inner join " . $db->getDatabasePlatform()->quoteSingleIdentifier('Groups') . " on UserGroups.gID = Groups.gID where uID = ? and gPath like " . $db->quote($g->getGroupPath() . '%'), $v);
+        $cnt = $db->GetOne("select Groups.gID from UserGroups inner join Groups on UserGroups.gID = Groups.gID where uID = ? and gPath like " . $db->quote($g->getGroupPath() . '%'), $v);
 
         return $cnt > 0;
     }

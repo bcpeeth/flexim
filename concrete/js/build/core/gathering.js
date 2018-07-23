@@ -1,8 +1,9 @@
-/* jshint unused:vars, undef:true, browser:true, jquery:true */
-/* global CCM_CID, CCM_TOOLS_PATH, ConcreteMenu */
+/**
+ * Gathering
+ */
 
-;(function(global, $) {
-  'use strict';
+
+(function($, window) {
 
   var methods = {
 
@@ -11,18 +12,10 @@
     	handleAppendedElements: function(response, $gathering, options, prepend) {
 			var elements = ($('<div />').append(response).find('>div'));
 			$.each(elements, function(i, obj) {
-				if(prepend) {
-				    $gathering.prepend(obj);
-				} else {
-				    $gathering.append(obj);
-				}
+				prepend ? $gathering.prepend(obj) : $gathering.append(obj);
 			});
 			if (elements.length > 0) {
-			    if (prepend) {
-			        $gathering.packery('prepended', elements);
-			    } else {
-			        $gathering.packery('appended', elements);
-			    }
+				prepend ? $gathering.packery('prepended', elements) : $gathering.packery('appended', elements);
 				if (options.showTileControls) {
 					methods.private.enableEditing($gathering, options);
 				}
@@ -63,9 +56,9 @@
 
 			$gathering.find('.ccm-gathering-item').not('.hover-bound').each(function() {
 				$(this).on('mouseenter', function() {
-					$(this).addClass('ccm-gathering-item-over');
+					$(this).addClass('ccm-gathering-item-over')
 				}).on('mouseleave', function() {
-					$(this).removeClass('ccm-gathering-item-over');
+					$(this).removeClass('ccm-gathering-item-over')
 				});
 			}).addClass('hover-bound');
     	},
@@ -97,7 +90,7 @@
 								drop: function(e, ui) {
 									jQuery.fn.dialog.showLoader();
 									var $destination = $(this);
-									//var gaID = $destination.attr('data-gathering-id');
+									var gaID = $destination.attr('data-gathering-id');
 									var data = [
 										{'name': 'task', 'value': 'move_to_new_gathering'},
 										{'name': 'gaiID', 'value': ui.draggable.attr('data-gathering-item-id')},
@@ -139,6 +132,7 @@
 					{'name': 'gaID', 'value': options.gaID},
 					{'name': 'editToken', 'value': options.editToken}
 				];
+				var items = [];
 				var elements = pkr.getItemElements();
 				for (var i = 0; i < elements.length; i++) {
 					var $obj = $(elements[i]);
@@ -340,5 +334,4 @@
     }   
 
   };
-
-})(window, jQuery);
+})(jQuery, window);

@@ -7,19 +7,19 @@
     }
 ?>
 <div class="form-group">
-	<?=$form->label('fID', t('File'))?>
-	<?=$al->file('ccm-b-file', 'fID', t('Choose File'), $bf);?>
+	<?php echo $form->label('fID', t('File'))?>
+	<?php echo $al->file('ccm-b-file', 'fID', t('Choose File'), $bf);?>
 </div>
 <div class="form-group">
-	<?=$form->label('fileLinkText', t('Link Text'))?>
-	<?=$form->text('fileLinkText', $controller->getLinkText())?>
+	<?php echo $form->label('fileLinkText', t('Link Text'))?>
+	<?php echo $form->text('fileLinkText', $controller->getLinkText())?>
 </div>
 
 <div class="form-group">
     <div class="checkbox">
         <label>
-            <?=$form->checkbox('forceDownload', '1', $forceDownload); ?>
-            <?=t('Force file to download')?>
+            <?php echo $form->checkbox('forceDownload', '1', $forceDownload); ?>
+            <?php echo t('Force file to download')?>
         </label>
     </div>
 </div>

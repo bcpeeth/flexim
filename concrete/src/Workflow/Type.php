@@ -1,11 +1,11 @@
 <?php
 namespace Concrete\Core\Workflow;
 
-use Concrete\Core\Foundation\ConcreteObject;
+use Concrete\Core\Foundation\Object;
 use Loader;
 use Concrete\Core\Package\PackageList;
 
-class Type extends ConcreteObject
+class Type extends Object
 {
     public function getWorkflowTypeID()
     {

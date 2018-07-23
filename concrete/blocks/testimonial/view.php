@@ -2,41 +2,41 @@
 <div class="ccm-block-testimonial-wrapper">
     <div class="ccm-block-testimonial">
         <?php if ($image): ?>
-            <div class="ccm-block-testimonial-image"><?=$image?></div>
+            <div class="ccm-block-testimonial-image"><?php echo $image?></div>
         <?php endif; ?>
 
         <div class="ccm-block-testimonial-text">
 
             <div class="ccm-block-testimonial-name">
-                <?=h($name)?>
+                <?php echo h($name)?>
             </div>
 
         <?php if ($position && $company && $companyURL): ?>
             <div class="ccm-block-testimonial-position">
-                <?=t('%s, <a href="%s">%s</a>', h($position), $companyURL, h($company))?>
+                <?php echo t('%s, <a href="%s">%s</a>', h($position), $companyURL, h($company))?>
             </div>
         <?php endif; ?>
 
         <?php if ($position && !$company && $companyURL): ?>
             <div class="ccm-block-testimonial-position">
-                <?=t('<a href="%s">%s</a>', $companyURL, h($position))?>
+                <?php echo t('<a href="%s">%s</a>', $companyURL, h($position))?>
             </div>
         <?php endif; ?>
 
         <?php if ($position && $company && !$companyURL): ?>
             <div class="ccm-block-testimonial-position">
-                <?=t('%s, %s', h($position), h($company))?>
+                <?php echo t('%s, %s', h($position), h($company))?>
             </div>
         <?php endif; ?>
 
         <?php if ($position && !$company && !$companyURL): ?>
             <div class="ccm-block-testimonial-position">
-                <?=h($position)?>
+                <?php echo h($position)?>
             </div>
         <?php endif; ?>
 
         <?php if ($paragraph): ?>
-            <div class="ccm-block-testimonial-paragraph"><?=h($paragraph)?></div>
+            <div class="ccm-block-testimonial-paragraph"><?php echo h($paragraph)?></div>
         <?php endif; ?>
 
         </div>

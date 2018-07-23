@@ -1,25 +1,24 @@
 <?php
-
 namespace Concrete\Core\Captcha;
 
-use Concrete\Core\Http\ResponseFactoryInterface;
-use Concrete\Core\Support\Facade\Application;
-
-/**
- * @deprecated Create a class that implements CaptchaInterface or a CaptchaWithPictureInterface interface (and optionally ConfigurableCaptchaInterface)
- */
-abstract class Controller implements CaptchaWithPictureInterface
+abstract class Controller
 {
     /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Captcha\CaptchaWithPictureInterface::displayCaptchaPicture()
+     * Note: feel free to make any of these blank.
      */
-    public function displayCaptchaPicture()
-    {
-        $app = Application::getFacadeApplication();
-        $responseFactory = $app->make(ResponseFactoryInterface::class);
 
-        return $responseFactory->notFound('Captcha without image');
-    }
+    /**
+     * Shows an input for a particular captcha library.
+     */
+    abstract public function showInput();
+
+    /**
+     * Displays the graphical portion of the captcha.
+     */
+    abstract public function display();
+
+    /**
+     * Displays the label for this captcha library.
+     */
+    abstract public function label();
 }

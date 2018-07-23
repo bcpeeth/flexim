@@ -5,12 +5,12 @@
 
 <?php if (count($presets) > 0) {
     ?>
-    <div class="alert alert-info"><?=t("Deleting a preset will not affect any layouts that have used that preset in the past.")?></div>
+    <div class="alert alert-info"><?php echo t("Deleting a preset will not affect any layouts that have used that preset in the past.")?></div>
 
     <ul class="item-select-list">
     <?php foreach ($presets as $preset) {
     ?>
-        <li data-preset-row="<?=$preset->getAreaLayoutPresetID()?>"><span><?=$preset->getAreaLayoutPresetName()?>
+        <li data-preset-row="<?php echo $preset->getAreaLayoutPresetID()?>"><span><?php echo $preset->getAreaLayoutPresetName()?>
         <a href="javascript:void(0)" class="pull-right icon-link delete-area-layout-preset" data-action="delete-area-layout-preset"><i class="fa fa-trash-o"></i></a>
         </span></li>
     <?php 
@@ -21,7 +21,7 @@
 <?php 
 } else {
     ?>
-    <p><?=t('You have no presets.')?></p>
+    <p><?php echo t('You have no presets.')?></p>
 <?php 
 } ?>
 
@@ -33,7 +33,7 @@
         $('a[data-action=delete-area-layout-preset]').on('click', function() {
             var $row = $(this).parent().parent();
             $.concreteAjax({
-                url: '<?=$controller->action('delete')?>',
+                url: '<?php echo $controller->action('delete')?>',
                 data: {'arLayoutPresetID': $row.attr('data-preset-row')},
                 success: function(r) {
                     $row.queue(function() {

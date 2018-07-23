@@ -7,12 +7,12 @@
     </div>
     <div class="checkbox">
         <label>
-            <input type="checkbox" name="thumbnails" value="1" <?= \Config::get('concrete.cache.clear.thumbnails', true) ? 'checked' : '' ?> />
-            <?= t('Clear cached thumbnails') ?>
+            <input type="checkbox" name="thumbnails" value="1" <?php echo \Config::get('concrete.cache.clear.thumbnails', true) ? 'checked' : '' ?> />
+            <?php echo t('Clear cached thumbnails') ?>
         </label>
     </div>
     <div class="form-group">
-        <?= $interface->submit(t('Clear Cache'), 'clear-cache-form', '', 'btn-primary'); ?>
+        <?php echo $interface->submit(t('Clear Cache'), 'clear-cache-form', '', 'btn-primary'); ?>
     </div>
 </form>
 

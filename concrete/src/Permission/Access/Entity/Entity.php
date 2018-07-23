@@ -1,14 +1,14 @@
 <?php
 namespace Concrete\Core\Permission\Access\Entity;
 
-use Concrete\Core\Foundation\ConcreteObject;
+use Concrete\Core\Foundation\Object;
 use Database;
 use Concrete\Core\Permission\Access\Access as PermissionAccess;
 use CacheLocal;
 use Core;
 use RuntimeException;
 
-abstract class Entity extends ConcreteObject
+abstract class Entity extends Object
 {
     public function getAccessEntityTypeID()
     {

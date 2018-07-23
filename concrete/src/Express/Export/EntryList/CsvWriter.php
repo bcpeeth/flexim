@@ -5,7 +5,6 @@ namespace Concrete\Core\Express\Export\EntryList;
 use Concrete\Core\Entity\Express\Entity;
 use Concrete\Core\Entity\Express\Entry;
 use Concrete\Core\Express\EntryList;
-use Concrete\Core\Localization\Service\Date;
 use League\Csv\Writer;
 
 /**
@@ -17,15 +16,9 @@ class CsvWriter
     /** @var Writer The writer we use to output */
     protected $writer;
 
-    /**
-     * @var Date
-     */
-    protected $dateFormatter;
-
-    public function __construct(Writer $writer, Date $dateFormatter)
+    public function __construct(Writer $writer)
     {
         $this->writer = $writer;
-        $this->dateFormatter = $dateFormatter;
     }
 
     public function insertHeaders(Entity $entity)
@@ -66,11 +59,6 @@ class CsvWriter
      */
     private function projectEntry(Entry $entry)
     {
-        $date = $entry->getDateCreated();
-        if ($date) {
-            yield $this->dateFormatter->formatCustom(\DateTime::ATOM, $date);
-        }
-
         $attributes = $entry->getAttributes();
         foreach ($attributes as $attribute) {
             yield $attribute->getPlainTextValue();
@@ -84,8 +72,6 @@ class CsvWriter
      */
     private function getHeaders(Entity $entity)
     {
-        yield 'dateCreated';
-
         $attributes = $entity->getAttributes();
         foreach ($attributes as $attribute) {
             yield $attribute->getAttributeKeyDisplayName();

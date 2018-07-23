@@ -10,33 +10,26 @@ foreach ($ctArray as $cta) {
 $ptID = 0;
 $factors = array('' => t('Select Menu'), 'sitemap_in_page' => t('In-Page Sitemap'));
 
-if (isset($pagetype) && is_object($pagetype) && $pagetype->getPageTypePublishTargetTypeID() == $type->getPageTypePublishTargetTypeID()) {
+if (is_object($pagetype) && $pagetype->getPageTypePublishTargetTypeID() == $type->getPageTypePublishTargetTypeID()) {
     $configuredTarget = $pagetype->getPageTypePublishTargetObject();
     $ptID = $configuredTarget->getPageTypeID();
     $startingPointPageID = $configuredTarget->getStartingPointPageID();
     $selectorFormFactor = $configuredTarget->getSelectorFormFactor();
-} else {
-    if (!isset($startingPointPageID)) {
-        $startingPointPageID = null;
-    }
-    if (!isset($selectorFormFactor)) {
-        $selectorFormFactor = null;
-    }
 }
 ?>
 <div class="form-group">
-	<?=$form->label('ptID', t('Publish Beneath Pages of Type'))?>
-	<?=$form->select('ptID', $types, $ptID)?>
+	<?php echo $form->label('ptID', t('Publish Beneath Pages of Type'))?>
+	<?php echo $form->select('ptID', $types, $ptID)?>
 </div>
 
 <div class="form-group">
-	<?=$form->label('selectorFormFactorPageType', t('Selector Form Factor'))?>
-	<?=$form->select('selectorFormFactorPageType', $factors, $selectorFormFactor)?>
+	<?php echo $form->label('selectorFormFactorPageType', t('Selector Form Factor'))?>
+	<?php echo $form->select('selectorFormFactorPageType', $factors, $selectorFormFactor)?>
 </div>
 
 <div class="form-group" data-page-type-form-factor-display="sitemap_in_page">
-	<?=$form->label('startingPointPageIDPageType', t('Display Pages Beneath Page'))?>
-	<?=$pageSelector->selectPage('startingPointPageIDPageType', $startingPointPageID)?>
+	<?php echo $form->label('startingPointPageIDPageType', t('Display Pages Beneath Page'))?>
+	<?php echo $pageSelector->selectPage('startingPointPageIDPageType', $startingPointPageID)?>
 </div>
 
 <script type="text/javascript">

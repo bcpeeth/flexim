@@ -19,7 +19,7 @@ $ps = $req->getPagePermissionSet();
                 $pk->setPermissionObject($c);
                 ?>
 <tr>
-	<td class="ccm-permission-grid-name"><strong><?=$pk->getPermissionKeyDisplayName()?></strong></td>
+	<td class="ccm-permission-grid-name"><strong><?php echo $pk->getPermissionKeyDisplayName()?></strong></td>
 	<td>
 	<?php $pa = PermissionAccess::getByID($paID, $pk);
                 Loader::element('permission/labels', array('pa' => $pa, 'pk' => $pk))?>

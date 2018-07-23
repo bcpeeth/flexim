@@ -2,9 +2,9 @@
 namespace Concrete\Core\Gathering;
 
 use Loader;
-use Concrete\Core\Foundation\ConcreteObject;
+use Concrete\Core\Foundation\Object;
 
-class Gathering extends ConcreteObject implements \Concrete\Core\Permission\ObjectInterface
+class Gathering extends Object implements \Concrete\Core\Permission\ObjectInterface
 {
     public function getGatheringID()
     {

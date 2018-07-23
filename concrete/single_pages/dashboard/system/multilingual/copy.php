@@ -35,7 +35,7 @@ use Concrete\Core\Multilingual\Page\Section\Section as MultilingualSection;
                     </div>
 
                     <?php echo Loader::helper('validation/token')->output('copy_tree') ?>
-                    <button class="btn btn-default pull-left" type="submit" name="copy"><?= t('Copy Tree') ?></button>
+                    <button class="btn btn-default pull-left" type="submit" name="copy"><?php echo t('Copy Tree') ?></button>
 
                     <?php
                 } elseif (count($locales) == 1) {
@@ -63,12 +63,12 @@ use Concrete\Core\Multilingual\Page\Section\Section as MultilingualSection;
                                         {'name': 'copyChildrenOnly', 'value': true},
                                         {'name': 'multilingual', 'value': true}
                                     ],
-                                    "<?=t('Copy Locale Tree')?>", function () {
-                                        window.location.href = "<?=$this->action('tree_copied')?>";
+                                    "<?php echo t('Copy Locale Tree')?>", function () {
+                                        window.location.href = "<?php echo $this->action('tree_copied')?>";
                                     }
                                 );
                             } else {
-                                alert("<?=t('You must choose two separate multilingual sections to copy from/to')?>");
+                                alert("<?php echo t('You must choose two separate multilingual sections to copy from/to')?>");
                             }
                             return false;
                         });
@@ -79,7 +79,7 @@ use Concrete\Core\Multilingual\Page\Section\Section as MultilingualSection;
             <?php
         } elseif (!$u->isSuperUser()) {
             ?>
-            <p><?= t('Only the super user may copy locale trees.') ?></p>
+            <p><?php echo t('Only the super user may copy locale trees.') ?></p>
         <?php } ?>
     </fieldset>
 
@@ -102,7 +102,7 @@ use Concrete\Core\Multilingual\Page\Section\Section as MultilingualSection;
 
                     <?php echo Loader::helper('validation/token')->output('rescan_locale') ?>
                     <button class="btn btn-default pull-left" type="submit"
-                            name="rescan_locale"><?= t('Rescan Locale') ?></button>
+                            name="rescan_locale"><?php echo t('Rescan Locale') ?></button>
 
                     <?php
                 } elseif (count($pages) == 1) {
@@ -122,17 +122,17 @@ use Concrete\Core\Multilingual\Page\Section\Section as MultilingualSection;
                             var ctf = $('select[name=rescanLocale]').val();
                             if (ctf > 0) {
                                 ccm_triggerProgressiveOperation(
-                                    '<?=$view->action('rescan_locale')?>',
+                                    '<?php echo $view->action('rescan_locale')?>',
                                     [
                                         {'name': 'locale', 'value': ctf},
                                         {
                                             'name': 'ccm_token',
-                                            'value': '<?=Core::make('token')->generate('rescan_locale')?>'
+                                            'value': '<?php echo Core::make('token')->generate('rescan_locale')?>'
                                         }
                                     ],
-                                    "<?=t('Rescan Links')?>",
+                                    "<?php echo t('Rescan Links')?>",
                                     function () {
-                                        window.location.href = "<?=$this->action('links_rescanned')?>";
+                                        window.location.href = "<?php echo $this->action('links_rescanned')?>";
                                     }
                                 );
                             }
@@ -145,7 +145,7 @@ use Concrete\Core\Multilingual\Page\Section\Section as MultilingualSection;
             <?php
         } elseif (!$u->isSuperUser()) {
             ?>
-            <p><?= t('Only the super user may rescan the links inside a multilingual tree.') ?></p>
+            <p><?php echo t('Only the super user may rescan the links inside a multilingual tree.') ?></p>
             <?php
         }
         ?>

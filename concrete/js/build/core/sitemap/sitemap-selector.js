@@ -1,20 +1,18 @@
-/* jshint unused:vars, undef:true, browser:true, jquery:true */
-/* global CCM_DISPATCHER_FILENAME */
-
-;(function(global, $) {
+!function(global, $) {
     'use strict';
 
     function ConcretePageSitemapSelector($element, options) {
-        var my = this;
-        options = $.extend({
-            'mode': 'single',
-            'inputName': 'cID',
-            'selected': 0,
-            'startingPoint': 1,
-            'siteTreeID': 0,
-            'token': '',
-            filters: {}
-        }, options);
+        'use strict';
+        var my = this,
+            options = $.extend({
+                'mode': 'single',
+                'inputName': 'cID',
+                'selected': 0,
+                'startingPoint': 1,
+                'siteTreeID': 0,
+                'token': '',
+                filters: {}
+            }, options);
 
         my.$element = $('<div />', {'class': 'ccm-page-sitemap-selector-inner'});
         my.$element.appendTo($element);
@@ -93,18 +91,18 @@
                 'data-sitemap-selector-page-id': node.data.cID,
                 'type': 'hidden', 'name': name
             });
-            $input.val(node.data.cID);
+            $input.val(node.data.cID)
             $input.appendTo(my.$element);
         }
-    };
+    }
 
     // jQuery Plugin
     $.fn.concretePageSitemapSelector = function(options) {
         return $.each($(this), function(i, obj) {
             new ConcretePageSitemapSelector($(this), options);
         });
-    };
+    }
 
     global.ConcretePageSitemapSelector = ConcretePageSitemapSelector;
 
-})(this, jQuery);
+}(this, $);

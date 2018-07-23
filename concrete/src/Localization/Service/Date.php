@@ -401,11 +401,11 @@ class Date
     {
         switch ($timezone) {
             case 'system':
-                $timezone = Config::get('app.server_timezone', @date_default_timezone_get() ?: 'UTC');
+                $timezone = Config::get('app.server_timezone', date_default_timezone_get());
                 break;
             case 'app':
                 $site = \Core::make('site')->getSite();
-                $timezone = $site->getConfigRepository()->get('timezone', @date_default_timezone_get() ?: 'UTC');
+                $timezone = $site->getConfigRepository()->get('timezone', date_default_timezone_get());
                 break;
             case 'user':
                 $tz = null;

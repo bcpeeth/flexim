@@ -2,12 +2,12 @@
 namespace Concrete\Core\Editor;
 
 use Loader;
-use Concrete\Core\Foundation\ConcreteObject;
+use Concrete\Core\Foundation\Object;
 use Concrete\Core\Package\PackageList;
 use Core;
 use Package;
 
-abstract class Snippet extends ConcreteObject
+abstract class Snippet extends Object
 {
     /**
      * Required for snippets to work.

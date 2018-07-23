@@ -10,6 +10,9 @@
                 </attributekey>
             </attributes>
         </page>
+        <page name="Page Not Found" path="/page_not_found" filename="/page_not_found.php" pagetype="" description="" package="" root="true" >
+            <area name="Main"/>
+        </page>
 
         <page name="Welcome Back" path="/desktop" custom-path="/account/welcome" filename="/desktop.php" pagetype="" description="" package="" root="true">
             <attributes>
@@ -25,24 +28,7 @@
             </attributes>
             <area name="Main">
                 <blocks>
-                    <block type="core_area_layout" name="">
-                        <arealayout type="theme-grid" columns="12">
-                            <columns>
-                                <column span="12" offset="0">
-                                    <block type="desktop_waiting_for_me" />
-                                </column>
-                            </columns>
-                        </arealayout>
-                    </block>
-                    <block type="core_area_layout" name="">
-                        <arealayout type="theme-grid" columns="12">
-                            <columns>
-                                <column span="12" offset="0">
-                                    <block type="desktop_draft_list" />
-                                </column>
-                            </columns>
-                        </arealayout>
-                    </block>
+                    <block type="desktop_waiting_for_me" />
                 </blocks>
             </area>
         </page>

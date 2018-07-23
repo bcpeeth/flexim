@@ -80,26 +80,18 @@ class AssociationField extends AbstractField
             // Is there an entity selected?
             if (isset($this->data['express_association_' . $this->associationID])) {
                 $selected = $this->data['express_association_' . $this->associationID];
-                // We have to spoof an entry in order for this to be selected. Kind of lame but oh well.
 
-                if (is_array($selected)) {
-                    $spoofedAssociation = new Entry\ManyAssociation();
-                    foreach($selected as $id) {
-                        $selectedEntry = new Entry();
-                        $selectedEntry->setID($id);
-                        $spoofedAssociation->getSelectedEntriesCollection()->add($selectedEntry);
-                    }
-                    $spoofedAssociation->setAssociation($this->association);
-                } else {
-                    $selectedEntry = new Entry();
-                    $selectedEntry->setID($selected);
-                    $spoofedAssociation = new Entry\OneAssociation();
-                    $spoofedAssociation->setAssociation($this->association);
-                    $spoofedAssociation->setSelectedEntry($selectedEntry);
-                }
+                // We have to spoof an entry in order for this to be selected. Kind of lame but oh well.
+                $selectedEntry = new Entry();
+                $selectedEntry->setID($selected);
+
+                $oneAssociation = new Entry\OneAssociation();
+                $oneAssociation->setAssociation($this->association);
+                $oneAssociation->setSelectedEntry($selectedEntry);
 
                 $spoofedEntry = new Entry();
-                $spoofedEntry->getAssociations()->add($spoofedAssociation);
+                $spoofedEntry->getAssociations()->add($oneAssociation);
+
                 $context->setEntry($spoofedEntry);
             }
 
@@ -120,7 +112,7 @@ class AssociationField extends AbstractField
      */
     public function filterList(ItemList $list)
     {
-        if ($this->association !== null && $this->getSelectedEntry()) {
+        if ($this->association !== null) {
             $list->filterByAssociatedEntry($this->association, $this->getSelectedEntry());
         }
     }

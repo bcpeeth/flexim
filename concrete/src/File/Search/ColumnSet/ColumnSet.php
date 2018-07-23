@@ -2,9 +2,7 @@
 namespace Concrete\Core\File\Search\ColumnSet;
 
 use Concrete\Core\Search\Column\FileAttributeKeyColumn;
-use Concrete\Core\Support\Facade\Facade;
 use User;
-use Concrete\Core\File\Search\SearchProvider;
 use Concrete\Core\Search\Column\Set as DatabaseItemListColumnSet;
 
 class ColumnSet extends DatabaseItemListColumnSet
@@ -20,17 +18,15 @@ class ColumnSet extends DatabaseItemListColumnSet
 
     public static function getCurrent()
     {
-        $app = Facade::getFacadeApplication();
-        /**
-         * @var $provider SearchProvider
-         */
-        $provider = $app->make(SearchProvider::class);
-        $query = $provider->getSessionCurrentQuery();
-        if ($query) {
-            $columns = $query->getColumns();
-            return $columns;
+        $u = new User();
+        $fldc = $u->config('FILE_LIST_DEFAULT_COLUMNS');
+        if ($fldc != '') {
+            $fldc = @unserialize($fldc);
+        }
+        if (!($fldc instanceof DatabaseItemListColumnSet)) {
+            $fldc = new DefaultSet();
         }
 
-        return new DefaultSet();
+        return $fldc;
     }
 }

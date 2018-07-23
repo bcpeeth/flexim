@@ -1,7 +1,4 @@
-/* jshint unused:vars, undef:true, browser:true, jquery:true */
-/* global _, ConcreteEvent */
-
-;(function(global, $) {
+var Concrete = (function (ConcreteEvent, $) {
     'use strict';
 
     var html = $('html');
@@ -11,7 +8,6 @@
     }
 
     function setAttribute(attributes, key, value) {
-        /* jshint -W040 */
         key += ''; // Make sure we always have a string.
         var get_method = 'get' + key.substr(0, 1).toUpperCase() + key.substr(1),
             set_method = 'set' + key.substr(0, 1).toUpperCase() + key.substr(1);
@@ -26,7 +22,7 @@
         return value;
     }
 
-    global.Concrete = {
+    return {
         editMode: null,
         event: ConcreteEvent,
 
@@ -61,4 +57,4 @@
 
     };
 
-})(window, jQuery);
+}(ConcreteEvent, jQuery));

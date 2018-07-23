@@ -2,8 +2,8 @@
 defined('C5_EXECUTE') or die("Access Denied.");
 ?>
 
-<form action="<?= $view->action('update_status', $user->getUserID()) ?>" method="post">
-    <?= $token_validator->output() ?>
+<form action="<?php echo $view->action('update_status', $user->getUserID()) ?>" method="post">
+    <?php echo $token_validator->output() ?>
     <div class="btn-group">
 
 
@@ -37,12 +37,12 @@ defined('C5_EXECUTE') or die("Access Denied.");
             <?php if ($user->isActive()) { ?>
                 <?php if (!in_array("deactivate", $workflowRequestActions)) { ?>
                     <button type="submit" name="task" value="deactivate"
-                            class="btn btn-default"><?= t('Deactivate User') ?></button>
+                            class="btn btn-default"><?php echo t('Deactivate User') ?></button>
                 <?php } ?>
             <?php } else { ?>
                 <?php if ((!in_array("activate", $workflowRequestActions) && !in_array("register_activate", $workflowRequestActions))) { ?>
                     <button type="submit" name="task" value="activate"
-                            class="btn btn-default"><?= t('Activate User') ?></button>
+                            class="btn btn-default"><?php echo t('Activate User') ?></button>
                 <?php } ?>
             <?php } ?>
         <?php } ?>
@@ -50,13 +50,13 @@ defined('C5_EXECUTE') or die("Access Denied.");
         <?php if ($canSignInAsUser) {
             ?>
             <button type="submit" name="task" value="sudo"
-                    class="btn btn-default"><?= t('Sign in As User') ?></button>
+                    class="btn btn-default"><?php echo t('Sign in As User') ?></button>
             <?php
         }
         ?>
         <?php if ($canDeleteUser) {
             ?>
-            <button type="submit" name="task" value="delete" class="btn btn-danger"><?= t('Delete') ?></button>
+            <button type="submit" name="task" value="delete" class="btn btn-danger"><?php echo t('Delete') ?></button>
             <?php
         }
         ?>

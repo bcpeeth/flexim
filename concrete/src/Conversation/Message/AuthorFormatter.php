@@ -57,18 +57,13 @@ class AuthorFormatter
      */
     public function getAvatar()
     {
-        return $this->getAvatarObject()->output();
-    }
-
-    public function getAvatarObject()
-    {
         $ui = $this->author->getUser();
         if (is_object($ui)) {
-            return $ui->getUserAvatar();
+            return $ui->getUserAvatar()->output();
         } else {
             $av = \Core::make('Concrete\Core\User\Avatar\AnonymousAvatar');
             $av->setAlt($this->author->getName());
-            return $av;
+            return $av->output();
         }
     }
 }

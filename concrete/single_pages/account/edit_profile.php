@@ -1,13 +1,13 @@
 <?php defined('C5_EXECUTE') or die("Access Denied."); ?>
 
-<h2><?=t($c->getCollectionName())?></h2>
+<h2><?php echo t($c->getCollectionName())?></h2>
 
 <form method="post" action="<?php echo $view->action('save')?>" enctype="multipart/form-data">
 	<?php  $attribs = UserAttributeKey::getEditableInProfileList();
     $valt->output('profile_edit');
     ?>
 	<fieldset>
-	<legend><?=t('Basic Information')?></legend>
+	<legend><?php echo t('Basic Information')?></legend>
 	<div class="form-group">
 		<?php echo $form->label('uEmail', t('Email'))?>
 		<?php echo $form->text('uEmail', $profile->getUserEmail())?>
@@ -61,7 +61,7 @@
     if (!empty($ats)) {
         ?>
 		<fieldset>
-			<legend><?=t('Authentication Types')?></legend>
+			<legend><?php echo t('Authentication Types')?></legend>
 			<?php
             foreach ($ats as $at) {
                 call_user_func($at);
@@ -74,11 +74,11 @@
     ?>
         <br/>
 	<fieldset>
-    	<legend><?=t('Change Password')?></legend>
+    	<legend><?php echo t('Change Password')?></legend>
         <div class="form-group">
             <?php echo $form->label('uPasswordNew', t('New Password'))?>
             <?php echo $form->password('uPasswordNew', array('autocomplete' => 'off'))?>
-            <a href="javascript:void(0)" title="<?=t("Leave blank to keep current password.")?>"><i class="icon-question-sign"></i></a>
+            <a href="javascript:void(0)" title="<?php echo t("Leave blank to keep current password.")?>"><i class="icon-question-sign"></i></a>
 		</div>
 
         <div class="form-group">
@@ -92,7 +92,7 @@
 
     <div class="ccm-dashboard-form-actions-wrapper">
         <div class="ccm-dashboard-form-actions">
-    		<input type="submit" name="save" value="<?=t('Save')?>" class="btn btn-primary pull-right" />
+    		<input type="submit" name="save" value="<?php echo t('Save')?>" class="btn btn-primary pull-right" />
         </div>
 	</div>
 

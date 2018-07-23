@@ -6,7 +6,7 @@
 ?>
 
 
-<input type="hidden" name="arLayoutID" value="<?=$controller->arLayout->getAreaLayoutID()?>" />
+<input type="hidden" name="arLayoutID" value="<?php echo $controller->arLayout->getAreaLayoutID()?>" />
 <input type="hidden" name="arLayoutEdit" value="1" />
 
 <div id="ccm-layouts-edit-mode" class="ccm-layouts-edit-mode-edit">
@@ -15,12 +15,12 @@
     ?>
 	<?php $i = $col->getAreaLayoutColumnIndex();
     ?>
-	<div class="<?=$col->getAreaLayoutColumnClass()?>" id="ccm-edit-layout-column-<?=$i?>" <?php if ($iscustom) {
-    ?>data-width="<?=$col->getAreaLayoutColumnWidth()?>" <?php 
+	<div class="<?php echo $col->getAreaLayoutColumnClass()?>" id="ccm-edit-layout-column-<?php echo $i?>" <?php if ($iscustom) {
+    ?>data-width="<?php echo $col->getAreaLayoutColumnWidth()?>" <?php 
 }
     ?>>
 		<div class="ccm-layout-column-inner ccm-layout-column-highlight">
-			<input type="hidden" name="width[<?=$i?>]" value="" id="ccm-edit-layout-column-width-<?=$i?>" />
+			<input type="hidden" name="width[<?php echo $i?>]" value="" id="ccm-edit-layout-column-width-<?php echo $i?>" />
 			<?php
             $col->display(true);
     ?>

@@ -1,10 +1,10 @@
 <?php defined('C5_EXECUTE') or die("Access Denied."); ?>
-<form method="post" class="ccm-dashboard-content-form" action="<?=$view->url('/dashboard/system/optimization/cache', 'update_cache')?>">
-    <?=$this->controller->token->output('update_cache')?>
+<form method="post" class="ccm-dashboard-content-form" action="<?php echo $view->url('/dashboard/system/optimization/cache', 'update_cache')?>">
+    <?php echo $this->controller->token->output('update_cache')?>
 
     <fieldset>
 
-        <legend><?=t('Block Cache')?> <i class="fa fa-question-circle launch-tooltip" data-placement="right" title="<?=t('Stores the output of blocks which support block caching')?>"></i></legend>
+        <legend><?php echo t('Block Cache')?> <i class="fa fa-question-circle launch-tooltip" data-placement="right" title="<?php echo t('Stores the output of blocks which support block caching')?>"></i></legend>
 
 
         <div class="form-group">
@@ -13,7 +13,7 @@
                 <input type="radio" name="ENABLE_BLOCK_CACHE" value="0" <?php if (!Config::get('concrete.cache.blocks')) {
         ?> checked <?php
     } ?> />
-                <?=t('Off - Good for development of custom blocks.')?>
+                <?php echo t('Off - Good for development of custom blocks.')?>
             </label>
         </div>
 
@@ -22,14 +22,14 @@
             <input type="radio" name="ENABLE_BLOCK_CACHE" value="1" <?php if (Config::get('concrete.cache.blocks')) {
     ?> checked <?php 
 } ?> />
-            <?=t('On - Helps speed up a live site.')?>
+            <?php echo t('On - Helps speed up a live site.')?>
         </label>
     </div>
     </div>
     </fieldset>
 
     <fieldset>
-        <legend><?=t('Theme CSS Cache')?> <i class="fa fa-question-circle launch-tooltip" data-placement="right" title="<?=t('Caches the output of customized theme stylesheets for faster loading. Turn off if you are editing LESS files in your theme directly.')?>"></i></legend>
+        <legend><?php echo t('Theme CSS Cache')?> <i class="fa fa-question-circle launch-tooltip" data-placement="right" title="<?php echo t('Caches the output of customized theme stylesheets for faster loading. Turn off if you are editing LESS files in your theme directly.')?>"></i></legend>
 
         <div class="form-group">
 
@@ -38,7 +38,7 @@
                     <input type="radio" name="ENABLE_THEME_CSS_CACHE" value="0" <?php if (!Config::get('concrete.cache.theme_css')) {
         ?> checked <?php
     } ?> />
-                    <span><?=t('Off - Good for active theme development when using LESS files.')?></span>
+                    <span><?php echo t('Off - Good for active theme development when using LESS files.')?></span>
                 </label>
             </div>
 
@@ -47,7 +47,7 @@
                     <input type="radio" name="ENABLE_THEME_CSS_CACHE" value="1" <?php  if (Config::get('concrete.cache.theme_css')) {
          ?> checked <?php
      } ?> />
-                    <span><?=t('On - Helps speed up a live site.')?></span>
+                    <span><?php echo t('On - Helps speed up a live site.')?></span>
                 </label>
             </div>
         </div>
@@ -55,7 +55,7 @@
 
 
     <fieldset>
-        <legend><?=t('Compress LESS Output')?> <i class="fa fa-question-circle launch-tooltip" data-placement="right" title="<?=t('Determines whether compiled LESS stylesheets should output as compressed CSS. Uncompressed stylesheets are slightly larger but easier to read.')?>"></i></legend>
+        <legend><?php echo t('Compress LESS Output')?> <i class="fa fa-question-circle launch-tooltip" data-placement="right" title="<?php echo t('Determines whether compiled LESS stylesheets should output as compressed CSS. Uncompressed stylesheets are slightly larger but easier to read.')?>"></i></legend>
 
         <div class="form-group">
 
@@ -64,7 +64,7 @@
                 <input type="radio" name="COMPRESS_THEME_PREPROCESSOR_OUTPUT" value="0" <?php if (!Config::get('concrete.theme.compress_preprocessor_output')) {
     ?> checked <?php 
 } ?> />
-                <span><?=t('Off - Good for debugging generated CSS output.')?></span>
+                <span><?php echo t('Off - Good for debugging generated CSS output.')?></span>
             </label>
             <br>
             <label><input type="checkbox" name="GENERATE_LESS_SOURCEMAP" value="1" <?php if (Config::get('concrete.theme.generate_less_sourcemap')) {
@@ -77,7 +77,7 @@
                 <input type="radio" name="COMPRESS_THEME_PREPROCESSOR_OUTPUT" value="1" <?php  if (Config::get('concrete.theme.compress_preprocessor_output')) {
      ?> checked <?php 
  } ?> />
-                <span><?=t('On - Helps speed up a live site.')?></span>
+                <span><?php echo t('On - Helps speed up a live site.')?></span>
             </label>
         </div>
         </div>
@@ -86,7 +86,7 @@
 
     <fieldset>
 
-        <legend><?=t('CSS and JavaScript Cache')?> <i class="fa fa-question-circle launch-tooltip" data-placement="right" title="<?=t('Stores the generation of CSS and JavaScript assets.')?>"></i></legend>
+        <legend><?php echo t('CSS and JavaScript Cache')?> <i class="fa fa-question-circle launch-tooltip" data-placement="right" title="<?php echo t('Stores the generation of CSS and JavaScript assets.')?>"></i></legend>
 
         <div class="form-group">
 
@@ -95,7 +95,7 @@
                 <input type="radio" name="ENABLE_ASSET_CACHE" value="0" <?php if (!Config::get('concrete.cache.assets')) {
     ?> checked <?php 
 } ?> />
-                <span><?=t('Off - Good for active block and site development.')?></span>
+                <span><?php echo t('Off - Good for active block and site development.')?></span>
             </label>
         </div>
 
@@ -104,7 +104,7 @@
                 <input type="radio" name="ENABLE_ASSET_CACHE" value="1" <?php  if (Config::get('concrete.cache.assets')) {
      ?> checked <?php 
  } ?> />
-                <span><?=t('On - Helps speed up a live site.')?></span>
+                <span><?php echo t('On - Helps speed up a live site.')?></span>
             </label>
         </div>
         </div>
@@ -112,7 +112,7 @@
 
     <fieldset>
 
-        <legend><?=t('Overrides Cache')?> <i class="fa fa-question-circle launch-tooltip" data-placement="right" title="<?=t('Stores the location and existence of source code files.')?>"></i></legend>
+        <legend><?php echo t('Overrides Cache')?> <i class="fa fa-question-circle launch-tooltip" data-placement="right" title="<?php echo t('Stores the location and existence of source code files.')?>"></i></legend>
 
 
         <div class="form-group">
@@ -122,7 +122,7 @@
                 <input type="radio" name="ENABLE_OVERRIDE_CACHE" value="0" <?php  if (!Config::get('concrete.cache.overrides')) {
      ?> checked <?php 
  } ?> />
-                <span><?=t('Off - Good for development.')?></span>
+                <span><?php echo t('Off - Good for development.')?></span>
             </label>
         </div>
 
@@ -131,14 +131,14 @@
                 <input type="radio" name="ENABLE_OVERRIDE_CACHE" value="1" <?php  if (Config::get('concrete.cache.overrides')) {
      ?> checked <?php 
  } ?> />
-                <span><?=t('On - Helps speed up a live site.')?></span>
+                <span><?php echo t('On - Helps speed up a live site.')?></span>
             </label>
         </div>
         </div>
     </fieldset>
 
     <fieldset>
-        <legend><?=t('Full Page Caching')?> <i class="fa fa-question-circle launch-tooltip" data-placement="right" title="<?=t('Stores the output of an entire page.')?>"></i></legend>
+        <legend><?php echo t('Full Page Caching')?> <i class="fa fa-question-circle launch-tooltip" data-placement="right" title="<?php echo t('Stores the output of an entire page.')?>"></i></legend>
 
         <div class="form-group">
 
@@ -147,7 +147,7 @@
                 <input type="radio" name="FULL_PAGE_CACHE_GLOBAL" value="0" <?php  if (!Config::get('concrete.cache.pages')) {
      ?> checked <?php 
  } ?> />
-                <span><?=t('Off - Turn it on by hand for specific pages.')?></span>
+                <span><?php echo t('Off - Turn it on by hand for specific pages.')?></span>
             </label>
         </div>
 
@@ -156,7 +156,7 @@
                 <input type="radio" name="FULL_PAGE_CACHE_GLOBAL" value="blocks" <?php  if (Config::get('concrete.cache.pages') == 'blocks') {
      ?> checked <?php 
  } ?> />
-                <span><?=t('On - If blocks on the particular page allow it.')?></span>
+                <span><?php echo t('On - If blocks on the particular page allow it.')?></span>
             </label>
         </div>
 
@@ -165,21 +165,21 @@
                 <input type="radio" name="FULL_PAGE_CACHE_GLOBAL" value="all" <?php  if (Config::get('concrete.cache.pages') == 'all') {
      ?> checked <?php 
  } ?> />
-                <span><?=t('On - In all cases.')?></span>
+                <span><?php echo t('On - In all cases.')?></span>
             </label>
         </div>
         </div>
 
         <div class="form-group">
 
-            <label class="control-label"><?=t('Expire Pages from the Cache')?></label>
+            <label class="control-label"><?php echo t('Expire Pages from the Cache')?></label>
 
             <div class="radio">
               <label>
                   <input type="radio" name="FULL_PAGE_CACHE_LIFETIME" value="default" <?php  if (Config::get('concrete.cache.full_page_lifetime') == 'default') {
          ?> checked <?php
      } ?> />
-                  <span><?=t('Every %s (default setting).', Loader::helper('date')->describeInterval(Config::get('concrete.cache.lifetime')))?></span>
+                  <span><?php echo t('Every %s (default setting).', Loader::helper('date')->describeInterval(Config::get('concrete.cache.lifetime')))?></span>
               </label>
             </div>
 
@@ -188,7 +188,7 @@
                     <input type="radio" name="FULL_PAGE_CACHE_LIFETIME" value="forever" <?php  if (Config::get('concrete.cache.full_page_lifetime') == 'forever') {
          ?> checked <?php
      } ?> />
-                    <span><?=t('Only when manually removed or the cache is cleared.')?></span>
+                    <span><?php echo t('Only when manually removed or the cache is cleared.')?></span>
                 </label>
             </div>
 
@@ -198,9 +198,9 @@
         ?> checked <?php
     } ?> />
                     <span>
-                        <?=t('Every ')?>
-                        <input type="text" name="FULL_PAGE_CACHE_LIFETIME_CUSTOM" value="<?= h(Config::get('concrete.cache.full_page_lifetime_value')) ?>" size="4" />
-                        <?=t(' minutes.')?>
+                        <?php echo t('Every ')?>
+                        <input type="text" name="FULL_PAGE_CACHE_LIFETIME_CUSTOM" value="<?php echo h(Config::get('concrete.cache.full_page_lifetime_value')) ?>" size="4" />
+                        <?php echo t(' minutes.')?>
                     </span>
                 </label>
             </div>
@@ -209,7 +209,7 @@
 
     <div class="ccm-dashboard-form-actions-wrapper">
         <div class="ccm-dashboard-form-actions">
-            <button class="pull-right btn btn-primary" type="submit" ><?=t('Save')?></button>
+            <button class="pull-right btn btn-primary" type="submit" ><?php echo t('Save')?></button>
         </div>
     </div>
 

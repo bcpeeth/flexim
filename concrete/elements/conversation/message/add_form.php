@@ -10,7 +10,7 @@ $u = new User();
 
 	<?php if ($addMessageLabel) {
     ?>
-		<h4><?=$addMessageLabel?></h4>
+		<h4><?php echo $addMessageLabel?></h4>
 	<?php
 }
     ?>
@@ -32,7 +32,7 @@ $u = new User();
 					<?php echo $form->hidden('blockAreaHandle', $blockAreaHandle) ?>
 					<?php echo $form->hidden('cID', $cID) ?>
 					<?php echo $form->hidden('bID', $bID) ?>
-					<button type="button" data-post-parent-id="0" data-submit="conversation-message" class="pull-right btn btn-submit btn-primary"><?=t('Submit')?></button>
+					<button type="button" data-post-parent-id="0" data-submit="conversation-message" class="pull-right btn btn-submit btn-primary"><?php echo t('Submit')?></button>
 					<?php if ($attachmentsEnabled) {
     ?>
 						<button type="button" class="pull-right btn btn-default ccm-conversation-attachment-toggle" href="#" title="<?php echo t('Attach Files');
@@ -42,14 +42,14 @@ $u = new User();
     ?>
 					<?php if ($conversation->getConversationSubscriptionEnabled() && $u->isRegistered()) {
     ?>
-						<a href="<?=URL::to('/ccm/system/dialogs/conversation/subscribe', $conversation->getConversationID())?>" data-conversation-subscribe="unsubscribe" <?php if (!$conversation->isUserSubscribed($u)) {
+						<a href="<?php echo URL::to('/ccm/system/dialogs/conversation/subscribe', $conversation->getConversationID())?>" data-conversation-subscribe="unsubscribe" <?php if (!$conversation->isUserSubscribed($u)) {
     ?>style="display: none"<?php
 }
-    ?> class="btn pull-right btn-default"><?=t('Un-Subscribe')?></a>
-						<a href="<?=URL::to('/ccm/system/dialogs/conversation/subscribe', $conversation->getConversationID())?>" data-conversation-subscribe="subscribe" <?php if ($conversation->isUserSubscribed($u)) {
+    ?> class="btn pull-right btn-default"><?php echo t('Un-Subscribe')?></a>
+						<a href="<?php echo URL::to('/ccm/system/dialogs/conversation/subscribe', $conversation->getConversationID())?>" data-conversation-subscribe="subscribe" <?php if ($conversation->isUserSubscribed($u)) {
     ?>style="display: none"<?php
 }
-    ?> class="btn pull-right btn-default"><?=t('Subscribe to Conversation')?></a>
+    ?> class="btn pull-right btn-default"><?php echo t('Subscribe to Conversation')?></a>
 					<?php
 }
     ?>
@@ -84,7 +84,7 @@ $u = new User();
 					<?php echo $form->hidden('blockAreaHandle', $blockAreaHandle) ?>
 					<?php echo $form->hidden('cID', $cID) ?>
 					<?php echo $form->hidden('bID', $bID) ?>
-					<button type="btn btn-primary" data-submit="conversation-message" class="pull-right btn btn-primary"><?=t('Reply')?> </button>
+					<button type="btn btn-primary" data-submit="conversation-message" class="pull-right btn btn-primary"><?php echo t('Reply')?> </button>
 					<?php if ($attachmentsEnabled) {
     ?>
 						<button type="button" class="pull-right btn btn-default ccm-conversation-attachment-toggle" href="#" title="<?php echo t('Attach Files');

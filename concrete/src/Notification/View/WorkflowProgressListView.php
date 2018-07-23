@@ -9,7 +9,6 @@ use Concrete\Core\Entity\Notification\UserSignupNotification;
 use Concrete\Core\Entity\Notification\WorkflowProgressNotification;
 use Concrete\Core\Notification\View\Menu\WorkflowProgressListViewMenu;
 use Concrete\Core\Workflow\Progress\Progress;
-use Concrete\Core\Workflow\Progress\SiteProgressInterface;
 use HtmlObject\Element;
 
 class WorkflowProgressListView extends StandardListView
@@ -65,11 +64,7 @@ class WorkflowProgressListView extends StandardListView
 
     public function getActionDescription()
     {
-        $req = $this->progress->getWorkflowRequestObject();
-        $description = $req->getWorkflowRequestDescriptionObject();
-        if ($description) {
-            return $description->getDescription();
-        }
+        return $this->workflow->getWorkflowProgressCurrentDescription($this->progress);
     }
 
     public function getInitiatorComment()
@@ -79,22 +74,12 @@ class WorkflowProgressListView extends StandardListView
 
     protected function getRequestedByElement()
     {
-        return new Element('span', t('Submitted By '));
+        return new Element('span', t('Requested By '));
     }
 
     public function getFormAction()
     {
         return $this->progress->getWorkflowProgressFormAction();
-    }
-
-    public function getNotificationDateTimeZone()
-    {
-        if ($this->progress instanceof SiteProgressInterface) {
-            $site = $this->progress->getSite();
-            if ($site) {
-                return $site->getTimezone();
-            }
-        }
     }
 
     public function getMenu()

@@ -1,8 +1,8 @@
 <?php
 namespace Concrete\Core\Conversation\Message;
 
-use Concrete\Core\Foundation\ConcreteObject;
+use Concrete\Core\Foundation\Object;
 
-class Rating extends ConcreteObject
+class Rating extends Object
 {
 }

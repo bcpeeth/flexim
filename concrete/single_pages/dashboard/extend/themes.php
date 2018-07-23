@@ -14,7 +14,7 @@ if ($controller->getTask() == 'view_detail') {
                 <?php foreach ($screenshots as $i => $image) {
     $detail = $detailShots[$i];
     ?>
-                    <li><a href="<?=$detail->src?>"><img src="<?=$image->src?>" /></a></li>
+                    <li><a href="<?php echo $detail->src?>"><img src="<?php echo $image->src?>" /></a></li>
                 <?php 
 }
     ?>
@@ -29,16 +29,16 @@ if ($controller->getTask() == 'view_detail') {
         </div>
 
         <div class="ccm-marketplace-detail-theme-details">
-            <h2><?=$item->getName()?></h2>
-            <div><i class="<?=$item->getSkillLevelClassName()?>"></i> <?=$item->getSkillLevelDisplayName()?></div>
+            <h2><?php echo $item->getName()?></h2>
+            <div><i class="<?php echo $item->getSkillLevelClassName()?>"></i> <?php echo $item->getSkillLevelDisplayName()?></div>
 
             <div class="ccm-marketplace-detail-theme-buy">
                 <div class="btn-group">
-                    <button onclick="ConcreteMarketplace.purchaseOrDownload({mpID: <?=$item->getMarketplaceItemID()?>})" class="btn btn-price" style="background-color: #1888d3"><?=$item->getDisplayPrice()?></button>
-                    <button onclick="ConcreteMarketplace.purchaseOrDownload({mpID: <?=$item->getMarketplaceItemID()?>})" class="btn btn-description"><?php if ($item->purchaseRequired()) {
-    ?><?=t('Purchase')?><?php 
+                    <button onclick="ConcreteMarketplace.purchaseOrDownload({mpID: <?php echo $item->getMarketplaceItemID()?>})" class="btn btn-price" style="background-color: #1888d3"><?php echo $item->getDisplayPrice()?></button>
+                    <button onclick="ConcreteMarketplace.purchaseOrDownload({mpID: <?php echo $item->getMarketplaceItemID()?>})" class="btn btn-description"><?php if ($item->purchaseRequired()) {
+    ?><?php echo t('Purchase')?><?php 
 } else {
-    ?><?=t('Download')?><?php 
+    ?><?php echo t('Download')?><?php 
 }
     ?></button>
                 </div>
@@ -50,14 +50,14 @@ if ($controller->getTask() == 'view_detail') {
         <div class="row">
             <div class="col-md-4">
                 <ul class="list-group">
-                    <li class="list-group-item"><?=Loader::helper('rating')->outputDisplay($item->getAverageRating())?>
+                    <li class="list-group-item"><?php echo Loader::helper('rating')->outputDisplay($item->getAverageRating())?>
                     <?php if ($item->getTotalRatings() > 0) {
     ?>
-                        <a href="<?=$item->getRemoteReviewsURL()?>" target="_blank" class="ccm-marketplace-detail-reviews-link">
+                        <a href="<?php echo $item->getRemoteReviewsURL()?>" target="_blank" class="ccm-marketplace-detail-reviews-link">
                     <?php 
 }
     ?>
-                    <?=t2('%d review', '%d reviews', $item->getTotalRatings(), $item->getTotalRatings())?>
+                    <?php echo t2('%d review', '%d reviews', $item->getTotalRatings(), $item->getTotalRatings())?>
                     <?php if ($item->getTotalRatings() > 0) {
     ?>
                         </a>
@@ -67,15 +67,15 @@ if ($controller->getTask() == 'view_detail') {
                     </li>
                     <?php if ($item->getExampleURL()) {
     ?>
-                        <li class="list-group-item"><a href="<?=$item->getExampleURL()?>" target="_blank"><?=t('Live Example')?></a></li>
+                        <li class="list-group-item"><a href="<?php echo $item->getExampleURL()?>" target="_blank"><?php echo t('Live Example')?></a></li>
                     <?php 
 }
     ?>
-                    <li class="list-group-item"><a href="<?=$item->getRemoteHelpURL()?>" target="_blank"><i class="fa fa-comment"></i> <?=t('Get Help')?></a></li>
+                    <li class="list-group-item"><a href="<?php echo $item->getRemoteHelpURL()?>" target="_blank"><i class="fa fa-comment"></i> <?php echo t('Get Help')?></a></li>
                 </ul>
             </div>
             <div class="col-md-7 col-md-offset-1">
-                <?=$item->getBody()?>
+                <?php echo $item->getBody()?>
             </div>
         </div>
     </div>
@@ -140,19 +140,19 @@ if ($controller->getTask() == 'view_detail') {
     ?>
 
         <div class="ccm-marketplace-list-item">
-            <div class="ccm-marketplace-list-item-theme-thumbnail"><a href="<?=$mi->getLocalURL()?>"><?php
+            <div class="ccm-marketplace-list-item-theme-thumbnail"><a href="<?php echo $mi->getLocalURL()?>"><?php
                 $thumb = $mi->getLargeThumbnail();
     printf('<img src="%s">', $thumb->src);
     ?></a></div>
             <div class="ccm-marketplace-list-item-theme-description">
-                <h2><a href="<?=$mi->getLocalURL()?>"><?=$mi->getName()?></a></h2>
-                    <p><?=$mi->getDescription()?></p>
-                    <a href="<?=$mi->getLocalURL()?>"><?=t('Learn More')?></a>
+                <h2><a href="<?php echo $mi->getLocalURL()?>"><?php echo $mi->getName()?></a></h2>
+                    <p><?php echo $mi->getDescription()?></p>
+                    <a href="<?php echo $mi->getLocalURL()?>"><?php echo t('Learn More')?></a>
             </div>
             <div class="ccm-marketplace-list-item-theme-price">
                 <div class="btn-group">
-                    <button onclick="ConcreteMarketplace.purchaseOrDownload({mpID: <?=$mi->getMarketplaceItemID()?>})" class="btn btn-price" style="background-color: #1888d3"><?=$mi->getDisplayPrice()?></button>
-                    <button onclick="ConcreteMarketplace.purchaseOrDownload({mpID: <?=$mi->getMarketplaceItemID()?>})" class="btn btn-description"><?php if ($mi->purchaseRequired()) { ?><?=t('Purchase')?><?php } else { ?><?=t('Download')?><?php } ?></button>
+                    <button onclick="ConcreteMarketplace.purchaseOrDownload({mpID: <?php echo $mi->getMarketplaceItemID()?>})" class="btn btn-price" style="background-color: #1888d3"><?php echo $mi->getDisplayPrice()?></button>
+                    <button onclick="ConcreteMarketplace.purchaseOrDownload({mpID: <?php echo $mi->getMarketplaceItemID()?>})" class="btn btn-description"><?php if ($mi->purchaseRequired()) { ?><?php echo t('Purchase')?><?php } else { ?><?php echo t('Download')?><?php } ?></button>
                 </div>
             </div>
         </div>
@@ -161,14 +161,14 @@ if ($controller->getTask() == 'view_detail') {
 }
     ?>
 
-    <?=$list->displayPagingV2()?>
+    <?php echo $list->displayPagingV2()?>
 
 <?php 
 } else {
     ?>
    <div class="ccm-marketplace-list-item">
    <div class="ccm-marketplace-list-item-theme-description">
-    <p><?=t('No themes found.')?></p>
+    <p><?php echo t('No themes found.')?></p>
     </div>
     </div>
 <?php 

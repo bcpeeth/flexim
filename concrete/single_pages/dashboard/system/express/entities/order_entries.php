@@ -12,8 +12,8 @@
 <div class="row">
     <?php View::element('dashboard/express/detail_navigation', array('entity' => $entity))?>
     <div class="col-md-8">
-        <form method="post" action="<?=$view->action('save', $entity->getID())?>">
-            <?=$token->output('save')?>
+        <form method="post" action="<?php echo $view->action('save', $entity->getID())?>">
+            <?php echo $token->output('save')?>
 
             <table class="table" data-table="entries">
                 <thead>
@@ -24,14 +24,14 @@
                  * @var $result \Concrete\Core\Express\Entry\Search\Result\Result
                  */
                 foreach($result->getListColumns()->getColumns() as $column) { ?>
-                    <th><span><?=$column->getColumnName()?></span></th>
+                    <th><span><?php echo $column->getColumnName()?></span></th>
                 <?php } ?>
                 </tr>
                 </thead>
                 <tbody>
                 <?php foreach($result->getItemListObject()->getResults() as $entry) { ?>
                     <tr>
-                        <td style="width: 1px;"><input type="hidden" name="entry[]" value="<?=$entry->getID()?>"><a href="#" class="icon-link" data-command="move-entry"><i class="fa fa-arrows"></i></a></td>
+                        <td style="width: 1px;"><input type="hidden" name="entry[]" value="<?php echo $entry->getID()?>"><a href="#" class="icon-link" data-command="move-entry"><i class="fa fa-arrows"></i></a></td>
                         <?php
                         $details = $result->getItemDetails($entry);
                         foreach($details->getColumns() as $column) { ?>
@@ -64,7 +64,7 @@
 
             <div class="ccm-dashboard-form-actions-wrapper">
                 <div class="ccm-dashboard-form-actions">
-                    <button class="pull-right btn btn-primary" type="submit" ><?=t('Save')?></button>
+                    <button class="pull-right btn btn-primary" type="submit" ><?php echo t('Save')?></button>
                 </div>
             </div>
 

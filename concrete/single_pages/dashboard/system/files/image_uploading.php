@@ -1,109 +1,59 @@
-<?php
-defined('C5_EXECUTE') or die('Access Denied.');
+<?php defined('C5_EXECUTE') or die("Access Denied."); ?>
 
-/* @var Concrete\Core\Page\View\PageView $view */
-/* @var Concrete\Core\Validation\CSRF\Token $token */
-/* @var Concrete\Core\Form\Service\Form $form */
+<?php echo Core::make('helper/concrete/dashboard')->getDashboardPaneHeaderWrapper(t('Image Uploading'), false, 'span8 offset2', false)?>
 
-/* @var array $manipulation_libraries */
-/* @var string $manipulation_library */
-/* @var int $jpeg_quality */
-/* @var int $png_compression */
-/* @var bool $use_exif_data_to_rotate_images */
-/* @var int $restrict_max_width */
-/* @var int $restrict_max_height */
-/* @var bool $use_exif_data_to_rotate_images */
-/* @var string|null $thumbnailOptionsURL */
-?>
-<form method="POST" action="<?= $view->action('save') ?>">
-    <?= $token->output('image-options') ?>
+<form method="post" id="file-access-extensions" action="<?php echo $view->action('save')?>" role="form">
+    <?php echo $validation_token->output('image_uploading');?>
 
-    <div class="form-group">
-        <?= $form->label('manipulation_library', t('Image Manipulation Library')) ?>
-        <?php
-        foreach ($manipulation_libraries as $id => $name) {
-            ?>
-            <div class="radio">
-                <label>
-                    <?= $form->radio('manipulation_library', $id, $id === $manipulation_library, ['required' => 'required']) ?>
-                    <?= h($name) ?>
-                    <?= t('(currently working: %s)', '<span class="ccm-check-manipulation-library" data-check-src="' . h($view->action('test_manipulation_library', $id, $token->generate('thumbnail-check-library-' . $id))) . '"><i class="fa fa-spinner fa-spin"></i></span>')?>
-                </label>
+    <div class="checkbox">
+        <label>
+            <?php echo $form->checkbox('restrict_uploaded_image_sizes', '1', $restrict_uploaded_image_sizes)?>
+            <span><?php echo t('Automatically resize uploaded images')?></span>
+        </label>
+    </div>
+
+    <div id="resizing-values" <?php echo ($restrict_uploaded_image_sizes ?  '' : 'style="display: none"');?>>
+        <div class="form-group">
+            <label for="restrict_max_width" class="control-label"><?php echo t('Maximum Width') ?></label>
+            <div class="input-group">
+                <input class="form-control" type="number" name="restrict_max_width" placeholder="1920" value="<?php echo $restrict_max_width?>">
+                <div class="input-group-addon"><?php echo t(/* i18n: short for pixels */ 'px') ?></div>
             </div>
-            <?php
-        }
-        ?>
-    </div>
+        </div>
 
-    <div class="form-group">
-        <?= $form->label('jpeg_quality', t('JPEG quality'), ['class' => 'launch-tooltip control-label', 'title' => t('JPEG quality ranges from 0 (worst quality, smaller file) to 100 (best quality, biggest file)')]) ?>
-        <?= $form->number('jpeg_quality', $jpeg_quality, ['required' => 'required', 'min' => '0', 'max' => '100']) ?>
-    </div>
+        <div class="form-group">
+            <label for="restrict_max_height" class="control-label"><?php echo t('Maximum Height') ?></label>
+            <div class="input-group">
+                <input class="form-control" type="number" name="restrict_max_height" placeholder="1080" value="<?php echo $restrict_max_height?>">
+                <div class="input-group-addon"><?php echo t(/* i18n: short for pixels */ 'px') ?></div>
+            </div>
+        </div>
 
-    <div class="form-group">
-        <?= $form->label('png_compression', t('PNG compression quality'), ['class' => 'launch-tooltip control-label', 'title' => t('PNG compression quality ranges from 0 (no compression) to 9 (maximum compression)')]) ?>
-        <?= $form->number('png_compression', $png_compression, ['required' => 'required', 'min' => '0', 'max' => '9']) ?>
-    </div>
-
-    <div class="form-group">
-        <?= $form->label('restrict_max_width', t('Maximum width of uploaded images'), ['class' => 'launch-tooltip', 'title' => t('Here you can set the maximum width of uploaded images: images wider that this value will be scaled down. Leave empty to allow any image width.')]) ?>
-        <div class="input-group">
-            <?= $form->number('restrict_max_width', $restrict_max_width > 0 ? $restrict_max_width : '', ['min' => '0']) ?>
-            <div class="input-group-addon"><?= t(/* i18n: short for pixels */ 'px') ?></div>
+        <div class="form-group">
+            <label for="restrict_resize_quality" class="control-label"><?php echo t('Image Compression Quality') ?></label>
+            <div class="input-group">
+                <input class="form-control" type="number" name="restrict_resize_quality" placeholder="85" value="<?php echo $restrict_resize_quality?>">
+                <div class="input-group-addon">%</div>
+            </div>
         </div>
     </div>
-    <div class="form-group">
-        <?= $form->label('restrict_max_height', t('Maximum height of uploaded images'), ['class' => 'launch-tooltip', 'title' => t('Here you can set the maximum height of uploaded images: images taller that this value will be scaled down. Leave empty to allow any image height.')]) ?>
-        <div class="input-group">
-            <?= $form->number('restrict_max_height', $restrict_max_height > 0 ? $restrict_max_height : '', ['min' => '0']) ?>
-            <div class="input-group-addon"><?= t(/* i18n: short for pixels */ 'px') ?></div>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <?= $form->label('', t('Other Options')) ?>
-        <div class="checkbox">
-            <label>
-                <?= $form->checkbox('use_exif_data_to_rotate_images', 1, $use_exif_data_to_rotate_images) ?>
-                <?= t('Use EXIF metadata to auto-rotate images uploaded images.') ?>
-            </label>
-        </div>
-    </div>
-
-    <?php
-    if ($thumbnailOptionsURL !== null) {
-        ?>
-        <div class="alert alert-info">
-            <?= t('Looking for thumbnail options? You can find them <a href="%s">here</a>.', $thumbnailOptionsURL) ?>
-        </div>
-        <?php
-    }
-    ?>
 
     <div class="ccm-dashboard-form-actions-wrapper">
         <div class="ccm-dashboard-form-actions">
-            <button class="pull-right btn btn-primary" type="submit"><?= t('Save') ?></button>
+            <button class="pull-right btn btn-primary" type="submit" value="file-access-extensions"><?php echo t('Save')?></button>
         </div>
     </div>
 </form>
-<script>
-$(window).load(function() {
-    function checked($container, ok) {
-        $container.html(
-            ok ? '<i class="fa fa-check" style="color: green"></i>' : '<i class="fa fa-remove" style="color: red"></i>'
-        );
+
+<?php echo Core::make('helper/concrete/dashboard')->getDashboardPaneFooterWrapper(false)?>
+
+<script type="text/javascript">
+$("input[name=restrict_uploaded_image_sizes]").click(function() {
+    if ($(this).is(":checked")) {
+        $("#resizing-values").show();
+    } else {
+        $("#resizing-values").hide();
     }
-    $('.ccm-check-manipulation-library').each(function() {
-        var $container = $(this);
-        $container.append($('<img style="visibility: hidden; width: 1px; height: 1px" />')
-            .on('load', function() {
-                checked($container, true);
-            })
-            .on('error', function() {
-                checked($container, false);
-            })
-            .attr('src', $container.data('check-src'))
-        );
-    });
 });
 </script>
+

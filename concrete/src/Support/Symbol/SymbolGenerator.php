@@ -4,7 +4,6 @@
  * Concrete5 symbol file generator.
  * Inspired by Laravel IDE Helper Generator by Barry vd. Heuvel <barryvdh@gmail.com>.
  */
-
 namespace Concrete\Core\Support\Symbol;
 
 use Concrete\Core\Foundation\ClassAliasList;
@@ -17,14 +16,7 @@ class SymbolGenerator
      *
      * @var ClassSymbol[]
      */
-    protected $classes = [];
-
-    /**
-     * All the alias namespaces.
-     *
-     * @var array
-     */
-    protected $aliasNamespaces = [''];
+    protected $classes = array();
 
     public function __construct()
     {
@@ -46,12 +38,7 @@ class SymbolGenerator
      */
     public function registerClass($alias, $class)
     {
-        $classSymbol = new ClassSymbol($alias, $class);
-        $this->classes[$alias] = $classSymbol;
-        $aliasNamespace = $classSymbol->getAliasNamespace();
-        if (!in_array($aliasNamespace, $this->aliasNamespaces, true)) {
-            $this->aliasNamespaces[] = $aliasNamespace;
-        }
+        $this->classes[$alias] = new ClassSymbol($alias, $class);
     }
 
     /**
@@ -65,36 +52,16 @@ class SymbolGenerator
      */
     public function render($eol = "\n", $padding = '    ', $methodFilter = null)
     {
-        $lines = [];
-        $lines[] = '<?php';
-        $lines[] = '';
-        $lines[] = '// Generated on ' . date('c');
-        foreach ($this->aliasNamespaces as $namespace) {
-            $lines[] = '';
-            $lines[] = rtrim("namespace {$namespace}");
-            $lines[] = '{';
-            $addNewline = false;
-            if ($namespace === '') {
-                $lines[] = "{$padding}die('Access Denied.');";
-                $addNewline = true;
+        $rendered = "<?php{$eol}namespace {{$eol}{$padding}die('Intended for use with IDE symbol matching only.');{$eol}";
+        $rendered .= $padding . "//Generated on " . date('r') . $eol;
+        foreach ($this->classes as $class) {
+            $rendered_class = $class->render($eol, $padding, $methodFilter);
+            if ($rendered_class !== '') {
+                $rendered .= $eol . $padding . str_replace($eol, $eol . $padding, rtrim($rendered_class)) . $eol;
             }
-            foreach ($this->classes as $class) {
-                if ($class->getAliasNamespace() === $namespace) {
-                    $rendered_class = $class->render($eol, $padding, $methodFilter);
-                    if ($rendered_class !== '') {
-                        if ($addNewline === true) {
-                            $lines[] = '';
-                        } else {
-                            $addNewline = true;
-                        }
-                        $lines[] = $padding . str_replace($eol, $eol . $padding, rtrim($rendered_class));
-                    }
-                }
-            }
-            $lines[] = '}';
         }
-        $lines[] = '';
+        $rendered .= '}' . $eol;
 
-        return implode($eol, $lines);
+        return $rendered;
     }
 }

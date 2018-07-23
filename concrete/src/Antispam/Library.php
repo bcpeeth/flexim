@@ -1,14 +1,14 @@
 <?php
 namespace Concrete\Core\Antispam;
 
-use Concrete\Core\Foundation\ConcreteObject;
+use Concrete\Core\Foundation\Object;
 use Concrete\Core\Support\Facade\Facade;
 use Loader;
 use Package;
 use Concrete\Core\Package\PackageList;
 use Core;
 
-class Library extends ConcreteObject
+class Library extends Object
 {
     /**
      * @var string

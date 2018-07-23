@@ -1,20 +1,14 @@
 <?php
-
 namespace Concrete\Core\Updater\Migrations\Migrations;
 
 use Concrete\Core\Config\Repository\Repository;
 use Concrete\Core\Support\Facade\Application;
 use Concrete\Core\Updater\Migrations\AbstractMigration;
-use Concrete\Core\Updater\Migrations\RepeatableMigrationInterface;
+use Doctrine\DBAL\Schema\Schema;
 
-class Version20170201000000 extends AbstractMigration implements RepeatableMigrationInterface
+class Version20170201000000 extends AbstractMigration
 {
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Updater\Migrations\AbstractMigration::upgradeDatabase()
-     */
-    public function upgradeDatabase()
+    public function up(Schema $schema)
     {
         $config = $this->getConfig();
 
@@ -31,12 +25,7 @@ class Version20170201000000 extends AbstractMigration implements RepeatableMigra
         }
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Updater\Migrations\AbstractMigration::downgradeDatabase()
-     */
-    public function downgradeDatabase()
+    public function down(Schema $schema)
     {
         $config = $this->getConfig();
 
@@ -55,7 +44,6 @@ class Version20170201000000 extends AbstractMigration implements RepeatableMigra
     protected function getConfig()
     {
         $app = Application::getFacadeApplication();
-
         return $app->make(Repository::class);
     }
 }

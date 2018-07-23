@@ -64,10 +64,10 @@ class Type extends \Concrete\Core\Entity\File\Image\Thumbnail\Type\Type implemen
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'ftTypeID', 'ftTypeHandle', 'ftTypeName', 'ftTypeWidth', 'ftTypeHeight', 'ftTypeIsRequired', 'ftTypeSizingMode', 'ftUpscalingEnabled', 'ftLimitedToFileSets', 'ftAssociatedFileSets'];
+            return ['__isInitialized__', 'ftTypeHandle', 'ftTypeName', 'ftTypeWidth', 'ftTypeHeight', 'ftTypeSizingMode', 'ftTypeIsRequired', 'ftTypeID'];
         }
 
-        return ['__isInitialized__', 'ftTypeID', 'ftTypeHandle', 'ftTypeName', 'ftTypeWidth', 'ftTypeHeight', 'ftTypeIsRequired', 'ftTypeSizingMode', 'ftUpscalingEnabled', 'ftLimitedToFileSets', 'ftAssociatedFileSets'];
+        return ['__isInitialized__', 'ftTypeHandle', 'ftTypeName', 'ftTypeWidth', 'ftTypeHeight', 'ftTypeSizingMode', 'ftTypeIsRequired', 'ftTypeID'];
     }
 
     /**
@@ -176,17 +176,6 @@ class Type extends \Concrete\Core\Entity\File\Image\Thumbnail\Type\Type implemen
     /**
      * {@inheritDoc}
      */
-    public function getID()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getID', []);
-
-        return parent::getID();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function setHandle($ftTypeHandle)
     {
 
@@ -209,78 +198,12 @@ class Type extends \Concrete\Core\Entity\File\Image\Thumbnail\Type\Type implemen
     /**
      * {@inheritDoc}
      */
-    public function setName($ftTypeName)
+    public function getID()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setName', [$ftTypeName]);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getID', []);
 
-        return parent::setName($ftTypeName);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getName()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getName', []);
-
-        return parent::getName();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getDisplayName($format = 'html')
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getDisplayName', [$format]);
-
-        return parent::getDisplayName($format);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setWidth($ftTypeWidth)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setWidth', [$ftTypeWidth]);
-
-        return parent::setWidth($ftTypeWidth);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getWidth()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getWidth', []);
-
-        return parent::getWidth();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setHeight($ftTypeHeight)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setHeight', [$ftTypeHeight]);
-
-        return parent::setHeight($ftTypeHeight);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getHeight()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getHeight', []);
-
-        return parent::getHeight();
+        return parent::getID();
     }
 
     /**
@@ -308,6 +231,28 @@ class Type extends \Concrete\Core\Entity\File\Image\Thumbnail\Type\Type implemen
     /**
      * {@inheritDoc}
      */
+    public function setName($ftTypeName)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setName', [$ftTypeName]);
+
+        return parent::setName($ftTypeName);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getName()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getName', []);
+
+        return parent::getName();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function setSizingMode($ftTypeSizingMode = 'proportional')
     {
 
@@ -330,28 +275,6 @@ class Type extends \Concrete\Core\Entity\File\Image\Thumbnail\Type\Type implemen
     /**
      * {@inheritDoc}
      */
-    public function isUpscalingEnabled()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'isUpscalingEnabled', []);
-
-        return parent::isUpscalingEnabled();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setIsUpscalingEnabled($value)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIsUpscalingEnabled', [$value]);
-
-        return parent::setIsUpscalingEnabled($value);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function getSizingModeDisplayName()
     {
 
@@ -363,34 +286,56 @@ class Type extends \Concrete\Core\Entity\File\Image\Thumbnail\Type\Type implemen
     /**
      * {@inheritDoc}
      */
-    public function setLimitedToFileSets($value)
+    public function getDisplayName($format = 'html')
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setLimitedToFileSets', [$value]);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getDisplayName', [$format]);
 
-        return parent::setLimitedToFileSets($value);
+        return parent::getDisplayName($format);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function isLimitedToFileSets()
+    public function setWidth($ftTypeWidth)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'isLimitedToFileSets', []);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setWidth', [$ftTypeWidth]);
 
-        return parent::isLimitedToFileSets();
+        return parent::setWidth($ftTypeWidth);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getAssociatedFileSets()
+    public function setHeight($ftTypeHeight)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getAssociatedFileSets', []);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setHeight', [$ftTypeHeight]);
 
-        return parent::getAssociatedFileSets();
+        return parent::setHeight($ftTypeHeight);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getWidth()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getWidth', []);
+
+        return parent::getWidth();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getHeight()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getHeight', []);
+
+        return parent::getHeight();
     }
 
     /**

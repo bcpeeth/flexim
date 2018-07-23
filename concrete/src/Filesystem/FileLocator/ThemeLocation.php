@@ -49,15 +49,14 @@ class ThemeLocation extends AbstractLocation
     public function getURL()
     {
         if ($this->pkgHandle) {
-            return REL_DIR_PACKAGES
+            return DIR_REL
             . '/'
             . $this->pkgHandle
             . '/'
             . DIRNAME_THEMES
-            . '/'
             . $this->themeHandle;
         } else {
-            return REL_DIR_APPLICATION . '/' . DIRNAME_THEMES . '/' . $this->themeHandle;
+            return DIR_REL . '/' . DIRNAME_THEMES . '/' . $this->themeHandle;
         }
     }
 }

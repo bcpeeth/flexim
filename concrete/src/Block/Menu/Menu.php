@@ -87,8 +87,6 @@ class Menu extends ContextMenu
             if ($btOriginal->supportsInlineEdit()) {
                 $editInline = true;
             }
-        } else {
-            $_bo = null;
         }
 
 
@@ -172,13 +170,7 @@ class Menu extends ContextMenu
             if ($canDesign || $canEditCustomTemplate || $canEditName || $canEditCacheSettings) {
                 $this->addItem(new DividerItem());
                 if ($canDesign || $canEditCustomTemplate) {
-                    if ($canDesign) {
-                        $menuItemText = t('Design &amp; Custom Template');
-                    }
-                    else {
-                        $menuItemText = t('Custom Template');
-                    }
-                    $this->addItem(new LinkItem('#', $menuItemText, [
+                    $this->addItem(new LinkItem('#', t('Design &amp; Custom Template'), [
                         'data-menu-action' => 'block_design',
                     ]));
                 }

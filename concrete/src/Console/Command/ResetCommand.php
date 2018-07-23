@@ -19,7 +19,6 @@ class ResetCommand extends Command
             ->setName('c5:reset')
             ->setDescription('Reset the concrete5 installation, deleting files and emptying the database')
             ->addEnvOption()
-            ->setCanRunAsRoot(false)
             ->addOption('force', 'f', InputOption::VALUE_NONE, 'Force the reset')
             ->setHelp(<<<EOT
 Returns codes:
@@ -54,16 +53,18 @@ EOT
             $sm = $cn->getSchemaManager();
             $tables = $sm->listTables();
             $output->writeln('<info>done.</info>');
+            $tableNames = [];
             foreach ($tables as $table) {
+                $tableNames[] = $table->getName();
                 foreach ($table->getForeignKeys() as $foreignKey) {
                     $output->write("Dropping foreign key {$table->getName()}.{$foreignKey->getName()}... ");
                     $sm->dropForeignKey($foreignKey, $table);
                     $output->writeln('<info>done.</info>');
                 }
             }
-            foreach ($tables as $table) {
-                $output->write("Dropping table {$table->getName()}... ");
-                $sm->dropTable($table);
+            foreach ($tableNames as $tableName) {
+                $output->write("Dropping table $tableName... ");
+                $sm->dropTable($tableName);
                 $output->writeln('<info>done.</info>');
             }
         }

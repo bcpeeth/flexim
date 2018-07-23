@@ -131,15 +131,14 @@ class PageView extends View
                         DIRNAME_THEMES . '/' . $this->themeHandle . '/' . $pt->getPageTemplateHandle() . '.php',
                         $this->themePkgHandle));
             } else {
-                $pTemplatePkgHandle = isset($this->pTemplatePkgHandle) ? $this->pTemplatePkgHandle : null;
                 $rec = $env->getRecord(
                     DIRNAME_PAGE_TEMPLATES . '/' . $this->c->getPageTemplateHandle() . '.php',
-                    $pTemplatePkgHandle);
+                    $this->pTemplatePkgHandle);
                 if ($rec->exists()) {
                     $this->setInnerContentFile(
                         $env->getPath(
                             DIRNAME_PAGE_TEMPLATES . '/' . $this->c->getPageTemplateHandle() . '.php',
-                            $pTemplatePkgHandle));
+                            $this->pTemplatePkgHandle));
                     $this->setViewTemplate(
                         $env->getPath(
                             DIRNAME_THEMES . '/' . $this->themeHandle . '/' . $this->controller->getThemeViewTemplate(),

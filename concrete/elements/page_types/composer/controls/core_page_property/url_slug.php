@@ -4,12 +4,12 @@ $draft = $control->getPageObject();
 ?>
 
 <div class="form-group ccm-composer-url-slug" data-composer-field="url_slug" style="position: relative">
-	<label class="control-label"><?=$label?></label>
+	<label class="control-label"><?php echo $label?></label>
     <?php if ($control->isPageTypeComposerControlRequiredByDefault() || $control->isPageTypeComposerFormControlRequiredOnThisRequest()) : ?>
-        <span class="label label-info"><?= t('Required') ?></span>
+        <span class="label label-info"><?php echo t('Required') ?></span>
     <?php endif; ?>
 	<?php if ($description): ?>
-	<i class="fa fa-question-circle launch-tooltip" title="" data-original-title="<?=$description?>"></i>
+	<i class="fa fa-question-circle launch-tooltip" title="" data-original-title="<?php echo $description?>"></i>
 	<?php endif; ?>
 
     <?php
@@ -19,11 +19,11 @@ $draft = $control->getPageObject();
         <i class="fa-refresh fa-spin fa ccm-composer-url-slug-loading"></i>
         <?php if (is_object($draft) && !$draft->isPageDraft()) {
     ?>
-            <div><a href="#" class="icon-link" data-composer-field="edit_url_slug"><i class="fa fa-pencil"></i></a> <span><?=$control->getPageTypeComposerControlDraftValue()?></span></div>
+            <div><a href="#" class="icon-link" data-composer-field="edit_url_slug"><i class="fa fa-pencil"></i></a> <span><?php echo $control->getPageTypeComposerControlDraftValue()?></span></div>
         <?php 
 } else {
     ?>
-            <?=$element?>
+            <?php echo $element?>
         <?php 
 } ?>
     </div>
@@ -40,7 +40,7 @@ $draft = $control->getPageObject();
 </style>
 
 <script type="text/javascript">
-    var slugHTML = '<?=addslashes($element)?>';
+    var slugHTML = '<?php echo addslashes($element)?>';
     $(function() {
         $('a[data-composer-field=edit_url_slug]').on('click', function(e) {
             e.preventDefault();
@@ -51,7 +51,7 @@ $draft = $control->getPageObject();
             $('div[data-composer-field=name] input').on('input', function() {
                 var input = $(this);
                 var send = {
-                    token: '<?=Loader::helper('validation/token')->generate('get_url_slug')?>',
+                    token: '<?php echo Loader::helper('validation/token')->generate('get_url_slug')?>',
                     name: input.val()
                 };
                 var parentID = input.closest('form').find('input[name=cParentID]').val();
@@ -62,7 +62,7 @@ $draft = $control->getPageObject();
                 concreteComposerAddPageTimer = setTimeout(function() {
                     $('.ccm-composer-url-slug-loading').show();
                     $.post(
-                        '<?=REL_DIR_FILES_TOOLS_REQUIRED?>/pages/url_slug',
+                        '<?php echo REL_DIR_FILES_TOOLS_REQUIRED?>/pages/url_slug',
                         send,
                         function(r) {
                             $('.ccm-composer-url-slug-loading').hide();

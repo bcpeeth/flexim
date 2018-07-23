@@ -64,10 +64,10 @@ class DateTimeSettings extends \Concrete\Core\Entity\Attribute\Key\Settings\Date
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'akUseNowIfEmpty', 'akDateDisplayMode', 'akTextCustomFormat', 'akTimeResolution', 'key'];
+            return ['__isInitialized__', 'akUseNowIfEmpty', 'akDateDisplayMode', 'akTimeResolution', 'key'];
         }
 
-        return ['__isInitialized__', 'akUseNowIfEmpty', 'akDateDisplayMode', 'akTextCustomFormat', 'akTimeResolution', 'key'];
+        return ['__isInitialized__', 'akUseNowIfEmpty', 'akDateDisplayMode', 'akTimeResolution', 'key'];
     }
 
     /**
@@ -215,28 +215,6 @@ class DateTimeSettings extends \Concrete\Core\Entity\Attribute\Key\Settings\Date
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setMode', [$mode]);
 
         return parent::setMode($mode);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getTextCustomFormat()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getTextCustomFormat', []);
-
-        return parent::getTextCustomFormat();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setTextCustomFormat($textCustomFormat)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setTextCustomFormat', [$textCustomFormat]);
-
-        return parent::setTextCustomFormat($textCustomFormat);
     }
 
     /**

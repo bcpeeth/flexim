@@ -9,10 +9,10 @@ $subject = $siteName.' '.t("Registration - Approval Required");
 ob_start()
 
 ?>
-<h2><?= t('Registration Approval Required') ?></h2>
-<?= t("You have registered on %s. Your account will be approved by the administrator.", $siteName) ?><br />
-<?= t('User Name') ?>: <b><?= $uName ?></b><br />
-<?= t('Email') ?>: <b><?= $uEmail ?></b><br />
+<h2><?php echo t('Registration Approval Required') ?></h2>
+<?php echo t("You have registered on %s. Your account will be approved by the administrator.", $siteName) ?><br />
+<?php echo t('User Name') ?>: <b><?php echo $uName ?></b><br />
+<?php echo t('Email') ?>: <b><?php echo $uEmail ?></b><br />
 <br />
 
 <?php
@@ -28,12 +28,12 @@ $bodyHTML = ob_get_clean();
 ob_start();
 
 ?>
-<?= t('Registration Approval Required') ?>
+<?php echo t('Registration Approval Required') ?>
 
-<?= t("You have registered on %s. Your account will be approved by the administrator.", $siteName) ?>
+<?php echo t("You have registered on %s. Your account will be approved by the administrator.", $siteName) ?>
 
-<?= t('User Name') ?>: <?= $uName ?>
-<?= t('Email') ?>: <?= $uEmail ?>
+<?php echo t('User Name') ?>: <?php echo $uName ?>
+<?php echo t('Email') ?>: <?php echo $uEmail ?>
 
 <?php
 

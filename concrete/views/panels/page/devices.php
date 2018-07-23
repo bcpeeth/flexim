@@ -9,7 +9,7 @@ use Concrete\Core\Device\Device;
         <a href="" class="ccm-panel-back" data-panel-navigation="back">
             <span class="fa fa-chevron-left"></span>
         </a>
-        <a href="" class="ccm-panel-devices-back" data-panel-navigation="back"><?= t('Devices') ?></a>
+        <a href="" class="ccm-panel-devices-back" data-panel-navigation="back"><?php echo t('Devices') ?></a>
     </header>
 
     <div class="ccm-panel-content-inner">
@@ -51,7 +51,7 @@ use Concrete\Core\Device\Device;
         foreach ($organized as $type => $device_list) {
             ?>
 
-            <h5><?= $categories[$type] ?></h5>
+            <h5><?php echo $categories[$type] ?></h5>
             <div class="ccm-menu-device-set">
                 <ul>
                     <?php
@@ -63,25 +63,25 @@ use Concrete\Core\Device\Device;
                             'device' => $device->getHandle(), ));
                 ?>
                         <li class="ccm-panel-devicelist-device"
-                            data-device-brand="<?= h($device->getBrand()) ?>"
-                            data-device-name="<?= h($device->getName()) ?>"
-                            data-device-handle="<?= h($device->getHandle()) ?>"
-                            data-device-width="<?= h($device->getWidth()) ?>"
-                            data-device-height="<?= h($device->getHeight()) ?>"
-                            data-device-agent="<?= h($device->getUserAgent()) ?>"
-                            data-device-ratio="<?= h($device->getPixelRatio()) ?>"
-                            data-device-type="<?= $type ?>"
-                            data-device-preview-url="<?= $device_preview_url ?>"
-                            data-device-orientation="<?= h($device->getDefaultOrientation()) ?>">
-                            <script type="text/html" class="viewport"><?= $device->getViewportHTML() ?></script>
+                            data-device-brand="<?php echo h($device->getBrand()) ?>"
+                            data-device-name="<?php echo h($device->getName()) ?>"
+                            data-device-handle="<?php echo h($device->getHandle()) ?>"
+                            data-device-width="<?php echo h($device->getWidth()) ?>"
+                            data-device-height="<?php echo h($device->getHeight()) ?>"
+                            data-device-agent="<?php echo h($device->getUserAgent()) ?>"
+                            data-device-ratio="<?php echo h($device->getPixelRatio()) ?>"
+                            data-device-type="<?php echo $type ?>"
+                            data-device-preview-url="<?php echo $device_preview_url ?>"
+                            data-device-orientation="<?php echo h($device->getDefaultOrientation()) ?>">
+                            <script type="text/html" class="viewport"><?php echo $device->getViewportHTML() ?></script>
 
                             <a href="#" class="ccm-device-select">
                                 <div class="ccm-panel-device-name row">
                                     <div class="ccm-panel-device-name-icon">
-                                        <i class="<?= $device->getIconClass() ?>"></i>
+                                        <i class="<?php echo $device->getIconClass() ?>"></i>
                                     </div>
                                     <div class="ccm-panel-device-name-label">
-                                        <span><?= h($device->getName()) ?></span>
+                                        <span><?php echo h($device->getName()) ?></span>
                                     </div>
                                 </div>
                                 <div class="ccm-panel-device-resolution">

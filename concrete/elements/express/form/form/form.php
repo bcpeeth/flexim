@@ -2,8 +2,8 @@
 defined('C5_EXECUTE') or die("Access Denied.");
 ?>
 
-<input type="hidden" name="express_form_id" value="<?=$form->getID()?>">
-<?=$token->output('express_form')?>
+<input type="hidden" name="express_form_id" value="<?php echo $form->getID()?>">
+<?php echo $token->output('express_form')?>
 
 <div class="ccm-dashboard-express-form">
     <?php
@@ -11,7 +11,7 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
         <fieldset>
             <?php if ($fieldSet->getTitle()) { ?>
-                <legend><?= h($fieldSet->getTitle()) ?></legend>
+                <legend><?php echo h($fieldSet->getTitle()) ?></legend>
             <?php } ?>
 
             <?php

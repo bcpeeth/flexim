@@ -1,7 +1,4 @@
-/* jshint unused:vars, undef:true, browser:true, jquery:true */
-/* global _, Concrete, ConcreteEvent, ConcretePanelManager, ConcreteToolbar, CCM_SECURITY_TOKEN, CCM_DISPATCHER_FILENAME */
-
-;(function(window, $) {
+(function (window, $, _, Concrete) {
     'use strict';
 
     var BlockType = Concrete.BlockType = function BlockType(elem, edit_mode, dragger, default_area) {
@@ -16,6 +13,7 @@
             my.setAttr('defaultArea', default_area || null);
 
             if (default_area) {
+                var types = default_area.getBlockTypes();
                 if (default_area.acceptsBlockType(my.getHandle())) {
                     my.handleDefaultArea();
                 } else {
@@ -45,11 +43,11 @@
                 if (!ul.children().length) {
                     $(this).remove();
                 }
-            });
+            })
         },
 
         handleClick: function() {
-            var my = this, default_area = my.getAttr('defaultArea');
+            var my = this, default_area = my.getAttr('defaultArea'), panel;
 
             ConcretePanelManager.exitPanelMode(function() {
                 _.defer(function() {
@@ -100,15 +98,13 @@
                 dragAreaBlockID = 0,
                 dragAreaBlock = drag_area.getBlock(),
                 is_inline = !!elem.data('supports-inline-add'),
-                has_add = !!elem.data('has-add-template'),
-                templates,
-                k;
+                has_add = !!elem.data('has-add-template');
 
             if (dragAreaBlock) {
                 dragAreaBlockID = dragAreaBlock.getId();
             }
 
-            $.fn.dialog.closeAll();
+            jQuery.fn.dialog.closeAll();
 
             if (!has_add) {
 
@@ -124,9 +120,9 @@
                     dragAreaBlockID: dragAreaBlockID
                 };
 
-                templates = area.getCustomTemplates();
+                var templates = area.getCustomTemplates();
                 if (templates) {
-                    for (k in templates) {
+                    for (var k in templates) {
                         postData[postData.length] = {
                             name: 'arCustomTemplates[' + k + ']',
                             value: templates[k]
@@ -168,12 +164,12 @@
                     'dragAreaBlockID': dragAreaBlockID
                 });
             } else {
-                var customTemplateString = '';
-                templates = area.getCustomTemplates();
-                    
+
+                var templates = area.getCustomTemplates(),
+                    customTemplateString = '';
 
                 if (templates) {
-                    for (k in templates) {
+                    for (var k in templates) {
                         customTemplateString += '&arCustomTemplates[' + k + ']=' + templates[k];
                     }
                 }
@@ -199,11 +195,12 @@
                     width: parseInt(elem.data('dialog-width'), 10),
                     height: parseInt(elem.data('dialog-height'), 10) + 20,
                     title: elem.data('dialog-title'),
-                    href: CCM_DISPATCHER_FILENAME + '/ccm/system/dialogs/page/add_block?cID=' + cID + '&btID=' + block_type_id + '&arHandle=' + encodeURIComponent(area_handle) + customTemplateString
+                    href: CCM_DISPATCHER_FILENAME + '/ccm/system/dialogs/page/add_block?cID=' + cID + '&btID=' + block_type_id + '&arHandle=' + encodeURIComponent(area_handle)
+                    + customTemplateString
                 });
             }
         }
     });
 
 
-})(window, jQuery);
+}(window, jQuery, _, Concrete));

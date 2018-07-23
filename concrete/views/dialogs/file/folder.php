@@ -1,6 +1,6 @@
 <?php defined('C5_EXECUTE') or die("Access Denied."); ?>
 
-<form method="post" data-dialog-form="move-to-folder" action="<?=$controller->action('submit')?>">
+<form method="post" data-dialog-form="move-to-folder" action="<?php echo $controller->action('submit')?>">
 
     <div class="ccm-ui">
         <?php Loader::element('files/move_to_folder', $func = array(
@@ -20,8 +20,8 @@
     </div>
 
     <div class="dialog-buttons">
-        <button class="btn btn-default pull-left" data-dialog-action="cancel"><?=t('Cancel')?></button>
-        <button type="button" data-dialog-action="submit" class="btn btn-primary pull-right"><?=t('Save')?></button>
+        <button class="btn btn-default pull-left" data-dialog-action="cancel"><?php echo t('Cancel')?></button>
+        <button type="button" data-dialog-action="submit" class="btn btn-primary pull-right"><?php echo t('Save')?></button>
     </div>
 
 </form>

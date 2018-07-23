@@ -128,7 +128,6 @@ $(function() {
                 data: data,
                 success: function(r) {
                     $types.find('option').eq(0).prop('selected', true);
-                    $types.find('select').trigger('change');
                     $types.closest('.ui-dialog-content').scrollTop(0);
                     $tabAdd.find('input[name=question]').val('');
                     $tabAdd.find('input[name=required][value=0]').prop('checked', true);
@@ -212,10 +211,10 @@ $(function() {
                     $fields.hide();
 
                     _.each(r.assets.css, function(css) {
-                        ConcreteAssetLoader.loadCSS(css);
+                        ccm_addHeaderItem(css, 'CSS');
                     });
                     _.each(r.assets.javascript, function(javascript) {
-                        ConcreteAssetLoader.loadJavaScript(javascript);
+                        ccm_addHeaderItem(javascript, 'JAVASCRIPT');
                     });
 
                     $editQuestionInner.html(questionTemplate({
@@ -264,10 +263,10 @@ $(function() {
                     loader: false,
                     success: function(r) {
                         _.each(r.assets.css, function(css) {
-                            ConcreteAssetLoader.loadCSS(css);
+                            ccm_addHeaderItem(css, 'CSS');
                         });
                         _.each(r.assets.javascript, function(javascript) {
-                            ConcreteAssetLoader.loadJavaScript(javascript);
+                            ccm_addHeaderItem(javascript, 'JAVASCRIPT');
                         });
                         if (r.showControlName) {
                             $controlName.show();

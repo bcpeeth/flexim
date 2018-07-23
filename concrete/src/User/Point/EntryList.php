@@ -1,9 +1,7 @@
 <?php
 namespace Concrete\Core\User\Point;
 
-use Concrete\Core\Database\Connection\Connection;
 use Concrete\Core\Legacy\DatabaseItemList;
-use Concrete\Core\Support\Facade\Application;
 use Loader;
 use Concrete\Core\User\Point\Entry as UserPointEntry;
 
@@ -18,11 +16,10 @@ class EntryList extends DatabaseItemList
 
     protected function setBaseQuery()
     {
-        $db = Application::getFacadeApplication()->make(Connection::class);
         $this->setQuery('SELECT UserPointHistory.upID
 			FROM UserPointHistory
 			LEFT JOIN UserPointActions ON UserPointActions.upaID = UserPointHistory.upaID
-			LEFT JOIN ' . $db->getDatabasePlatform()->quoteSingleIdentifier('Groups') . ' ON UserPointActions.gBadgeID = Groups.gID
+			LEFT JOIN Groups ON UserPointActions.gBadgeID = Groups.gID
 			LEFT JOIN Users ON UserPointHistory.upuID = Users.uID
 		');
     }

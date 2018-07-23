@@ -3,15 +3,15 @@ defined('C5_EXECUTE') or die("Access Denied.");
 ?>
 
 <div class="form-group">
-	<label class="control-label"><?=$label?></label>
-    <?php if ($control->isPageTypeComposerFormControlRequiredOnThisRequest()) : ?>
-        <span class="label label-info"><?= t('Required') ?></span>
+	<label class="control-label"><?php echo $label?></label>
+    <?php if ($control->isPageTypeComposerControlRequiredByDefault() || $control->isPageTypeComposerFormControlRequiredOnThisRequest()) : ?>
+        <span class="label label-info"><?php echo t('Required') ?></span>
     <?php endif; ?>
 	<?php if ($description): ?>
-	<i class="fa fa-question-circle launch-tooltip" title="" data-original-title="<?=$description?>"></i>
+	<i class="fa fa-question-circle launch-tooltip" title="" data-original-title="<?php echo $description?>"></i>
 	<?php endif; ?>
 	<div data-composer-field="name">
-		<?=$form->text($this->field('name'), $control->getPageTypeComposerControlDraftValue(), ['autofocus' => 'autofocus'])?>
+		<?php echo $form->text($this->field('name'), $control->getPageTypeComposerControlDraftValue(), ['autofocus' => 'autofocus'])?>
 	</div>
 </div>
 
@@ -23,7 +23,7 @@ $(function() {
 		$('div[data-composer-field=name] input').on('keyup', function() {
 			var input = $(this);
 			var send = {
-				token: '<?=Loader::helper('validation/token')->generate('get_url_slug')?>',
+				token: '<?php echo Loader::helper('validation/token')->generate('get_url_slug')?>',
 				name: input.val()
 			};
 			var parentID = input.closest('form').find('input[name=cParentID]').val();
@@ -34,7 +34,7 @@ $(function() {
 			concreteComposerAddPageTimer = setTimeout(function() {
 				$('.ccm-composer-url-slug-loading').show();
 				$.post(
-					'<?=REL_DIR_FILES_TOOLS_REQUIRED?>/pages/url_slug',
+					'<?php echo REL_DIR_FILES_TOOLS_REQUIRED?>/pages/url_slug',
 					send,
 					function(r) {
 						$('.ccm-composer-url-slug-loading').hide();

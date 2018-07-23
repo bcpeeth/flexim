@@ -51,7 +51,7 @@ class Controller extends BlockController
     {
         $this->list = new PageList();
         $this->list->disableAutomaticSorting();
-        $this->list->setNameSpace('b' . $this->bID);
+        //$pl->setNameSpace('b' . $this->bID);
 
         $cArray = [];
 
@@ -64,9 +64,6 @@ class Controller extends BlockController
                 break;
             case 'chrono_asc':
                 $this->list->sortByPublicDate();
-                break;
-            case 'modified_desc':
-                $this->list->sortByDateModifiedDescending();
                 break;
             case 'random':
                 $this->list->sortBy('RAND()');
@@ -82,17 +79,17 @@ class Controller extends BlockController
                 break;
         }
 
-        $now = Core::make('helper/date')->toDB();
+        $today = date('Y-m-d');
         $end = $start = null;
 
         switch ($this->filterDateOption) {
             case 'now':
-                $start = date('Y-m-d').' 00:00:00';
-                $end = $now;
+                $start = "$today 00:00:00";
+                $end = "$today 23:59:59";
                 break;
 
             case 'past':
-                $end = $now;
+                $end = "$today 23:59:59";
 
                 if ($this->filterDateDays > 0) {
                     $past = date('Y-m-d', strtotime("-{$this->filterDateDays} days"));
@@ -101,7 +98,7 @@ class Controller extends BlockController
                 break;
 
             case 'future':
-                $start = $now;
+                $start = "$today 00:00:00";
 
                 if ($this->filterDateDays > 0) {
                     $future = date('Y-m-d', strtotime("+{$this->filterDateDays} days"));
@@ -155,7 +152,7 @@ class Controller extends BlockController
             $ak = CollectionKey::getByHandle($this->relatedTopicAttributeKeyHandle);
             if (is_object($ak)) {
                 $topics = $c->getAttribute($ak->getAttributeKeyHandle());
-                if (is_array($topics) && count($topics) > 0) {
+                if (count($topics) > 0 && is_array($topics)) {
                     $topic = $topics[array_rand($topics)];
                     $this->list->filter('p.cID', $c->getCollectionID(), '<>');
                     $this->list->filterByTopic($topic);
@@ -417,7 +414,7 @@ class Controller extends BlockController
         $args['num'] = ($args['num'] > 0) ? $args['num'] : 0;
         $args['cThis'] = ($args['cParentID'] == $this->cID) ? '1' : '0';
         $args['cThisParent'] = ($args['cParentID'] == $this->cPID) ? '1' : '0';
-        $args['cParentID'] = ($args['cParentID'] == 'OTHER') ? (empty($args['cParentIDValue']) ? null : $args['cParentIDValue']) : $args['cParentID'];
+        $args['cParentID'] = ($args['cParentID'] == 'OTHER') ? $args['cParentIDValue'] : $args['cParentID'];
         if (!$args['cParentID']) {
             $args['cParentID'] = 0;
         }
@@ -499,7 +496,7 @@ class Controller extends BlockController
         if (isset($this->pageListTitle) && $this->pageListTitle) {
             return false;
         }
-        if (empty($pages)) {
+        if (count($pages) == 0) {
             if ($this->noResultsMessage) {
                 return false;
             } else {

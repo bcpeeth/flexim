@@ -1,13 +1,9 @@
-/* jshint unused:vars, undef:true, browser:true, jquery:true */
-/* global _, CCM_TOOLS_PATH, CCM_DISPATCHER_FILENAME, ConcreteMenu, ConcreteMenuManager */ 
-
-;(function(global, $) {
-    'use strict';
+!function(global, $, _) {
+	'use strict';
 
 	function ConcreteFileMenu($element, options) {
-		var my = this;
-
-		options = options || {};
+		var my = this, 
+			options = options || {};
 
 		options = $.extend({
 			'container': false,
@@ -56,15 +52,15 @@
 			});
 			return false;
 		});
-	};
+	}
 
 	// jQuery Plugin
 	$.fn.concreteFileMenu = function(options) {
 		return $.each($(this), function(i, obj) {
 			new ConcreteFileMenu($(this), options);
 		});
-	};
+	}
 
 	global.ConcreteFileMenu = ConcreteFileMenu;
 
-})(this, jQuery);
+}(this, $, _);

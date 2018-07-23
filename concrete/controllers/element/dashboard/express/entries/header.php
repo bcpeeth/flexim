@@ -42,16 +42,13 @@ class Header extends ElementController
         $this->exportURL = $exportURL;
     }
 
-    public function __construct($entity, $page = null)
+    public function __construct($entity, $page)
     {
         parent::__construct();
         $this->entity = $entity;
-        
-        if ($page != null) {
-            $this->page = $page;
-            $this->setCreateURL(\URL::to($page->getCollectionPath(), 'create_entry', $entity->getID()));
-            $this->setExportURL(\URL::to($page->getCollectionPath(), 'csv_export', $entity->getEntityResultsNodeId()));
-        }
+        $this->page = $page;
+        $this->setCreateURL(\URL::to($page->getCollectionPath(), 'create_entry', $entity->getID()));
+        $this->setExportURL(\URL::to($page->getCollectionPath(), 'csv_export', $entity->getEntityResultsNodeId()));
     }
 
     /**

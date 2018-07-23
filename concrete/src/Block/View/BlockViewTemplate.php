@@ -41,11 +41,6 @@ class BlockViewTemplate
             if (is_object($c)) {
                 $this->theme = $c->getCollectionThemeObject();
             }
-        } else {
-            $c = \Page::getCurrentPage();
-            if ($c) {
-                $this->theme = $c->getCollectionThemeObject();
-            }
         }
         if ($packageList) {
             $this->setPackageList($packageList);

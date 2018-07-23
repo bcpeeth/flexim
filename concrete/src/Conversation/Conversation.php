@@ -2,12 +2,12 @@
 namespace Concrete\Core\Conversation;
 
 use Loader;
-use Concrete\Core\Foundation\ConcreteObject;
+use Concrete\Core\Foundation\Object;
 use Page;
 use Config;
 use Concrete\Core\Conversation\Message\MessageList as ConversationMessageList;
 
-class Conversation extends ConcreteObject implements \Concrete\Core\Permission\ObjectInterface
+class Conversation extends Object implements \Concrete\Core\Permission\ObjectInterface
 {
     const POSTING_ENABLED = 10;
     const POSTING_DISABLED_MANUALLY = 5;

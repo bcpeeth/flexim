@@ -1,12 +1,12 @@
 <?php
 namespace Concrete\Core\Page\Type\Composer;
 
-use Concrete\Core\Foundation\ConcreteObject;
+use Concrete\Core\Foundation\Object;
 use Concrete\Core\Page\Type\Type;
 use PageType;
 use Loader;
 
-class FormLayoutSet extends ConcreteObject
+class FormLayoutSet extends Object
 {
     public function getPageTypeComposerFormLayoutSetID()
     {

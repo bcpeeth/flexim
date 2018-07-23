@@ -12,7 +12,7 @@
  */
 namespace Concrete\Core\Utility\Service;
 
-use Concrete\Core\Foundation\ConcreteObject;
+use Concrete\Core\Foundation\Object;
 use Config;
 use DOMDocument;
 use Patchwork\Utf8;
@@ -222,7 +222,7 @@ class Text
      */
     public function camelcase($string)
     {
-        return ConcreteObject::camelcase($string);
+        return Object::camelcase($string);
     }
 
     /**
@@ -332,7 +332,7 @@ class Text
      */
     public function uncamelcase($string)
     {
-        return ConcreteObject::uncamelcase($string);
+        return Object::uncamelcase($string);
     }
 
     /**

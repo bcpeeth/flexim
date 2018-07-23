@@ -37,7 +37,6 @@ class Delete extends Node
             $response = new EditResponse();
             $response->setMessage(t('%s deleted successfully.', $node->getTreeNodeDisplayName()));
             $response->setAdditionalDataAttribute('treeNodeID', $treeNodeID);
-            $response->setAdditionalDataAttribute('treeJSONObject', $node->getJSONObject());
 
             $node->delete();
             return new JsonResponse($response);

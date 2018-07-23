@@ -77,7 +77,7 @@ class Key implements AttributeKeyInterface, ExportableInterface, ControlInterfac
     protected $type;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\Concrete\Core\Entity\Attribute\Category", inversedBy="keys")
+     * @ORM\ManyToOne(targetEntity="\Concrete\Core\Entity\Attribute\Category")
      * @ORM\JoinColumn(name="akCategoryID", referencedColumnName="akCategoryID")
      **/
     protected $category;

@@ -19,20 +19,20 @@ if (is_object($targetPage)) {
 
 <div class="alert alert-info" style="display: none" id="ccm-page-type-composer-form-save-status"></div>
 
-    <input type="hidden" name="ptID" value="<?=$pagetype->getPageTypeID()?>" />
+    <input type="hidden" name="ptID" value="<?php echo $pagetype->getPageTypeID()?>" />
 
 <?php foreach ($fieldsets as $cfl) {
     ?>
 	<fieldset>
 		<?php if ($cfl->getPageTypeComposerFormLayoutSetDisplayName()) {
     ?>
-			<legend><?=$cfl->getPageTypeComposerFormLayoutSetDisplayName()?></legend>
+			<legend><?php echo $cfl->getPageTypeComposerFormLayoutSetDisplayName()?></legend>
 		<?php 
 }
     ?>
 		<?php if ($cfl->getPageTypeComposerFormLayoutSetDisplayDescription()) {
     ?>
-			<span class="help-block"><?=$cfl->getPageTypeComposerFormLayoutSetDisplayDescription()?></span>
+			<span class="help-block"><?php echo $cfl->getPageTypeComposerFormLayoutSetDisplayDescription()?></span>
 		<?php 
 }
     ?>

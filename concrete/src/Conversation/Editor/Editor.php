@@ -1,16 +1,16 @@
 <?php
 namespace Concrete\Core\Conversation\Editor;
 
-use Concrete\Core\Conversation\Conversation;
+use Conversation;
 use Core;
 use Database;
 use Environment;
 use Concrete\Core\Conversation\Message\Message;
-use Concrete\Core\Foundation\ConcreteObject;
+use Concrete\Core\Foundation\Object;
 use Package;
 use Concrete\Core\Package\PackageList;
 
-abstract class Editor extends ConcreteObject
+abstract class Editor extends Object
 {
     /** @var string */
     protected $cnvEditorHandle;
@@ -214,8 +214,14 @@ abstract class Editor extends ConcreteObject
      */
     public function outputConversationEditorAddMessageForm()
     {
-        \View::element(DIRNAME_CONVERSATIONS . '/' . DIRNAME_CONVERSATION_EDITOR . '/' .
-            $this->cnvEditorHandle . '/message', ['editor' => $this], $this->getPackageHandle());
+        $env = Environment::get();
+        $path = $env->getPath(
+            DIRNAME_ELEMENTS . '/' . DIRNAME_CONVERSATIONS . '/' . DIRNAME_CONVERSATION_EDITOR . '/' .
+            $this->cnvEditorHandle . '/' . FILENAME_CONVERSATION_EDITOR_FORM_MESSAGE,
+            $this->getPackageHandle()
+        );
+        $editor = $this; //$editor used in the element
+        include $path;
     }
 
     /**
@@ -223,8 +229,14 @@ abstract class Editor extends ConcreteObject
      */
     public function outputConversationEditorReplyMessageForm()
     {
-        \View::element(DIRNAME_CONVERSATIONS . '/' . DIRNAME_CONVERSATION_EDITOR . '/' .
-            $this->cnvEditorHandle . '/reply', ['editor' => $this], $this->getPackageHandle());
+        $env = Environment::get();
+        $path = $env->getPath(
+            DIRNAME_ELEMENTS . '/' . DIRNAME_CONVERSATIONS . '/' . DIRNAME_CONVERSATION_EDITOR . '/' .
+            $this->cnvEditorHandle . '/' . FILENAME_CONVERSATION_EDITOR_FORM_REPLY,
+            $this->getPackageHandle()
+        );
+        $editor = $this; //$editor used in the element
+        include $path;
     }
 
     /**
@@ -244,11 +256,11 @@ abstract class Editor extends ConcreteObject
         if (isset($config['htmlawed'])) {
             $default = array('safe' => 1, 'elements' => 'p, br, strong, em, strike, a');
             $conf = array_merge($default, (array) $config['htmlawed']);
-            $result = htmLawed($cnvMessageBody, $conf);
+            $lawed = htmLawed($cnvMessageBody, $conf);
         } else {
-            $result = $cnvMessageBody;
+            $lawed = $cnvMessageBody;
         }
-        if (isset($config['mention']) && $config['mention'] !== false) {
+        if ($config['mention'] !== false) {
             $users = $cnv->getConversationMessageUsers();
             $needle = array();
             $haystack = array();
@@ -257,26 +269,10 @@ abstract class Editor extends ConcreteObject
                 $haystack[] = "<a href='" . $user->getUserPublicProfileURL() . "'>'@" . $user->getUserName() . "</a>";
             }
 
-            $result = str_ireplace($needle, $haystack, $result);
+            return str_ireplace($needle, $haystack, $lawed);
         }
 
-        // Replace any potential XSS
-        $result = $this->removeJavascriptLinks($result);
-        return $result;
-    }
-
-    /**
-     * Replace javascript links with dummy links
-     *
-     * @param string $html
-     * @return string 
-     */
-    protected function removeJavascriptLinks($html)
-    {
-        // Use regex to replace javascript links with javascript:void
-        $html = preg_replace('/\bhref\s*=\s*["\']?\s*(javascript|data)\s*:/i', 'data-blocked-$0/', $html);
-
-        return $html;
+        return $lawed;
     }
 
     /**

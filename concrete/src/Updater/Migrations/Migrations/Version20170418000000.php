@@ -1,18 +1,14 @@
 <?php
-
 namespace Concrete\Core\Updater\Migrations\Migrations;
 
+use Concrete\Core\Database\DatabaseStructureManager;
 use Concrete\Core\Updater\Migrations\AbstractMigration;
-use Concrete\Core\Updater\Migrations\RepeatableMigrationInterface;
+use Doctrine\DBAL\Schema\Schema;
+use ORM;
 
-class Version20170418000000 extends AbstractMigration implements RepeatableMigrationInterface
+class Version20170418000000 extends AbstractMigration
 {
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Updater\Migrations\AbstractMigration::upgradeDatabase()
-     */
-    public function upgradeDatabase()
+    public function up(Schema $schema)
     {
         $this->refreshEntities([
             // Technically only the notification form submission entity is new but we need all of the entities
@@ -21,5 +17,9 @@ class Version20170418000000 extends AbstractMigration implements RepeatableMigra
             'Concrete\Core\Entity\Express\Entry',
             'Concrete\Core\Entity\Notification\NewFormSubmissionNotification',
         ]);
+    }
+
+    public function down(Schema $schema)
+    {
     }
 }

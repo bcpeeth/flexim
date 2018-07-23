@@ -6,7 +6,7 @@ defined('C5_EXECUTE') or die("Access Denied.");
 <div data-container="editable-fields">
 
 <section>
-	<h4><?=t('Other Attributes')?></h4>
+	<h4><?php echo t('Other Attributes')?></h4>
 	<?php
 
     Loader::element('attribute/editable_list', array(
@@ -26,7 +26,7 @@ defined('C5_EXECUTE') or die("Access Denied.");
 		data: [
 			<?php foreach ($users as $ui) {
     ?>
-				{'name': 'item[]', 'value': '<?=$ui->getUserID()?>'},
+				{'name': 'item[]', 'value': '<?php echo $ui->getUserID()?>'},
 			<?php 
 } ?>	
 		]

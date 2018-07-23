@@ -8,11 +8,6 @@ use Concrete\Core\Application\Application;
  */
 abstract class Provider
 {
-    /**
-     * @var Application
-     */
-    protected $app;
-
     public function __construct(Application $app)
     {
         $this->app = $app;
@@ -25,6 +20,8 @@ abstract class Provider
 
     public function provides()
     {
-        return [];
+        return array();
     }
+
+
 }

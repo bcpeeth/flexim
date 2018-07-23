@@ -41,7 +41,7 @@ $types = $ch->serializeUploadFileExtensions($types);
 $valt = Loader::helper('validation/token');
 ?>
 <div class="ccm-ui" id="ccm-file-manager-import-files">
-<?=Core::make('helper/concrete/ui')->tabs([
+<?php echo Core::make('helper/concrete/ui')->tabs([
     ['local', t('Your Computer'), true],
     ['incoming', t('Incoming Directory')],
     ['remote', t('Remote Files')],
@@ -128,13 +128,13 @@ ConcreteFileImportDialog = {
     }
 ?>
 <div id="ccm-tab-content-local" class="ccm-tab-content">
-    <form action="<?=URL::to('/ccm/system/file/upload')?>"
+    <form action="<?php echo URL::to('/ccm/system/file/upload')?>"
           class="dropzone"
           >
-        <?=Core::make('token')->output()?>
+        <?php echo Core::make('token')->output()?>
 
         <?php if (isset($_REQUEST['currentFolder'])) { ?>
-            <input type="hidden" name="currentFolder" value="<?=h($_REQUEST['currentFolder'])?>">
+            <input type="hidden" name="currentFolder" value="<?php echo h($_REQUEST['currentFolder'])?>">
         <?php } ?>
     </form>
 </div>
@@ -142,10 +142,10 @@ ConcreteFileImportDialog = {
 <div class="ccm-tab-content" id="ccm-tab-content-incoming">
 <?php if (!empty($incoming_contents) && is_array($incoming_contents)) {
     ?>
-<form id="ccm-file-add-incoming-form" method="post" action="<?=REL_DIR_FILES_TOOLS_REQUIRED?>/files/importers/incoming">
-    <input type="hidden" name="ocID" value="<?=$ocID?>" />
+<form id="ccm-file-add-incoming-form" method="post" action="<?php echo REL_DIR_FILES_TOOLS_REQUIRED?>/files/importers/incoming">
+    <input type="hidden" name="ocID" value="<?php echo $ocID?>" />
     <?php if ($folder) { ?>
-        <input type="hidden" name="currentFolder" value="<?=$folder->getTreeNodeID()?>" />
+        <input type="hidden" name="currentFolder" value="<?php echo $folder->getTreeNodeID()?>" />
     <?php } ?>
 		<table id="incoming_file_table" class="table table-striped" width="100%" cellpadding="0" cellspacing="0">
 			<tr>
@@ -153,8 +153,8 @@ ConcreteFileImportDialog = {
                     <input type="checkbox" id="check-all-incoming"/>
 				</th>
 				<th width="20%" valign="middle" class="center theader"></th>
-				<th width="45%" valign="middle" class="theader"><?=t('Filename')?></th>
-				<th width="25%" valign="middle" class="center theader"><?=t('Size')?></th>
+				<th width="45%" valign="middle" class="theader"><?php echo t('Filename')?></th>
+				<th width="25%" valign="middle" class="center theader"><?php echo t('Size')?></th>
 			</tr>
 		<?php foreach ($incoming_contents as $i => $file) {
     $ft = \Concrete\Core\File\Type\TypeList::getType($file['basename']);
@@ -163,27 +163,27 @@ ConcreteFileImportDialog = {
 				<td width="10%" style="vertical-align: middle" class="center">
 					<?php if ($fh->extension($file['basename'])) {
     ?>
-						<input type="checkbox" name="send_file<?=$i?>" class="ccm-file-select-incoming" value="<?=$file['basename']?>" />
+						<input type="checkbox" name="send_file<?php echo $i?>" class="ccm-file-select-incoming" value="<?php echo $file['basename']?>" />
 					<?php 
 }
     ?>
 				</td>
-				<td width="20%" style="vertical-align: middle" class="center"><?=$ft->getThumbnail()?></td>
-				<td width="45%" style="vertical-align: middle"><?=$file['basename']?></td>
-				<td width="25%" style="vertical-align: middle" class="center"><?=Loader::helper('number')->formatSize($file['size'], 'KB')?></td>
+				<td width="20%" style="vertical-align: middle" class="center"><?php echo $ft->getThumbnail()?></td>
+				<td width="45%" style="vertical-align: middle"><?php echo $file['basename']?></td>
+				<td width="25%" style="vertical-align: middle" class="center"><?php echo Loader::helper('number')->formatSize($file['size'], 'KB')?></td>
 			</tr>
 		<?php 
 }
     ?>
             <tr>
                 <td><input type="checkbox" name="removeFilesAfterPost" value="1" /></td>
-                <td colspan="3"><?=t('Remove files from incoming/ directory.')?></td>
+                <td colspan="3"><?php echo t('Remove files from incoming/ directory.')?></td>
             </tr>
 		</table>
 
 
 
-	<?=$valt->output('import_incoming');
+	<?php echo $valt->output('import_incoming');
     ?>
 
 </form>
@@ -205,44 +205,44 @@ ConcreteFileImportDialog = {
 </div>
 
     <div id="dialog-buttons-local" style="display: none">
-        <button class="btn btn-default" onclick="jQuery.fn.dialog.closeTop()"><?=t("Close")?></button>
-        <button class="btn btn-success pull-right" data-button="launch-upload-complete" onclick="ConcreteFileImportDialog.loadDropzoneFiles()" style="display: none"><?=t("Edit Properties and Sets")?></button>
+        <button class="btn btn-default" onclick="jQuery.fn.dialog.closeTop()"><?php echo t("Close")?></button>
+        <button class="btn btn-success pull-right" data-button="launch-upload-complete" onclick="ConcreteFileImportDialog.loadDropzoneFiles()" style="display: none"><?php echo t("Edit Properties and Sets")?></button>
     </div>
 
     <div id="dialog-buttons-incoming" style="display: none">
-    <button class="btn btn-default" onclick="jQuery.fn.dialog.closeTop()"><?=t("Cancel")?></button>
-    <button class="btn btn-success pull-right" onclick="ConcreteFileImportDialog.addFiles()"><?=t("Add Files")?></button>
+    <button class="btn btn-default" onclick="jQuery.fn.dialog.closeTop()"><?php echo t("Cancel")?></button>
+    <button class="btn btn-success pull-right" onclick="ConcreteFileImportDialog.addFiles()"><?php echo t("Add Files")?></button>
 </div>
 
 <div id="dialog-buttons-remote"  style="display: none">
-    <button class="btn btn-default" onclick="jQuery.fn.dialog.closeTop()"><?=t("Cancel")?></button>
-    <button class="btn btn-success pull-right" onclick="ConcreteFileImportDialog.addFiles()"><?=t("Add Files")?></button>
+    <button class="btn btn-default" onclick="jQuery.fn.dialog.closeTop()"><?php echo t("Cancel")?></button>
+    <button class="btn btn-success pull-right" onclick="ConcreteFileImportDialog.addFiles()"><?php echo t("Add Files")?></button>
 </div>
 
 
 <div id="ccm-tab-content-remote" class="ccm-tab-content">
-<form method="POST" id="ccm-file-add-remote-form" action="<?=REL_DIR_FILES_TOOLS_REQUIRED?>/files/importers/remote">
+<form method="POST" id="ccm-file-add-remote-form" action="<?php echo REL_DIR_FILES_TOOLS_REQUIRED?>/files/importers/remote">
     <?php if ($folder) { ?>
-        <input type="hidden" name="currentFolder" value="<?=$folder->getTreeNodeID()?>" />
+        <input type="hidden" name="currentFolder" value="<?php echo $folder->getTreeNodeID()?>" />
     <?php } ?>
-    <input type="hidden" name="ocID" value="<?=$ocID?>" />
-	<p><?=t('Enter URL to valid file(s)')?></p>
-	<?=$valt->output('import_remote');?>
+    <input type="hidden" name="ocID" value="<?php echo $ocID?>" />
+	<p><?php echo t('Enter URL to valid file(s)')?></p>
+	<?php echo $valt->output('import_remote');?>
 
     <div class="form-group">
-    	<?=$form->text('url_upload_1')?>
+    	<?php echo $form->text('url_upload_1')?>
     </div>
     <div class="form-group">
-        <?=$form->text('url_upload_2')?>
+        <?php echo $form->text('url_upload_2')?>
     </div>
     <div class="form-group">
-        <?=$form->text('url_upload_3')?>
+        <?php echo $form->text('url_upload_3')?>
     </div>
     <div class="form-group">
-        <?=$form->text('url_upload_4')?>
+        <?php echo $form->text('url_upload_4')?>
     </div>
     <div class="form-group">
-        <?=$form->text('url_upload_5')?>
+        <?php echo $form->text('url_upload_5')?>
     </div>
 </form>
 

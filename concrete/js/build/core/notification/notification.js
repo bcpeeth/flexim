@@ -1,12 +1,11 @@
-/* jshint unused:vars, undef:true, browser:true, jquery:true */
-/* global CCM_DISPATCHER_FILENAME */
-
-;(function(global, $) {
+!function(global, $) {
     'use strict';
 
     function ConcreteNotificationList($element, options) {
-        var my = this;
-        options = $.extend({}, options);
+        'use strict';
+        var my = this,
+            options = $.extend({
+            }, options);
 
         my.$element = $element;
         my.options = options;
@@ -73,15 +72,15 @@
             }
         }
 
-    };
+    }
 
     // jQuery Plugin
     $.fn.concreteNotificationList = function(options) {
         return $.each($(this), function(i, obj) {
             new ConcreteNotificationList($(this), options);
         });
-    };
+    }
 
     global.ConcreteNotificationList = ConcreteNotificationList;
 
-})(this, jQuery);
+}(this, $);

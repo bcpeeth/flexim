@@ -1,16 +1,16 @@
 <?php defined('C5_EXECUTE') or die("Access Denied.");?>
-<?=Loader::helper('concrete/dashboard')->getDashboardPaneHeaderWrapper(t('Captcha Settings'), false, 'span10 offset1', (!is_object($activeCaptcha) || (!$activeCaptcha->hasOptionsForm())))?>
-<form method="post" id="site-form" action="<?=$view->action('update_captcha')?>">
+<?php echo Loader::helper('concrete/dashboard')->getDashboardPaneHeaderWrapper(t('Captcha Settings'), false, 'span10 offset1', (!is_object($activeCaptcha) || (!$activeCaptcha->hasOptionsForm())))?>
+<form method="post" id="site-form" action="<?php echo $view->action('update_captcha')?>">
 <?php if (is_object($activeCaptcha) && $activeCaptcha->hasOptionsForm()) {
     ?>
 <?php 
 } ?>
-<?=$this->controller->token->output('update_captcha')?>
+<?php echo $this->controller->token->output('update_captcha')?>
 	<?php if (count($captchas) > 0) {
     ?>
 
 		<div class="form-group">
-		<?=$form->label('activeCaptcha', t('Active Captcha'))?>
+		<?php echo $form->label('activeCaptcha', t('Active Captcha'))?>
 		<?php
         $activeHandle = '';
     if (is_object($activeCaptcha)) {
@@ -18,7 +18,7 @@
     }
     ?>
 		
-		<?=$form->select('activeCaptcha', $captchas, $activeHandle, array('class' => 'span4'))?>
+		<?php echo $form->select('activeCaptcha', $captchas, $activeHandle, array('class' => 'span4'))?>
 		</div>
 		
 		<?php if (is_object($activeCaptcha)) {
@@ -36,7 +36,7 @@
 	<?php 
 } else {
     ?>
-		<p><?=t('You have no captcha libraries installed.')?></p>
+		<p><?php echo t('You have no captcha libraries installed.')?></p>
 	<?php 
 } ?>
 
@@ -44,7 +44,7 @@
     ?>
     <div class="ccm-dashboard-form-actions-wrapper">
         <div class="ccm-dashboard-form-actions">
-		<?=Loader::helper('concrete/ui')->submit(t('Save'), 'submit', 'right', 'btn-primary')?>
+		<?php echo Loader::helper('concrete/ui')->submit(t('Save'), 'submit', 'right', 'btn-primary')?>
         </div>
 	</div>
 <?php 

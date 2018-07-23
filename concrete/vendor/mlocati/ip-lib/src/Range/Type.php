@@ -135,7 +135,7 @@ class Type
             case static::T_PUBLIC:
                  return 'Public address';
             default:
-                return $type === null ? 'Unknown type' : sprintf('Unknown type (%s)', $type);
+                return sprintf('Unknown type (%s)', $type);
         }
     }
 }

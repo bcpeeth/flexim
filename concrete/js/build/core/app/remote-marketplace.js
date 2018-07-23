@@ -1,20 +1,24 @@
-/* jshint unused:vars, undef:true, browser:true, jquery:true */
-/* global CCM_DISPATCHER_FILENAME, ConcreteEvent, ccmi18n */
 
-;(function(global, $) {
+!function (global, $, _) {
     'use strict';
 
     var ConcreteMarketplace = {
+
+        updatesShowMore: function(obj) {
+            $(obj).parent().hide();
+            $(obj).parent().parent().find('.ccm-marketplace-update-changelog').css('max-height', 'none');
+        },
+
         getMoreInformation: function(mpID)
         {
-            $.fn.dialog.showLoader();
+            jQuery.fn.dialog.showLoader();
             var params = {'mpID': mpID};
             $.concreteAjax({
                 method: 'get',
                 url: CCM_DISPATCHER_FILENAME + '/ccm/system/marketplace/connect',
                 data: params,
                 success: function(resp) {
-                    $.fn.dialog.hideLoader();
+                    jQuery.fn.dialog.hideLoader();
                     if (resp.isConnected) {
                         window.location.href = resp.localURL;
                     } else {
@@ -31,21 +35,21 @@
 
             if (!args.onComplete) {
                 args.onComplete = function(e, data) {
-                    $.fn.dialog.closeTop();
-                };
+                    jQuery.fn.dialog.closeTop();
+                }
             }
 
             ConcreteEvent.subscribe('MarketplaceRequestComplete', args.onComplete);
 
             if (closeTop) {
-                $.fn.dialog.closeTop(); // this is here due to a weird safari behavior
+                jQuery.fn.dialog.closeTop(); // this is here due to a weird safari behavior
             }
-            $.fn.dialog.showLoader();
+            jQuery.fn.dialog.showLoader();
             // first, we check our local install to ensure that we're connected to the
             // marketplace, etc..
             var params = {'mpID': mpID};
             $.getJSON(CCM_DISPATCHER_FILENAME + '/ccm/system/marketplace/connect', params, function(resp) {
-                $.fn.dialog.hideLoader();
+                jQuery.fn.dialog.hideLoader();
                 if (resp.isConnected) {
                     if (!resp.purchaseRequired) {
                         $.fn.dialog.open({
@@ -53,7 +57,7 @@
                             href:  CCM_DISPATCHER_FILENAME + '/ccm/system/dialogs/marketplace/download?mpID=' + mpID,
                             width: 500,
                             appendButtons: true,
-                            modal: true,
+                            modal: false,
                             height: 400
                         });
                     } else {
@@ -62,7 +66,7 @@
                             iframe: true,
                             href:  CCM_DISPATCHER_FILENAME + '/ccm/system/dialogs/marketplace/checkout?mpID=' + mpID,
                             width: '560px',
-                            modal: true,
+                            modal: false,
                             height: '400px'
                         });
                     }
@@ -72,8 +76,9 @@
                 }
             });
         }
-    };
+    }
+
 
     global.ConcreteMarketplace = ConcreteMarketplace;
 
-})(window, jQuery);
+}(window, jQuery, _);

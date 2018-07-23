@@ -1,22 +1,22 @@
 <?php defined('C5_EXECUTE') or die("Access Denied."); ?>
 
 <fieldset>
-    <legend><?=t('Display')?></legend>
+    <legend><?php echo t('Display')?></legend>
     <div class="form-group ccm-block-feature-select-icon">
-        <label class="control-label" for="icon"><?=t('Icon')?></label>
-        <?=$form->select('icon', $icons, $icon);?>
+        <label class="control-label" for="icon"><?php echo t('Icon')?></label>
+        <?php echo $form->select('icon', $icons, $icon);?>
     </div>
     <div class="form-group">
-        <label class="control-label"><?=t('Preview')?></label>
+        <label class="control-label"><?php echo t('Preview')?></label>
         <div>
         <i data-preview="icon" <?php if ($icon) {
-        ?>class="fa fa-<?=$icon?>"<?php
+        ?>class="fa fa-<?php echo $icon?>"<?php
         } ?>></i>
         </div>
     </div>
 
     <div class="form-group">
-        <?=$form->label('title', t('Title'))?>
+        <?php echo $form->label('title', t('Title'))?>
         <?php echo $form->text('title', $title); ?>
     </div>
 
@@ -31,24 +31,24 @@
 </fieldset>
 
 <fieldset>
-    <legend><?=t('Link')?></legend>
+    <legend><?php echo t('Link')?></legend>
 
     <div class="form-group">
         <select name="linkType" data-select="feature-link-type" class="form-control">
-            <option value="0" <?=(empty($externalLink) && empty($internalLinkCID) ? 'selected="selected"' : '')?>><?=t('None')?></option>
-            <option value="1" <?=(empty($externalLink) && !empty($internalLinkCID) ? 'selected="selected"' : '')?>><?=t('Another Page')?></option>
-            <option value="2" <?=(!empty($externalLink) ? 'selected="selected"' : '')?>><?=t('External URL')?></option>
+            <option value="0" <?php echo (empty($externalLink) && empty($internalLinkCID) ? 'selected="selected"' : '')?>><?php echo t('None')?></option>
+            <option value="1" <?php echo (empty($externalLink) && !empty($internalLinkCID) ? 'selected="selected"' : '')?>><?php echo t('Another Page')?></option>
+            <option value="2" <?php echo (!empty($externalLink) ? 'selected="selected"' : '')?>><?php echo t('External URL')?></option>
         </select>
     </div>
 
     <div data-select-contents="feature-link-type-internal" style="display: none;" class="form-group">
-        <?=$form->label('internalLinkCID', t('Choose Page:'))?>
-        <?= Loader::helper('form/page_selector')->selectPage('internalLinkCID', $internalLinkCID); ?>
+        <?php echo $form->label('internalLinkCID', t('Choose Page:'))?>
+        <?php echo Loader::helper('form/page_selector')->selectPage('internalLinkCID', $internalLinkCID); ?>
     </div>
 
     <div data-select-contents="feature-link-type-external" style="display: none;" class="form-group">
-        <?=$form->label('externalLink', t('URL'))?>
-        <?= $form->text('externalLink', $externalLink); ?>
+        <?php echo $form->label('externalLink', t('URL'))?>
+        <?php echo $form->text('externalLink', $externalLink); ?>
     </div>
 
 </fieldset>
@@ -86,8 +86,5 @@ $(function() {
         position: absolute;
         right: -25px;
         top: 10px;
-    }
-    [data-preview="icon"] {
-        font-size: 50px;
     }
 </style>

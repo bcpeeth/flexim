@@ -2,8 +2,6 @@
 namespace Concrete\Core\User\Search\ColumnSet;
 
 use Concrete\Core\Search\Column\UserAttributeKeyColumn;
-use Concrete\Core\Support\Facade\Facade;
-use Concrete\Core\User\Search\SearchProvider;
 use PermissionKey;
 use User;
 use Concrete\Core\Search\Column\Set;
@@ -40,18 +38,15 @@ class ColumnSet extends Set
 
     public static function getCurrent()
     {
-
-        $app = Facade::getFacadeApplication();
-        /**
-         * @var $provider SearchProvider
-         */
-        $provider = $app->make(SearchProvider::class);
-        $query = $provider->getSessionCurrentQuery();
-        if ($query) {
-            $columns = $query->getColumns();
-            return $columns;
+        $u = new User();
+        $fldc = $u->config('USER_LIST_DEFAULT_COLUMNS');
+        if ($fldc != '') {
+            $fldc = @unserialize($fldc);
+        }
+        if (!($fldc instanceof Set)) {
+            $fldc = new DefaultSet();
         }
 
-        return new DefaultSet();
+        return $fldc;
     }
 }

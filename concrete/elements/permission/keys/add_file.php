@@ -17,7 +17,7 @@ $extensions = Loader::helper('concrete/file')->getAllowedFileExtensions();
 
 <fieldset>
 
-<legend><?=t('Who can add what?')?></legend>
+<legend><?php echo t('Who can add what?')?></legend>
 
 <?php foreach ($included as $assignment) {
     $entity = $assignment->getAccessEntityObject();
@@ -25,8 +25,8 @@ $extensions = Loader::helper('concrete/file')->getAllowedFileExtensions();
 
 
 <div class="form-group">
-	<label class="control-label"><?=$entity->getAccessEntityLabel()?></label>
-	<?=$form->select('fileTypesIncluded[' . $entity->getAccessEntityID() . ']', array('A' => t('All File Types'), 'C' => t('Custom')), $assignment->getFileTypesAllowedPermission())?>
+	<label class="control-label"><?php echo $entity->getAccessEntityLabel()?></label>
+	<?php echo $form->select('fileTypesIncluded[' . $entity->getAccessEntityID() . ']', array('A' => t('All File Types'), 'C' => t('Custom')), $assignment->getFileTypesAllowedPermission())?>
 </div>
 
 
@@ -37,10 +37,10 @@ $extensions = Loader::helper('concrete/file')->getAllowedFileExtensions();
 <?php foreach ($extensions as $ext) {
 $checked = ($assignment->getFileTypesAllowedPermission() == 1 || ($assignment->getFileTypesAllowedPermission() == 'C' && in_array($ext, $assignment->getFileTypesAllowedArray())));
 ?>
-		<div class="checkbox"><label><input type="checkbox" name="extensionInclude[<?=$entity->getAccessEntityID()?>][]" value="<?=$ext?>" <?php if ($checked) {
+		<div class="checkbox"><label><input type="checkbox" name="extensionInclude[<?php echo $entity->getAccessEntityID()?>][]" value="<?php echo $ext?>" <?php if ($checked) {
 ?> checked="checked" <?php
 }
-?> /> <?=$ext?></label></div>
+?> /> <?php echo $ext?></label></div>
 	<?php
 }
 ?>
@@ -59,7 +59,7 @@ $checked = ($assignment->getFileTypesAllowedPermission() == 1 || ($assignment->g
     ?>
 
 <fieldset>
-<legend><?=t('Who can\'t add what?')?></legend>
+<legend><?php echo t('Who can\'t add what?')?></legend>
 
 <?php foreach ($excluded as $assignment) {
     $entity = $assignment->getAccessEntityObject();
@@ -67,8 +67,8 @@ $checked = ($assignment->getFileTypesAllowedPermission() == 1 || ($assignment->g
 
 
 <div class="form-group">
-	<label><?=$entity->getAccessEntityLabel()?></label>
-	<?=$form->select('fileTypesExcluded[' . $entity->getAccessEntityID() . ']', array('N' => t('No File Types'), 'C' => t('Custom')), $assignment->getFileTypesAllowedPermission())?>
+	<label><?php echo $entity->getAccessEntityLabel()?></label>
+	<?php echo $form->select('fileTypesExcluded[' . $entity->getAccessEntityID() . ']', array('N' => t('No File Types'), 'C' => t('Custom')), $assignment->getFileTypesAllowedPermission())?>
 
 </div>
 
@@ -80,10 +80,10 @@ $checked = ($assignment->getFileTypesAllowedPermission() == 1 || ($assignment->g
 <?php foreach ($extensions as $ext) {
 $checked = in_array($ext, $assignment->getFileTypesAllowedArray());
 ?>
-		<div class="checkbox"><label><input type="checkbox" name="extensionExclude[<?=$entity->getAccessEntityID()?>][]" value="<?=$ext?>" <?php if ($checked) {
+		<div class="checkbox"><label><input type="checkbox" name="extensionExclude[<?php echo $entity->getAccessEntityID()?>][]" value="<?php echo $ext?>" <?php if ($checked) {
 ?> checked="checked" <?php
 }
-?> /> <?=$ext?></label></div>
+?> /> <?php echo $ext?></label></div>
 	<?php
 }
 ?>
@@ -100,7 +100,7 @@ $checked = in_array($ext, $assignment->getFileTypesAllowedArray());
 <?php 
 } else {
     ?>
-	<p><?=t('No users or groups selected.')?></p>
+	<p><?php echo t('No users or groups selected.')?></p>
 <?php 
 } ?>
 

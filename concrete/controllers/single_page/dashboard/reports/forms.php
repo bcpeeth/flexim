@@ -19,14 +19,7 @@ class Forms extends DashboardExpressEntriesPageController
 
     public function view($folder = null)
     {
-        if ($folder) {
-            $parent = $this->getParentNode($folder);
-            $entity = $this->getEntity($parent);
-            $this->set('headerMenu', new Header($folder, $entity));
-        } else {
-            $this->set('headerMenu', new Header($folder));
-
-        }
+        $this->set('headerMenu', new Header($folder));
         $this->renderList($folder);
     }
 }

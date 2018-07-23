@@ -2,7 +2,7 @@
 namespace Concrete\Core\Page\Stack\Pile;
 
 use Concrete\Core\Block\Block;
-use Concrete\Core\Foundation\ConcreteObject;
+use Concrete\Core\Foundation\Object;
 use Concrete\Core\Page\Collection\Collection;
 use Concrete\Core\Page\Page;
 use Concrete\Core\User\User;
@@ -17,7 +17,7 @@ use Loader;
  *
  * \@package Concrete\Core\Page\Stack\Pile
  */
-class Pile extends ConcreteObject
+class Pile extends Object
 {
     /**
      * @var int
@@ -78,7 +78,7 @@ class Pile extends ConcreteObject
      *
      * @return Pile
      */
-    public static function create($name)
+    public function create($name)
     {
         $db = Loader::db();
         $u = new User();
@@ -97,7 +97,7 @@ class Pile extends ConcreteObject
      *
      * @return Pile
      */
-    public static function get($pID)
+    public function get($pID)
     {
         $db = Loader::db();
         $v = array($pID);
@@ -120,7 +120,7 @@ class Pile extends ConcreteObject
      *
      * @return Pile
      */
-    public static function getOrCreate($name)
+    public function getOrCreate($name)
     {
         $db = Loader::db();
         $u = new User();
@@ -178,7 +178,7 @@ class Pile extends ConcreteObject
     /**
      * @return Pile
      */
-    public static function getDefault()
+    public function getDefault()
     {
         $db = Loader::db();
         // checks to see if we're registered, or if we're a visitor. Either way, we get a pile entry
@@ -203,7 +203,7 @@ class Pile extends ConcreteObject
     /**
      * @return Pile
      */
-    public static function createDefaultPile()
+    public function createDefaultPile()
     {
         $db = Loader::db();
         // for the sake of data integrity, we're going to ensure that a general pile does not exist
@@ -233,7 +233,7 @@ class Pile extends ConcreteObject
     /**
      * @return array
      */
-    public static function getMyPiles()
+    public function getMyPiles()
     {
         $db = Loader::db();
 

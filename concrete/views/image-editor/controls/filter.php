@@ -5,7 +5,7 @@ $filters = $editor->getFilterList();
 
 foreach ($filters as $filter) {
     ?>
-    <div class="filter filter-<?= $filter->getHandle() ?>">
+    <div class="filter filter-<?php echo $filter->getHandle() ?>">
         <?php
 
         try {

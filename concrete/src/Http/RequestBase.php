@@ -209,8 +209,6 @@ class RequestBase extends SymfonyRequest
      */
     public static function isPost()
     {
-        $req = static::getInstance();
-
-        return $req->getMethod() === 'POST';
+        return isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] == 'POST';
     }
 }

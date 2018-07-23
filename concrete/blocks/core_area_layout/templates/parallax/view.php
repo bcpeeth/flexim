@@ -16,7 +16,7 @@ if (is_object($style)) {
 
 ?>
 
-<div data-stripe-wrapper="parallax" data-background-image="<?= $background ?>">
+<div data-stripe-wrapper="parallax" data-background-image="<?php echo $background ?>">
     <?php
     foreach ($columns as $column) {
         $html = $column->getColumnHtmlObject();

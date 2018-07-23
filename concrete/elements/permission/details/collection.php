@@ -11,5 +11,5 @@ $pk->setPermissionObject($c);
 
 
 <script type="text/javascript">
-var ccm_permissionDialogURL = '<?=REL_DIR_FILES_TOOLS_REQUIRED?>/edit_collection_popup?ctask=set_advanced_permissions&cID=<?=$c->getCollectionID()?>'; 
+var ccm_permissionDialogURL = '<?php echo REL_DIR_FILES_TOOLS_REQUIRED?>/edit_collection_popup?ctask=set_advanced_permissions&cID=<?php echo $c->getCollectionID()?>'; 
 </script>

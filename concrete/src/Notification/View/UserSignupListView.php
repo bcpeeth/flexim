@@ -3,7 +3,6 @@ namespace Concrete\Core\Notification\View;
 
 
 use Concrete\Core\Entity\Notification\UserSignupNotification;
-use Concrete\Core\Support\Facade\Facade;
 use HtmlObject\Element;
 
 class UserSignupListView extends StandardListView
@@ -34,15 +33,13 @@ class UserSignupListView extends StandardListView
 
     public function getActionDescription()
     {
-        $app = Facade::getFacadeApplication();
-        $resolver = $app->make('url/manager');
         $user = $this->notification->getSignupRequest()->getUser();
         $ui = $user->getUserInfoObject();
         $createdBy = $this->notification->getSignupRequest()->getCreatedBy();
         if ($createdBy) {
-            return t('New user <a href="%s">%s</a> created.', $resolver->resolve([$ui]), $ui->getUserDisplayName());
+            return t('New user %s created.', $ui->getUserDisplayName());
         } else {
-            return t('New user <a href="%s">%s</a> registered for site.', $resolver->resolve([$ui]), $ui->getUserDisplayName());
+            return t('New user %s registered for site.', $ui->getUserDisplayName());
         }
     }
 

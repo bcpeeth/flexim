@@ -1,9 +1,8 @@
-/* jshint unused:vars, undef:true, browser:true, jquery:true */
-/* global CCM_DISPATCHER_FILENAME, ConcreteEvent, ConcreteHelpDialog, ConcreteHelpGuideManager, ConcretePanelManager */
+/**
+ * Basic concrete5 toolbar class
+ */
 
-/* Basic concrete5 toolbar class */
-;(function(global, $) {
-    'use strict';
+var ConcreteToolbar = function() {
 
 	var $toolbar = $('#ccm-toolbar');
 	var $searchInput = $('#ccm-nav-intelligent-search');
@@ -14,7 +13,7 @@
         $searchResults.css('right', $(window).width() - $searchInput.offset().left - $searchResults.width() - 1);
     }
 
-	function setupHelpNotifications() {
+	setupHelpNotifications = function() {
 		$('.ccm-notification .dialog-launch').dialog();
 		$('a[data-help-notification-toggle]').concreteHelpLauncher();
 		$('a[data-help-launch-dialog=main]').on('click', function(e) {
@@ -29,7 +28,7 @@
 		}
 	}
 
-	function setupPageAlerts() {
+	setupPageAlerts = function() {
 		$(document.body).on('click', 'a[data-dismiss-alert=page-alert]', function(e) {
 			e.stopPropagation();
 			$(this).closest('.ccm-notification').queue(function() {
@@ -45,7 +44,7 @@
 		$('form[data-form=workflow]').ajaxForm({
 			dataType: 'json',
 			beforeSubmit: function() {
-				$.fn.dialog.showLoader();
+				jQuery.fn.dialog.showLoader();
 			},
 			success: function(r) {
 				if (r.redirect) {
@@ -64,53 +63,40 @@
 
 	}
 
-	function setupTooltips() {
+	setupTooltips = function() {
 		if ($("#ccm-tooltip-holder").length == 0) {
 			$('<div />').attr('id','ccm-tooltip-holder').attr('class', 'ccm-ui').prependTo(document.body);
 		}
 		$('.launch-tooltip').tooltip({'container': '#ccm-tooltip-holder'});
 	}
 
-	function setupPanels() {
+	setupPanels = function() {
 		$('<div />', {'id': 'ccm-panel-overlay'}).appendTo($(document.body));
         $('[data-launch-panel]').each(function() {
-            $(this).prepend('<span class="spinner"><div class="double-bounce1"></div><div class="double-bounce2"></div></span>');
+            $(this).prepend('<span class="spinner"><div class="double-bounce1"></div><div class="double-bounce2"></div></span>')
         });
 
-		$('[data-launch-panel]').unbind().on('click', function(e) {
+		$('[data-launch-panel]').unbind().on('click', function() {
             var $this = $(this);
 			var panelID = $this.attr('data-launch-panel');
 			var panel = ConcretePanelManager.getByIdentifier(panelID);
-			if (!$this.attr('data-original-icon-class')) {
-				$this.attr('data-original-icon-class', $this.find('i').attr('class'));
-			}
-			if (!e.altKey && !$this.find('i').hasClass($this.attr('data-original-icon-class'))) {
-				$this.find('i').removeClass().addClass($this.attr('data-original-icon-class'));
-			}
-			if (panel.isPinable()) {
-				var parent = $($this.parent());
-				if (e.altKey) {
-					if (!panel.pinned()) {
-						$this.find('i').removeClass().addClass('fa fa-lock');
-						parent.addClass('ccm-toolbar-page-edit-mode-pinned');
-						panel.isPinned = true;
-						if (!panel.isOpen) {
-							panel.show();
-						}
-					}
-				} else {
-					if (panel.isPinned) {
-						panel.isPinned = false;
-						parent.removeClass('ccm-toolbar-page-edit-mode-pinned');
-					}
-					panel.toggle();
+            if ( !panel.willBePinned() ) $this.toggleClass('ccm-launch-panel-loading');
+
+            if ( panel.isPinable() )
+            {
+                var parent = $($this.parent());
+                if ( panel.willBePinned() || panel.pinned() ) parent.toggleClass("ccm-toolbar-page-edit-mode-pinned ");
+				if (panel.willBePinned()) {
+					$this.attr('data-original-icon-class', $this.find('i').attr('class'));
+					$this.find('i').removeClass().addClass('fa fa-lock');
+				} else if ($this.attr('data-original-icon-class')) {
+					$this.find('i').removeClass().addClass($this.attr('data-original-icon-class'));
+					$this.removeAttr('data-original-icon-class');
 				}
-			} else {
-				panel.toggle();
-			}
+            }
+			panel.toggle();
 			return false;
 		});
-
 		$('html').addClass('ccm-panel-ready');
 
 		ConcreteEvent.subscribe('PanelOpen',function(e, data) {
@@ -128,11 +114,10 @@
 			$('a[data-toolbar-action=check-in]').unbind('click.close-check-in');
 		});
 
-	}
+	};
 
-	function setupIntelligentSearch() {
+	setupIntelligentSearch = function() {
 		$searchInput.bind('keydown.ccm-intelligent-search', function(e) {
-		    // jshint -W107
 			if (e.keyCode == 13 || e.keyCode == 40 || e.keyCode == 38) {
 				e.preventDefault();
 				e.stopPropagation();
@@ -151,7 +136,6 @@
 				if (e.keyCode == 40 || e.keyCode == 38) {
 					$.each(visibleitems, function(i, item) {
 						if ($(item).children('a').hasClass('ccm-intelligent-search-result-selected')) {
-						    var io;
 							if (e.keyCode == 38) {
 								io = visibleitems[i-1];
 							} else {
@@ -178,43 +162,23 @@
 
 	}
 
-   function setupMobileNav(){
+   setupMobileNav = function(){
         $('.ccm-toolbar-mobile-menu-button').click(function(){
             $(this).toggleClass('ccm-mobile-close');   // slide out mobile nav
             $('.ccm-mobile-menu-overlay').slideToggle();
         });
-
-		// on page load
-		// - open drop-downs to current page
-        // - from the current page, set parent toggle arrows up
-        var navSelectedParents = $('.ccm-mobile-menu-entries li.nav-selected')
-            .parentsUntil('.ccm-mobile-menu-entries')
-            .show();
-        $(navSelectedParents).last()
-            .find('.drop-down-toggle:first, .nav-path-selected:not(.nav-selected) > .drop-down-toggle')
-            .removeClass('fa-caret-down')
-            .addClass('fa-caret-up');
-
-        $('.ccm-mobile-menu-entries .drop-down-toggle').on('click', function() {
-        	// toggle the arrows and toggle the drop-downs
-            $(this).toggleClass('fa-caret-down fa-caret-up');
-            $(this).next('ul').slideToggle();
-
-            // find the parent's siblings
-            // - close them and their children
-            // - set toggle arrows down on closed drop-downs
-            var toggleParent = $(this).parent('li');
-            $(toggleParent).siblings('li')
-                .find('ul')
-                .slideUp();
-            $(toggleParent).siblings('li')
-                .find('.drop-down-toggle')
-                .removeClass('fa-caret-up')
-                .addClass('fa-caret-down');
+        $('.ccm-mobile-menu-overlay .parent-ul a').click(function(event) {
+            if(!($(this).parent('li').hasClass('last-li'))) {
+                $(this).parent('li').siblings().children('ul').hide();
+                if(!($(this).parent('li').children('ul').is(':visible'))) {
+                    $(this).next('ul').show();
+                    event.preventDefault();
+                }
+            }
         });
     }
 
-	function activateIntelligentSearchResults() {
+	activateIntelligentSearchResults = function() {
 		if ($("#ccm-intelligent-search-results div:visible").length == 0) {
 			$("#ccm-intelligent-search-results").hide();
 		}
@@ -224,10 +188,10 @@
 		}, function() {
 			$(this).removeClass('ccm-intelligent-search-result-selected');
 		});
-	}
+	};
 
-	function doRemoteSearchCall(query) {
-		query = $.trim(query);
+	doRemoteSearchCall = function(query) {
+		query = jQuery.trim(query);
 		if (!query) {
 			return;
 		}
@@ -255,7 +219,7 @@
 				function(r) {
 					$("#ccm-intelligent-search-results-list-marketplace").parent().addClass('ccm-intelligent-search-results-module-loaded');
 					$("#ccm-intelligent-search-results-list-marketplace").html('');
-					for (var i = 0; i < r.length; i++) {
+					for (i = 0; i < r.length; i++) {
 						var rr= r[i];
 						var _onclick = "ConcreteMarketplace.getMoreInformation(" + rr.mpID + ")";
 						$("#ccm-intelligent-search-results-list-marketplace").append('<li><a href="javascript:void(0)" onclick="' + _onclick + '"><img src="' + rr.img + '" />' + rr.name + '</a></li>');
@@ -279,7 +243,7 @@
 
 					$("#ccm-intelligent-search-results-list-help").parent().addClass('ccm-intelligent-search-results-module-loaded');
 					$("#ccm-intelligent-search-results-list-help").html('');
-					for (var i = 0; i < r.length; i++) {
+					for (i = 0; i < r.length; i++) {
 						var rr= r[i];
 						$("#ccm-intelligent-search-results-list-help").append('<li><a href="' + rr.href + '">' + rr.name + '</a></li>');
 					}
@@ -303,7 +267,7 @@
 
 					$("#ccm-intelligent-search-results-list-your-site").parent().addClass('ccm-intelligent-search-results-module-loaded');
 					$("#ccm-intelligent-search-results-list-your-site").html('');
-					for (var i = 0; i < r.length; i++) {
+					for (i = 0; i < r.length; i++) {
 						var rr= r[i];
 						$("#ccm-intelligent-search-results-list-your-site").append('<li><a href="' + rr.href + '">' + rr.name + '</a></li>');
 					}
@@ -323,7 +287,7 @@
 		}
 	}
 
-	global.ConcreteToolbar = {
+	return {
 		start: function() {
 			if ($toolbar.length > 0) {
 
@@ -361,6 +325,7 @@
 				});
 			}
 		}
-	};
 
-})(window, jQuery);
+
+	}
+}();

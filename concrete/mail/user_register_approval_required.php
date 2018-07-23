@@ -9,17 +9,17 @@ $subject = $siteName.' '.t("Registration - Approval Required");
 ob_start()
 
 ?>
-<h2><?= t('Registration Approval Required') ?></h2>
-<?= t('A new user has registered on your website. This account must be approved before it is active and may login.') ?><br />
-<?= t('User Name') ?>: <b><?= $uName ?></b><br />
-<?= t('Email') ?>: <b><?= $uEmail ?></b><br />
+<h2><?php echo t('Registration Approval Required') ?></h2>
+<?php echo t('A new user has registered on your website. This account must be approved before it is active and may login.') ?><br />
+<?php echo t('User Name') ?>: <b><?php echo $uName ?></b><br />
+<?php echo t('Email') ?>: <b><?php echo $uEmail ?></b><br />
 <br />
-<?= t('You may approve or remove this user account here:') ?><br />
-<a href="<?= View::url('/dashboard/users/search', 'view', $uID) ?>"><?= View::url('/dashboard/users/search', 'view', $uID) ?></a>
+<?php echo t('You may approve or remove this user account here:') ?><br />
+<a href="<?php echo View::url('/dashboard/users/search', 'view', $uID) ?>"><?php echo View::url('/dashboard/users/search', 'view', $uID) ?></a>
 <?php if ($attribs): ?>
 	<ul>
 	<?php foreach ($attribs as $item): ?>
-		<li><?= $item ?></li>
+		<li><?php echo $item ?></li>
 	<?php endforeach ?>
 	</ul>
 <?php endif ?>
@@ -36,24 +36,24 @@ $bodyHTML = ob_get_clean();
 ob_start();
 
 ?>
-<?= t('Registration Approval Required') ?>
+<?php echo t('Registration Approval Required') ?>
 
-<?= t('A new user has registered on your website. This account must be approved before it is active and may login.') ?>
+<?php echo t('A new user has registered on your website. This account must be approved before it is active and may login.') ?>
 
-<?= t('User Name') ?>: <?= $uName ?>
+<?php echo t('User Name') ?>: <?php echo $uName ?>
 
-<?= t('Email Address') ?>: <?= $uEmail ?>
+<?php echo t('Email Address') ?>: <?php echo $uEmail ?>
 
 <?php if ($attribs): ?>
 	<?php foreach ($attribs as $item): ?>
-		<?= $item ?>
+		<?php echo $item ?>
 
 	<?php endforeach ?>
 <?php endif ?>
 
-<?= t('You may approve or remove this user account here') ?>:
+<?php echo t('You may approve or remove this user account here') ?>:
 
-<?= View::url('/dashboard/users/search', 'view', $uID) ?>
+<?php echo View::url('/dashboard/users/search', 'view', $uID) ?>
 <?php
 
 $body = ob_get_clean();

@@ -3,10 +3,10 @@ namespace Concrete\Core\Permission;
 
 use Core;
 use Database;
-use Concrete\Core\Foundation\ConcreteObject;
+use Concrete\Core\Foundation\Object;
 use Concrete\Core\Package\PackageList;
 
-class Category extends ConcreteObject
+class Category extends Object
 {
     protected static $categories;
 

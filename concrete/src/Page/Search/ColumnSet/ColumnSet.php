@@ -1,10 +1,8 @@
 <?php
 namespace Concrete\Core\Page\Search\ColumnSet;
 
-use Concrete\Core\Page\Search\SearchProvider;
 use Concrete\Core\Search\Column\CollectionAttributeKeyColumn;
 use Concrete\Core\Search\Column\Set;
-use Concrete\Core\Support\Facade\Facade;
 use User;
 
 class ColumnSet extends Set
@@ -20,18 +18,15 @@ class ColumnSet extends Set
 
     public static function getCurrent()
     {
-
-        $app = Facade::getFacadeApplication();
-        /**
-         * @var $provider SearchProvider
-         */
-        $provider = $app->make(SearchProvider::class);
-        $query = $provider->getSessionCurrentQuery();
-        if ($query) {
-            $columns = $query->getColumns();
-            return $columns;
+        $u = new User();
+        $fldc = $u->config('PAGE_LIST_DEFAULT_COLUMNS');
+        if ($fldc != '') {
+            $fldc = @unserialize($fldc);
+        }
+        if (!($fldc instanceof Set)) {
+            $fldc = new DefaultSet();
         }
 
-        return new DefaultSet();
+        return $fldc;
     }
 }

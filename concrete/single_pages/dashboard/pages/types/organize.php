@@ -2,22 +2,22 @@
 
 <div class="ccm-pane-body">
 <fieldset>
-    <legend><?=t('Frequently Used')?></legend>
+    <legend><?php echo t('Frequently Used')?></legend>
     <ul class="item-select-list" data-sort="frequently-used">
     <?php foreach ($frequent as $pt) {
     ?>
-        <li data-page-type-id="<?=$pt->getPageTypeID()?>"><span><?=$pt->getPageTypeDisplayName()?> <i class="fa fa-arrow-v ccm-item-select-list-sort"></i></span></li>
+        <li data-page-type-id="<?php echo $pt->getPageTypeID()?>"><span><?php echo $pt->getPageTypeDisplayName()?> <i class="fa fa-arrow-v ccm-item-select-list-sort"></i></span></li>
     <?php 
 } ?>
     </ul>
 </fieldset>
 
 <fieldset>
-    <legend><?=t('Others')?></legend>
+    <legend><?php echo t('Others')?></legend>
     <ul class="item-select-list" data-sort="other">
         <?php foreach ($infrequent as $pt) {
     ?>
-            <li data-page-type-id="<?=$pt->getPageTypeID()?>"><span><?=$pt->getPageTypeDisplayName()?> <i class="fa fa-arrow-v ccm-item-select-list-sort"></i></span></li>
+            <li data-page-type-id="<?php echo $pt->getPageTypeID()?>"><span><?php echo $pt->getPageTypeDisplayName()?> <i class="fa fa-arrow-v ccm-item-select-list-sort"></i></span></li>
         <?php 
 } ?>
     </ul>
@@ -25,8 +25,8 @@
 </div>
 <div class="ccm-dashboard-form-actions-wrapper">
     <div class="ccm-dashboard-form-actions">
-        <a href="<?=URL::to('/dashboard/pages/types', $siteTypeID)?>" class="btn pull-left btn-default"><?=t('Back to Page Types')?></a>
-        <button class="pull-right btn btn-primary" type="button" data-submit="save"><?=t('Save Ordering')?></button>
+        <a href="<?php echo URL::to('/dashboard/pages/types', $siteTypeID)?>" class="btn pull-left btn-default"><?php echo t('Back to Page Types')?></a>
+        <button class="pull-right btn btn-primary" type="button" data-submit="save"><?php echo t('Save Ordering')?></button>
     </div>
 </div>
 
@@ -49,9 +49,9 @@
             });
 
             $.concreteAjax({
-               url: '<?=$view->action('submit')?>',
+               url: '<?php echo $view->action('submit')?>',
                data: {
-                   ccm_token: '<?=Loader::helper('validation/token')->generate("submit")?>',
+                   ccm_token: '<?php echo Loader::helper('validation/token')->generate("submit")?>',
                    frequent: frequent,
                    infrequent: infrequent
                },

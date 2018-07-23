@@ -14,23 +14,23 @@ function getAttributeOptionHTML($v)
         $akSelectValue = $v->getSelectAttributeOptionValue();
     }
     ?>
-		<div id="akSelectValueDisplay_<?=$akSelectValueID?>" >
+		<div id="akSelectValueDisplay_<?php echo $akSelectValueID?>" >
 			<div class="rightCol">
-				<input class="btn btn-primary" type="button" onClick="ccmAttributesHelper.editValue('<?=addslashes($akSelectValueID)?>')" value="<?=t('Edit')?>" />
-				<input class="btn btn-danger" type="button" onClick="ccmAttributesHelper.deleteValue('<?=addslashes($akSelectValueID)?>')" value="<?=t('Delete')?>" />
+				<input class="btn btn-primary" type="button" onClick="ccmAttributesHelper.editValue('<?php echo addslashes($akSelectValueID)?>')" value="<?php echo t('Edit')?>" />
+				<input class="btn btn-danger" type="button" onClick="ccmAttributesHelper.deleteValue('<?php echo addslashes($akSelectValueID)?>')" value="<?php echo t('Delete')?>" />
 			</div>			
-			<span onClick="ccmAttributesHelper.editValue('<?=addslashes($akSelectValueID)?>')" id="akSelectValueStatic_<?=$akSelectValueID?>" class="leftCol"><?=$akSelectValue ?></span>
+			<span onClick="ccmAttributesHelper.editValue('<?php echo addslashes($akSelectValueID)?>')" id="akSelectValueStatic_<?php echo $akSelectValueID?>" class="leftCol"><?php echo $akSelectValue ?></span>
 		</div>
-		<div id="akSelectValueEdit_<?=$akSelectValueID?>" style="display:none">
+		<div id="akSelectValueEdit_<?php echo $akSelectValueID?>" style="display:none">
 			<span class="leftCol">
-				<input name="akSelectValueOriginal_<?=$akSelectValueID?>" type="hidden" value="<?=$akSelectValue?>" />
+				<input name="akSelectValueOriginal_<?php echo $akSelectValueID?>" type="hidden" value="<?php echo $akSelectValue?>" />
 				<?php if (is_object($v) && $v->getSelectAttributeOptionID()) {
     ?>
-					<input id="akSelectValueExistingOption_<?=$akSelectValueID?>" name="akSelectValueExistingOption_<?=$akSelectValueID?>" type="hidden" value="<?=$akSelectValueID?>" />
+					<input id="akSelectValueExistingOption_<?php echo $akSelectValueID?>" name="akSelectValueExistingOption_<?php echo $akSelectValueID?>" type="hidden" value="<?php echo $akSelectValueID?>" />
 				<?php
 } else {
     ?>
-					<input id="akSelectValueNewOption_<?=$akSelectValueID?>" name="akSelectValueNewOption_<?=$akSelectValueID?>" type="hidden" value="<?=$akSelectValueID?>" />
+					<input id="akSelectValueNewOption_<?php echo $akSelectValueID?>" name="akSelectValueNewOption_<?php echo $akSelectValueID?>" type="hidden" value="<?php echo $akSelectValueID?>" />
 				<?php
 }
     ?>
@@ -38,8 +38,8 @@ function getAttributeOptionHTML($v)
     ?>" name="akSelectValue_<?php echo $akSelectValueID?>" type="text" value="<?php echo $akSelectValue?>" size="40" />
 			</span>		
 			<div class="rightCol">
-				<input class="btn btn-default" type="button" onClick="ccmAttributesHelper.editValue('<?=addslashes($akSelectValueID)?>')" value="<?=t('Cancel')?>" />
-				<input class="btn btn-success" type="button" onClick="ccmAttributesHelper.changeValue('<?=addslashes($akSelectValueID)?>')" value="<?=t('Save')?>" />
+				<input class="btn btn-default" type="button" onClick="ccmAttributesHelper.editValue('<?php echo addslashes($akSelectValueID)?>')" value="<?php echo t('Cancel')?>" />
+				<input class="btn btn-success" type="button" onClick="ccmAttributesHelper.changeValue('<?php echo addslashes($akSelectValueID)?>')" value="<?php echo t('Save')?>" />
 			</div>		
 		</div>	
 		<div class="ccm-spacer">&nbsp;</div>
@@ -47,47 +47,28 @@ function getAttributeOptionHTML($v)
 } ?>
 
 <fieldset class="ccm-attribute ccm-attribute-select">
-<legend><?=t('Select Options')?></legend>
+<legend><?php echo t('Select Options')?></legend>
 
 <div class="form-group">
-    <label><?=t("Multiple Values")?></label>
+    <label><?php echo t("Multiple Values")?></label>
     <div class="checkbox">
         <label>
-            <?=$form->checkbox('akSelectAllowMultipleValues', 1, $akSelectAllowMultipleValues)?> <span><?=t('Allow multiple options to be chosen.')?></span>
-        </label>
-    </div>
-</div>
-
-<div class="form-group" data-group="single-value">
-	<label><?=t("Single Value")?></label>
-	<div class="checkbox">
-		<label>
-			<?=$form->checkbox('akDisplayMultipleValuesOnSelect', 1, $akDisplayMultipleValuesOnSelect)?> <span><?=t('Display full option list when selecting.')?></span>
-		</label>
-	</div>
-	<div class="help-block"><?=t('Enabling this will typically display the list with radio buttons.')?></div>
-</div>
-
-<div class="form-group" data-group="single-value">
-    <label><?=t("Hide None Option")?></label>
-    <div class="checkbox">
-        <label>
-            <?=$form->checkbox('akHideNoneOption', 1, $akHideNoneOption)?> <span><?=t('Hide none option from the list.')?></span>
+            <?php echo $form->checkbox('akSelectAllowMultipleValues', 1, $akSelectAllowMultipleValues)?> <span><?php echo t('Allow multiple options to be chosen.')?></span>
         </label>
     </div>
 </div>
 
 <div class="form-group">
-    <label><?=t("User Submissions")?></label>
+    <label><?php echo t("User Submissions")?></label>
     <div class="checkbox">
         <label>
-            <?=$form->checkbox('akSelectAllowOtherValues', 1, $akSelectAllowOtherValues)?> <span><?=t('Allow users to add to this list.')?></span>
+            <?php echo $form->checkbox('akSelectAllowOtherValues', 1, $akSelectAllowOtherValues)?> <span><?php echo t('Allow users to add to this list.')?></span>
         </label>
     </div>
 </div>
 
 <div class="form-group">
-<label for="akSelectOptionDisplayOrder"><?=t("Option Order")?></label>
+<label for="akSelectOptionDisplayOrder"><?php echo t("Option Order")?></label>
 	<?php
     $displayOrderOptions = array(
         'display_asc' => t('Display Order'),
@@ -96,11 +77,11 @@ function getAttributeOptionHTML($v)
     );
     ?>
 
-	<?=$form->select('akSelectOptionDisplayOrder', $displayOrderOptions, $akSelectOptionDisplayOrder)?>
+	<?php echo $form->select('akSelectOptionDisplayOrder', $displayOrderOptions, $akSelectOptionDisplayOrder)?>
 </div>
 
 <div class="clearfix">
-<label><?=t('Values')?></label>
+<label><?php echo t('Values')?></label>
 <div class="input">
 	<div id="attributeValuesInterface">
 	<div id="attributeValuesWrap">
@@ -113,24 +94,24 @@ function getAttributeOptionHTML($v)
             $akSelectValueID = uniqid();
         }
         ?>
-		<div id="akSelectValueWrap_<?=$akSelectValueID?>" class="akSelectValueWrap akSelectValueWrapSortable">
-			<?=getAttributeOptionHTML($v)?>
+		<div id="akSelectValueWrap_<?php echo $akSelectValueID?>" class="akSelectValueWrap akSelectValueWrapSortable">
+			<?php echo getAttributeOptionHTML($v)?>
 		</div>
 	<?php
     } ?>
 	</div>
 	
 	<div id="akSelectValueWrapTemplate" class="akSelectValueWrap" style="display:none">
-		<?=getAttributeOptionHTML('TEMPLATE') ?>
+		<?php echo getAttributeOptionHTML('TEMPLATE') ?>
 	</div>
 	
 	<div id="addAttributeValueWrap" class="form-inline">
-		<input id="akSelectValueFieldNew" name="akSelectValueNew" type="text" value="<?=$defaultNewOptionNm ?>" size="40"  class="form-control"
-		onfocus="ccmAttributesHelper.clrInitTxt(this,'<?=$defaultNewOptionNm ?>','faint',0)" 
-		onblur="ccmAttributesHelper.clrInitTxt(this,'<?=$defaultNewOptionNm ?>','faint',1)"
+		<input id="akSelectValueFieldNew" name="akSelectValueNew" type="text" value="<?php echo $defaultNewOptionNm ?>" size="40"  class="form-control"
+		onfocus="ccmAttributesHelper.clrInitTxt(this,'<?php echo $defaultNewOptionNm ?>','faint',0)" 
+		onblur="ccmAttributesHelper.clrInitTxt(this,'<?php echo $defaultNewOptionNm ?>','faint',1)"
 		onkeypress="ccmAttributesHelper.keydownHandler(event);"
 		 /> 
-		<input class="btn btn-primary" type="button" onClick="ccmAttributesHelper.saveNewOption(); $('#ccm-attribute-key-form').unbind()" value="<?=t('Add') ?>" />
+		<input class="btn btn-primary" type="button" onClick="ccmAttributesHelper.saveNewOption(); $('#ccm-attribute-key-form').unbind()" value="<?php echo t('Add') ?>" />
 	</div>
 	</div>
 
@@ -250,13 +231,6 @@ function getAttributeOptionHTML($v)
 	}
 
 	$(function() {
-		$('input[name=akSelectAllowMultipleValues]').on('change', function() {
-			if ($(this).is(':checked')) {
-				$('div[data-group=single-value]').hide();
-			} else {
-				$('div[data-group=single-value]').show();
-			}
-		}).trigger('change');
 		ccmAttributesHelper.makeSortable();
         <?php
         $max_input_vars = (int) @ini_get('max_input_vars');
@@ -265,9 +239,9 @@ function getAttributeOptionHTML($v)
             var $form = $("#ccm-attribute-key-form");
             $form.on('submit', function(e) {
                 var numFields = $form.find(':input').length;
-                if (numFields > <?=$max_input_vars?>) {
+                if (numFields > <?php echo $max_input_vars?>) {
                     alert(
-                        <?=json_encode(t(
+                        <?php echo json_encode(t(
 <<<'EOT'
 Your current PHP configuration does not allow to save so many tags.
 

@@ -64,7 +64,7 @@ $captcha = $surveyBlockInfo['displayCaptcha'] ? Loader::helper('validation/captc
 
 <div id="formblock<?php  echo $bID; ?>" class="ccm-block-type-form">
 <form enctype="multipart/form-data" class="form-stacked miniSurveyView" id="miniSurveyView<?php  echo $bID; ?>" method="post" action="<?php  echo $formAction ?>">
-    <?=Core::make('token')->output('form_block_submit_qs_'.$qsID);?>
+    <?php echo Core::make('token')->output('form_block_submit_qs_'.$qsID);?>
 	<?php  if ($success): ?>
 		
 		<div class="alert alert-success">
@@ -88,7 +88,7 @@ $captcha = $surveyBlockInfo['displayCaptcha'] ? Loader::helper('validation/captc
 				<label class="control-label" <?php  echo $question['labelFor']; ?>>
 					<?php  echo $question['question']; ?>
                     <?php if ($question['required']): ?>
-                        <span class="text-muted small" style="font-weight: normal"><?=t("Required")?></span>
+                        <span class="text-muted small" style="font-weight: normal"><?php echo t("Required")?></span>
                     <?php  endif; ?>
 				</label>
 				<?php  echo $question['input']; ?>

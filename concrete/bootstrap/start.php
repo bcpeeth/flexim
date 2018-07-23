@@ -24,14 +24,14 @@ if (basename($_SERVER['PHP_SELF']) == DISPATCHER_FILENAME_CORE) {
  * ----------------------------------------------------------------------------
  */
 /** @var \Concrete\Core\Application\Application $cms */
-$app = require DIR_APPLICATION . '/bootstrap/start.php';
-$app->instance('app', $app);
+$cms = require DIR_APPLICATION . '/bootstrap/start.php';
+$cms->instance('app', $cms);
 
 // Bind fully application qualified class names
-$app->instance('Concrete\Core\Application\Application', $app);
-$app->instance('Illuminate\Container\Container', $app);
+$cms->instance('Concrete\Core\Application\Application', $cms);
+$cms->instance('Illuminate\Container\Container', $cms);
 
 // Boot the runtime
-$app->getRuntime()->boot();
+$cms->getRuntime()->boot();
 
-return $app;
+return $cms;

@@ -1,7 +1,9 @@
 <?php
 namespace Concrete\Core\Application\Service;
 
-use Concrete\Core\Http\Response;
+use Concrete\Core\Asset\JavascriptInlineAsset;
+use Concrete\Core\Http\ResponseAssetGroup;
+use HtmlObject\Element;
 use HtmlObject\Traits\Tag;
 use PermissionKey;
 use User as ConcreteUser;
@@ -25,7 +27,7 @@ use stdClass;
  */
 class UserInterface
 {
-    public static $menuItems = [];
+    public static $menuItems = array();
 
     /**
      * Generates a submit button in the Concrete style.
@@ -38,11 +40,11 @@ class UserInterface
      *
      * @return string
      */
-    public function submit($text, $formID = false, $buttonAlign = 'right', $innerClass = null, $args = [])
+    public function submit($text, $formID = false, $buttonAlign = 'right', $innerClass = null, $args = array())
     {
-        if ('right' == $buttonAlign) {
+        if ($buttonAlign == 'right') {
             $innerClass .= ' pull-right';
-        } elseif ('left' == $buttonAlign) {
+        } elseif ($buttonAlign == 'left') {
             $innerClass .= ' pull-left';
         }
 
@@ -68,11 +70,11 @@ class UserInterface
      *
      * @return string
      */
-    public function button($text, $href, $buttonAlign = 'right', $innerClass = null, $args = [])
+    public function button($text, $href, $buttonAlign = 'right', $innerClass = null, $args = array())
     {
-        if ('right' == $buttonAlign) {
+        if ($buttonAlign == 'right') {
             $innerClass .= ' pull-right';
-        } elseif ('left' == $buttonAlign) {
+        } elseif ($buttonAlign == 'left') {
             $innerClass .= ' pull-left';
         }
         $argsstr = '';
@@ -80,7 +82,7 @@ class UserInterface
             $argsstr .= $k . '="' . $v . '" ';
         }
 
-        return '<a href="' . $href . '" class="btn btn-default ' . $innerClass . '" ' . $argsstr . '>' . $text . '</a>';
+        return '<a href="'.$href.'" class="btn btn-default '.$innerClass.'" '.$argsstr.'>'.$text.'</a>';
     }
 
     /**
@@ -94,11 +96,11 @@ class UserInterface
      *
      * @return string
      */
-    public function buttonJs($text, $onclick, $buttonAlign = 'right', $innerClass = null, $args = [])
+    public function buttonJs($text, $onclick, $buttonAlign = 'right', $innerClass = null, $args = array())
     {
-        if ('right' == $buttonAlign) {
+        if ($buttonAlign == 'right') {
             $innerClass .= ' pull-right';
-        } elseif ('left' == $buttonAlign) {
+        } elseif ($buttonAlign == 'left') {
             $innerClass .= ' pull-left';
         }
         $argsstr = '';
@@ -112,7 +114,7 @@ class UserInterface
     /**
      * @deprecated
      */
-    public function button_js($text, $onclick, $buttonAlign = 'right', $innerClass = null, $args = [])
+    public function button_js($text, $onclick, $buttonAlign = 'right', $innerClass = null, $args = array())
     {
         return self::buttonJs($text, $onclick, $buttonAlign, $innerClass, $args);
     }
@@ -195,12 +197,31 @@ class UserInterface
     }
 
     /**
-     * @deprecated The Newsflow Overlay feature has been removed
-     *
      * @return bool
      */
     public function showNewsflowOverlay()
     {
+        $tp = new \TaskPermission();
+        $c = Page::getCurrentPage();
+        if (Config::get('concrete.external.news_overlay') && $tp->canViewNewsflow() && $c->getCollectionPath() != '/dashboard/news') {
+            $u = new ConcreteUser();
+            $nf = $u->config('NEWSFLOW_LAST_VIEWED');
+            if ($nf == 'FIRSTRUN') {
+                return false;
+            }
+
+            if (Config::get('concrete.maintenance_mode') && !PermissionKey::getByHandle('view_in_maintenance_mode')->validate()) {
+                return false;
+            }
+
+            if (!$nf) {
+                return true;
+            }
+            if (time() - $nf > NEWSFLOW_VIEWED_THRESHOLD) {
+                return true;
+            }
+        }
+
         return false;
     }
 
@@ -276,7 +297,7 @@ class UserInterface
             if (is_object($c) && $c->getCollectionID() == $_c->getCollectionID()) {
                 $active = true;
             }
-            $html .= '<li class="' . (($active) ? 'active' : '') . '"><a href="' . $href . '">' . $name . '</a></li>';
+            $html .= '<li class="' . (($active) ? 'active' : ''). '"><a href="' . $href . '">' . $name . '</a></li>';
         }
         $html .= '</ul>';
 
@@ -302,7 +323,7 @@ class UserInterface
                 $dt = '';
                 $href = $t[0];
             }
-            $html .= '<li class="' . ((isset($t[2]) && true == $t[2]) ? 'active' : '') . '"><a href="' . $href . '" data-tab="' . $dt . '">' . $t[1] . '</a></li>';
+            $html .= '<li class="' . ((isset($t[2]) && $t[2] == true) ? 'active' : ''). '"><a href="' . $href . '" data-tab="' . $dt . '">' . $t[1] . '</a></li>';
         }
         $html .= '</ul>';
         if ($jstabs) {
@@ -319,7 +340,7 @@ class UserInterface
      */
     public function renderError($title, $error, $exception = false)
     {
-        Response::closeOutputBuffers(1, false);
+        \Response::closeOutputBuffers(1, false);
         $this->buildErrorResponse($title, $error, $exception)->send();
     }
 
@@ -338,11 +359,10 @@ class UserInterface
         if ($exception) {
             $o->content .= $exception->getTraceAsString();
         }
-
+    
         $ve = new ErrorView($o);
         $contents = $ve->render($o);
-
-        return Response::create($contents, Response::HTTP_INTERNAL_SERVER_ERROR);
+        return \Response::create($contents);
     }
 
     /**
@@ -352,7 +372,7 @@ class UserInterface
      */
     public function notify($arguments)
     {
-        $defaults = [
+        $defaults = array(
             'type' => 'success',
             'icon' => 'fa fa-check-mark',
             'title' => false,
@@ -360,8 +380,8 @@ class UserInterface
             'form' => false,
             'hide' => false,
             'addclass' => 'ccm-notification-page-alert',
-            'buttons' => [],
-        ];
+            'buttons' => array(),
+        );
 
         // overwrite all the defaults with the arguments
         $arguments = array_merge($defaults, $arguments);
@@ -377,8 +397,9 @@ class UserInterface
         $text .= $arguments['text'];
 
         if (count($arguments['buttons']) > 0) {
+
             $text .= '<div class="ccm-notification-inner-buttons">';
-            if (1 == count($arguments['buttons'])) {
+            if (count($arguments['buttons']) == 1) {
                 $singleButton = $arguments['buttons'][0];
                 if ($singleButton instanceof Tag) {
                     $singleButton->addClass('btn btn-xs btn-default');
@@ -386,7 +407,7 @@ class UserInterface
                 $text .= '<div>' . $singleButton . '</div>';
             } else {
                 $text .= '<div class="btn-group"><button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action <span class="caret"></span></button><ul class="dropdown-menu">';
-                foreach ($arguments['buttons'] as $button) {
+                foreach($arguments['buttons'] as $button) {
                     $text .= '<li>' . $button . '</li>';
                 }
                 $text .= '</ul></div>';
@@ -398,15 +419,16 @@ class UserInterface
             $text .= '</form>';
         }
 
+
         $arguments['text'] = $text;
 
         unset($arguments['buttons']);
         $string = json_encode($arguments);
 
+
         $content = '<script type="text/javascript">$(function() {';
         $content .= 'new PNotify(' . $string . ');';
         $content .= '});</script>';
-
         return $content;
     }
 }

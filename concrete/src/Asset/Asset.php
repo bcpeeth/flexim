@@ -1,196 +1,95 @@
 <?php
-
 namespace Concrete\Core\Asset;
 
-use Concrete\Core\Filesystem\FileLocator;
-use Concrete\Core\Http\Request;
 use Concrete\Core\Package\Package;
-use Concrete\Core\Package\PackageService;
-use Concrete\Core\Routing\RouterInterface;
 use Concrete\Core\Support\Facade\Application;
-use Exception;
+use Environment;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Matcher\UrlMatcher;
-use Symfony\Component\Routing\RequestContext;
 
 abstract class Asset implements AssetInterface
 {
     /**
-     * The handle of this asset (together with getAssetType, identifies this asset).
-     *
-     * @var string
-     */
-    protected $assetHandle;
-
-    /**
-     * The position of this asset (\Concrete\Core\Asset\AssetInterface::ASSET_POSITION_HEADER or \Concrete\Core\Asset\AssetInterface::ASSET_POSITION_FOOTER).
-     *
-     * @var string
-     */
-    protected $position;
-
-    /**
-     * Is this asset a locally available file (accessible with the getAssetPath method)?
-     *
-     * @var bool
-     */
-    protected $local = true;
-
-    /**
-     * Does this asset support minification?
-     *
-     * @var bool
-     */
-    protected $assetSupportsMinification = false;
-
-    /**
-     * Can this asset be combined with other assets?
-     *
-     * @var bool
-     */
-    protected $assetSupportsCombination = false;
-
-    /**
-     * The location of the asset (used to build the path & URL).
-     *
      * @var string
      */
     protected $location;
 
     /**
-     * The URL of this asset.
-     *
-     * @var string
-     */
-    protected $assetURL;
-
-    /**
-     * The path to this asset.
-     *
-     * @var string
-     */
-    protected $assetPath;
-
-    /**
-     * Does the URL/path have already been resolved (starting from the location) for this (local) assets?
-     *
      * @var bool
      */
     protected $assetHasBeenMapped = false;
 
     /**
-     * The name of the file of this asset.
-     *
-     * @var string
-     */
-    protected $filename;
-
-    /**
-     * The asset version.
-     *
      * @var string
      */
     protected $assetVersion = '0';
 
     /**
-     * The package that defines this asset.
-     *
-     * @var \Concrete\Core\Package\Package|\Concrete\Core\Entity\Package|null
+     * @var string
+     */
+    protected $assetHandle;
+
+    /**
+     * @var bool
+     */
+    protected $local = true;
+
+    /**
+     * @var string
+     */
+    protected $filename;
+
+    /**
+     * @var string
+     */
+    protected $assetURL;
+
+    /**
+     * @var string
+     */
+    protected $assetPath;
+
+    /**
+     * @var bool
+     */
+    protected $assetSupportsMinification = false;
+
+    /**
+     * @var bool
+     */
+    protected $assetSupportsCombination = false;
+
+    /**
+     * @var \Package
      */
     protected $pkg;
 
     /**
-     * The URL of the source files this asset has been built from (useful to understand the origin of this asset).
-     *
      * @var array
      */
     protected $combinedAssetSourceFiles = [];
 
-    /**
-     * Initialize the instance.
-     *
-     * @param string $assetHandle the handle of this asset (together with getAssetType, identifies this asset)
-     */
-    public function __construct($assetHandle = '')
-    {
-        $this->assetHandle = (string) $assetHandle;
-        $this->position = $this->getAssetDefaultPosition();
-    }
+    const ASSET_POSITION_HEADER = 'H';
+    const ASSET_POSITION_FOOTER = 'F';
 
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Asset\AssetInterface::setAssetPosition()
-     */
-    public function setAssetPosition($position)
-    {
-        $this->position = $position;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Asset\AssetInterface::getAssetPosition()
-     */
-    public function getAssetPosition()
-    {
-        return $this->position;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Asset\AssetInterface::getAssetHandle()
-     */
-    public function getAssetHandle()
-    {
-        return $this->assetHandle;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Asset\AssetInterface::getOutputAssetType()
-     */
     public function getOutputAssetType()
     {
         return $this->getAssetType();
     }
 
     /**
-     * {@inheritdoc}
+     * @param Asset[] $assets
      *
-     * @see \Concrete\Core\Asset\AssetInterface::setAssetIsLocal()
+     * @return Asset[]
+     *
+     * @abstract
      */
-    public function setAssetIsLocal($isLocal)
+    public static function process($assets)
     {
-        $this->local = $isLocal;
+        return $assets;
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Asset\AssetInterface::isAssetLocal()
-     */
-    public function isAssetLocal()
-    {
-        return $this->local;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Asset\AssetInterface::setAssetSupportsMinification()
-     */
-    public function setAssetSupportsMinification($minify)
-    {
-        $this->assetSupportsMinification = $minify;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Asset\AssetInterface::assetSupportsMinification()
+     * @return bool
      */
     public function assetSupportsMinification()
     {
@@ -198,19 +97,7 @@ abstract class Asset implements AssetInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Asset\AssetInterface::setAssetSupportsCombination()
-     */
-    public function setAssetSupportsCombination($combine)
-    {
-        $this->assetSupportsCombination = $combine;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Asset\AssetInterface::assetSupportsCombination()
+     * @return bool
      */
     public function assetSupportsCombination()
     {
@@ -218,9 +105,7 @@ abstract class Asset implements AssetInterface
     }
 
     /**
-     * Set the location of this asset.
-     *
-     * @param string $location
+     * @param mixed $location
      */
     public function setAssetLocation($location)
     {
@@ -228,20 +113,23 @@ abstract class Asset implements AssetInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Asset\AssetInterface::setAssetURL()
+     * @param bool $minify
      */
-    public function setAssetURL($url)
+    public function setAssetSupportsMinification($minify)
     {
-        $this->assetHasBeenMapped = true;
-        $this->assetURL = $url;
+        $this->assetSupportsMinification = $minify;
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Asset\AssetInterface::getAssetURL()
+     * @param bool $combine
+     */
+    public function setAssetSupportsCombination($combine)
+    {
+        $this->assetSupportsCombination = $combine;
+    }
+
+    /**
+     * @return string
      */
     public function getAssetURL()
     {
@@ -253,85 +141,7 @@ abstract class Asset implements AssetInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Asset\AssetInterface::setAssetPath()
-     */
-    public function setAssetPath($path)
-    {
-        $this->assetHasBeenMapped = true;
-        $this->assetPath = $path;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Asset\AssetInterface::getAssetPath()
-     */
-    public function getAssetPath()
-    {
-        if (!$this->assetHasBeenMapped) {
-            $this->mapAssetLocation($this->location);
-        }
-
-        return $this->assetPath;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Asset\AssetInterface::mapAssetLocation()
-     */
-    public function mapAssetLocation($path)
-    {
-        if ($this->isAssetLocal()) {
-            $app = Application::getFacadeApplication();
-            $locator = $app->make(FileLocator::class);
-            if ($this->pkg) {
-                $locator->addLocation(new FileLocator\PackageLocation($this->pkg->getPackageHandle()));
-            }
-            $r = $locator->getRecord($path);
-            $this->setAssetPath($r->file);
-            $this->setAssetURL($r->url);
-        } else {
-            $this->setAssetURL($path);
-        }
-    }
-
-    /**
-     * Does the URL/path have already been resolved (starting from the location) for this (local) assets?
-     *
-     * @return bool
-     */
-    public function hasAssetBeenMapped()
-    {
-        return $this->assetHasBeenMapped;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Asset\AssetInterface::getAssetURLPath()
-     */
-    public function getAssetURLPath()
-    {
-        return substr($this->getAssetURL(), 0, strrpos($this->getAssetURL(), '/'));
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Asset\AssetInterface::getAssetFilename()
-     */
-    public function getAssetFilename()
-    {
-        return $this->filename;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Asset\AssetInterface::getAssetHashKey()
+     * @return string
      */
     public function getAssetHashKey()
     {
@@ -339,15 +149,7 @@ abstract class Asset implements AssetInterface
         if ($this->isAssetLocal()) {
             $filename = $this->getAssetPath();
             if (is_file($filename)) {
-                $useFileContents = false;
-                if (is_readable($filename)) {
-                    $app = Application::getFacadeApplication();
-                    $config = $app->make('config');
-                    if ($config->get('concrete.cache.full_contents_assets_hash')) {
-                        $useFileContents = true;
-                    }
-                }
-                if ($useFileContents) {
+                if (is_readable($filename) && \Config::get('concrete.cache.full_contents_assets_hash')) {
                     $sha1 = @sha1_file($filename);
                     if ($sha1 !== false) {
                         $result = $sha1;
@@ -364,10 +166,52 @@ abstract class Asset implements AssetInterface
         return $result;
     }
 
+    public function getAssetPointer()
+    {
+        $pointer = new AssetPointer($this->getAssetType(), $this->getAssetHandle());
+
+        return $pointer;
+    }
+
     /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Asset\AssetInterface::setAssetVersion()
+     * @return string
+     */
+    public function getAssetPath()
+    {
+        if (!$this->assetHasBeenMapped) {
+            $this->mapAssetLocation($this->location);
+        }
+
+        return $this->assetPath;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAssetHandle()
+    {
+        return $this->assetHandle;
+    }
+
+    /**
+     * @param bool|string $assetHandle
+     */
+    public function __construct($assetHandle = false)
+    {
+        $this->assetHandle = $assetHandle;
+        $this->position = $this->getAssetDefaultPosition();
+    }
+
+    /**
+     * @return string
+     */
+    public function getAssetFilename()
+    {
+        return $this->filename;
+    }
+
+    /**
+     * @param string $version
      */
     public function setAssetVersion($version)
     {
@@ -375,9 +219,15 @@ abstract class Asset implements AssetInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Asset\AssetInterface::getAssetVersion()
+     * @param array $paths
+     */
+    public function setCombinedAssetSourceFiles($paths)
+    {
+        $this->combinedAssetSourceFiles = $paths;
+    }
+
+    /**
+     * @return string
      */
     public function getAssetVersion()
     {
@@ -385,9 +235,15 @@ abstract class Asset implements AssetInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Asset\AssetInterface::setPackageObject()
+     * @param string $position
+     */
+    public function setAssetPosition($position)
+    {
+        $this->position = $position;
+    }
+
+    /**
+     * @param \Package $pkg
      */
     public function setPackageObject($pkg)
     {
@@ -395,9 +251,81 @@ abstract class Asset implements AssetInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Asset\AssetInterface::getAssetContents()
+     * @param string $url
+     */
+    public function setAssetURL($url)
+    {
+        $this->assetHasBeenMapped = true;
+        $this->assetURL = $url;
+    }
+
+    /**
+     * @param string $path
+     */
+    public function setAssetPath($path)
+    {
+        $this->assetHasBeenMapped = true;
+        $this->assetPath = $path;
+    }
+
+    public function hasAssetBeenMapped()
+    {
+        return $this->assetHasBeenMapped;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAssetURLPath()
+    {
+        return substr($this->getAssetURL(), 0, strrpos($this->getAssetURL(), '/'));
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAssetLocal()
+    {
+        return $this->local;
+    }
+
+    /**
+     * @param bool $isLocal
+     */
+    public function setAssetIsLocal($isLocal)
+    {
+        $this->local = $isLocal;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAssetPosition()
+    {
+        return $this->position;
+    }
+
+    /**
+     * @param string $path
+     */
+    public function mapAssetLocation($path)
+    {
+        if ($this->isAssetLocal()) {
+            $env = Environment::get();
+            $pkgHandle = false;
+            if (is_object($this->pkg)) {
+                $pkgHandle = $this->pkg->getPackageHandle();
+            }
+            $r = $env->getRecord($path, $pkgHandle);
+            $this->setAssetPath($r->file);
+            $this->setAssetURL($r->url);
+        } else {
+            $this->setAssetURL($path);
+        }
+    }
+
+    /**
+     * @return string|null
      */
     public function getAssetContents()
     {
@@ -407,77 +335,6 @@ abstract class Asset implements AssetInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Asset\AssetInterface::setCombinedAssetSourceFiles()
-     */
-    public function setCombinedAssetSourceFiles($paths)
-    {
-        $this->combinedAssetSourceFiles = $paths;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Asset\AssetInterface::register()
-     */
-    public function register($filename, $args, $pkg = false)
-    {
-        $args += [
-            'local' => false,
-            'minify' => null,
-            'combine' => null,
-            'version' => null,
-            'position' => null,
-        ];
-        if ($pkg) {
-            if (is_string($pkg)) {
-                $app = Application::getFacadeApplication();
-                $pkg = $app->make(PackageService::class)->getByHandle($pkg);
-            }
-            $this->setPackageObject($pkg ?: null);
-        }
-        $this->setAssetIsLocal($args['local']);
-        $this->setAssetLocation($filename);
-        if ($args['minify'] === true || $args['minify'] === false) {
-            $this->setAssetSupportsMinification($args['minify']);
-        }
-        if ($args['combine'] === true || $args['combine'] === false) {
-            $this->setAssetSupportsCombination($args['combine']);
-        }
-        if ($args['version']) {
-            $this->setAssetVersion($args['version']);
-        }
-        if ($args['position']) {
-            $this->setAssetPosition($args['position']);
-        }
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Asset\AssetInterface::process()
-     */
-    public static function process($assets)
-    {
-        return $assets;
-    }
-
-    /**
-     * Get an AssetPointer instance that identifies this asset.
-     *
-     * @return \Concrete\Core\Asset\AssetPointer
-     */
-    public function getAssetPointer()
-    {
-        $pointer = new AssetPointer($this->getAssetType(), $this->getAssetHandle());
-
-        return $pointer;
-    }
-
-    /**
-     * Get the contents of an asset given its route.
-     *
      * @param string $route
      *
      * @return string|null
@@ -486,22 +343,22 @@ abstract class Asset implements AssetInterface
     {
         $result = null;
         try {
-            $app = Application::getFacadeApplication();
-            $router = $app->make(RouterInterface::class);
-            $routes = $router->getList();
-            $context = new RequestContext();
-            $request = $app->make(Request::class);
+            $routes = \Route::getList();
+            /* @var $routes \Symfony\Component\Routing\RouteCollection */
+            $context = new \Symfony\Component\Routing\RequestContext();
+            $request = \Request::getInstance();
             $context->fromRequest($request);
-            $matcher = new UrlMatcher($routes, $context);
+            $matcher = new \Symfony\Component\Routing\Matcher\UrlMatcher($routes, $context);
             $matched = null;
             try {
                 $matched = $matcher->match($route);
-            } catch (Exception $x) {
+            } catch (\Exception $x) {
+                $m = null;
                 // Route matcher requires that paths ends with a slash
                 if (preg_match('/^(.*[^\/])($|\?.*)$/', $route, $m)) {
                     try {
                         $matched = $matcher->match($m[1] . '/' . (isset($m[2]) ? $m[2] : ''));
-                    } catch (Exception $x) {
+                    } catch (\Exception $x) {
                     }
                 }
             }
@@ -512,14 +369,14 @@ abstract class Asset implements AssetInterface
                     $chunks = explode('::', $controller, 2);
                     if (count($chunks) === 2) {
                         if (class_exists($chunks[0])) {
-                            $array = [$app->make($chunks[0]), $chunks[1]];
+                            $array = [Application::getFacadeApplication()->make($chunks[0]), $chunks[1]];
                             if (is_callable($array)) {
                                 $callable = $array;
                             }
                         }
                     } else {
                         if (class_exists($controller) && method_exists($controller, '__invoke')) {
-                            $callable = $app->make($controller);
+                            $callable = Application::getFacadeApplication()->make($controller);
                         }
                     }
                 } elseif (is_callable($controller)) {
@@ -536,9 +393,33 @@ abstract class Asset implements AssetInterface
                     ob_end_clean();
                 }
             }
-        } catch (Exception $x) {
+        } catch (\Exception $x) {
         }
 
         return $result;
+    }
+
+    public function register($filename, $args, $pkg = false)
+    {
+        if ($pkg != false) {
+            if ($pkg !== false && is_string($pkg)) {
+                $pkg = Package::getByHandle($pkg);
+            }
+            $this->setPackageObject($pkg);
+        }
+        $this->setAssetIsLocal($args['local']);
+        $this->setAssetLocation($filename);
+        if ($args['minify'] === true || $args['minify'] === false) {
+            $this->setAssetSupportsMinification($args['minify']);
+        }
+        if ($args['combine'] === true || $args['combine'] === false) {
+            $this->setAssetSupportsCombination($args['combine']);
+        }
+        if ($args['version']) {
+            $this->setAssetVersion($args['version']);
+        }
+        if ($args['position']) {
+            $this->setAssetPosition($args['position']);
+        }
     }
 }

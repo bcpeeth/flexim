@@ -2,22 +2,19 @@
 namespace Concrete\Controller\Element\Dashboard\Reports\Forms;
 
 use Concrete\Core\Controller\ElementController;
-use Concrete\Core\Entity\Express\Entity;
 
 class Header extends ElementController
 {
     protected $nodeId;
-    protected $entity;
 
     /**
      * Header constructor.
      *
      * @param $nodeId
      */
-    public function __construct($nodeId, Entity $entity = null)
+    public function __construct($nodeId)
     {
         parent::__construct();
-        $this->entity = $entity;
         $this->nodeId = $nodeId;
     }
 
@@ -29,17 +26,10 @@ class Header extends ElementController
     public function view()
     {
         $db = \Database::connection();
-        if ($this->entity) {
-            $this->set('entity', $this->entity);
-            $this->set('exportURL', \URL::to('/dashboard/reports/forms', 'csv_export', $this->nodeId));
-            $managePage = \Page::getByPath('/dashboard/system/express/entities');
-            $permissions = new \Permissions($managePage);
-            if ($permissions->canViewPage()) {
-                $this->set('manageURL', \URL::to('/dashboard/system/express/entities', 'view_entity', $this->entity->getID()));
-            }
+        $this->set('supportsLegacy', $db->tableExists('btFormQuestions'));
 
-        } else {
-            $this->set('supportsLegacy', $db->tableExists('btFormQuestions'));
+        if ($this->nodeId) {
+            $this->set('exportURL', \URL::to('/dashboard/express/entries', 'csv_export', $this->nodeId));
         }
     }
 }

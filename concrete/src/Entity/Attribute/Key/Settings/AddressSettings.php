@@ -1,6 +1,7 @@
 <?php
 namespace Concrete\Core\Entity\Attribute\Key\Settings;
 
+use Concrete\Core\Entity\Attribute\Value\Value\AddressValue;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,12 +23,7 @@ class AddressSettings extends Settings
     /**
      * @ORM\Column(type="json_array")
      */
-    protected $customCountries = [];
-
-    /**
-     * @ORM\Column(type="boolean", nullable=false)
-     */
-    protected $akGeolocateCountry = false;
+    protected $customCountries = array();
 
     /**
      * @return mixed
@@ -77,23 +73,4 @@ class AddressSettings extends Settings
         $this->customCountries = $customCountries;
     }
 
-    /**
-     * Should we try to determine the Country starting from the visitor's IP address?
-     *
-     * @return bool
-     */
-    public function geolocateCountry()
-    {
-        return $this->akGeolocateCountry;
-    }
-
-    /**
-     * Should we try to determine the Country starting from the visitor's IP address?
-     *
-     * @param bool $value
-     */
-    public function setGeolocateCountry($value)
-    {
-        $this->akGeolocateCountry = (bool) $value;
-    }
 }

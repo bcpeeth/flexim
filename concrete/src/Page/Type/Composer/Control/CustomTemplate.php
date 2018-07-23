@@ -1,9 +1,9 @@
 <?php
 namespace Concrete\Core\Page\Type\Composer\Control;
 
-use Concrete\Core\Foundation\ConcreteObject;
+use Concrete\Core\Foundation\Object;
 
-class CustomTemplate extends ConcreteObject
+class CustomTemplate extends Object
 {
     protected $ptComposerControlCustomTemplateFilename;
     protected $ptComposerControlCustomTemplateName;

@@ -1,29 +1,26 @@
 <?php
-
 namespace Concrete\Core\Updater\Migrations\Migrations;
 
-use Concrete\Core\Updater\Migrations\AbstractMigration;
-use Concrete\Core\Updater\Migrations\RepeatableMigrationInterface;
+use Doctrine\DBAL\Migrations\AbstractMigration;
+use Doctrine\DBAL\Schema\Schema;
+use Concrete\Core\Block\BlockType\BlockType;
 
-class Version20150109000000 extends AbstractMigration implements RepeatableMigrationInterface
+class Version20150109000000 extends AbstractMigration
 {
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Doctrine\DBAL\Migrations\AbstractMigration::getDescription()
-     */
     public function getDescription()
     {
         return '5.7.3.1';
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Updater\Migrations\AbstractMigration::upgradeDatabase()
-     */
-    public function upgradeDatabase()
+    public function up(Schema $schema)
     {
-        $this->refreshBlockType('google_map');
+        $bt = BlockType::getByHandle('google_map');
+        if (is_object($bt)) {
+            $bt->refresh();
+        }
+    }
+
+    public function down(Schema $schema)
+    {
     }
 }

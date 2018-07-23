@@ -7,13 +7,14 @@ use Concrete\Core\Express\Entry\Search\Result\Result;
 use Concrete\Core\Express\EntryList;
 use Concrete\Core\Express\Search\ColumnSet\DefaultSet;
 use Concrete\Core\Search\AbstractSearchProvider;
+use Concrete\Core\Search\ProviderInterface;
 use Concrete\Core\Express\Search\ColumnSet\Available;
 use Concrete\Core\Express\Search\ColumnSet\ColumnSet;
-use Concrete\Core\Entity\Search\SavedExpressSearch;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 class SearchProvider extends AbstractSearchProvider
 {
+
     protected $category;
     protected $entity;
     protected $columnSet;
@@ -63,11 +64,6 @@ class SearchProvider extends AbstractSearchProvider
 
     public function getCurrentColumnSet()
     {
-        $query = $this->getSessionCurrentQuery();
-        if ($query) {
-            $this->columnSet = $query->getColumns();
-        }
-
         if (!isset($this->columnSet)) {
             $current = $this->entity->getResultColumnSet();
             if (!is_object($current)) {
@@ -75,7 +71,6 @@ class SearchProvider extends AbstractSearchProvider
             }
             $this->columnSet = $current;
         }
-
         return $this->columnSet;
     }
 
@@ -93,23 +88,10 @@ class SearchProvider extends AbstractSearchProvider
     {
         return new DefaultSet($this->category);
     }
-
-    /**
-     * Returns the number of items per page.
-     * @return int
-     */
-    public function getItemsPerPage()
+    
+    function getSavedSearch()
     {
-        $query = $this->getSessionCurrentQuery();
-        if ($query) {
-            return $query->getItemsPerPage();
-        } else {
-            return $this->entity->getItemsPerPage();
-        }
+        // TODO: Implement getSavedSearch() method.
     }
 
-    public function getSavedSearch()
-    {
-        return new SavedExpressSearch();
-    }
 }

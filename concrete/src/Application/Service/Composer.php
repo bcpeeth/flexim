@@ -4,6 +4,7 @@ namespace Concrete\Core\Application\Service;
 use Concrete\Core\Page\Page;
 use Concrete\Core\Page\Type\Type;
 use Concrete\Core\Permission\Key\Key;
+use PageType;
 use Concrete\Core\Page\Type\Composer\Control\Control as PageTypeComposerControl;
 use View;
 
@@ -19,10 +20,10 @@ class Composer
     }
 
     /**
-     * @param Type $pagetype
+     * @param PageType $pagetype
      * @param bool|\Page $page
      */
-    public function displayButtons(Type $pagetype, $page = false)
+    public function displayButtons(PageType $pagetype, $page = false)
     {
         View::element('page_types/composer/form/output/buttons', array(
             'pagetype' => $pagetype,
@@ -31,10 +32,10 @@ class Composer
     }
 
     /**
-     * @param Type $pt
+     * @param PageType $pt
      * @param \Controller $cnt
      */
-    public function addAssetsToRequest(Type $pt, \Controller $cnt)
+    public function addAssetsToRequest(PageType $pt, \Controller $cnt)
     {
         $list = PageTypeComposerControl::getList($pt);
         foreach ($list as $l) {

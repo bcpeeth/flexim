@@ -2,23 +2,23 @@
 
 <div class="form-group">
     <?php if ($view->supportsLabel()) { ?>
-        <label class="control-label" for="<?=$view->getControlID()?>"><?=$label?></label>
+        <label class="control-label"><?php echo $label?></label>
     <?php } ?>
 
     <?php
     if (!empty($entities)) {
         $selectedEntity = $selectedEntities[0];
         ?>
-        <select class="form-control" id="<?=$view->getControlID()?>" name="express_association_<?=$control->getId()?>">
-            <option value=""><?=t('** Choose %s', $control->getControlLabel())?></option>
+        <select class="form-control" name="express_association_<?php echo $control->getId()?>">
+            <option value=""><?php echo t('** Choose %s', $control->getControlLabel())?></option>
             <?php
             foreach ($entities as $entity) {
                 ?>
                 <option
-                    value="<?=$entity->getId()?>"
+                    value="<?php echo $entity->getId()?>"
                     <?php if (is_object($selectedEntity) && $selectedEntity->getID() == $entity->getID()) { ?>selected<?php } ?>
                 >
-                    <?=$formatter->getEntryDisplayName($control, $entity)?>
+                    <?php echo $formatter->getEntryDisplayName($control, $entity)?>
                 </option>
                 <?php
             }
@@ -26,6 +26,6 @@
         </select>
     <?php
     } else {
-        ?><p><?=t('No entity found.')?></p><?php
+        ?><p><?php echo t('No entity found.')?></p><?php
     } ?>
 </div>

@@ -2,18 +2,25 @@
 
 namespace Concrete\Core\Updater\Migrations\Migrations;
 
-use Concrete\Core\Updater\Migrations\AbstractMigration;
-use Concrete\Core\Updater\Migrations\RepeatableMigrationInterface;
+use Concrete\Core\Page\Page;
+use Doctrine\DBAL\Migrations\AbstractMigration;
+use Doctrine\DBAL\Schema\Schema;
+use ORM;
 
-class Version20160314000000 extends AbstractMigration implements RepeatableMigrationInterface
+class Version20160314000000 extends AbstractMigration
 {
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Updater\Migrations\AbstractMigration::upgradeDatabase()
-     */
-    public function upgradeDatabase()
+
+    public function up(Schema $schema)
     {
-        $this->refreshBlockType('image_slider');
+        $bt = \BlockType::getByHandle('image_slider');
+        if (is_object($bt)) {
+            $bt->refresh();
+        }
     }
+
+    public function down(Schema $schema)
+    {
+    }
+
+
 }

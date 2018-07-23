@@ -27,20 +27,22 @@ class AttributeKeyControl implements ItemInterface
      */
     public function import(\SimpleXMLElement $xml, Entity $entity)
     {
+        $control = new \Concrete\Core\Entity\Express\Control\AttributeKeyControl();
+        $control->setCustomLabel((string)$xml['custom-label']);
+        if (((string)$xml['required']) == '1') {
+            $control->setIsRequired(true);
+        }
+        $control->setId((string)$xml['id']);
+        $category = new ExpressCategory($entity, $this->application, $this->entityManager);
+
         if (isset($xml->attributekey)) {
-            $category = new ExpressCategory($entity, $this->application, $this->entityManager);
-            $control = new \Concrete\Core\Entity\Express\Control\AttributeKeyControl();
-            $control->setCustomLabel((string) $xml['custom-label']);
-            if (((string) $xml['required']) == '1') {
-                $control->setIsRequired(true);
-            }
-            $control->setId((string) $xml['id']);
             $ak = $xml->attributekey;
-            $key = $category->getAttributeKeyByHandle((string) $ak['handle']);
+            $type = $this->application->make('Concrete\Core\Attribute\TypeFactory')->getByHandle((string)$ak['type']);
+            $key = $category->import($type, $ak);
             $control->setAttributeKey($key);
-            return $control;
         }
 
+        return $control;
     }
 
 }

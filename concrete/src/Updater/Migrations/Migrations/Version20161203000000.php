@@ -1,38 +1,17 @@
 <?php
-
 namespace Concrete\Core\Updater\Migrations\Migrations;
 
-use Concrete\Core\Updater\Migrations\AbstractMigration;
-use Concrete\Core\Updater\Migrations\RepeatableMigrationInterface;
+use Doctrine\DBAL\Migrations\AbstractMigration;
+use Doctrine\DBAL\Schema\Schema;
 
-class Version20161203000000 extends AbstractMigration implements RepeatableMigrationInterface
+class Version20161203000000 extends AbstractMigration
 {
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Doctrine\DBAL\Migrations\AbstractMigration::getDescription()
-     */
-    public function getDescription()
-    {
-        return '8.0.1';
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Updater\Migrations\AbstractMigration::upgradeDatabase()
-     */
-    public function upgradeDatabase()
-    {
-        $this->fixFileFolderPermissions();
-        $this->fixWorkflows();
-        $this->fixTrackingCode();
-    }
 
     protected function output($message)
     {
         $this->version->getConfiguration()->getOutputWriter()->write($message);
     }
+
 
     protected function fixFileFolderPermissions()
     {
@@ -66,10 +45,10 @@ class Version20161203000000 extends AbstractMigration implements RepeatableMigra
         $config = $site->getConfigRepository();
         $proceed = true;
         $tracking = $config->get('seo.tracking');
-        if (is_array($tracking) && isset($tracking['header']) && $tracking['header']) {
+        if (is_array($tracking) && isset($tracking['header']) && $tracking['header']){
             $proceed = false;
         }
-        if (is_array($tracking) && isset($tracking['footer']) && $tracking['footer']) {
+        if (is_array($tracking) && isset($tracking['footer']) && $tracking['footer']){
             $proceed = false;
         }
         if ($proceed) {
@@ -92,5 +71,16 @@ class Version20161203000000 extends AbstractMigration implements RepeatableMigra
             unset($tracking['code_position']);
             $config->save('seo.tracking', $tracking);
         }
+    }
+
+    public function up(Schema $schema)
+    {
+        $this->fixFileFolderPermissions();
+        $this->fixWorkflows();
+        $this->fixTrackingCode();
+    }
+
+    public function down(Schema $schema)
+    {
     }
 }

@@ -32,11 +32,6 @@ class SiteEntry extends Entry
         return null;
     }
 
-    public function getIcon()
-    {
-        return null;
-    }
-
     public function getID()
     {
         return $this->site->getSiteID();

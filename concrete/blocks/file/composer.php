@@ -13,9 +13,9 @@ $al = Loader::helper('concrete/asset_library');
 ?>
 
 <div class="control-group">
-	<label class="control-label"><?=$label?></label>
+	<label class="control-label"><?php echo $label?></label>
 	<?php if ($description): ?>
-	<i class="fa fa-question-circle launch-tooltip" title="" data-original-title="<?=$description?>"></i>
+	<i class="fa fa-question-circle launch-tooltip" title="" data-original-title="<?php echo $description?>"></i>
 	<?php endif; ?>
 	<div class="controls">
 		<?php echo $al->file('ccm-b-file-'.$setcontrol->getPageTypeComposerFormLayoutSetControlID(), $view->field('fID'), t('Choose File'), $bf); ?>

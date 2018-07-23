@@ -9,7 +9,7 @@ use Core;
 class Controller extends BlockController
 {
     protected $btTable = 'btGoogleMap';
-    protected $btInterfaceWidth = 525;
+    protected $btInterfaceWidth = 475;
     protected $btInterfaceHeight = 550;
     protected $btCacheBlockOutput = true;
     protected $btCacheBlockOutputOnPost = true;
@@ -52,11 +52,16 @@ class Controller extends BlockController
         $c = Page::getCurrentPage();
         if (!$c->isEditMode()) {
             $this->addFooterItem(
-                '<script defer src="https://maps.googleapis.com/maps/api/js?callback=concreteGoogleMapInit&key='
+                '<script defer src="https://maps.googleapis.com/maps/api/js?key='
                 . Config::get('app.api_keys.google.maps')
                 .'"></script>'
             );
         }
+    }
+
+    public function view()
+    {
+        $this->set('unique_identifier', Core::make('helper/validation/identifier')->getString(18));
     }
 
     public function save($data)

@@ -4,33 +4,33 @@
 	<a href="<?php echo View::url('/dashboard/system/basics/attributes')?>" class="btn btn-default"><?php echo t("Manage Attributes")?></a>
 </div>
 
-<form method="post" class="ccm-dashboard-content-form" action="<?=$view->action('update_sitename')?>">
-	<?=$this->controller->token->output('update_sitename')?>
+<form method="post" class="ccm-dashboard-content-form" action="<?php echo $view->action('update_sitename')?>">
+	<?php echo $this->controller->token->output('update_sitename')?>
 
 	<fieldset>
-		<legend><?= t('Core Properties') ?></legend>
+		<legend><?php echo t('Core Properties') ?></legend>
 		<div class="form-group">
-			<label for="SITE" class="launch-tooltip control-label" data-placement="right" title="<?=t('By default, site name is displayed in the browser title bar. It is also the default name for your project on concrete5.org')?>"><?=t('Site Name')?></label>
-			<?=$form->text('SITE', $site->getSiteName(), array('class' => 'span4'))?>
+			<label for="SITE" class="launch-tooltip control-label" data-placement="right" title="<?php echo t('By default, site name is displayed in the browser title bar. It is also the default name for your project on concrete5.org')?>"><?php echo t('Site Name')?></label>
+			<?php echo $form->text('SITE', $site->getSiteName(), array('class' => 'span4'))?>
 		</div>
 	</fieldset>
 
 	<fieldset>
-		<legend><?=t('Custom Attributes')?></legend>
+		<legend><?php echo t('Custom Attributes')?></legend>
 		<?php
 		if (count($attributes) > 0) {
 			foreach ($attributes as $ak) {
 				echo $renderer->render($ak);
 			}
 		} else { ?>
-			<p><?=t('You have not defined any <a href="%s">custom attributes</a> for this site.', URL::to('/dashboard/system/basics/attributes'))?></p>
+			<p><?php echo t('You have not defined any <a href="%s">custom attributes</a> for this site.', URL::to('/dashboard/system/basics/attributes'))?></p>
 		<?php } ?>
 
 	</fieldset>
 
 	<div class="ccm-dashboard-form-actions-wrapper">
 	<div class="ccm-dashboard-form-actions">
-		<button class="pull-right btn btn-primary" type="submit" ><?=t('Save')?></button>
+		<button class="pull-right btn btn-primary" type="submit" ><?php echo t('Save')?></button>
 	</div>
 	</div>
 

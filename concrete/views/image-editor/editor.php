@@ -2,7 +2,6 @@
 defined('C5_EXECUTE') or die("Access Denied.");
 use Concrete\Core\Http\ResponseAssetGroup;
 use Concrete\Core\ImageEditor\ImageEditor;
-use Concrete\Core\File\Image\BitmapFormat;
 use Whoops\Exception\ErrorException;
 
 $editorid = substr(sha1(time()), 0, 5); // Just enough entropy.
@@ -31,7 +30,7 @@ $controls = $editor->getControlList()
 ?>
     <div class='table ccm-ui'>
         <div class='editorcontainer'>
-            <div id='<?= $editorid ?>' class='Editor'></div>
+            <div id='<?php echo $editorid ?>' class='Editor'></div>
             <div class='bottomBar'></div>
         </div>
         <div class='controls'>
@@ -52,10 +51,10 @@ $controls = $editor->getControlList()
                                 $req->addOutputAsset($asset);
                             }
                             ?>
-                            <div class="controlset controlset-<?= $control_handle ?> control control-<?= $control_handle ?>"
-                                 data-namespace="<?= $control_handle ?>"
-                                 data-src="<?= $javascript_asset->getAssetUrl() ?>">
-                                <h4><?= $control->getName() ?></h4>
+                            <div class="controlset controlset-<?php echo $control_handle ?> control control-<?php echo $control_handle ?>"
+                                 data-namespace="<?php echo $control_handle ?>"
+                                 data-src="<?php echo $javascript_asset->getAssetUrl() ?>">
+                                <h4><?php echo $control->getName() ?></h4>
 
                                 <div class="control">
                                     <div class="contents">
@@ -79,15 +78,15 @@ $controls = $editor->getControlList()
                     </div>
                 </div>
                 <div class='save'>
-                    <button class='cancel btn'><?= t('Cancel')?></button>
-                    <button class='save btn pull-right btn-primary'><?= t('Save')?></button>
+                    <button class='cancel btn'><?php echo t('Cancel')?></button>
+                    <button class='save btn pull-right btn-primary'><?php echo t('Save')?></button>
                 </div>
             </div>
         </div>
     </div>
 
 <?php
-if (empty($settings)) {
+if (!$settings) {
     $settings = array();
 }
 $fnames = array();
@@ -113,16 +112,16 @@ foreach ($filters as $filter) {
             _.defer(function () {
                 var defaults = {
                         saveUrl: CCM_DISPATCHER_FILENAME + '/tools/required/files/importers/imageeditor',
-                        src: '<?=$fv->getURL()?>',
-                        fID: <?= $fv->getFileID() ?>,
-                        token: '<?= $token ?>',
+                        src: '<?php echo $fv->getURL()?>',
+                        fID: <?php echo $fv->getFileID() ?>,
+                        token: '<?php echo $token ?>',
                         controlsets: {},
                         filters: {},
                         debug: false,
-                        jpegCompression: <?= Core::make(BitmapFormat::class)->getDefaultJpegQuality() / 100 ?>,
-                        mime: '<?= $fv->getMimeType() ?>'
+                        jpegCompression: <?php echo Config::get('concrete.misc.default_jpeg_image_compression') / 100 ?>,
+                        mime: '<?php echo $fv->getMimeType() ?>'
                     },
-                    settings = _.extend(defaults, <?= json_encode($settings) ?>);
+                    settings = _.extend(defaults, <?php echo json_encode($settings) ?>);
                 $('div.controlset', 'div.controls').each(function () {
                     settings.controlsets[$(this).attr('data-namespace')] = {
                         src: $(this).attr('data-src'),
@@ -135,8 +134,8 @@ foreach ($filters as $filter) {
                         element: $(this).children('div.control').children('div.contents')
                     }
                 });
-                settings.filters = <?= json_encode($fnames); ?>;
-                var editor = $('div#<?=$editorid?>.Editor');
+                settings.filters = <?php echo json_encode($fnames); ?>;
+                var editor = $('div#<?php echo $editorid?>.Editor');
                 window.im = editor.closest('.ui-dialog-content').css('padding', 0).end().ImageEditor(settings);
             });
 

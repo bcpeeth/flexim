@@ -2,9 +2,9 @@
 namespace Concrete\Core\Conversation\FlagType;
 
 use Loader;
-use Concrete\Core\Foundation\ConcreteObject;
+use Concrete\Core\Foundation\Object;
 
-class FlagType extends ConcreteObject
+class FlagType extends Object
 {
     public $id;
     public $handle;

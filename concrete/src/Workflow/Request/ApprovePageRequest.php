@@ -18,8 +18,7 @@ class ApprovePageRequest extends PageRequest
 {
     protected $wrStatusNum = 30;
     private $isScheduled = false;
-    private $cvPublishDate;
-    private $cvPublishEndDate;
+    private $scheduleDatetime;
 
     public function __construct()
     {
@@ -155,7 +154,7 @@ class ApprovePageRequest extends PageRequest
     {
         $c = Page::getByID($this->getRequestedPageID());
         $v = CollectionVersion::get($c, $this->cvID);
-        $v->approve(false, $this->cvPublishDate, $this->cvPublishEndDate);
+        $v->approve(false, $this->scheduleDatetime);
 
         $ev = new \Concrete\Core\Page\Collection\Version\Event($c);
         $ev->setCollectionVersionObject($v);
@@ -167,11 +166,10 @@ class ApprovePageRequest extends PageRequest
         return $wpr;
     }
 
-    public function scheduleVersion($cvPublishDate, $cvPublishEndDate)
+    public function scheduleVersion($dateTime)
     {
         $this->isScheduled = true;
-        $this->cvPublishDate = $cvPublishDate;
-        $this->cvPublishEndDate = $cvPublishEndDate;
+        $this->scheduleDatetime = $dateTime;
     }
 
     public function getRequesterComment()

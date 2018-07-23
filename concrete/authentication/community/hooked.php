@@ -3,9 +3,9 @@
 $url = $controller->getConcrete5ProfileURL(new User())
 ?>
 <div class="form-group">
-    <a href="<?= h($url) ?>" class="btn btn-primary btn-community">
-        <img src="<?= Core::getApplicationURL() ?>/concrete/images/logo.svg" class="concrete5-icon" />
-        <?= t('View your concrete5 account') ?>
+    <a href="<?php echo h($url) ?>" class="btn btn-primary btn-community">
+        <img src="<?php echo Core::getApplicationURL() ?>/concrete/images/logo.svg" class="concrete5-icon" />
+        <?php echo t('View your concrete5 account') ?>
     </a>
 </div>
 

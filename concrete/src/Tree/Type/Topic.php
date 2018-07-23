@@ -82,7 +82,6 @@ class Topic extends Tree
     public function exportDetails(\SimpleXMLElement $sx)
     {
         $default = self::getDefault();
-        $sx->addAttribute('name', $this->getTreeName());
         if (is_object($default) && $default->getTreeID() == $this->getTreeID()) {
             $sx->addAttribute('default', 1);
         }

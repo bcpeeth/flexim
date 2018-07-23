@@ -48,7 +48,6 @@ class Attributes extends BackendInterfacePageController
         $html = ob_get_contents();
         ob_end_clean();
         $obj = new stdClass();
-        $obj->controlID = $ak->getController()->getControlID();
         $obj->akID = $ak->getAttributeKeyID();
         $obj->label = $ak->getAttributeKeyDisplayName();
         $obj->content = $html;
@@ -76,7 +75,6 @@ class Attributes extends BackendInterfacePageController
     public function submit()
     {
         if ($this->validateAction()) {
-            $post = $this->request->request;
             $c = $this->page;
             $cp = $this->permissions;
             $asl = $this->assignment;
@@ -84,10 +82,10 @@ class Attributes extends BackendInterfacePageController
             $nvc = $c->getVersionToModify();
             $data = array();
             if ($asl->allowEditName()) {
-                $data['cName'] = $post->get('cName');
+                $data['cName'] = $_POST['cName'];
             }
             if ($asl->allowEditDescription()) {
-                $data['cDescription'] = $post->get('cDescription');
+                $data['cDescription'] = $_POST['cDescription'];
             }
             if ($asl->allowEditDateTime()) {
                 $dt = Loader::helper('form/date_time');
@@ -95,7 +93,7 @@ class Attributes extends BackendInterfacePageController
                 $data['cDatePublic'] = $dt->translate('cDatePublic');
             }
             if ($asl->allowEditUserID()) {
-                $data['uID'] = $post->get('uID');
+                $data['uID'] = $_POST['uID'];
             }
 
             $nvc->update($data);
@@ -103,11 +101,11 @@ class Attributes extends BackendInterfacePageController
             // First, we check out the attributes we need to clear.
             $setAttribs = $nvc->getSetCollectionAttributes();
             $processedAttributes = array();
-            $selectedAKIDs = $post->get('selectedAKIDs');
+            $selectedAKIDs = $_POST['selectedAKIDs'];
             if (!is_array($selectedAKIDs)) {
                 $selectedAKIDs = array();
             }
-            $selected = is_array($post->get('selectedAKIDs')) ? $post->get('selectedAKIDs') : array();
+            $selected = is_array($_POST['selectedAKIDs']) ? $_POST['selectedAKIDs'] : array();
 
             foreach ($setAttribs as $ak) {
                 // do I have the ability to edit this attribute?

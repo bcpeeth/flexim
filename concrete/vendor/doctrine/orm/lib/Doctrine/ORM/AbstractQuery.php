@@ -325,14 +325,14 @@ abstract class AbstractQuery
     public function getParameter($key)
     {
         $filteredParameters = $this->parameters->filter(
-            function (Query\Parameter $parameter) use ($key) {
-                $parameterName = $parameter->getName();
-
-                return $key === $parameterName || (string) $key === (string) $parameterName;
+            function ($parameter) use ($key)
+            {
+                // Must not be identical because of string to integer conversion
+                return ($key == $parameter->getName());
             }
         );
 
-        return ! $filteredParameters->isEmpty() ? $filteredParameters->first() : null;
+        return count($filteredParameters) ? $filteredParameters->first() : null;
     }
 
     /**
@@ -373,10 +373,17 @@ abstract class AbstractQuery
      */
     public function setParameter($key, $value, $type = null)
     {
-        $existingParameter = $this->getParameter($key);
+        $filteredParameters = $this->parameters->filter(
+            function ($parameter) use ($key)
+            {
+                // Must not be identical because of string to integer conversion
+                return ($key == $parameter->getName());
+            }
+        );
 
-        if ($existingParameter !== null) {
-            $existingParameter->setValue($value, $type);
+        if (count($filteredParameters)) {
+            $parameter = $filteredParameters->first();
+            $parameter->setValue($value, $type);
 
             return $this;
         }
@@ -525,7 +532,7 @@ abstract class AbstractQuery
      */
     public function setResultCacheProfile(QueryCacheProfile $profile = null)
     {
-        if ($profile !== null && ! $profile->getResultCacheDriver()) {
+        if ( ! $profile->getResultCacheDriver()) {
             $resultCacheDriver = $this->_em->getConfiguration()->getResultCacheImpl();
             $profile = $profile->setResultCacheDriver($resultCacheDriver);
         }

@@ -10,7 +10,7 @@ abstract class SavedSearch
 {
 
 
-    /** @ORM\Embedded(class = "\Concrete\Core\Entity\Search\Query") */
+    /** @ORM\Embedded(class = "Query") */
     protected $query = null;
 
     /**

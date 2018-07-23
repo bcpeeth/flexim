@@ -1,12 +1,12 @@
 <?php
 namespace Concrete\Core\Tree;
 
-use Concrete\Core\Foundation\ConcreteObject;
+use Concrete\Core\Foundation\Object;
 use Concrete\Core\Package\PackageList;
 use Core;
 use Database;
 
-class TreeType extends ConcreteObject
+class TreeType extends Object
 {
     public function getTreeTypeID()
     {

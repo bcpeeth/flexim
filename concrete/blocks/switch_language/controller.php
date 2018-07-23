@@ -6,7 +6,6 @@ use Concrete\Core\Block\BlockController;
 use Concrete\Core\Http\Response;
 use Concrete\Core\Http\ResponseFactoryInterface;
 use Concrete\Core\Multilingual\Page\Section\Section;
-use Concrete\Core\Permission\Checker;
 use Concrete\Core\Url\Resolver\Manager\ResolverManagerInterface;
 use Cookie;
 use Session;
@@ -109,16 +108,11 @@ class Controller extends BlockController
             $locale = \Localization::activeLocale();
             $al = Section::getByLocale($locale);
         }
-        $mlAccessible = [];
         foreach ($ml as $m) {
-            $pc = new Checker(\Page::getByID($m->getCollectionID()));
-            if ($pc->canRead()) {
-                $mlAccessible[] = $m;
-                $languages[$m->getCollectionID()] = $m->getLanguageText($m->getLocale());
-            }
+            $languages[$m->getCollectionID()] = $m->getLanguageText($m->getLocale());
         }
         $this->set('languages', $languages);
-        $this->set('languageSections', $mlAccessible);
+        $this->set('languageSections', $ml);
         $this->set('activeLanguage', $al ? $al->getCollectionID() : null);
         $dl = $this->app->make('multilingual/detector');
         $this->set('defaultLocale', $dl->getPreferredSection());

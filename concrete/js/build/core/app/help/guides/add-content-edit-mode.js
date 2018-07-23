@@ -1,9 +1,5 @@
-/* jshint unused:vars, undef:true, browser:true, jquery:true */
-/* global Tourist, ConcreteHelpGuideManager, ccmi18n_helpGuides */
-
-;(function(global, $) {
+!function(global, $) {
 	'use strict';
-
 	var i18n = ccmi18n_helpGuides['add-content-edit-mode'];
 	var steps = [{
 		content: '<p><span class="h5">' + i18n[0].title + '</span><br/>' + i18n[0].text + '</p>',
@@ -27,7 +23,7 @@
 		setup: function(tour, options) {
 			return {
 				target: $('#ccm-panel-add-block .ccm-panel-content-inner')
-			};
+			}
 		},
 		teardown: function(tour, options) {
 
@@ -43,7 +39,7 @@
 		setup: function(tour, options) {
 			return {
 				target: $('#ccm-panel-add-block .ccm-panel-header-accordion')
-			};
+			}
 		}
 	},{
 		content: '<p><span class="h5">' + i18n[3].title + '</span><br/>' + i18n[3].text + '</p>',
@@ -56,7 +52,7 @@
 		setup: function(tour, options) {
 			return {
 				target: $('#ccm-panel-add-block input[data-input=search-blocks]')
-			};
+			}
 		}
 	},{
 		content: '<p><span class="h5">' + i18n[4].title + '</span><br/>' + i18n[4].text + '</p>',
@@ -69,7 +65,7 @@
 		setup: function(tour, options) {
 			return {
 				target: $('#ccm-panel-add-block .ccm-panel-add-block-draggable-block-type').eq(0)
-			};
+			}
 		}
 	}];
 
@@ -88,11 +84,11 @@
 			// we haven't started the tour really yet
 			$('.ccm-dialog-help-wrapper').show();
 		} else {
-			$.fn.dialog.showLoader();
+			jQuery.fn.dialog.showLoader();
 			window.location.href = $('[data-toolbar-action=check-in]').attr('href');
 		}
 	});
 
 	ConcreteHelpGuideManager.register('add-content-edit-mode', tour);
 
-})(window, jQuery);
+}(window, jQuery);

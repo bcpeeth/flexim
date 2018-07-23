@@ -1,10 +1,8 @@
-/* jshint unused:vars, undef:true, jquery:true */
-/* global moment, _ */
-
-;(function(global, $) {
+!function (global, $) {
     'use strict';
 
     function ConcreteDurationSelectorRepetition($element, options) {
+        'use strict';
         var my = this;
 
         options = $.extend({
@@ -12,8 +10,7 @@
             'repetition': '',
             'template': 'script[data-template=duration-wrapper]',
             'dateFormat': '',
-            'allowRepeat': true,
-            'timeFormat': 24
+            'allowRepeat': true
         }, options);
 
         my.options = options;
@@ -34,6 +31,7 @@
     }
 
     function ConcreteDurationSelector($element, options) {
+        'use strict';
         var my = this;
         options = $.extend({
             'template': 'script[data-template=duration-wrapper]',
@@ -42,8 +40,7 @@
             'repetitions': [],
             'allowRepeat': true,
             'allowMultiple': true,
-            'namespace': '',
-            'timeFormat': 24
+            'namespace': ''
         }, options);
 
         my.options = options;
@@ -75,12 +72,11 @@
                 'dateFormat': my.options.dateFormat,
                 'template': my.options.template,
                 'allowRepeat': my.options.allowRepeat,
-                'namespace': my.options.namespace,
-                'timeFormat': my.options.timeFormat
+                'namespace': my.options.namespace
             });
             my.$element.find('div[data-duration-selector]').append(object.getElement());
 
-            if (!my.totalRepetitions) {
+            if (my.totalRepetitions == 0) {
                 object.getElement().find('a[data-delete=duration]').hide();
             }
 
@@ -92,7 +88,7 @@
             });
 
         }
-    };
+    },
 
     ConcreteDurationSelectorRepetition.prototype = {
 
@@ -111,7 +107,7 @@
                 momentStartDate = moment(repetition.pdStartDateTimestamp * 1000).tz(
                     repetition.timezone.timezone
                 ),
-                round = !repetition.repetitionID;
+                round = repetition.repetitionID == 0;
 
             // if this is a new repetition (ID == 0) then we round the starting date.
             // otherwise we accept what is passed exactly
@@ -183,44 +179,35 @@
         },
 
         getTimeFromDate: function (momentDate, round) {
-            var minutes = momentDate.minutes(),
-                hours,
-                pm,
-                selectedTime;
+            var minutes = momentDate.minutes();
+            var hours, pm;
 
-            switch (this.options.timeFormat) {
-                case 12:
-                    if (!momentDate.hours()) {
-                        hours = 12;
-                        pm = 'am';
-                    } else if (momentDate.hours() > 11) {
-                        pm = 'pm';
-                        if (momentDate.hours() > 12) {
-                            hours = momentDate.hours() - 12;
-                        } else {
-                            hours = momentDate.hours();
-                        }
-                    } else {
-                        hours = momentDate.hours();
-                        pm = 'am';
-                    }
-                    break;
-                case 24:
+            if (momentDate.hours() == 0) {
+                hours = 12;
+                pm = 'am';
+            } else if (momentDate.hours() > 11) {
+                pm = 'pm';
+                if (momentDate.hours() > 12) {
+                    hours = momentDate.hours() - 12;
+                } else {
                     hours = momentDate.hours();
-                    pm = '';
-                    break;
+                }
+            } else {
+                hours = momentDate.hours();
+                pm = 'am';
             }
+
             if (minutes < 10) {
                 minutes = '0' + minutes;
             }
+
             if (round) {
+                var selectedTime = hours +  ':00' + pm;
                 if (minutes > 29) {
-                    selectedTime = hours + ':30' + pm;
-                } else {
-                    selectedTime = hours +  ':00' + pm;                    
+                    var selectedTime = hours + ':30' + pm;
                 }
             } else {
-                selectedTime = hours + ':' + minutes + pm;
+                var selectedTime = hours + ':' + minutes + pm;
             }
 
             return selectedTime;
@@ -286,8 +273,10 @@
                 my.$element.find('input[name=' + my.options.namespace + '_pdEndRepeatDateSpecific_pub_' + my.getSetID() + ']').datepicker('setDate', momentEndDateSpecific.toDate());
             }
 
-            my.$element.find('input[name=' + my.options.namespace + '_pdStartDate_pub_' + my.getSetID() + ']').datepicker('option', 'onSelect', function () {
-                $(this).trigger('change');
+            my.$element.find('input[name=' + my.options.namespace + '_pdStartDate_pub_' + my.getSetID() + ']').datepicker({
+                onSelect: function () {
+                    $(this).trigger('change');
+                }
             });
             my.$element.find('input[name=' + my.options.namespace + '_pdStartDate_pub_' + my.getSetID() + ']').on('change', function () {
                 my.$element.find('input[name=' + my.options.namespace + '_pdEndDate_pub_' + my.getSetID() + ']').datepicker('setDate', $(this).val());
@@ -395,7 +384,7 @@
             my.$element.find("div[data-wrapper=duration-dates-repeat-weekly]").hide();
             my.$element.find("div[data-wrapper=duration-dates-repeat-monthly]").hide();
             var repeatPeriod = my.$element.find('select[name=' + my.options.namespace + '_pdRepeatPeriod_' + my.getSetID() + ']').val();
-            if (repeatPeriod) {
+            if (repeatPeriod != '') {
                 my.$element.find("div[data-wrapper=duration-dates-repeat-" + repeatPeriod + "]").show();
                 my.$element.find("div[data-wrapper=duration-repeat-dates]").show();
             }
@@ -425,15 +414,15 @@
             my.onRepeatPeriodChange();
             my.calculateRepeatEnd();
         }
-    };
+    }
 
     // jQuery Plugin
     $.fn.concreteDurationSelector = function (options) {
         return $.each($(this), function (i, obj) {
             new ConcreteDurationSelector($(this), options);
         });
-    };
+    }
 
     global.ConcreteDurationSelector = ConcreteDurationSelector;
 
-})(this, jQuery);
+}(this, $);

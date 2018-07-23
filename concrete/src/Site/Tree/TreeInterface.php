@@ -1,16 +1,17 @@
 <?php
-
 namespace Concrete\Core\Site\Tree;
+
+use Concrete\Core\Entity\Site\Tree;
 
 interface TreeInterface
 {
-    /**
-     * @return int|null
-     */
-    public function getSiteTreeID();
+
+    function getSiteTreeID();
 
     /**
-     * @return \Concrete\Core\Entity\Site\Tree|null
+     * @return Tree
      */
-    public function getSiteTreeObject();
+    function getSiteTreeObject();
+
+
 }

@@ -5,7 +5,6 @@
         <category handle="user" allow-sets="1" package=""/>
         <category handle="file" allow-sets="1" package=""/>
         <category handle="site" allow-sets="1" package=""/>
-        <category handle="event" allow-sets="1" package=""/>
     </attributecategories>
     <attributetypes>
         <attributetype handle="text" name="Text" package="">
@@ -14,7 +13,6 @@
                 <category handle="user"/>
                 <category handle="file"/>
                 <category handle="site"/>
-                <category handle="event"/>
             </categories>
         </attributetype>
         <attributetype handle="textarea" name="Text Area" package="">
@@ -23,7 +21,6 @@
                 <category handle="user"/>
                 <category handle="file"/>
                 <category handle="site"/>
-                <category handle="event"/>
             </categories>
         </attributetype>
         <attributetype handle="boolean" name="Checkbox" package="">
@@ -32,7 +29,6 @@
                 <category handle="user"/>
                 <category handle="file"/>
                 <category handle="site"/>
-                <category handle="event"/>
             </categories>
         </attributetype>
         <attributetype handle="date_time" name="Date/Time" package="">
@@ -41,14 +37,12 @@
                 <category handle="user"/>
                 <category handle="file"/>
                 <category handle="site"/>
-                <category handle="event"/>
             </categories>
         </attributetype>
         <attributetype handle="image_file" name="Image/File" package="">
             <categories>
                 <category handle="collection"/>
                 <category handle="site"/>
-                <category handle="event"/>
             </categories>
         </attributetype>
         <attributetype handle="number" name="Number" package="">
@@ -57,24 +51,21 @@
                 <category handle="user"/>
                 <category handle="file"/>
                 <category handle="site"/>
-                <category handle="event"/>
             </categories>
         </attributetype>
 
-        <attributetype handle="select" name="Option List" package="">
+        <attributetype handle="select" name="Select" package="">
             <categories>
                 <category handle="collection"/>
                 <category handle="user"/>
                 <category handle="file"/>
                 <category handle="site"/>
-                <category handle="event"/>
             </categories>
         </attributetype>
         <attributetype handle="address" name="Address" package="">
             <categories>
                 <category handle="user"/>
                 <category handle="site"/>
-                <category handle="event"/>
             </categories>
         </attributetype>
 
@@ -84,7 +75,6 @@
                 <category handle="user"/>
                 <category handle="file"/>
                 <category handle="site"/>
-                <category handle="event"/>
             </categories>
         </attributetype>
         <attributetype handle="url" name="URL" package="">
@@ -93,7 +83,6 @@
                 <category handle="user"/>
                 <category handle="file"/>
                 <category handle="site"/>
-                <category handle="event"/>
             </categories>
         </attributetype>
         <attributetype handle="email" name="Email" package="">
@@ -102,7 +91,6 @@
                 <category handle="user"/>
                 <category handle="file"/>
                 <category handle="site"/>
-                <category handle="event"/>
             </categories>
         </attributetype>
 
@@ -118,7 +106,6 @@
                 <category handle="user"/>
                 <category handle="file"/>
                 <category handle="site"/>
-                <category handle="event"/>
             </categories>
         </attributetype>
         <attributetype handle="social_links" name="Social Links" package="">
@@ -126,28 +113,11 @@
                 <category handle="user"/>
             </categories>
         </attributetype>
-        <attributetype handle="calendar" name="Calendar" package="">
-            <categories>
-                <category handle="collection"/>
-                <category handle="site"/>
-            </categories>
-        </attributetype>
-        <attributetype handle="calendar_event" name="Calendar Event" package="">
-            <categories>
-                <category handle="collection"/>
-            </categories>
-        </attributetype>
         <attributetype handle="express" name="Express Entity" package="">
             <categories>
                 <category handle="collection"/>
                 <category handle="user"/>
                 <category handle="file"/>
-                <category handle="site"/>
-            </categories>
-        </attributetype>
-        <attributetype handle="page_selector" name="Page Selector" package="">
-            <categories>
-                <category handle="collection"/>
                 <category handle="site"/>
             </categories>
         </attributetype>

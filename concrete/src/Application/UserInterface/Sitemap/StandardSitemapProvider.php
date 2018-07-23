@@ -1,13 +1,16 @@
 <?php
-
 namespace Concrete\Core\Application\UserInterface\Sitemap;
 
 use Concrete\Core\Application\Application;
+use Concrete\Core\Application\UserInterface\Sitemap\TreeCollection\Entry\Group\Provider\GroupProvider;
 use Concrete\Core\Application\UserInterface\Sitemap\TreeCollection\Entry\Group\SiteGroup;
 use Concrete\Core\Application\UserInterface\Sitemap\TreeCollection\Entry\LocaleEntry;
+use Concrete\Core\Application\UserInterface\Sitemap\TreeCollection\Entry\Provider\SiteLocaleProvider;
 use Concrete\Core\Application\UserInterface\Sitemap\TreeCollection\Entry\SiteEntry;
 use Concrete\Core\Application\UserInterface\Sitemap\TreeCollection\StandardTreeCollection;
+use Concrete\Core\Application\UserInterface\Sitemap\TreeCollection\TreeCollection;
 use Concrete\Core\Cookie\CookieJar;
+use Concrete\Core\Entity\Site\SiteTree;
 use Concrete\Core\Entity\Site\Tree;
 use Concrete\Core\Permission\Checker;
 use Concrete\Core\Site\Service;
@@ -16,37 +19,24 @@ use Symfony\Component\HttpFoundation\Request;
 
 class StandardSitemapProvider implements ProviderInterface
 {
-    /**
-     * @var string
-     */
+
     protected $permissionsIgnored = false;
-
-    /**
-     * @var \Concrete\Core\Cookie\CookieJar
-     */
     protected $cookieJar;
-
-    /**
-     * @var \Symfony\Component\HttpFoundation\Request
-     */
     protected $request;
-
-    /**
-     * @var \Concrete\Core\Application\Application
-     */
     protected $app;
-
     /**
-     * @var \Concrete\Core\Site\Service
+     * @var $siteService Service
      */
     protected $siteService;
 
+    public function ignorePermissions()
+    {
+        $this->permissionsIgnored = true;
+    }
+
     /**
      * StandardSitemapProvider constructor.
-     *
-     * @param \Concrete\Core\Application\Application $app
-     * @param \Concrete\Core\Site\Service $siteService
-     * @param \Concrete\Core\Cookie\CookieJar $cookies
+     * @param Service $siteService
      */
     public function __construct(Application $app, CookieJar $cookies, Service $siteService)
     {
@@ -56,21 +46,39 @@ class StandardSitemapProvider implements ProviderInterface
         $this->request = Request::createFromGlobals();
     }
 
-    /**
-     * Ignore the permissions.
-     */
-    public function ignorePermissions()
+    protected function useGroups($sites)
     {
-        $this->permissionsIgnored = true;
+        if (count($sites) < 2) {
+            return false;
+        }
+
+        return $this->useLocales($sites);
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Application\UserInterface\Sitemap\ProviderInterface::getTreeCollection()
-     *
-     * @return \Concrete\Core\Application\UserInterface\Sitemap\TreeCollection\StandardTreeCollection
-     */
+    protected function checkPermissions(TreeInterface $object)
+    {
+        if (!$this->permissionsIgnored) {
+            $home = $object->getSiteTreeObject()->getSiteHomePageObject();
+            if ($home) {
+                $cp = new Checker($home);
+                return $cp->canViewPageInSitemap();
+            }
+        }
+        return true;
+    }
+
+    protected function useLocales($sites)
+    {
+        foreach($sites as $site) {
+            $locales = $site->getLocales();
+            if (count($locales) > 1) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
     public function getTreeCollection(Tree $selectedTree = null)
     {
         $collection = new StandardTreeCollection();
@@ -78,11 +86,11 @@ class StandardSitemapProvider implements ProviderInterface
 
         // Do we use the locales as our entry, or do we use the site?
         if ($this->useLocales($sites)) {
-            foreach ($sites as $site) {
-                foreach ($site->getLocales() as $locale) {
+            foreach($sites as $site) {
+                foreach($site->getLocales() as $locale) {
                     if ($this->checkPermissions($locale)) {
                         $entry = new LocaleEntry($locale);
-                        if ($selectedTree && $entry->getSiteTreeID() == $selectedTree->getSiteTreeID()) {
+                        if ($selectedTree && $entry->getSiteTreeID() == $selectedTree->getSiteTreeID()){
                             $entry->setIsSelected(true);
                         }
                         $collection->addEntry($entry);
@@ -90,10 +98,10 @@ class StandardSitemapProvider implements ProviderInterface
                 }
             }
         } else {
-            foreach ($sites as $site) {
+            foreach($sites as $site) {
                 if ($this->checkPermissions($site)) {
                     $entry = new SiteEntry($site);
-                    if ($selectedTree && $entry->getSiteTreeID() == $selectedTree->getSiteTreeID()) {
+                    if ($selectedTree && $entry->getSiteTreeID() == $selectedTree->getSiteTreeID()){
                         $entry->setIsSelected(true);
                     }
                     $collection->addEntry($entry);
@@ -102,7 +110,7 @@ class StandardSitemapProvider implements ProviderInterface
         }
 
         if ($this->useGroups($sites)) {
-            foreach ($sites as $site) {
+            foreach($sites as $site) {
                 $collection->addEntryGroup(new SiteGroup($site));
             }
         }
@@ -110,59 +118,35 @@ class StandardSitemapProvider implements ProviderInterface
         return $collection;
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Application\UserInterface\Sitemap\ProviderInterface::includeMenuInResponse()
-     */
     public function includeMenuInResponse()
     {
         if (($this->request->query->has('cParentID') && $this->request->query->get('cParentID'))
         || ($this->request->query->has('reloadNode') && $this->request->query->get('reloadNode'))) {
             return false;
         }
-
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Application\UserInterface\Sitemap\ProviderInterface::getRequestedSiteTree()
-     *
-     * @return \Concrete\Core\Entity\Site\Tree|null
-     */
     public function getRequestedSiteTree()
     {
         if ($this->request->query->has('siteTreeID') && $this->request->query->get('siteTreeID') > 0) {
-            $this->cookieJar->set('ConcreteSitemapTreeID', $this->request->query->get('siteTreeID'));
-
             return $this->siteService->getSiteTreeByID($this->request->query->get('siteTreeID'));
-        } elseif ($this->cookieJar->has('ConcreteSitemapTreeID')) {
-            return $this->siteService->getSiteTreeByID($this->cookieJar->get('ConcreteSitemapTreeID'));
         } else {
-            $site = $this->siteService->getActiveSiteForEditing();
-            $locale = $site->getDefaultLocale();
-            if ($locale && $this->checkPermissions($locale)) {
-                return $locale->getSiteTreeObject();
-            }
-
-            // This means we don't have permission to view the default locale.
-            // So instead we just grab the first we can find that we DO have permission
-            // to view.
-            foreach ($site->getLocales() as $locale) {
-                if ($this->checkPermissions($locale)) {
-                    return $locale->getSiteTreeObject();
-                }
-            }
+            return $this->siteService->getActiveSiteForEditing()->getSiteTreeObject();
         }
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Application\UserInterface\Sitemap\ProviderInterface::getRequestedNodes()
-     */
+    protected function getSitemapDataProvider()
+    {
+        $dh = $this->app->make('helper/concrete/dashboard/sitemap');
+        if ($this->request->query->has('displayNodePagination') && $this->request->query->get('displayNodePagination')){
+            $dh->setDisplayNodePagination(true);
+        } else {
+            $dh->setDisplayNodePagination(false);
+        }
+        return $dh;
+    }
+
     public function getRequestedNodes()
     {
         $dh = $this->getSitemapDataProvider();
@@ -179,70 +163,5 @@ class StandardSitemapProvider implements ProviderInterface
         }
 
         return $nodes;
-    }
-
-    /**
-     * @param \Concrete\Core\Entity\Site\Site[] $sites
-     *
-     * @return bool
-     */
-    protected function useGroups($sites)
-    {
-        if (count($sites) < 2) {
-            return false;
-        }
-
-        return $this->useLocales($sites);
-    }
-
-    /**
-     * @param \Concrete\Core\Site\Tree\TreeInterface $object
-     *
-     * @return bool
-     */
-    protected function checkPermissions(TreeInterface $object)
-    {
-        if (!$this->permissionsIgnored) {
-            $home = $object->getSiteTreeObject()->getSiteHomePageObject();
-            if ($home) {
-                $cp = new Checker($home);
-
-                return $cp->canViewPageInSitemap();
-            }
-        }
-
-        return true;
-    }
-
-    /**
-     * @param \Concrete\Core\Entity\Site\Site[] $sites
-     *
-     * @return bool
-     */
-    protected function useLocales($sites)
-    {
-        foreach ($sites as $site) {
-            $locales = $site->getLocales();
-            if (count($locales) > 1) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * @return \Concrete\Core\Application\Service\Dashboard\Sitemap
-     */
-    protected function getSitemapDataProvider()
-    {
-        $dh = $this->app->make('helper/concrete/dashboard/sitemap');
-        if ($this->request->query->has('displayNodePagination') && $this->request->query->get('displayNodePagination')) {
-            $dh->setDisplayNodePagination(true);
-        } else {
-            $dh->setDisplayNodePagination(false);
-        }
-
-        return $dh;
     }
 }

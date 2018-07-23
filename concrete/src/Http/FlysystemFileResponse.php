@@ -29,6 +29,8 @@ class FlysystemFileResponse extends Response
     protected $maxlen;
 
     /**
+     * Constructor.
+     *
      * @param File                $file               The file to stream
      * @param FilesystemInterface $filesystem         The filesystem instance to get info with
      * @param int                 $status             The response status code
@@ -57,7 +59,7 @@ class FlysystemFileResponse extends Response
      * @param null|string         $contentDisposition The type of Content-Disposition to set automatically with the filename
      * @param bool                $autoEtag           Whether the ETag header should be automatically set
      *
-     * @return static
+     * @return BinaryFileResponse The created response
      */
     public static function create($file = null, $status = 200, $headers = array(), $public = true, $contentDisposition = null, $autoEtag = false)
     {
@@ -71,7 +73,7 @@ class FlysystemFileResponse extends Response
      * @param string              $contentDisposition
      * @param bool                $autoEtag
      *
-     * @return $this
+     * @return BinaryFileResponse
      *
      * @throws FileException
      */
@@ -112,8 +114,6 @@ class FlysystemFileResponse extends Response
 
     /**
      * Automatically sets the ETag header according to the checksum of the file.
-     *
-     * @return $this
      */
     public function setAutoEtag()
     {
@@ -126,29 +126,15 @@ class FlysystemFileResponse extends Response
      * Sets the Content-Disposition header with the given filename.
      *
      * @param string $disposition      ResponseHeaderBag::DISPOSITION_INLINE or ResponseHeaderBag::DISPOSITION_ATTACHMENT
-     * @param string $filename         Optionally use this UTF-8 encoded filename instead of the real name of the file
+     * @param string $filename         Optionally use this filename instead of the real name of the file
      * @param string $filenameFallback A fallback filename, containing only ASCII characters. Defaults to an automatically encoded filename
      *
-     * @return $this
+     * @return BinaryFileResponse
      */
     public function setContentDisposition($disposition, $filename = '', $filenameFallback = '')
     {
-        if ('' === $filename) {
+        if ($filename === '') {
             $filename = basename($this->file->getPath());
-        }
-
-        if ('' === $filenameFallback && (!preg_match('/^[\x20-\x7e]*$/', $filename) || false !== strpos($filename, '%'))) {
-            $encoding = mb_detect_encoding($filename, null, true) ?: '8bit';
-
-            for ($i = 0, $filenameLength = mb_strlen($filename, $encoding); $i < $filenameLength; ++$i) {
-                $char = mb_substr($filename, $i, 1, $encoding);
-    
-                if ('%' === $char || ord($char) < 32 || ord($char) > 126) {
-                    $filenameFallback .= '_';
-                } else {
-                    $filenameFallback .= $char;
-                }
-            }
         }
 
         $dispositionHeader = $this->headers->makeDisposition($disposition, $filename, $filenameFallback);
@@ -162,11 +148,18 @@ class FlysystemFileResponse extends Response
      */
     public function prepare(\Symfony\Component\HttpFoundation\Request $request)
     {
+        $this->headers->set('Content-Length', $this->file->getSize());
+
+        if (!$this->headers->has('Accept-Ranges')) {
+            // Only accept ranges on safe HTTP methods
+            $this->headers->set('Accept-Ranges', $request->isMethodSafe() ? 'bytes' : 'none');
+        }
+
         if (!$this->headers->has('Content-Type')) {
             $this->headers->set('Content-Type', $this->file->getMimetype() ?: 'application/octet-stream');
         }
 
-        if ('HTTP/1.0' !== $request->server->get('SERVER_PROTOCOL')) {
+        if ('HTTP/1.0' != $request->server->get('SERVER_PROTOCOL')) {
             $this->setProtocolVersion('1.1');
         }
 
@@ -175,20 +168,11 @@ class FlysystemFileResponse extends Response
         $this->offset = 0;
         $this->maxlen = -1;
 
-        if (false === $fileSize = $this->file->getSize()) {
-            return $this;
-        }
-        $this->headers->set('Content-Length', $fileSize);
-
-        if (!$this->headers->has('Accept-Ranges')) {
-            // Only accept ranges on safe HTTP methods
-            $this->headers->set('Accept-Ranges', $request->isMethodSafe(false) ? 'bytes' : 'none');
-        }
-
         if ($request->headers->has('Range')) {
             // Process the range headers.
-            if (!$request->headers->has('If-Range') || $this->hasValidIfRangeHeader($request->headers->get('If-Range'))) {
+            if (!$request->headers->has('If-Range') || $this->getEtag() == $request->headers->get('If-Range')) {
                 $range = $request->headers->get('Range');
+                $fileSize = $this->file->getSize();
 
                 list($start, $end) = explode('-', substr($range, 6), 2) + array(0);
 
@@ -204,8 +188,7 @@ class FlysystemFileResponse extends Response
                 if ($start <= $end) {
                     if ($start < 0 || $end > $fileSize - 1) {
                         $this->setStatusCode(416);
-                        $this->headers->set('Content-Range', sprintf('bytes */%s', $fileSize));
-                    } elseif (0 !== $start || $end !== $fileSize - 1) {
+                    } elseif ($start !== 0 || $end !== $fileSize - 1) {
                         $this->maxlen = $end < $fileSize ? $end - $start + 1 : -1;
                         $this->offset = $start;
 
@@ -220,32 +203,19 @@ class FlysystemFileResponse extends Response
         return $this;
     }
 
-    private function hasValidIfRangeHeader($header)
-    {
-        if ($this->getEtag() === $header) {
-            return true;
-        }
-
-        if (null === $lastModified = $this->getLastModified()) {
-            return false;
-        }
-
-        return $lastModified->format('D, d M Y H:i:s').' GMT' === $header;
-    }
-
     /**
      * Sends the file.
-     *
-     * {@inheritdoc}
      */
     public function sendContent()
     {
         if (!$this->isSuccessful()) {
-            return parent::sendContent();
+            parent::sendContent();
+
+            return;
         }
 
         if (0 === $this->maxlen) {
-            return $this;
+            return;
         }
 
         $out = fopen('php://output', 'wb');
@@ -254,8 +224,6 @@ class FlysystemFileResponse extends Response
 
         fclose($out);
         fclose($file);
-
-        return $this;
     }
 
     /**
@@ -266,7 +234,7 @@ class FlysystemFileResponse extends Response
     public function setContent($content)
     {
         if (null !== $content) {
-            throw new \LogicException('The content cannot be set on a FlysystemFileResponse instance.');
+            throw new \LogicException('The content cannot be set on a BinaryFileResponse instance.');
         }
     }
 

@@ -41,7 +41,7 @@ if (!$canViewPane) {
 
 ?>
 
-<div id="<?=$divID?>">
+<div id="<?php echo $divID?>">
 
 <?php if (!$_GET['close']) {
     if (!$c->isEditMode() && (!in_array($_GET['ctask'], array('add', 'edit_external', 'delete_external')))) {

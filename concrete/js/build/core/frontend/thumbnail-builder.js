@@ -1,7 +1,4 @@
-/* jshint unused:vars, undef:true, browser:true, jquery:true */
-/* global CCM_DISPATCHER_FILENAME */
-
-;(function(global, $) {
+!function (global, $, _) {
 	'use strict';
 
 	var ConcreteThumbnailBuilder = {
@@ -13,15 +10,15 @@
 						$('[src$="' + result.path + '"]').each(function() {
 							var me = $(this);
 							me.attr('src', me.attr('src'));
-						});
+						})
 					}
 					setTimeout(ConcreteThumbnailBuilder.build, 50);
 				}
 			});
 		}
 
-	};
+	}
 
 	ConcreteThumbnailBuilder.build();
 
-})(this, jQuery);
+}(this, $, _);

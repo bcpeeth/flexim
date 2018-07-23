@@ -6,15 +6,11 @@ use Concrete\Core\Application\ApplicationAwareTrait;
 use Concrete\Core\Config\Repository\Repository;
 use Concrete\Core\Http\Request;
 use Concrete\Core\Http\Response;
-use Concrete\Core\Http\ResponseFactoryInterface;
 use Concrete\Core\Http\ServerInterface;
 use Concrete\Core\Localization\Localization;
 use Concrete\Core\Permission\Key\Key;
 use Concrete\Core\Routing\RouterInterface;
 use Concrete\Core\Site\Service as SiteService;
-use Concrete\Core\System\Mutex\MutexBusyException;
-use Concrete\Core\Updater\Migrations\MigrationIncompleteException;
-use Concrete\Core\Updater\Update;
 use Concrete\Core\Url\Resolver\CanonicalUrlResolver;
 use Concrete\Core\Url\Resolver\UrlResolverInterface;
 use Concrete\Core\User\User;
@@ -150,7 +146,7 @@ class DefaultRunner implements RunInterface, ApplicationAwareInterface
         $config = $this->app->make('config');
         if (!$config->has('app.server_timezone')) {
             // There is no server timezone set.
-            $config->set('app.server_timezone', @date_default_timezone_get() ?: 'UTC');
+            $config->set('app.server_timezone', @date_default_timezone_get());
         }
         @date_default_timezone_set($config->get('app.server_timezone'));
     }
@@ -274,23 +270,7 @@ class DefaultRunner implements RunInterface, ApplicationAwareInterface
      */
     protected function handleUpdates()
     {
-        $config = $this->app->make('config');
-        if (!$config->get('concrete.maintenance_mode')) {
-            try {
-                $this->app->handleAutomaticUpdates();
-            } catch (MutexBusyException $x) {
-                if ($x->getMutexKey() !== Update::MUTEX_KEY) {
-                    throw $x;
-                }
-                $config->set('concrete.maintenance_mode', true);
-            }
-            catch (MigrationIncompleteException $x) {
-                $request = Request::getInstance();
-                $requestUri = $request->getUri();
-                $rf = $this->app->make(ResponseFactoryInterface::class);
-                return $rf->redirect($requestUri, Response::HTTP_FOUND);
-            }
-        }
+        $this->app->handleAutomaticUpdates();
     }
 
     /**

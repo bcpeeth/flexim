@@ -1,12 +1,12 @@
 <?php
 namespace Concrete\Core\Gathering\Item\Template;
 
-use Concrete\Core\Foundation\ConcreteObject;
+use Concrete\Core\Foundation\Object;
 use Loader;
 use Concrete\Core\Package\PackageList;
 use CacheLocal;
 
-class Type extends ConcreteObject
+class Type extends Object
 {
     public function getGatheringItemTemplateTypeID()
     {

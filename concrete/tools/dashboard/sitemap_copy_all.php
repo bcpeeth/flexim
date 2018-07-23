@@ -15,12 +15,12 @@ Core::make('cache/request')->disable();
 
 $q = Queue::get('copy_page');
 $includeParent = true;
-if (isset($_REQUEST['copyChildrenOnly']) && $_REQUEST['copyChildrenOnly']) {
+if ($_REQUEST['copyChildrenOnly']) {
     $includeParent = false;
 }
 $db = Loader::db();
 
-if (isset($_POST['process']) && $_POST['process']) {
+if ($_POST['process']) {
     $obj = new stdClass();
     $js = Loader::helper('json');
     $messages = $q->receive(Config::get('concrete.limits.copy_pages'));
@@ -37,7 +37,7 @@ if (isset($_POST['process']) && $_POST['process']) {
             $dc = Page::getByID($page['destination']);
         }
 
-        if (isset($_POST['multilingual']) && $_POST['multilingual']) {
+        if ($_POST['multilingual']) {
             // Find multilingual section of the destination
             if (Section::isMultilingualSection($dc)) {
                 $ms = Section::getByID($dc->getCollectionID());
@@ -92,13 +92,13 @@ if (isset($_POST['process']) && $_POST['process']) {
             }
         }
     } else {
-        $oc = isset($_REQUEST['origCID']) ? Page::getByID($_REQUEST['origCID']) : null;
+        $oc = Page::getByID($_REQUEST['origCID']);
         if (is_object($oc) && !$oc->isError()) {
             $originalPages[] = $oc;
         }
     }
 
-    $dc = isset($_REQUEST['destCID']) ? Page::getByID($_REQUEST['destCID']) : null;
+    $dc = Page::getByID($_REQUEST['destCID']);
     if (count($originalPages) > 0 && is_object($dc) && !$dc->isError()) {
         $u = new User();
         if ($u->isSuperUser() && $oc->canMoveCopyTo($dc)) {

@@ -36,7 +36,7 @@ class CustomStyle extends AbstractCustomStyle
     public function getCSS()
     {
         $set = $this->set;
-        $groups = [];
+        $groups = array();
         if ($set->getBackgroundColor()) {
             $groups[''][] = 'background-color:' . $set->getBackgroundColor();
         }
@@ -95,11 +95,7 @@ class CustomStyle extends AbstractCustomStyle
             $groups[''][] = '-o-transform: rotate(' . $set->getRotate() . 'deg)';
             $groups[''][] = '-ms-transform: rotate(' . $set->getRotate() . 'deg)';
         }
-        if ($set->getBoxShadowColor()
-        && ($set->getBoxShadowSpread()
-        || $set->getBoxShadowBlur()
-        || $set->getBoxShadowHorizontal()
-        || $set->getBoxShadowVertical())) {
+        if ($set->getBoxShadowSpread()) {
             $groups[''][] = 'box-shadow: ' . $set->getBoxShadowHorizontal() . ' ' . $set->getBoxShadowVertical() . ' ' . $set->getBoxShadowBlur() . ' ' . $set->getBoxShadowSpread() . ' ' . $set->getBoxShadowColor();
         }
         if ($set->getLinkColor()) {
@@ -108,7 +104,7 @@ class CustomStyle extends AbstractCustomStyle
 
         $css = '';
         foreach ($groups as $suffix => $styles) {
-            $css .= '.' . str_replace(' ', '.', $this->getCustomStyleClass()) . $suffix . '{' . implode(';', $styles) . '}';
+            $css .= '.' . str_replace(' ', '.', $this->getCustomStyleClass()) . $suffix . '{'.implode(';', $styles).'}';
         }
 
         return $css;
@@ -128,7 +124,7 @@ class CustomStyle extends AbstractCustomStyle
      */
     public function getContainerClass()
     {
-        $classes = [$this->getCustomStyleClass()];
+        $classes = array($this->getCustomStyleClass());
 
         if (is_object($this->set)) {
             if ($this->set->getCustomClass()) {

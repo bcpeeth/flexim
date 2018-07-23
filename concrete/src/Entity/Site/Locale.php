@@ -1,21 +1,19 @@
 <?php
-
 namespace Concrete\Core\Entity\Site;
 
 use Concrete\Core\Entity\LocaleTrait;
 use Concrete\Core\Localization\Locale\LocaleInterface;
+use Concrete\Core\Multilingual\Service\UserInterface\Flag;
 use Concrete\Core\Site\Tree\TreeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Represents a site locale.
- *
  * @ORM\Entity
  * @ORM\Table(name="SiteLocales")
- * @ORM\EntityListeners({"\Concrete\Core\Site\Locale\Listener"})
  */
 class Locale implements LocaleInterface, TreeInterface
 {
+
     use LocaleTrait;
 
     /**
@@ -42,9 +40,7 @@ class Locale implements LocaleInterface, TreeInterface
     public $msIsDefault = false;
 
     /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Localization\Locale\LocaleInterface::getLocaleID()
+     * @return mixed
      */
     public function getLocaleID()
     {
@@ -52,9 +48,7 @@ class Locale implements LocaleInterface, TreeInterface
     }
 
     /**
-     * Is this the default locale?
-     *
-     * @return bool
+     * @return mixed
      */
     public function getIsDefault()
     {
@@ -62,19 +56,15 @@ class Locale implements LocaleInterface, TreeInterface
     }
 
     /**
-     * Is this the default locale?
-     *
-     * @param bool $msIsDefault
+     * @param mixed $msIsDefault
      */
     public function setIsDefault($msIsDefault)
     {
-        $this->msIsDefault = (bool) $msIsDefault;
+        $this->msIsDefault = $msIsDefault;
     }
 
     /**
-     * Get the site associated to this locale.
-     *
-     * @return Site|null
+     * @return mixed
      */
     public function getSite()
     {
@@ -82,19 +72,15 @@ class Locale implements LocaleInterface, TreeInterface
     }
 
     /**
-     * Set the site associated to this locale.
-     *
-     * @param Site|null $site
+     * @param mixed $site
      */
-    public function setSite(Site $site = null)
+    public function setSite($site)
     {
         $this->site = $site;
     }
 
     /**
-     * Get the site tree associated to this locale.
-     *
-     * @return SiteTree|null
+     * @return mixed
      */
     public function getSiteTree()
     {
@@ -102,32 +88,18 @@ class Locale implements LocaleInterface, TreeInterface
     }
 
     /**
-     * Set the site tree associated to this locale.
-     *
-     * @param SiteTree|null $tree
+     * @param mixed $tree
      */
-    public function setSiteTree(SiteTree $tree = null)
+    public function setSiteTree($tree)
     {
         $this->tree = $tree;
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * @see TreeInterface::getSiteTreeID()
-     */
     public function getSiteTreeID()
     {
-        $tree = $this->getSiteTree();
-
-        return $tree === null ? null : $tree->getSiteTreeID();
+        return $this->getSiteTree()->getSiteTreeID();
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * @see TreeInterface::getSiteTreeObject()
-     */
     public function getSiteTreeObject()
     {
         return $this->getSiteTree();

@@ -3,10 +3,10 @@
     <table class="table table-striped">
         <thead>
         <tr>
-            <td><?= t('Page ID') ?></td>
-            <td><?= t('Version') ?></td>
-            <td><?= t('Handle') ?></td>
-            <td><?= t('Location') ?></td>
+            <td><?php echo t('Page ID') ?></td>
+            <td><?php echo t('Version') ?></td>
+            <td><?php echo t('Handle') ?></td>
+            <td><?php echo t('Location') ?></td>
         </tr>
         </thead>
         <?php
@@ -15,10 +15,10 @@
             $page = \Concrete\Core\Page\Page::getByID($record->getCollectionID());
             ?>
             <tr>
-                <td><?= $page->getCollectionID() ?></td>
-                <td><?= $page->getVersionID() ?></td>
-                <td><?= $page->getCollectionHandle() ?></td>
-                <td><a target="_blank" href="<?= \URL::to($page) ?>"><?= h($page->getCollectionPath() ?: '/') ?></a></td>
+                <td><?php echo $page->getCollectionID() ?></td>
+                <td><?php echo $page->getVersionID() ?></td>
+                <td><?php echo $page->getCollectionHandle() ?></td>
+                <td><a target="_blank" href="<?php echo \URL::to($page) ?>"><?php echo h($page->getCollectionPath() ?: '/') ?></a></td>
             </tr>
             <?php
         }

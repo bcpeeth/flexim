@@ -28,10 +28,9 @@ class FormBuilder
 
     public function save()
     {
-        $entity = $this->objectBuilder->getEntity();
         $form = new Form();
         $form->setName($this->formName);
-        $form->setEntity($entity);
+        $form->setEntity($this->objectBuilder->getEntity());
 
         /**
          * @var $fieldset FieldsetBuilder
@@ -47,19 +46,7 @@ class FormBuilder
 
         $em = $this->objectBuilder->getEntityManager();
         $em->persist($form);
-
-        // Set this as the default view and edit form for the entity if one isn't already set
-        $defaultViewForm = $entity->getDefaultViewForm();
-        if (!$defaultViewForm) {
-            $entity->setDefaultViewForm($form);
-        }
-        $defaultEditForm = $entity->getDefaultEditForm();
-        if (!$defaultEditForm) {
-            $entity->setDefaultEditForm($form);
-        }
-        $em->persist($entity);
         $em->flush();
-
 
         return $form;
     }

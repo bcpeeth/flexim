@@ -1,19 +1,14 @@
 <?php
-
 namespace Concrete\Core\Updater\Migrations\Migrations;
 
+use Concrete\Core\Database\DatabaseStructureManager;
 use Concrete\Core\Updater\Migrations\AbstractMigration;
-use Concrete\Core\Updater\Migrations\LongRunningMigrationInterface;
-use Concrete\Core\Updater\Migrations\RepeatableMigrationInterface;
+use Doctrine\DBAL\Schema\Schema;
+use ORM;
 
-class Version20170412000000 extends AbstractMigration implements RepeatableMigrationInterface, LongRunningMigrationInterface
+class Version20170412000000 extends AbstractMigration
 {
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Concrete\Core\Updater\Migrations\AbstractMigration::upgradeDatabase()
-     */
-    public function upgradeDatabase()
+    public function up(Schema $schema)
     {
         $this->connection->Execute('set foreign_key_checks = 0');
         $this->refreshEntities([
@@ -30,8 +25,12 @@ class Version20170412000000 extends AbstractMigration implements RepeatableMigra
             'Concrete\Core\Entity\Attribute\Value\Value\TopicsValue',
             'Concrete\Core\Entity\Attribute\Value\Value\Value',
             'Concrete\Core\Entity\File\File',
-            'Concrete\Core\Entity\Attribute\Key\Key',
+            'Concrete\Core\Entity\Attribute\Key\Key'
         ]);
         $this->connection->Execute('set foreign_key_checks = 1');
+    }
+
+    public function down(Schema $schema)
+    {
     }
 }

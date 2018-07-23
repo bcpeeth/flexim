@@ -44,20 +44,6 @@ interface AddressInterface
     public function getAddressType();
 
     /**
-     * Get the default RFC reserved range type.
-     *
-     * @return int One of the \IPLib\Range\Type::T_... constants
-     */
-    public static function getDefaultReservedRangeType();
-
-    /**
-     * Get the RFC reserved ranges (except the ones of type getDefaultReservedRangeType).
-     *
-     * @return \IPLib\Address\AssignedRange[] ranges are sorted
-     */
-    public static function getReservedRanges();
-
-    /**
      * Get the type of range of the IP address.
      *
      * @return int One of the \IPLib\Range\Type::T_... constants
@@ -79,18 +65,4 @@ interface AddressInterface
      * @return bool
      */
     public function matches(RangeInterface $range);
-
-    /**
-     * Get the address right after this IP address (if available).
-     *
-     * @return AddressInterface|null
-     */
-    public function getNextAddress();
-
-    /**
-     * Get the address right before this IP address (if available).
-     *
-     * @return AddressInterface|null
-     */
-    public function getPreviousAddress();
 }
