@@ -25,6 +25,9 @@
   },
   "dependencies": {
     "ajv": "^6.5.2",
+    "imports-loader": "^0.8.0",
+    "jquery-match-height": "^0.7.2",
+    "object-fit-images": "^3.2.3",
     "owl.carousel": "^2.2.0",
     "owl.carousel2.thumbs": "^0.1.8",
     "webpack-bundle-analyzer": "^2.9.0"

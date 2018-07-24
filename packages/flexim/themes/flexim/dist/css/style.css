@@ -1820,18 +1820,32 @@ mark, .mark {
     -webkit-box-align: center;
         -ms-flex-align: center;
             align-items: center; }
+    .nieuws__block-text {
+      height: 100%;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-align: center;
+          -ms-flex-align: center;
+              align-items: center;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+      padding: 75px 0; }
     .nieuws__block-left {
       width: 50%;
-      height: 100%;
-      background-color: blue; }
+      height: 100%; }
+      .nieuws__block-left img {
+        float: right; }
     .nieuws__block-right {
       width: 50%;
-      height: 100%;
-      background-color: violet; }
-    .nieuws__block img {
-      -o-object-fit: contain;
-         object-fit: contain;
       height: 100%; }
+      .nieuws__block-right img {
+        float: left; }
+    .nieuws__block img {
+      -o-object-fit: cover;
+         object-fit: cover;
+      height: 100%;
+      width: 100%; }
 
 .bg-yellow {
   background-color: #F6A800; }

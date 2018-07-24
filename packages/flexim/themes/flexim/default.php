@@ -127,7 +127,7 @@
 <section class="team">
 
 
-  <div class="grid__container padding--top-2-steps padding--bottom-2-steps">
+  <div class="grid__container padding--top-2-steps">
     <div class="grid__col--8 grid__push--2 padding--bottom-2-steps">
       <?php 
         $a = new Area('Bestuur');
