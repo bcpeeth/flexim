@@ -10,6 +10,7 @@
   <link href="<?php echo $view->getThemePath(); ?>/dist/css/animations.css?v=1.3" type="text/css" rel="stylesheet" />
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
   <link rel="icon" type="image/png" href="<?php echo $view->getThemePath(); ?>/assets/images/favicon.png" />
+  <link rel="stylesheet" href="/path/to/material-icons/iconfont/material-icons.css">
   <!-- <link rel="stylesheet" href="//basehold.it/25"> -->
 </head>
 

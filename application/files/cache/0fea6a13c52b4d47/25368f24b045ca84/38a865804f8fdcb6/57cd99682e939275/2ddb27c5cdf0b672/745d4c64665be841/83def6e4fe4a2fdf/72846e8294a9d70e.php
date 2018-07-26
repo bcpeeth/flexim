@@ -1,12 +1,12 @@
 <?php 
 /* Cachekey: cache/stash_default/doctrine/[ramonleenders\blockdesignerpro\fieldtype\fontawesomefieldtype\fontawesomefieldtype@[annot]][1]/ */
 /* Type: array */
-/* Expiration: 2018-07-30T12:22:10+00:00 */
+/* Expiration: 2018-07-31T04:52:32+00:00 */
 
 
 
 $loaded = true;
-$expiration = 1532953330;
+$expiration = 1533012752;
 
 $data = array();
 
@@ -14,4 +14,4 @@ $data = array();
 $data['return'] = unserialize(base64_decode('YTowOnt9'));
 
 /* Child Type: integer */
-$data['createdOn'] = 1532584519;
+$data['createdOn'] = 1532587661;
