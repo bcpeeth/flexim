@@ -8,7 +8,7 @@
   <div class="grid__container">
 
     <div class="grid__col--6">
-      <h3 class="padding--bottom-step">Oprichting</h3>
+      <h3 class="padding--bottom-step">testing</h3>
       <p>De Flexim Foundation is opgericht op … in Dordrecht op initiatief van een aantal medewerkers van Flexim Netherlands.
       <br />
       <br />

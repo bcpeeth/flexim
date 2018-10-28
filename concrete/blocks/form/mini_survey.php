@@ -50,6 +50,7 @@ class MiniSurvey
                 $jsonVals['hideQID'] = intval($this->db->fetchColumn("SELECT MAX(qID) FROM btFormQuestions WHERE bID!=0 AND msqID=?", $vals));
             } else {
                 $jsonVals['mode'] = '"Add"';
+                $pendingEditExists = false;
             }
 
             //see if the 'send notification from' checkbox is checked and save this to the options field
@@ -160,6 +161,8 @@ class MiniSurvey
             } else {
                 $bIDClause .= ' ) ';
             }
+        } else {
+            $bIDClause = '';
         }
 
         return $db->executeQuery('SELECT * FROM btFormQuestions WHERE questionSetId='.intval($qsID).' '.$bIDClause.' ORDER BY position, msqID');
@@ -207,7 +210,7 @@ class MiniSurvey
                 $surveyBlockInfo['submitText'] = 'Submit';
             }
 
-            if ($surveyBlockInfo['displayCaptcha']) {
+            if (!empty($surveyBlockInfo['displayCaptcha'])) {
                 echo '<div class="ccm-edit-mode-disabled-item">' . t('Form Captcha') . '</div><br/>';
             }
 
@@ -232,8 +235,8 @@ class MiniSurvey
 						<div class="miniSurveyOptions">
 							<a href="javascript:void(0)" class="ccm-icon-wrapper" onclick="miniSurvey.moveUp(this,<?php echo $questionRow['msqID']?>);return false"><i class="fa fa-chevron-up"></i></a>
 							<a href="javascript:void(0)" class="ccm-icon-wrapper" onclick="miniSurvey.moveDown(this,<?php echo $questionRow['msqID']?>);return false"><i class="fa fa-chevron-down"></i></a>
-							<a href="javascript:void(0)" class="ccm-icon-wrapper" onclick="miniSurvey.reloadQuestion(<?php echo intval($questionRow['qID']) ?>);return false"><i class="fa fa-pencil"></i></a>
-							<a href="javascript:void(0)" class="ccm-icon-wrapper" onclick="miniSurvey.deleteQuestion(this,<?php echo intval($questionRow['msqID']) ?>,<?php echo intval($questionRow['qID'])?>);return false"><i class="fa fa-trash"></i></a>
+							<a href="javascript:void(0)" class="ccm-icon-wrapper" onclick="miniSurvey.reloadQuestion(<?=intval($questionRow['qID']) ?>);return false"><i class="fa fa-pencil"></i></a>
+							<a href="javascript:void(0)" class="ccm-icon-wrapper" onclick="miniSurvey.deleteQuestion(this,<?=intval($questionRow['msqID']) ?>,<?=intval($questionRow['qID'])?>);return false"><i class="fa fa-trash"></i></a>
 						</div>
 						<div class="clearfix"></div>
 					</li>

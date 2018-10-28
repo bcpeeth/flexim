@@ -683,19 +683,19 @@
 
 @font-face {
   font-family: 'Hind-Regular';
-  src: url(NaN/dist/fonts/cb31f0d7204d5f2cc5c5f9e8e43a9b4c.eot) format("embedded-opentype"), url(NaN/dist/fonts/8d05e15e524e925cecb5029676517bdd.woff) format("woff"), url(NaN/dist/fonts/d4ddc8177b52ba76cb976e55db4c05d7.ttf) format("truetype"), url(NaN/dist/images/d1d6e818649f84c53afd8f33555d6594.svg) format("svg");
+  src: url(/flexim/packages/flexim/themes/flexim/dist/fonts/cb31f0d7204d5f2cc5c5f9e8e43a9b4c.eot) format("embedded-opentype"), url(/flexim/packages/flexim/themes/flexim/dist/fonts/8d05e15e524e925cecb5029676517bdd.woff) format("woff"), url(/flexim/packages/flexim/themes/flexim/dist/fonts/d4ddc8177b52ba76cb976e55db4c05d7.ttf) format("truetype"), url(/flexim/packages/flexim/themes/flexim/dist/images/d1d6e818649f84c53afd8f33555d6594.svg) format("svg");
   font-weight: normal;
   font-style: normal; }
 
 @font-face {
   font-family: 'Hind-Light';
-  src: url(NaN/dist/fonts/e92ef611ae74fe15e399c8c3d18b21ed.eot) format("embedded-opentype"), url(NaN/dist/fonts/e24763984ca038d4c4a8ff2a502c037a.woff) format("woff"), url(NaN/dist/fonts/bea2b56690c1c53249f9fd8bd77a1a6d.ttf) format("truetype"), url(NaN/dist/images/46b77dd7da5f8a116299fcccc624933d.svg) format("svg");
+  src: url(/flexim/packages/flexim/themes/flexim/dist/fonts/e92ef611ae74fe15e399c8c3d18b21ed.eot) format("embedded-opentype"), url(/flexim/packages/flexim/themes/flexim/dist/fonts/e24763984ca038d4c4a8ff2a502c037a.woff) format("woff"), url(/flexim/packages/flexim/themes/flexim/dist/fonts/bea2b56690c1c53249f9fd8bd77a1a6d.ttf) format("truetype"), url(/flexim/packages/flexim/themes/flexim/dist/images/46b77dd7da5f8a116299fcccc624933d.svg) format("svg");
   font-weight: normal;
   font-style: normal; }
 
 @font-face {
   font-family: 'Hind-Bold';
-  src: url(NaN/dist/fonts/01bbf29c23dfe2d42b4bcd63549a7d7c.eot) format("embedded-opentype"), url(NaN/dist/fonts/31cbb6ad8975a190df226a78536c9394.woff) format("woff"), url(NaN/dist/fonts/63ddc19d8534da1ddd3898ce1ddfb5a4.ttf) format("truetype"), url(NaN/dist/images/d04ebb3729643be91625408ce6d55f16.svg) format("svg");
+  src: url(/flexim/packages/flexim/themes/flexim/dist/fonts/01bbf29c23dfe2d42b4bcd63549a7d7c.eot) format("embedded-opentype"), url(/flexim/packages/flexim/themes/flexim/dist/fonts/31cbb6ad8975a190df226a78536c9394.woff) format("woff"), url(/flexim/packages/flexim/themes/flexim/dist/fonts/63ddc19d8534da1ddd3898ce1ddfb5a4.ttf) format("truetype"), url(/flexim/packages/flexim/themes/flexim/dist/images/d04ebb3729643be91625408ce6d55f16.svg) format("svg");
   font-weight: normal;
   font-style: normal; }
 
@@ -1717,7 +1717,11 @@ mark, .mark {
       -ms-flex-align: center;
           align-items: center; }
   .intro img {
-    width: 178px; }
+    width: 178px;
+    height: 100%; }
+  @media screen and (max-width: 767px) {
+    .intro img {
+      display: block; } }
 
 .list-horizontal ul li {
   float: left;
@@ -1763,7 +1767,7 @@ mark, .mark {
   height: 25px;
   width: 25px;
   background-color: #d1271b;
-  background-image: url(NaN/dist/images/5cddb0484e0cd0f0d18c8b01a7caa2b1.png); }
+  background-image: url(/flexim/packages/flexim/themes/flexim/dist/images/5cddb0484e0cd0f0d18c8b01a7caa2b1.png); }
 
 @media screen and (max-width: 767px) {
   .list-horizontal li {
@@ -1777,6 +1781,7 @@ mark, .mark {
 
 .method img {
   width: 105px;
+  height: 100%;
   margin-top: auto;
   margin-bottom: auto; }
 
@@ -1788,7 +1793,8 @@ mark, .mark {
       -ms-flex-align: center;
           align-items: center; }
   .target img {
-    width: 185px; }
+    width: 185px;
+    height: 100%; }
 
 .team .photos {
   width: 100%; }
@@ -1861,3 +1867,6 @@ mark, .mark {
 
 .bg-red {
   background: linear-gradient(180deg, #c32519 10px, #da291c); }
+
+.bg-blue {
+  background-color: #00A3AD; }

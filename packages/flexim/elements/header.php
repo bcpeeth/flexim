@@ -52,24 +52,15 @@
                 </li>
 
                 <li>
-                  <a class= "" href="<?php echo View::url('/projecten'); ?>">Projecten</a>
-                </li>
+                  <a class= "logo" href="<?php echo View::url('/'); ?>"><img class="" src="<?php echo $view->getThemePath(); ?>/assets/images/logo-white-bg.png"></a>    
+                </li> 
 
                 <li>
-                  <a class= "logo" href="<?php echo View::url('/'); ?>"><img class="" src="<?php echo $view->getThemePath(); ?>/assets/images/logo-white-bg.png"></a>    
-                </li>           
-                
+                  <a class= "" href="<?php echo View::url('/projecten'); ?>">Projecten</a>
+                </li>         
 
                 <li>
                   <a class= "" href="<?php echo View::url('/informatie'); ?>">Informatie</a>
-                </li>
-
-                <li>
-                  <a class= "" href="<?php echo View::url('/partners'); ?>">Partners</a>
-                </li>
-
-                <li>
-                  <a class= "" href="<?php echo View::url('/contact'); ?>">Contact</a>
                 </li>
 
               </ul>

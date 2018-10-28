@@ -12,14 +12,14 @@ if (!$ptComposerPageTemplateID) {
 ?>
 
 <div class="form-group">
-	<label class="control-label"><?php echo $label?></label>
+	<label class="control-label"><?=$label?></label>
     <?php if ($control->isPageTypeComposerControlRequiredByDefault() || $control->isPageTypeComposerFormControlRequiredOnThisRequest()) : ?>
-        <span class="label label-info"><?php echo t('Required') ?></span>
+        <span class="label label-info"><?= t('Required') ?></span>
     <?php endif; ?>
 	<?php if ($description): ?>
-	<i class="fa fa-question-circle launch-tooltip" title="" data-original-title="<?php echo $description?>"></i>
+	<i class="fa fa-question-circle launch-tooltip" title="" data-original-title="<?=$description?>"></i>
 	<?php endif; ?>
 	<div data-composer-field="page_template">
-		<?php echo $form->select('ptComposerPageTemplateID', $templates, $ptComposerPageTemplateID)?>
+		<?=$form->select('ptComposerPageTemplateID', $templates, $ptComposerPageTemplateID)?>
 	</div>
 </div>

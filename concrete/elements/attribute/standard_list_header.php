@@ -4,7 +4,7 @@ if ($category && $category->getController()->getSetManager()->allowAttributeSets
     ?>
 
 
-    <a href="<?php echo URL::to('/dashboard/system/attributes/sets', 'category', $category->getAttributeKeyCategoryID())?>" class="btn btn-default"><?php echo t('Manage Sets')?></a>
+    <a href="<?=URL::to('/dashboard/system/attributes/sets', 'category', $category->getAttributeKeyCategoryID())?>" class="btn btn-default"><?=t('Manage Sets')?></a>
 
 <?php 
 } ?>

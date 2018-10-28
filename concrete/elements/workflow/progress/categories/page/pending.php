@@ -10,10 +10,10 @@ if (count($items) > 0) {
 <div id="ccm-workflow-waiting-for-me-wrapper">
 <table class="ccm-results-list table table-condensed" id="ccm-workflow-waiting-for-me">
 <tr>
-	<th class="<?php echo $list->getSearchResultsClass('cvName')?>"><a href="<?php echo $list->getSortByURL('cvName', 'asc')?>"><?php echo t('Page Name')?></a></th>
-	<th><?php echo t('URL')?></th>
-	<th class="<?php echo $list->getSearchResultsClass('wpDateLastAction')?>"><a href="<?php echo $list->getSortByURL('wpDateLastAction', 'desc')?>"><?php echo t('Last Action')?></a></th>
-	<th class="<?php echo $list->getSearchResultsClass('wpCurrentStatus')?>"><a href="<?php echo $list->getSortByURL('wpCurrentStatus', 'desc')?>"><?php echo t('Current Status')?></a></th>
+	<th class="<?=$list->getSearchResultsClass('cvName')?>"><a href="<?=$list->getSortByURL('cvName', 'asc')?>"><?=t('Page Name')?></a></th>
+	<th><?=t('URL')?></th>
+	<th class="<?=$list->getSearchResultsClass('wpDateLastAction')?>"><a href="<?=$list->getSortByURL('wpDateLastAction', 'desc')?>"><?=t('Last Action')?></a></th>
+	<th class="<?=$list->getSearchResultsClass('wpCurrentStatus')?>"><a href="<?=$list->getSortByURL('wpCurrentStatus', 'desc')?>"><?=t('Current Status')?></a></th>
 	<th>&nbsp;</th>
 </tr>
 <?php
@@ -25,13 +25,13 @@ $noitems = true;
         if ($wf->canApproveWorkflowProgressObject($wp)) {
             $noitems = false;
             ?>
-<tr class="ccm-workflow-waiting-for-me-row<?php echo $wp->getWorkflowProgressID()?>">
-	<td><?php echo $p->getCollectionName()?></td>
-	<td><a href="<?php echo Loader::helper('navigation')->getLinkToCollection($p)?>"><?php echo $p->getCollectionPath()?></a>
-	<td><?php echo $dh->formatDateTime($wp->getWorkflowProgressDateLastAction(), true)?></td>
-	<td><a href="javascript:void(0)" title="<?php echo t('Click for history.')?>" onclick="$(this).parentsUntil('tr').parent().next().show()"><?php echo $wf->getWorkflowProgressStatusDescription($wp)?></a></td>
+<tr class="ccm-workflow-waiting-for-me-row<?=$wp->getWorkflowProgressID()?>">
+	<td><?=$p->getCollectionName()?></td>
+	<td><a href="<?=Loader::helper('navigation')->getLinkToCollection($p)?>"><?=$p->getCollectionPath()?></a>
+	<td><?=$dh->formatDateTime($wp->getWorkflowProgressDateLastAction(), true)?></td>
+	<td><a href="javascript:void(0)" title="<?=t('Click for history.')?>" onclick="$(this).parentsUntil('tr').parent().next().show()"><?=$wf->getWorkflowProgressStatusDescription($wp)?></a></td>
 	<td class="ccm-workflow-progress-actions">
-	<form action="<?php echo $wp->getWorkflowProgressFormAction()?>" method="post">
+	<form action="<?=$wp->getWorkflowProgressFormAction()?>" method="post">
 	<?php $actions = $wp->getWorkflowProgressActions();
             ?>
 	<?php foreach ($actions as $act) {
@@ -58,9 +58,9 @@ $noitems = true;
 	</form>
 	</td>
 </tr>
-<tr class="ccm-workflow-waiting-for-me-row<?php echo $wp->getWorkflowProgressID()?> ccm-workflow-progress-history">
+<tr class="ccm-workflow-waiting-for-me-row<?=$wp->getWorkflowProgressID()?> ccm-workflow-progress-history">
 	<td colspan="6">
-		<?php echo Loader::element('workflow/progress/history', array('wp' => $wp))?>
+		<?=Loader::element('workflow/progress/history', array('wp' => $wp))?>
 	</td>
 </tr>
 
@@ -71,7 +71,7 @@ $noitems = true;
 <?php if ($noitems) {
     ?>
 	<tr>
-		<td colspan="5"><?php echo t('There is nothing currently waiting for you.')?></td>
+		<td colspan="5"><?=t('There is nothing currently waiting for you.')?></td>
 	</tr>
 <?php 
 }
@@ -92,7 +92,7 @@ $(function() {
 				jQuery.fn.dialog.hideLoader();
 				$('.ccm-workflow-waiting-for-me-row' + wpID).remove();
 				if ($('#ccm-workflow-waiting-for-me tr').length == 1) { 
-					$("#ccm-workflow-waiting-for-me-wrapper").html('<?php echo t('None.')?>');
+					$("#ccm-workflow-waiting-for-me-wrapper").html('<?=t('None.')?>');
 				}
 			});
 		}
@@ -103,6 +103,6 @@ $(function() {
 <?php 
 } else {
     ?>
-	<p><?php echo t('None.')?></p>
+	<p><?=t('None.')?></p>
 <?php 
 } ?>

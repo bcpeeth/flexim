@@ -10,6 +10,7 @@ $color-lightblue: #49A4D6;
 $color-lightgreen: #4BB886;
 $color-green : #38C616;
 $color-red: #d1271b;
+$color-blue: #00A3AD;
 
 $padding: 50px;
 
@@ -61,4 +62,8 @@ $breakpoint-max-xl: 1499px;
 
 .bg-red {
   background: linear-gradient(180deg,#c32519 10px,#da291c);
+}
+
+.bg-blue {
+  background-color: $color-blue;
 }

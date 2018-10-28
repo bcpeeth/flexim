@@ -54,21 +54,21 @@ $dh = Core::make('helper/date'); /* @var $dh \Concrete\Core\Localization\Service
 }
 </style>
 
- <form role="form" action="<?php echo $controller->action('view')?>" class="ccm-search-fields">
+ <form role="form" action="<?=$controller->action('view')?>" class="ccm-search-fields">
     <div class="form-group">
-        <?php echo $form->label('keywords', t('Search'))?>
+        <?=$form->label('keywords', t('Search'))?>
         <div class="ccm-search-field-content">
             <div class="ccm-search-main-lookup-field">
                 <i class="fa fa-search"></i>
-                <?php echo $form->search('keywords', array('placeholder' => t('Keywords')))?>
+                <?=$form->search('keywords', array('placeholder' => t('Keywords')))?>
             </div>
         </div>
     </div>
 
     <div class="form-group">
-        <?php echo $form->label('channel', t('Number of Pages to Display'))?>
+        <?=$form->label('channel', t('Number of Pages to Display'))?>
         <div class="ccm-search-field-content">
-            <?php echo $form->select('numResults', array(
+            <?=$form->select('numResults', array(
                 '10' => '10',
                 '25' => '25',
                 '50' => '50',
@@ -79,35 +79,35 @@ $dh = Core::make('helper/date'); /* @var $dh \Concrete\Core\Localization\Service
     </div>
 
     <div class="form-group">
-        <?php echo $form->label('cParentIDSearchField', t('Parent Page'))?>
+        <?=$form->label('cParentIDSearchField', t('Parent Page'))?>
         <div class="ccm-search-field-content">
             <?php echo $pageSelector->selectPage('cParentIDSearchField', $cParentIDSearchField ? $cParentIDSearchField : false);?>
         </div>
     </div>
 
     <div class="form-group">
-        <?php echo $form->label('cParentAll', t('How Many Levels Below Parent?'))?>
+        <?=$form->label('cParentAll', t('How Many Levels Below Parent?'))?>
         <div class="ccm-search-field-content">
             <div class="radio">
-                <label><?php echo $form->radio('cParentAll', 0, false)?><?php echo t('First Level')?></label>
+                <label><?=$form->radio('cParentAll', 0, false)?><?=t('First Level')?></label>
            </div>
            <div class="radio">
-               <label><?php echo $form->radio('cParentAll', 1, false)?><?php echo t('All Levels')?></label>
+               <label><?=$form->radio('cParentAll', 1, false)?><?=t('All Levels')?></label>
            </div>
         </div>
     </div>
 
     <div class="form-group">
-        <?php echo $form->label('cParentAll', t('Filter By:'))?>
+        <?=$form->label('cParentAll', t('Filter By:'))?>
         <div class="ccm-search-field-content">
             <div class="checkbox">
-                <label> <?php echo $form->checkbox('noDescription', 1, $descCheck);  ?><?php echo t('No Meta Description'); ?></label>
+                <label> <?php echo $form->checkbox('noDescription', 1, $descCheck);  ?><?=t('No Meta Description'); ?></label>
             </div>
         </div>
     </div>
 
     <div class="ccm-search-fields-submit">
-        <button type="submit" class="btn btn-primary pull-right"><?php echo t('Search')?></button>
+        <button type="submit" class="btn btn-primary pull-right"><?=t('Search')?></button>
     </div>
 </form>
 
@@ -116,6 +116,7 @@ $dh = Core::make('helper/date'); /* @var $dh \Concrete\Core\Localization\Service
     <?php if (count($pages) > 0) { ?>
         <div class="ccm-search-results-table container-fluid">
         <?php $i = 0;
+        $homeCID = Page::getHomePageID();
         foreach ($pages as $cobj) {
             $cpobj = new Permissions($cobj);
             ++$i;
@@ -149,10 +150,10 @@ $dh = Core::make('helper/date'); /* @var $dh \Concrete\Core\Localization\Service
                         $autoTitle = sprintf(Config::get('concrete.seo.title_format'), $controller->getSiteNameForPage($cobj), $seoPageTitle);
                         $titleInfo = array('title' => $cID);
                         if(strlen($cobj->getAttribute('meta_title')) <= 0) {
-                            $titleInfo[style] = 'background: whiteSmoke';
+                            $titleInfo['style'] = 'background: whiteSmoke';
                         }
                         echo $form->text('meta_title', $cobj->getAttribute('meta_title') ? $cobj->getAttribute('meta_title') : $autoTitle, $titleInfo);
-                        echo $titleInfo[style] ? '<span class="help-inline">' . t('Default value. Click to edit.') . '</span>' : '' ?>
+                        echo $titleInfo['style'] ? '<span class="help-inline">' . t('Default value. Click to edit.') . '</span>' : '' ?>
                     </div>
 
                     <div class="form-group">
@@ -161,14 +162,14 @@ $dh = Core::make('helper/date'); /* @var $dh \Concrete\Core\Localization\Service
                         $autoDesc = htmlspecialchars($pageDescription, ENT_COMPAT, APP_CHARSET);
                         $descInfo = array('title' => $cID);
                         if (strlen($cobj->getAttribute('meta_description')) <= 0) {
-                            $descInfo[style] = 'background: whiteSmoke';
+                            $descInfo['style'] = 'background: whiteSmoke';
                         }
-                        echo $form->textarea('meta_description', $cobj->getAttribute('meta_description') ? $cobj->getAttribute('meta_description') : $autoDesc, $descInfo);
-                        echo $descInfo[style] ? '<span class="help-inline">' . t('Default value. Click to edit.') . '</span>' : '';
+                        echo $form->textarea('meta_description', h($cobj->getAttribute('meta_description')) ?: $autoDesc, $descInfo);
+                        echo $descInfo['style'] ? '<span class="help-inline">' . t('Default value. Click to edit.') . '</span>' : '';
                         ?>
                     </div>
 
-                    <?php if ($cobj->getCollectionID() != HOME_CID) { ?>
+                    <?php if ($cobj->getCollectionID() != $homeCID) { ?>
                     <div class="form-group">
                         <label class="control-label"><?php echo t('Slug'); ?></label>
                         <?php echo $form->text('collection_handle', $cobj->getCollectionHandle(), array('title' => $cID, 'class' => 'collectionHandle')); ?>
@@ -215,7 +216,7 @@ $dh = Core::make('helper/date'); /* @var $dh \Concrete\Core\Localization\Service
 
     <?php if ($pagination) { ?>
     <div style="text-align: center">
-        <?php echo $pagination?>
+        <?=$pagination?>
     </div>
     <?php } ?>
 </div>

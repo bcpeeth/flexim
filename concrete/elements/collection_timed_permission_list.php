@@ -13,11 +13,11 @@ foreach ($assignments as $ppc) {
     ?>
 	<tr>
 	<td>
-	<strong><?php echo $pk->getPermissionKeyDisplayName()?></strong>
-	<?php echo t('Permission on ')?><?php
+	<strong><?=$pk->getPermissionKeyDisplayName()?></strong>
+	<?=t('Permission on ')?><?php
         if ($pk instanceof AreaPermissionKey) {
             ?>
-			<strong><?php echo $pk->getPermissionObject()->getAreaHandle() ?></strong>.
+			<strong><?=$pk->getPermissionObject()->getAreaHandle() ?></strong>.
 		<?php 
         } elseif ($pk instanceof BlockPermissionKey) {
             $bt = BlockType::getByID($pk->getPermissionObject()->getBlockTypeID());
@@ -25,13 +25,13 @@ foreach ($assignments as $ppc) {
             if ($obj->getBlockName() != '') {
                 ?>
 
-			<?php echo t('the %s block named <strong>%s</strong> in <strong>%s</strong> Area. ', t($bt->getBlockTypeName()), $obj->getBlockName(), $pk->getPermissionObject()->getAreaHandle())?>
+			<?=t('the %s block named <strong>%s</strong> in <strong>%s</strong> Area. ', t($bt->getBlockTypeName()), $obj->getBlockName(), $pk->getPermissionObject()->getAreaHandle())?>
 			
 			<?php 
             } else {
                 ?>
 			
-			<?php echo t('<strong>%s Block</strong> in <strong>%s</strong> Area. ', t($bt->getBlockTypeName()), $pk->getPermissionObject()->getAreaHandle())?>
+			<?=t('<strong>%s Block</strong> in <strong>%s</strong> Area. ', t($bt->getBlockTypeName()), $pk->getPermissionObject()->getAreaHandle())?>
 			
 			<?php 
             }
@@ -39,7 +39,7 @@ foreach ($assignments as $ppc) {
 		<?php 
         } else {
             ?>
-			<strong><?php echo t('Entire Page')?></strong>.
+			<strong><?=t('Entire Page')?></strong>.
 		<?php 
         }
     ?>
@@ -54,8 +54,8 @@ foreach ($assignments as $ppc) {
         $assignee = $pae->getAccessEntityLabel();
     }
     ?>
-		<?php echo t('Assigned to <strong>%s</strong>. ', $assignee)?>
-		<?php echo $pd->getTextRepresentation()?>
+		<?=t('Assigned to <strong>%s</strong>. ', $assignee)?>
+		<?=$pd->getTextRepresentation()?>
 		</div>
 	</td>
 	</tr>
@@ -67,7 +67,7 @@ foreach ($assignments as $ppc) {
 <?php 
 } else {
     ?>
-	<p><?php echo t('No timed permission assignments')?></p>
+	<p><?=t('No timed permission assignments')?></p>
 <?php 
 } ?>
 

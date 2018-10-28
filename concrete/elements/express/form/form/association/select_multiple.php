@@ -2,35 +2,35 @@
 
 <div class="form-group">
     <?php if ($view->supportsLabel()) { ?>
-        <label class="control-label"><?php echo $label?></label>
+        <label class="control-label"><?=$label?></label>
     <?php } ?>
     <?php
-    if (!empty($entities)) {
-        foreach ($entities as $entity) {
+    if (!empty($allEntries)) {
+        foreach ($allEntries as $entry) {
             ?>
             <div class="checkbox">
                 <label>
                     <input
                         type="checkbox"
                         <?php
-                        if (isset($selectedEntities)) {
-                            foreach($selectedEntities as $selectedEntity) {
-                                if ($selectedEntity->getID() == $entity->getID()) {
+                        if (isset($selectedEntries)) {
+                            foreach($selectedEntries as $selectedEntry) {
+                                if ($selectedEntry->getID() == $entry->getID()) {
                                     print 'checked';
                                 }
                             }
                         }
                         ?>
-                        name="express_association_<?php echo $control->getId()?>[]"
-                        value="<?php echo $entity->getId()?>"
+                        name="express_association_<?=$control->getId()?>[]"
+                        value="<?=$entry->getId()?>"
                     >
-                    <?php echo $formatter->getEntryDisplayName($control, $entity)?>
+                    <?=$formatter->getEntryDisplayName($control, $entry)?>
                 </label>
             </div>
             <?php
         }
     } else {
-        ?><p><?php echo t('No entity found.')?></p><?php
+        ?><p><?=t('No available entries found.')?></p><?php
     }
     ?>
 </div>

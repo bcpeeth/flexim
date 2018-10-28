@@ -7,22 +7,22 @@
 <section class="intro padding--top-3-steps padding--bottom-3-steps">
   <div class="grid__container">
 
-    <div class="grid__col--6">
+    <div class="grid__col--6 grid__col--sm-12">
 
-    <?php 
+    <!-- <?php 
       $a = new Area('Oprichting');
       $a->display();
-    ?>
+    ?> -->
 
-      <!-- <h3 class="padding--bottom-step">Oprichting</h3>
+      <h3 class="padding--bottom-step">Oprichting</h3>
       <p>De Flexim Foundation is opgericht op … in Dordrecht op initiatief van een aantal medewerkers van Flexim Netherlands.
       <br />
       <br />
       De Flexim Foundation zet zich in voor diverse kwetsbare groepen binnen en buiten de Nederlandse samenleving. Deze kwetsbare groepen worden geholpen om hun levenscondities te verbeteren en toekomstperspectief te vergroten. 
-      </p> -->
+      </p>
     </div>
 
-    <div class="grid__col--4 grid__push--2">
+    <div class="grid__col--4 grid__push--2 grid__col--sm-12">
       <!-- <?php 
         $a = new Area('Oprichting Image');
         $a->display();
@@ -62,10 +62,10 @@
   </div>
 </section> -->
 
-<section class="goal bg-red white clearfix">
+<section class="goal bg-blue white clearfix">
   <div class="grid__container padding--top-3-steps padding--bottom-3-steps text--align-center">
     
-    <div class="grid__col--8 grid__push--2">
+    <div class="grid__col--8 grid__push--2 grid__col--sm-12">
 
     <?php 
       $a = new Area('Doelstelling');
@@ -81,11 +81,16 @@
   <div class="grid__container padding--top-3-steps padding--bottom-3-steps">
 
 
-    <div class="image grid__col--3 grid__push--2">
-      <img class="" src="<?php echo $view->getThemePath(); ?>/assets/images/twirl_team.png">
+    <div class="image grid__col--3 grid__push--2 grid__col--sm-12">
+      <?php 
+        $a = new Area('Method Image');
+        $a->display();
+      ?>
+
+      <!-- <img class="" src="<?php echo $view->getThemePath(); ?>/assets/images/twirl_team.png"> -->
     </div>
 
-    <div class="grid__col--6 grid__push--1 grid__collapse">
+    <div class="grid__col--6 grid__push--1 grid__collapse grid__col--sm-12">
 
     <?php 
       $a = new Area('Bereikt Door');
@@ -109,7 +114,7 @@
 
 <section class="target bg-lightgrey">
   <div class="grid__container padding--top-3-steps padding--bottom-3-steps">
-    <div class="grid__col--6">
+    <div class="grid__col--6 grid__col--sm-12">
     <?php 
       $a = new Area('Doelgroep');
       $a->display();
@@ -117,8 +122,13 @@
     <!-- <h3 class="padding--bottom-step">Doelgroep</h3>
       <p>De doelgroep van de Flexim Foundation is een groep mensen in de samenleving die niet zelfredzaam is, eenzaam is, een lichamelijke of psychische handicap heeft of op of onder de armoedegrens leeft.</p> -->
     </div>
-    <div class="grid__col--4 grid__push--2">
-      <img class="" src="<?php echo $view->getThemePath(); ?>/assets/images/au2.png">
+    <div class="grid__col--4 grid__push--2 grid__col--sm-12">
+      <?php 
+        $a = new Area('Doelgroep Image');
+        $a->display();
+      ?>
+
+      <!-- <img class="" src="<?php echo $view->getThemePath(); ?>/assets/images/au2.png"> -->
     </div>
 
   </div>
@@ -128,7 +138,7 @@
 
 
   <div class="grid__container padding--top-2-steps">
-    <div class="grid__col--8 grid__push--2 padding--bottom-2-steps">
+    <div class="grid__col--8 grid__push--2 padding--bottom-2-steps grid__col--sm-12">
       <?php 
         $a = new Area('Bestuur');
         $a->display();
@@ -146,56 +156,110 @@
 
       <div class="photos text--align-center">
       
-        <div class="col-5">
-          <img class="padding--bottom-step" src="<?php echo $view->getThemePath(); ?>/assets/images/Tekengebied-grey.png">
-          <h5>Rini Tak</h5>
+        <div class="col-5 grid__col--sm-12">
+
+          <?php 
+            $a = new Area('First Team Picture');
+            $a->display();
+          ?>
+          <!-- <img class="padding--bottom-step" src="<?php echo $view->getThemePath(); ?>/assets/images/Tekengebied-grey.png"> -->
+
+          <?php 
+            $a = new Area('First Team Text');
+            $a->display();
+          ?>
+
+          <!-- <h5>Rini Tak</h5>
        
           <p><em>Voorzitter</em></p>
           <br />
           Vanuit zijn passie al jarenlang betrokken bij diverse stichtingen.
-          <br />
+          <br /> -->
           
         </div>
-        <div class="col-5">
-          <img class="padding--bottom-step" src="<?php echo $view->getThemePath(); ?>/assets/images/Tekengebied-grey.png">
-          <h5>Patty van Veldhuizen</h5>
+        <div class="col-5 grid__col--sm-12">
+
+
+          <?php 
+            $a = new Area('Second Team Picture');
+            $a->display();
+          ?>
+          <!-- <img class="padding--bottom-step" src="<?php echo $view->getThemePath(); ?>/assets/images/Tekengebied-grey.png"> -->
+
+          <?php 
+            $a = new Area('Second Team Text');
+            $a->display();
+          ?>
+
+          <!-- <h5>Patty van Veldhuizen</h5>
 
           <p><em>Penningmeester</em></p>
           <br />
           Als fiscalist altijd de focus op financieel beheer.
-          <br />    
+          <br />     -->
+
         </div>
-        <div class="col-5">
-          <img class="padding--bottom-step" src="<?php echo $view->getThemePath(); ?>/assets/images/Tekengebied-grey.png">
-          <h5>Richard Bruins</h5>
+        <div class="col-5 grid__col--sm-12">
+
+          <?php 
+            $a = new Area('Third Team Picture');
+            $a->display();
+          ?>
+          <!-- <img class="padding--bottom-step" src="<?php echo $view->getThemePath(); ?>/assets/images/Tekengebied-grey.png"> -->
+
+          <?php 
+            $a = new Area('Third Team Text');
+            $a->display();
+          ?>
+
+          <!-- <h5>Richard Bruins</h5>
 
           <p><em>Secretaris</em></p>
           <br />
           Als Directeur Flexim Netherlands de initiatiefnemer en direct betrokken bij diverse goede doelen.
-          <br />
+          <br /> -->
           
         </div>
-        <div class="col-5">
-          <img class="padding--bottom-step" src="<?php echo $view->getThemePath(); ?>/assets/images/Tekengebied-grey.png">
-          <h5>Célie Verstelle</h5>
+        <div class="col-5 grid__col--sm-12">
+
+          <?php 
+            $a = new Area('Forth Team Picture');
+            $a->display();
+          ?>
+          <!-- <img class="padding--bottom-step" src="<?php echo $view->getThemePath(); ?>/assets/images/Tekengebied-grey.png"> -->
+
+          <?php 
+            $a = new Area('Forth Team Text');
+            $a->display();
+          ?>
+
+          <!-- <h5>Célie Verstelle</h5>
 
           <p><em>Algemeen Bestuurslid</em></p>
           <br />
           Als Legal advisor en haar juridische achtergrond gedreven de juiste support te geven.
-          <br />
+          <br /> -->
 
         </div>
-        <div class="col-5">
-          <img class="padding--bottom-step" src="<?php echo $view->getThemePath(); ?>/assets/images/Tekengebied-grey.png">
-          <h5>Remko Overdam</h5>
+        <div class="col-5 grid__col--sm-12">
+
+          <?php 
+            $a = new Area('Fifth Team Picture');
+            $a->display();
+          ?>
+          <!-- <img class="padding--bottom-step" src="<?php echo $view->getThemePath(); ?>/assets/images/Tekengebied-grey.png"> -->
+
+          <?php 
+            $a = new Area('Fifth Team Text');
+            $a->display();
+          ?>
+
+          <!-- <h5>Remko Overdam</h5>
 
           <p><em>Algemeen Bestuurslid</em></p>
           <br />
           Als Directeur bij een ontwikkelaar als visionair betrokken bij diverse (maatschappelijke) ontwikkelingen.
-          <br />
-
-
-
+          <br /> -->
 
         </div>
 

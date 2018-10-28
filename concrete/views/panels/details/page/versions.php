@@ -26,8 +26,8 @@ if (!isset($_REQUEST['cvID']) || !is_array($_REQUEST['cvID'])) {
 
     $display = 'block';
     foreach ($_REQUEST['cvID'] as $cvID) {
-        ?><div id="ccm-tab-content-view-version-<?php echo $cvID?>" style="display: <?php echo $display?>; height: 100%">
-            <iframe border="0" frameborder="0" height="100%" width="100%" src="<?php echo REL_DIR_FILES_TOOLS_REQUIRED?>/pages/preview_version?cvID=<?php echo $cvID?>&amp;cID=<?php echo $cID?>"></iframe>
+        ?><div id="ccm-tab-content-view-version-<?=$cvID?>" style="display: <?=$display?>; height: 100%">
+            <iframe border="0" frameborder="0" height="100%" width="100%" src="<?=REL_DIR_FILES_TOOLS_REQUIRED?>/pages/preview_version?cvID=<?=$cvID?>&amp;cID=<?=$cID?>"></iframe>
         </div>
         <?php
         $display = 'none';

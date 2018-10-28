@@ -1,9 +1,5 @@
 <?php
 
-if (version_compare(PHP_VERSION, '5.5.9') < 0) {
-    die("concrete5 requires PHP 5.5.9+ to run.\nYou are running PHP " . PHP_VERSION . "\n");
-}
-
 /*
  * ----------------------------------------------------------------------------
  * Ensure that all subsequent procedural pages are running inside concrete5.
@@ -65,6 +61,7 @@ if (!defined('APP_UPDATED_PASSTHRU')) {
             exit;
         }
     }
+    unset($update_file);
     define('APP_UPDATED_PASSTHRU', false);
 }
 
@@ -164,6 +161,7 @@ const DIRNAME_EXPRESS_FORM_CONTROLS = 'form';
 const DIRNAME_EXPRESS_FORM_CONTROLS_ASSOCIATION = 'association';
 const DIRNAME_METADATA_XML = 'xml';
 const DIRNAME_METADATA_YAML = 'yaml';
+const DIRNAME_GEOLOCATION = 'geolocation';
 const REL_DIR_FILES_INCOMING = '/incoming';
 const REL_DIR_FILES_THUMBNAILS = '/thumbnails';
 define('REL_DIR_METADATA_XML', DIRNAME_CONFIG . '/' . DIRNAME_METADATA_XML);
@@ -223,8 +221,6 @@ const FILENAME_EXPRESS_CONTROL_OPTIONS = 'options.php';
 const FILENAME_GATHERING_DATA_SOURCE_OPTIONS = 'options.php';
 const FILENAME_GATHERING_ITEM_TEMPLATE_ICON = 'icon.png';
 const FILENAME_CONVERSATION_EDITOR_OPTIONS = 'options.php';
-const FILENAME_CONVERSATION_EDITOR_FORM_MESSAGE = 'message.php';
-const FILENAME_CONVERSATION_EDITOR_FORM_REPLY = 'reply.php';
 const FILENAME_STYLE_CUSTOMIZER_STYLES = 'styles.xml';
 const FILENAME_STYLE_CUSTOMIZER_DEFAULT_PRESET_NAME = 'defaults.less';
 
@@ -240,7 +236,7 @@ define('DIR_FILES_BLOCK_TYPES_CORE', DIR_BASE_CORE . '/' . DIRNAME_BLOCKS);
 define('DIR_FILES_TOOLS', DIR_APPLICATION . '/tools');
 define('DIR_FILES_TOOLS_REQUIRED', DIR_BASE_CORE . '/tools');
 define('DIR_PACKAGES_CORE', DIR_BASE_CORE . '/packages');
-define('DIR_STARTING_POINT_PACKAGES', DIR_APPLICATION . '/config/install/packages');
+defined('DIR_STARTING_POINT_PACKAGES') or define('DIR_STARTING_POINT_PACKAGES', DIR_CONFIG_SITE . '/install/packages');
 define('DIR_STARTING_POINT_PACKAGES_CORE', DIR_BASE_CORE . '/config/install/packages');
 define('DIR_CORE_UPDATES', DIR_BASE . '/' . DIRNAME_UPDATES);
 define('DIR_FILES_PAGE_TEMPLATE_ICONS', DIR_BASE_CORE . '/images/icons/page_templates');
@@ -314,11 +310,13 @@ const ONLINE_NOW_TIMEOUT = 300;
 const UVTYPE_REGISTER = 0;
 const UVTYPE_CHANGE_PASSWORD = 1;
 const UVTYPE_LOGIN_FOREVER = 2;
-const NEWSFLOW_VIEWED_THRESHOLD = 86400; // once a day
 
 /* -- Pages -- */
 const CHECKOUT_TIMEOUT = 300; // # in seconds.
 const VERSION_INITIAL_COMMENT = 'Initial Version';
+/**
+ * @deprecated Use Page::getHomePageID()
+ */
 const HOME_CID = 1;
 const HOME_NAME = 'Home';
 const HOME_UID = USER_SUPER_ID;
@@ -338,6 +336,7 @@ const COLLECTION_PRIVATE = 40;
 const BLOCK_NOT_AVAILABLE = 50;
 
 /* -- Debugging and Logging -- */
+defined('DEFAULT_ERROR_REPORTING') or define('DEFAULT_ERROR_REPORTING', E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED);
 const DEBUG_DISPLAY_PRODUCTION = 0;
 const DEBUG_DISPLAY_ERRORS = 1;
 const DEBUG_DISPLAY_ERRORS_SQL = 2; // not used
@@ -349,7 +348,7 @@ const LOG_TYPE_EXCEPTIONS = 'exceptions';
  * concrete5 depends on some more forgiving error handling.
  * ----------------------------------------------------------------------------
  */
-error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED);
+error_reporting(DEFAULT_ERROR_REPORTING);
 
 /*
  * ----------------------------------------------------------------------------
@@ -367,10 +366,12 @@ foreach (str_split(decoct($DIRECTORY_PERMISSIONS_MODE), 1) as $p) {
     }
     $FILE_PERMISSIONS_MODE .= intval($p) - 1;
 }
+unset($p);
 $FILE_PERMISSIONS_MODE = octdec($FILE_PERMISSIONS_MODE);
 define('DIRECTORY_PERMISSIONS_MODE_COMPUTED', $DIRECTORY_PERMISSIONS_MODE);
+unset($DIRECTORY_PERMISSIONS_MODE);
 define('FILE_PERMISSIONS_MODE_COMPUTED', $FILE_PERMISSIONS_MODE);
-
+unset($FILE_PERMISSIONS_MODE);
 /*
  * ----------------------------------------------------------------------------
  * We need our include path to be set here for libraries like Zend Framework

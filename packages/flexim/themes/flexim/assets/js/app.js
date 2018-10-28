@@ -48,13 +48,13 @@ $('.owl-carousel').owlCarousel({
 });
 
 
-// var menuOpen = false
-// var menuToggle = document.getElementById('menu__toggle')
+var menuOpen = false
+var menuToggle = document.getElementById('menu__toggle')
 
 
-// menuToggle.addEventListener('click', function() {
-//   menuOpen ? closeMenu() : openMenu()
-// })
+menuToggle.addEventListener('click', function() {
+  menuOpen ? closeMenu() : openMenu()
+})
 
 $('.menu__mobile li a').on('click', function(event) {
   closeMenu()

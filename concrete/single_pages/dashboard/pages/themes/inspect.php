@@ -8,22 +8,22 @@ $ci = Loader::helper('concrete/ui');
 ?>
 
 
-    <form method="post" id="ccm-inspect-form" action="<?php echo $view->url('/dashboard/pages/themes/inspect/', 'activate_files', $pThemeID)?>">
+    <form method="post" id="ccm-inspect-form" action="<?=$view->url('/dashboard/pages/themes/inspect/', 'activate_files', $pThemeID)?>">
     
-    	<p class="lead"><?php echo t("%s Theme", $pageTheme->getThemeDisplayName())?></p>
+    	<p class="lead"><?=t("%s Theme", $pageTheme->getThemeDisplayName())?></p>
 
         <div class="row">
             <div class="col-sm-2">
-                <?php echo $pageTheme->getThemeThumbnail()?>
+                <?=$pageTheme->getThemeThumbnail()?>
             </div>
 
             <div class="col-sm-10">
                 <table border="0" cellspacing="0" cellpadding="0" class="table table-striped table-bordered">
                     <thead>
                         <tr>
-                            <th><?php echo t('File')?></th>
-                            <th><?php echo t('Type')?></th>
-                            <th><?php echo t('Action to take')?></th>
+                            <th><?=t('File')?></th>
+                            <th><?=t('Type')?></th>
+                            <th><?=t('Action to take')?></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -36,7 +36,7 @@ $ci = Loader::helper('concrete/ui');
                             ?>
                         <tr>
                             <td colspan="3">
-                                <?php echo t('There are no templates in this file.')?>
+                                <?=t('There are no templates in this file.')?>
                             </td>
                         </tr>
                         <?php 
@@ -45,7 +45,7 @@ $ci = Loader::helper('concrete/ui');
                         foreach ($files as $f) {
                             ?>
                         <tr class="inputs-list">
-                            <td><?php echo $f->getFilename()?></td>
+                            <td><?=$f->getFilename()?></td>
                             <td><?php
                                 switch ($f->getType()) {
                                     case PageThemeFile::TFTYPE_VIEW:

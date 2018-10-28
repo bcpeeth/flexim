@@ -64,10 +64,10 @@ class SelectSettings extends \Concrete\Core\Entity\Attribute\Key\Settings\Select
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'list', 'akSelectAllowMultipleValues', 'akSelectAllowOtherValues', 'akSelectOptionDisplayOrder', 'key'];
+            return ['__isInitialized__', 'list', 'akSelectAllowMultipleValues', 'akSelectAllowOtherValues', 'akHideNoneOption', 'akSelectOptionDisplayOrder', 'akDisplayMultipleValuesOnSelect', 'key'];
         }
 
-        return ['__isInitialized__', 'list', 'akSelectAllowMultipleValues', 'akSelectAllowOtherValues', 'akSelectOptionDisplayOrder', 'key'];
+        return ['__isInitialized__', 'list', 'akSelectAllowMultipleValues', 'akSelectAllowOtherValues', 'akHideNoneOption', 'akSelectOptionDisplayOrder', 'akDisplayMultipleValuesOnSelect', 'key'];
     }
 
     /**
@@ -231,6 +231,28 @@ class SelectSettings extends \Concrete\Core\Entity\Attribute\Key\Settings\Select
     /**
      * {@inheritDoc}
      */
+    public function setHideNoneOption($akHideNoneOption)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setHideNoneOption', [$akHideNoneOption]);
+
+        return parent::setHideNoneOption($akHideNoneOption);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getHideNoneOption()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getHideNoneOption', []);
+
+        return parent::getHideNoneOption();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function setAllowOtherValues($allowOtherValues)
     {
 
@@ -259,6 +281,28 @@ class SelectSettings extends \Concrete\Core\Entity\Attribute\Key\Settings\Select
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setDisplayOrder', [$displayOrder]);
 
         return parent::setDisplayOrder($displayOrder);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getDisplayMultipleValuesOnSelect()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getDisplayMultipleValuesOnSelect', []);
+
+        return parent::getDisplayMultipleValuesOnSelect();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setDisplayMultipleValuesOnSelect($displayMultipleValuesOnSelect)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setDisplayMultipleValuesOnSelect', [$displayMultipleValuesOnSelect]);
+
+        return parent::setDisplayMultipleValuesOnSelect($displayMultipleValuesOnSelect);
     }
 
     /**

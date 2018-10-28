@@ -39,7 +39,7 @@ if (isset($allowMultipleValues) && $allowMultipleValues === false) {
         if (is_array($valueIDArray)) {
             foreach ($valueIDArray as $vID) {
                 ?>
-				<input data-node-id="<?php echo $vID?>" type="hidden" name="topics_<?php echo $akID ?>[]" value="<?php echo $vID ?>">
+				<input data-node-id="<?=$vID?>" type="hidden" name="topics_<?php echo $akID ?>[]" value="<?php echo $vID ?>">
 		<?php 
             }
         } ?>

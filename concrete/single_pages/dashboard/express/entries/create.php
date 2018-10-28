@@ -5,7 +5,7 @@
 if (is_object($renderer)) {
     ?>
 
-    <form method="post" action="<?php echo $view->action('submit', $entity->getId())?>">
+    <form method="post" action="<?=$view->action('submit', $entity->getId())?>">
 
     <?php
         echo $renderer->render(); ?>
@@ -14,10 +14,10 @@ if (is_object($renderer)) {
             <div class="ccm-dashboard-form-actions">
                 <?php if ($backURL) {
     ?>
-                    <a class="pull-left btn btn-default" href="<?php echo $backURL?>"><?php echo t('Back')?></a>
+                    <a class="pull-left btn btn-default" href="<?=$backURL?>"><?=t('Back')?></a>
                 <?php 
 } ?>
-                <button class="pull-right btn btn-primary" type="submit"><?php echo t('Add %s', $entity->getEntityDisplayName())?></button>
+                <button class="pull-right btn btn-primary" type="submit"><?=t('Add %s', $entity->getEntityDisplayName())?></button>
             </div>
         </div>
 
@@ -26,7 +26,7 @@ if (is_object($renderer)) {
 
 } else {
     ?>
-    <p><?php echo t('You have not created any forms for this data type.')?></p>
+    <p><?=t('You have not created any forms for this data type.')?></p>
 <?php 
 } ?>
 

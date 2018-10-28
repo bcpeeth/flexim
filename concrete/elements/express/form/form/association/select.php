@@ -2,23 +2,23 @@
 
 <div class="form-group">
     <?php if ($view->supportsLabel()) { ?>
-        <label class="control-label"><?php echo $label?></label>
+        <label class="control-label" for="<?=$view->getControlID()?>"><?=$label?></label>
     <?php } ?>
 
     <?php
-    if (!empty($entities)) {
-        $selectedEntity = $selectedEntities[0];
+    if (!empty($allEntries)) {
+        $selectedEntry = $selectedEntries[0];
         ?>
-        <select class="form-control" name="express_association_<?php echo $control->getId()?>">
-            <option value=""><?php echo t('** Choose %s', $control->getControlLabel())?></option>
+        <select class="form-control" id="<?=$view->getControlID()?>" name="express_association_<?=$control->getId()?>">
+            <option value=""><?=t('** Choose %s', $control->getControlLabel())?></option>
             <?php
-            foreach ($entities as $entity) {
+            foreach ($allEntries as $entry) {
                 ?>
                 <option
-                    value="<?php echo $entity->getId()?>"
-                    <?php if (is_object($selectedEntity) && $selectedEntity->getID() == $entity->getID()) { ?>selected<?php } ?>
+                    value="<?=$entry->getId()?>"
+                    <?php if (is_object($selectedEntry) && $selectedEntry->getID() == $entry->getID()) { ?>selected<?php } ?>
                 >
-                    <?php echo $formatter->getEntryDisplayName($control, $entity)?>
+                    <?=$formatter->getEntryDisplayName($control, $entry)?>
                 </option>
                 <?php
             }
@@ -26,6 +26,6 @@
         </select>
     <?php
     } else {
-        ?><p><?php echo t('No entity found.')?></p><?php
+        ?><p><?=t('No available entries found.')?></p><?php
     } ?>
 </div>

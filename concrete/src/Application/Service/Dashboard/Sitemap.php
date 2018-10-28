@@ -206,7 +206,7 @@ class Sitemap
                 $cAlias = 'POINTER';
                 $cID = $c->getCollectionPointerOriginalID();
             } else {
-                $cIconClass = 'fa fa-sign-out';
+                $cIconClass = 'fa fa-external-link';
                 $cAlias = 'LINK';
             }
         }
@@ -231,7 +231,7 @@ class Sitemap
         } else {
             $node->icon = $cIcon;
         }
-        if ($cID == HOME_CID) {
+        if ($c->isHomePage()) {
             $node->addClass = 'ccm-page-home';
             $node->expanded = true;
         }
@@ -255,7 +255,7 @@ class Sitemap
         $node->canAddSubpages = $canAddSubpages;
         $node->canAddExternalLinks = $canAddExternalLinks;
 
-        if ($includeChildren && ($cID == 1 || $nodeOpen)) {
+        if ($includeChildren && ($c->isHomePage() || $nodeOpen)) {
             // We open another level
             $node->children = $this->getSubNodes($cID, $onGetNode);
         }

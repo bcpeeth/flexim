@@ -10,11 +10,11 @@ if (isset($control)) {
 ?>
 
 <div class="form-group">
-    <?php echo $form->label('headline', t('Headline'))?>
-    <?php echo $form->text('headline', $headline)?>
+    <?=$form->label('headline', t('Headline'))?>
+    <?=$form->text('headline', $headline)?>
 </div>
 <div class="form-group">
-    <?php echo $form->label('body', t('Body'))?>
+    <?=$form->label('body', t('Body'))?>
     <?php
     $editor = Core::make('editor');
     print $editor->outputStandardEditor('body', $body);

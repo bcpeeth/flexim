@@ -286,6 +286,17 @@ class StorageLocation extends \Concrete\Core\Entity\File\StorageLocation\Storage
     /**
      * {@inheritDoc}
      */
+    public function clearCache()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'clearCache', []);
+
+        return parent::clearCache();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function delete()
     {
 

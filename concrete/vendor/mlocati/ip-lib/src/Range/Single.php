@@ -91,6 +91,16 @@ class Single implements RangeInterface
     /**
      * {@inheritdoc}
      *
+     * @see RangeInterface::getRangeType()
+     */
+    public function getRangeType()
+    {
+        return $this->address->getRangeType();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
      * @see RangeInterface::contains()
      */
     public function contains(AddressInterface $address)
@@ -103,6 +113,43 @@ class Single implements RangeInterface
         }
 
         return $result;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see RangeInterface::containsRange()
+     */
+    public function containsRange(RangeInterface $range)
+    {
+        $result = false;
+        if ($range->getAddressType() === $this->getAddressType()) {
+            if ($range->toString(false) === $this->toString(false)) {
+                $result = true;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see RangeInterface::getStartAddress()
+     */
+    public function getStartAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see RangeInterface::getEndAddress()
+     */
+    public function getEndAddress()
+    {
+        return $this->address;
     }
 
     /**

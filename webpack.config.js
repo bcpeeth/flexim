@@ -14,7 +14,7 @@ module.exports = {
   output: {
     filename: './js/app.js',
     path: path.join(root, '/dist/'),
-    publicPath: + public + '/dist',
+    publicPath: '/flexim' + public + '/dist',
   },
   module: {
     rules: [{

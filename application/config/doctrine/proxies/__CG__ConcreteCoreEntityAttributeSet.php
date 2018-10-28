@@ -385,6 +385,17 @@ class Set extends \Concrete\Core\Entity\Attribute\Set implements \Doctrine\ORM\P
     /**
      * {@inheritDoc}
      */
+    public function __toString()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, '__toString', []);
+
+        return parent::__toString();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getPackage()
     {
 

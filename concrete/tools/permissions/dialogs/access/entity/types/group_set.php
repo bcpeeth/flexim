@@ -16,15 +16,15 @@ if (!$tp->canAccessGroupSearch()) {
     	<?php if ($gl->getTotal() > 0) {
             foreach ($gl->get() as $gs) { ?>
         		<li>
-					<a class="ccm-group-inner-atag" id="g<?php echo $g['gID']?>" href="javascript:void(0)" onclick="ccm_selectGroupSet(<?php echo $gs->getGroupSetID()?>)">
+					<a class="ccm-group-inner-atag" id="g<?=$g['gID']?>" href="javascript:void(0)" onclick="ccm_selectGroupSet(<?=$gs->getGroupSetID()?>)">
 					<i class="fa fa-users"></i>
-					<?php echo $gs->getGroupSetDisplayName()?>
+					<?=$gs->getGroupSetDisplayName()?>
 					</a>
         		</li>
         	<?php
             }
         } else { ?>
-    		<p><?php echo t('No group sets found.')?></p>
+    		<p><?=t('No group sets found.')?></p>
     	<?php
         }
         ?>
@@ -33,7 +33,7 @@ if (!$tp->canAccessGroupSearch()) {
 	<script>
 	ccm_selectGroupSet = function(gsID) {
 		$('#ccm-permissions-access-entity-form .btn-group').removeClass('open');
-		$.getJSON('<?php echo $url?>', {
+		$.getJSON('<?=$url?>', {
 			'gsID': gsID
 		}, function(r) {
 			jQuery.fn.dialog.hideLoader();

@@ -1,2 +1,2 @@
-flexim
+Flexim
 Website template

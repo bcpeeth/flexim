@@ -7,11 +7,13 @@ $selectorFormFactor = '';
 if (is_object($pagetype) && $pagetype->getPageTypePublishTargetTypeID() == $type->getPageTypePublishTargetTypeID()) {
     $configuredTarget = $pagetype->getPageTypePublishTargetObject();
     $cID = $configuredTarget->getParentPageID();
+} elseif (!isset($cID)) {
+    $cID = null;
 }
 
 ?>
 	<div class="control-group">
-		<?php echo $form->label('cParentID', t('Publish Beneath Page'))?>
+		<?=$form->label('cParentID', t('Publish Beneath Page'))?>
 		<div class="controls">
 			<?php
             $pf = Loader::helper('form/page_selector');

@@ -5,7 +5,7 @@ defined('C5_EXECUTE') or die("Access Denied.");
 <script type="text/template" class="attribute">
 	<div class="form-group <% if (pending) { %>ccm-page-attribute-adding<% } %>" data-attribute-key-id="<%=akID%>">
 		<a href="javascript:void(0)" data-remove-attribute-key="<%=akID%>"><i class="fa fa-minus-circle"></i></a>
-		<label class="control-label"><%=label%></label>
+		<label class="control-label" for="<%=controlID%>"><%=label%></label>
 		<div>
 			<%=content%>
 		</div>
@@ -16,7 +16,7 @@ defined('C5_EXECUTE') or die("Access Denied.");
 <div id="ccm-detail-page-attributes">
 
 <section class="ccm-ui">
-	<form method="post" action="<?php echo $controller->action('submit')?>" data-dialog-form="attributes" data-panel-detail-form="attributes"  data-action-after-save="reload">
+	<form method="post" action="<?=$controller->action('submit')?>" data-dialog-form="attributes" data-panel-detail-form="attributes"  data-action-after-save="reload">
 
         <?php if (isset($sitemap) && $sitemap) {
     ?>
@@ -24,14 +24,14 @@ defined('C5_EXECUTE') or die("Access Denied.");
         <?php
 } ?>
 
-		<span class="ccm-detail-page-attributes-id"><?php echo t('Page ID: %s', $c->getCollectionID())?></span>
+		<span class="ccm-detail-page-attributes-id"><?=t('Page ID: %s', $c->getCollectionID())?></span>
 
 		<?php if ($assignment->allowEditName()) {
     ?>
 		<div class="form-group">
-			<label for="cName" class="control-label"><?php echo t('Name')?></label>
+			<label for="cName" class="control-label"><?=t('Name')?></label>
 			<div>
-			<input type="text" class="form-control" id="cName" name="cName" value="<?php echo htmlentities($c->getCollectionName(), ENT_QUOTES, APP_CHARSET) ?>" />
+			<input type="text" class="form-control" id="cName" name="cName" value="<?=htmlentities($c->getCollectionName(), ENT_QUOTES, APP_CHARSET) ?>" />
 			</div>
 		</div>
 		<?php
@@ -40,7 +40,7 @@ defined('C5_EXECUTE') or die("Access Denied.");
 		<?php if ($assignment->allowEditDateTime()) {
     ?>
 		<div class="form-group">
-			<label for="cName" class="control-label"><?php echo t('Created Time')?></label>
+			<label for="cName" class="control-label"><?=t('Created Time')?></label>
 			<div>
 				<?php echo $dt->datetime('cDatePublic', $c->getCollectionDatePublic());
     ?>
@@ -52,7 +52,7 @@ defined('C5_EXECUTE') or die("Access Denied.");
 		<?php if ($assignment->allowEditUserID()) {
     ?>
 		<div class="form-group">
-			<label for="cName" class="control-label"><?php echo t('Author')?></label>
+			<label for="cName" class="control-label"><?=t('Author')?></label>
 			<div>
 			<?php
             echo $uh->selectUser('uID', $c->getCollectionUserID());
@@ -66,9 +66,9 @@ defined('C5_EXECUTE') or die("Access Denied.");
 		<?php if ($assignment->allowEditDescription()) {
     ?>
 		<div class="form-group">
-			<label for="cDescription" class="control-label"><?php echo t('Description')?></label>
+			<label for="cDescription" class="control-label"><?=t('Description')?></label>
 			<div>
-				<textarea id="cDescription" name="cDescription" class="form-control" rows="8"><?php echo $c->getCollectionDescription()?></textarea>
+				<textarea id="cDescription" name="cDescription" class="form-control" rows="8"><?= htmlentities($c->getCollectionDescription(), ENT_QUOTES, APP_CHARSET) ?></textarea>
 			</div>
 		</div>
 		<?php
@@ -76,8 +76,8 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 	</form>
 	<div class="ccm-panel-detail-form-actions dialog-buttons">
-        <button class="pull-left btn btn-default" type="button" data-dialog-action="cancel" data-panel-detail-action="cancel"><?php echo t('Cancel')?></button>
-		<button class="pull-right btn btn-success" type="button" data-dialog-action="submit" data-panel-detail-action="submit"><?php echo t('Save Changes')?></button>
+        <button class="pull-left btn btn-default" type="button" data-dialog-action="cancel" data-panel-detail-action="cancel"><?=t('Cancel')?></button>
+		<button class="pull-right btn btn-success" type="button" data-dialog-action="submit" data-panel-detail-action="submit"><?=t('Save Changes')?></button>
 	</div>
 
 </section>
@@ -116,19 +116,19 @@ ConcretePageAttributesDetail = {
 	addAttributeKey: function(akID) {
 		jQuery.fn.dialog.showLoader();
 		$.ajax({
-			url: '<?php echo $controller->action("add_attribute")?>',
+			url: '<?=$controller->action("add_attribute")?>',
 			dataType: 'json',
 			data: {
 				'akID': akID
 			},
 			type: 'get',
 			success: function(r) {
-                _.each(r.assets.css, function(css) {
-                    ccm_addHeaderItem(css, 'CSS');
-                });
-                _.each(r.assets.javascript, function(javascript) {
-                    ccm_addHeaderItem(javascript, 'JAVASCRIPT');
-                });
+				_.each(r.assets.css, function(css) {
+					ConcreteAssetLoader.loadCSS(css);
+				});
+				_.each(r.assets.javascript, function(javascript) {
+					ConcreteAssetLoader.loadJavaScript(javascript);
+				});
 
 				var $form = $('form[data-panel-detail-form=attributes]');
 				$form.append(
@@ -150,7 +150,7 @@ ConcretePageAttributesDetail = {
 $(function() {
 
 	var $form = $('form[data-panel-detail-form=attributes]');
-	var selectedAttributes = <?php echo $selectedAttributes?>;
+	var selectedAttributes = <?=$selectedAttributes?>;
 	_.each(selectedAttributes, function(attribute) {
 		$form.append(renderAttribute(attribute));
 	});

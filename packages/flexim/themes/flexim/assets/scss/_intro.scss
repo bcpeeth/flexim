@@ -4,5 +4,13 @@
 
   img {
     width: 178px;
+    height: 100%;
+  }
+
+  @media screen and (max-width: $breakpoint-max-sm) {
+    img {
+      display: block;
+      
+    }
   }
 }

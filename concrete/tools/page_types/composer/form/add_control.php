@@ -35,15 +35,15 @@ if ($cp->canViewPage()) {
     foreach ($types as $t) {
         ?>
 
-	<div class="ccm-tab-content" id="ccm-tab-content-<?php echo $t->getPageTypeComposerControlTypeHandle()?>">
+	<div class="ccm-tab-content" id="ccm-tab-content-<?=$t->getPageTypeComposerControlTypeHandle()?>">
 	<ul data-list="page-type-composer-control-type" class="item-select-list">
 		<?php
         $controls = $t->getPageTypeComposerControlObjects();
         foreach ($controls as $cnt) {
             ?>
-			<li><a href="#" data-control-type-id="<?php echo $t->getPageTypeComposerControlTypeID()?>" data-control-identifier="<?php echo $cnt->getPageTypeComposerControlIdentifier()?>">
-                    <?php echo $cnt->getPageTypeComposerControlIcon()?>
-                    <?php echo $cnt->getPageTypeComposerControlDisplayName()?></a></li>
+			<li><a href="#" data-control-type-id="<?=$t->getPageTypeComposerControlTypeID()?>" data-control-identifier="<?=$cnt->getPageTypeComposerControlIdentifier()?>">
+                    <?=$cnt->getPageTypeComposerControlIcon()?>
+                    <?=$cnt->getPageTypeComposerControlDisplayName()?></a></li>
 		<?php
         }
         ?>
@@ -76,17 +76,17 @@ $(function() {
 			'value': ptComposerControlIdentifier
 		},{
 			'name': 'ptComposerFormLayoutSetID',
-			'value': '<?php echo $set->getPageTypeComposerFormLayoutSetID()?>'
+			'value': '<?=$set->getPageTypeComposerFormLayoutSetID()?>'
 		}];
 		jQuery.fn.dialog.showLoader();
 		$.ajax({
 			type: 'post',
 			data: formData,
-			url: '<?php echo REL_DIR_FILES_TOOLS_REQUIRED?>/page_types/composer/form/add_control',
+			url: '<?=REL_DIR_FILES_TOOLS_REQUIRED?>/page_types/composer/form/add_control',
 			success: function(html) {
 				jQuery.fn.dialog.hideLoader();
 				jQuery.fn.dialog.closeTop();
-				$('div[data-page-type-composer-form-layout-control-set-id=<?php echo $set->getPageTypeComposerFormLayoutSetID()?>] tbody.ccm-item-set-inner').append(html);
+				$('div[data-page-type-composer-form-layout-control-set-id=<?=$set->getPageTypeComposerFormLayoutSetID()?>] tbody.ccm-item-set-inner').append(html);
 				$('a[data-command=edit-form-set-control]').dialog();
 			}
 		});

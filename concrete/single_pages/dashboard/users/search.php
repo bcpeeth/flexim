@@ -19,44 +19,44 @@ if (isset($user) && is_object($user)) {
             <div class="row">
 
                 <div class="col-md-6">
-                    <h4><?php echo t('Basic Details') ?></h4>
+                    <h4><?= t('Basic Details') ?></h4>
                     <div class="row">
-                        <div class="col-md-4"><p><?php echo t('Username') ?></p></div>
+                        <div class="col-md-4"><p><?= t('Username') ?></p></div>
                         <div class="col-md-8"><p><span
                             <?php
                             if ($canEditUserName) {
                                 ?>
                                 data-editable-field-type="xeditable"
-                                data-url="<?php echo $view->action('update_username', $user->getUserID()) ?>"
+                                data-url="<?= $view->action('update_username', $user->getUserID()) ?>"
                                 data-type="text"
                                 data-name="uName"
                                 <?php
                             }
                             ?>
-                        ><?php echo h($user->getUserName()) ?></span></p></div>
+                        ><?= h($user->getUserName()) ?></span></p></div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4"><p><?php echo t('Email Address') ?></p></div>
+                        <div class="col-md-4"><p><?= t('Email Address') ?></p></div>
                         <div class="col-md-8"><p><span
                         <?php
                             if ($canEditEmail) {
                                 ?>
                                 data-editable-field-type="xeditable"
-                                data-url="<?php echo $view->action('update_email', $user->getUserID()) ?>"
+                                data-url="<?= $view->action('update_email', $user->getUserID()) ?>"
                                 data-type="email"
                                 data-name="uEmail"
                                 <?php
                             }
                             ?>
-                        ><?php echo h($user->getUserEmail()) ?></span></p>
+                        ><?= h($user->getUserEmail()) ?></span></p>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4"><p><?php echo t('Password') ?></p></div>
+                        <div class="col-md-4"><p><?= t('Password') ?></p></div>
                         <div class="col-md-8"><p>
                             <?php
                             if ($canEditPassword) {
-                                ?><a href="#" class="btn btn-xs btn-default" data-button="change-password"><?php echo t('Change') ?></a><?php
+                                ?><a href="#" class="btn btn-xs btn-default" data-button="change-password"><?= t('Change') ?></a><?php
                             } else {
                                 ?>*********<?php
                             }
@@ -64,14 +64,14 @@ if (isset($user) && is_object($user)) {
                         </p></div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4"><p><?php echo t('Profile Picture') ?></p></div>
+                        <div class="col-md-4"><p><?= t('Profile Picture') ?></p></div>
                         <div class="col-md-8"><p><div
                             <?php
                             if ($canEditAvatar) {
                                 ?>
                                 data-editable-field-type="image"
                                 data-editable-field-inline-commands="true"
-                                data-url="<?php echo $view->action('update_avatar', $user->getUserID()) ?>"
+                                data-url="<?= $view->action('update_avatar', $user->getUserID()) ?>"
                                 <?php
                             }
                             ?>
@@ -81,21 +81,21 @@ if (isset($user) && is_object($user)) {
                             </ul>
                             <span class="editable-image-wrapper">
                                 <input type="file" id="file-avatar" name="avatar"/>
-                                <div class="editable-image-display"><?php echo $user->getUserAvatar()->output() ?></div>
+                                <div class="editable-image-display"><?=$user->getUserAvatar()->output() ?></div>
                             </span>
                         </div></p></div>
                     </div>
                 </div>
 
                 <div class="col-md-6">
-                    <h4><?php echo t('Account') ?></h4>
+                    <h4><?= t('Account') ?></h4>
                     <div class="row">
-                        <div class="col-md-4"><p><?php echo t('Date Created') ?></p></div>
-                        <div class="col-md-8"><p><?php echo $dh->formatDateTime($user->getUserDateAdded()) ?></p></div>
+                        <div class="col-md-4"><p><?= t('Date Created') ?></p></div>
+                        <div class="col-md-8"><p><?= $dh->formatDateTime($user->getUserDateAdded()) ?></p></div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4"><p><?php echo t('Last IP Address') ?></p></div>
-                        <div class="col-md-8"><p><?php echo $user->getLastIPAddress() ?></p></div>
+                        <div class="col-md-4"><p><?= t('Last IP Address') ?></p></div>
+                        <div class="col-md-8"><p><?= $user->getLastIPAddress() ?></p></div>
                     </div>
                     <?php
                     if (Config::get('concrete.misc.user_timezones')) {
@@ -105,20 +105,20 @@ if (isset($user) && is_object($user)) {
                         }
                         ?>
                         <div class="row">
-                            <div class="col-md-4"><p><?php echo t('Timezone') ?></p></div>
+                            <div class="col-md-4"><p><?= t('Timezone') ?></p></div>
                             <div class="col-md-8"><p><span
                             <?php
                             if ($canEditTimezone) {
                                 ?>
                                 data-editable-field-type="xeditable"
-                                data-source="<?php echo $view->action('get_timezones') ?>"
-                                data-url="<?php echo $view->action('update_timezone', $user->getUserID()) ?>"
+                                data-source="<?= $view->action('get_timezones') ?>"
+                                data-url="<?= $view->action('update_timezone', $user->getUserID()) ?>"
                                 data-type="select" data-name="uTimezone"
-                                data-value="<?php echo h($uTimezone) ?>"
+                                data-value="<?= h($uTimezone) ?>"
                                 <?php
                             }
                             ?>
-                            ><?php echo $dh->getTimezoneDisplayName($uTimezone) ?></span></p></div>
+                            ><?= $dh->getTimezoneDisplayName($uTimezone) ?></span></p></div>
                         </div>
                     <?php
                     }
@@ -126,32 +126,32 @@ if (isset($user) && is_object($user)) {
                     if (count($languages) > 0) {
                         ?>
                         <div class="row">
-                            <div class="col-md-4"><p><?php echo t('Language') ?></p></div>
+                            <div class="col-md-4"><p><?= t('Language') ?></p></div>
                             <div class="col-md-8"><p><span
                             <?php
                             if ($canEditLanguage) {
                                 ?>
                                 data-editable-field-type="xeditable"
-                                data-source="<?php echo $view->action('get_languages') ?>"
-                                data-url="<?php echo $view->action('update_language', $user->getUserID()) ?>"
+                                data-source="<?= $view->action('get_languages') ?>"
+                                data-url="<?= $view->action('update_language', $user->getUserID()) ?>"
                                 data-type="select"
                                 data-name="uDefaultLanguage"
-                                data-value="<?php echo h($user->getUserDefaultLanguage()) ?>"
+                                data-value="<?= h($user->getUserDefaultLanguage()) ?>"
                                 <?php
                             }
                             ?>
-                            ><?php echo h(Punic\Language::getName($user->getUserDefaultLanguage())) ?></span></p></div>
+                            ><?= h(Punic\Language::getName($user->getUserDefaultLanguage())) ?></span></p></div>
                         </div>
                         <?php
                     }
                     if (Config::get('concrete.user.registration.validate_email')) {
                         ?>
                         <div class="row">
-                            <div class="col-md-4"><p><?php echo t('Full Record') ?></p></div>
-                            <div class="col-md-8"><p><?php echo ($user->isFullRecord()) ? t('Yes') : t('No') ?></p></div>
+                            <div class="col-md-4"><p><?= t('Full Record') ?></p></div>
+                            <div class="col-md-8"><p><?= ($user->isFullRecord()) ? t('Yes') : t('No') ?></p></div>
                         </div>
                         <div class="row">
-                            <div class="col-md-4"><p><?php echo t('Email Validated') ?></p></div>
+                            <div class="col-md-4"><p><?= t('Email Validated') ?></p></div>
                             <div class="col-md-8"><p>
                                 <?php
                                 switch ($user->isValidated()) {
@@ -172,7 +172,7 @@ if (isset($user) && is_object($user)) {
                     }
                     ?>
 
-                    <h4><?php echo t('Groups') ?></h4>
+                    <h4><?= t('Groups') ?></h4>
                     <div data-container="group-list"></div>
                     <?php
                     if ($canAddGroup) {
@@ -180,8 +180,8 @@ if (isset($user) && is_object($user)) {
                         <hr>
                         <a class="btn btn-default btn-xs" data-button="assign-groups" dialog-width="640"
                            dialog-height="480" dialog-modal="true"
-                           href="<?php echo URL::to('/ccm/system/dialogs/group/search') ?>?filter=assign"
-                           dialog-title="<?php echo t('Add Groups') ?>" dialog-modal="false"><?php echo t('Add Group') ?></a>
+                           href="<?= URL::to('/ccm/system/dialogs/group/search') ?>?filter=assign"
+                           dialog-title="<?= t('Add Groups') ?>" dialog-modal="false"><?= t('Add Group') ?></a>
                         <?php
                     }
                     ?>
@@ -232,22 +232,22 @@ if (isset($user) && is_object($user)) {
         ?>
         <div style="display: none">
             <div data-dialog="change-password" class="ccm-ui">
-                <form data-dialog-form="change-password" action="<?php echo $view->action('change_password', $user->getUserID()) ?>">
-                    <?php echo $token->output('change_password') ?>
+                <form data-dialog-form="change-password" action="<?= $view->action('change_password', $user->getUserID()) ?>">
+                    <?= $token->output('change_password') ?>
 
                     <div class="form-group">
-                        <?php echo $form->label('uPassword', t('Password')) ?>
-                        <?php echo $form->password('uPassword', ['autocomplete' => 'off']) ?>
+                        <?= $form->label('uPassword', t('Password')) ?>
+                        <?= $form->password('uPassword', ['autocomplete' => 'off']) ?>
                     </div>
 
                     <div class="form-group">
-                        <?php echo $form->label('uPasswordConfirm', t('Confirm Password')) ?>
-                        <?php echo $form->password('uPasswordConfirm', ['autocomplete' => 'off']) ?>
+                        <?= $form->label('uPasswordConfirm', t('Confirm Password')) ?>
+                        <?= $form->password('uPasswordConfirm', ['autocomplete' => 'off']) ?>
                     </div>
 
                     <div class="dialog-buttons">
-                        <button class="btn btn-default pull-left" data-dialog-action="cancel"><?php echo t('Cancel') ?></button>
-                        <button type="button" data-dialog-action="submit" class="btn btn-primary pull-right"><?php echo t('Update') ?></button>
+                        <button class="btn btn-default pull-left" data-dialog-action="cancel"><?= t('Cancel') ?></button>
+                        <button type="button" data-dialog-action="submit" class="btn btn-primary pull-right"><?= t('Update') ?></button>
                     </div>
 
                 </form>
@@ -274,29 +274,29 @@ if (isset($user) && is_object($user)) {
 
             var _addGroupsTemplate = _.template($('script[data-template=user-add-groups]').html());
             $('div[data-container=group-list]').append(
-                _addGroupsTemplate({'groups': <?php echo $groupsJSON?>})
+                _addGroupsTemplate({'groups': <?=$groupsJSON?>})
             );
             $('div[data-container=editable-fields]').concreteEditableFieldContainer({
-                url: '<?php echo $view->action('save', $user->getUserID())?>',
+                url: '<?=$view->action('save', $user->getUserID())?>',
                 data: {
-                    ccm_token: '<?php echo $token->generate()?>'
+                    ccm_token: '<?=$token->generate()?>'
                 }
             });
 
             $('button[name=task][value=sudo]').on('click', function () {
-                return confirm('<?php echo t("This will end your current session and sign you in as %s", $user->getUserName())?>');
+                return confirm('<?=t("This will end your current session and sign you in as %s", $user->getUserName())?>');
             });
 
             $('button[name=task][value=delete]').on('click', function () {
-                return confirm('<?php echo t("Are you sure you want to permanently remove this user?")?>');
+                return confirm('<?=t("Are you sure you want to permanently remove this user?")?>');
             });
             ConcreteEvent.subscribe('SelectGroup', function (e, data) {
                 $.concreteAjax({
-                    url: "<?php echo URL::to('/ccm/system/user/add_group')?>",
+                    url: "<?=URL::to('/ccm/system/user/add_group')?>",
                     data: {
                         gID: data.gID,
-                        uID: '<?php echo $user->getUserID()?>',
-                        ccm_token: '<?php echo $token->generate('add_group') ?>'
+                        uID: '<?=$user->getUserID()?>',
+                        ccm_token: '<?= $token->generate('add_group') ?>'
                     },
                     success: function (r) {
                         $('div[data-container=group-list]').append(
@@ -313,7 +313,7 @@ if (isset($user) && is_object($user)) {
             $('div[data-container=editable-fields]').on('click', 'a[data-button=change-password]', function () {
                 $.fn.dialog.open({
                     element: 'div[data-dialog=change-password]',
-                    title: '<?php echo t('Change Password')?>',
+                    title: '<?=t('Change Password')?>',
                     width: '280',
                     height: '220',
                     modal: true,
@@ -326,11 +326,11 @@ if (isset($user) && is_object($user)) {
 
             $('div[data-container=editable-fields]').on('click', 'a[data-button=delete-group]', function () {
                 $.concreteAjax({
-                    url: "<?php echo URL::to('/ccm/system/user/remove_group')?>",
+                    url: "<?=URL::to('/ccm/system/user/remove_group')?>",
                     data: {
                         gID: $(this).attr('data-group-id'),
-                        uID: '<?php echo $user->getUserID()?>',
-                        ccm_token: '<?php echo $token->generate('remove_group') ?>'
+                        uID: '<?=$user->getUserID()?>',
+                        ccm_token: '<?= $token->generate('remove_group') ?>'
                     },
                     success: function (r) {
                         $('div[data-container=group-list] div[data-group-id=' + r.group.gID + ']').queue(function () {
@@ -370,10 +370,10 @@ if (isset($user) && is_object($user)) {
         <script type="text/javascript">
             $(function() {
                 $('#ccm-dashboard-content').concreteAjaxSearch({
-                    result: <?php echo json_encode($result->getJSONObject())?>,
+                    result: <?=json_encode($result->getJSONObject())?>,
                     onLoad: function (concreteSearch) {
                         concreteSearch.$element.on('click', 'a[data-user-id]', function () {
-                            window.location.href = '<?php echo rtrim(URL::to('/dashboard/users/search', 'view'), '/')?>/' + $(this).attr('data-user-id');
+                            window.location.href = '<?=rtrim(URL::to('/dashboard/users/search', 'view'), '/')?>/' + $(this).attr('data-user-id');
                             return false;
                         });
                     }
@@ -384,7 +384,7 @@ if (isset($user) && is_object($user)) {
         <?php
     } else {
         ?>
-        <p><?php echo t('You do not have access to user search. This setting may be changed in the access section of the dashboard settings page.') ?></p>
+        <p><?= t('You do not have access to user search. This setting may be changed in the access section of the dashboard settings page.') ?></p>
         <?php
     }
 

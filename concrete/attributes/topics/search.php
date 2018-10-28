@@ -3,7 +3,7 @@
 
     <script type="text/javascript">
         $(function() {
-            $('.tree-view-template-<?php echo $attributeKey->getAttributeKeyID()?>').concreteTree({  // run first time around to get default tree if new.
+            $('.tree-view-template-<?=$attributeKey->getAttributeKeyID()?>').concreteTree({  // run first time around to get default tree if new.
                 'treeID': <?php echo $tree->getTreeID();
     ?>,
                 'chooseNodeInForm': true,
@@ -15,20 +15,20 @@
     ?>
                 'onSelect' : function(nodes) {
                      if (nodes.length) {
-                        $('input[data-topic-search-field=<?php echo $attributeKey->getAttributeKeyID()?>]').val(nodes[0]);
+                        $('input[data-topic-search-field=<?=$attributeKey->getAttributeKeyID()?>]').val(nodes[0]);
                      } else {
-                         $('input[data-topic-search-field=<?php echo $attributeKey->getAttributeKeyID()?>]').val('');
+                         $('input[data-topic-search-field=<?=$attributeKey->getAttributeKeyID()?>]').val('');
                      }
                  }
             });
         });
     </script>
     <div class="tree-view-container">
-        <div class="tree-view-template-<?php echo $attributeKey->getAttributeKeyID()?>">
+        <div class="tree-view-template-<?=$attributeKey->getAttributeKeyID()?>">
         </div>
     </div>
-    <input type="hidden" data-topic-search-field="<?php echo $attributeKey->getAttributeKeyID()?>"
-           name="<?php echo $view->field('treeNodeID')?>" value="">
+    <input type="hidden" data-topic-search-field="<?=$attributeKey->getAttributeKeyID()?>"
+           name="<?=$view->field('treeNodeID')?>" value="">
 
 <?php 
 } ?>

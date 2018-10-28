@@ -7,7 +7,7 @@
 <?php if (strlen($title) > 0) {
     ?>
     <div class="ccm-block-rss-displayer-header">
-    	<h5><?php echo $title?></h5>
+    	<h5><?=$title?></h5>
     </div>
 <?php 
 } ?>
@@ -27,16 +27,16 @@ if (isset($errorMsg) && strlen($errorMsg) > 0) {
 		
 		<div class="ccm-block-rss-displayer-item">
 			<div class="ccm-block-rss-displayer-item-title">
-				<a href="<?php echo $item->getLink();
+				<a href="<?= $item->getLink();
         ?>" <?php if ($rssObj->launchInNewWindow) {
     echo 'target="_blank"';
 }
         ?> >
-					<?php echo $item->getTitle();
+					<?= $item->getTitle();
         ?>
 				</a>
 			</div>
-			<div class="ccm-block-rss-displayer-item-date"><?php echo h($this->controller->formatDateTime($item->getDateCreated()));
+			<div class="ccm-block-rss-displayer-item-date"><?= h($this->controller->formatDateTime($item->getDateCreated()));
         ?></div>
 			<div class="ccm-block-rss-displayer-item-summary">
 				<?php

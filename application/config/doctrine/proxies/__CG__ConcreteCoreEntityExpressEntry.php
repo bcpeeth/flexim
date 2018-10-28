@@ -451,6 +451,17 @@ class Entry extends \Concrete\Core\Entity\Express\Entry implements \Doctrine\ORM
     /**
      * {@inheritDoc}
      */
+    public function getExporter()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getExporter', []);
+
+        return parent::getExporter();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getAttribute($ak, $mode = false)
     {
 

@@ -13,18 +13,18 @@
 <div class="row">
     <?php View::element('dashboard/express/detail_navigation', array('entity' => $entity))?>
     <div class="col-md-8">
-        <h3><?php echo t('Name')?></h3>
-        <p><?php echo $entity->getEntityDisplayName()?></p>
+        <h3><?=t('Name')?></h3>
+        <p><?=$entity->getEntityDisplayName()?></p>
 
-        <h3><?php echo t('Handle')?></h3>
-        <p><?php echo $entity->getHandle()?></p>
+        <h3><?=t('Handle')?></h3>
+        <p><?=$entity->getHandle()?></p>
 
-        <h3><?php echo t('Description')?></h3>
-        <p><?php echo $entity->getEntityDisplayDescription()?></p>
+        <h3><?=t('Description')?></h3>
+        <p><?=$entity->getEntityDisplayDescription()?></p>
 
         <?php if ($owned_by = $entity->getOwnedBy()) { ?>
-            <h3><?php echo t('Owned By')?></h3>
-            <p><a href="<?php echo URL::to('/dashboard/system/express/entities', 'view_entity', $owned_by->getID())?>"><?php echo $owned_by->getName()?></a></p>
+            <h3><?=t('Owned By')?></h3>
+            <p><a href="<?=URL::to('/dashboard/system/express/entities', 'view_entity', $owned_by->getID())?>"><?=$owned_by->getName()?></a></p>
         <?php } ?>
 
     </div>

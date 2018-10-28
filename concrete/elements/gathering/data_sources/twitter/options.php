@@ -5,8 +5,8 @@ if (is_object($configuration)) {
 }
 ?>
 <div class="control-group">
-	<label class="control-label"><?php echo t('Twitter User')?></label>
+	<label class="control-label"><?=t('Twitter User')?></label>
 	<div class="controls">
-		<?php echo $form->text($source->optionFormKey('twitterUsername'), $twitterUsername)?>
+		<?=$form->text($source->optionFormKey('twitterUsername'), $twitterUsername)?>
 	</div>
 </div>

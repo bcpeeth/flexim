@@ -25,7 +25,7 @@ echo Core::make('helper/concrete/ui')->tabs(array(
         <?php echo $form->text('videoURL', $videoURL, array('required' => 'required'));?>
     </div>
     <div class="form-group">
-        <label class="control-label"><?php echo t('Size')?></label>
+        <label class="control-label"><?=t('Size')?></label>
         <div class="radio">
             <label>
                 <?php echo $form->radio('sizing', '16:9', $sizing); ?>
@@ -69,10 +69,10 @@ echo Core::make('helper/concrete/ui')->tabs(array(
             <div class="col-xs-6">
                 <div class="form-group">
                     <div class="checkbox">
-                    <label>
-                        <?php echo $form->checkbox('showinfo', 1, (isset($showinfo) ? $showinfo : true)); ?>
-                        <?php echo t("Show video information")?>
-                    </label>
+                        <label>
+                            <?php echo $form->checkbox('showinfo', 1, (isset($showinfo) ? $showinfo : true)); ?>
+                            <?php echo t("Show video information")?>
+                        </label>
                     </div>
                     <div class="checkbox">
                         <label>
@@ -128,6 +128,15 @@ echo Core::make('helper/concrete/ui')->tabs(array(
                     <?php echo $form->checkbox('loopEnd', 1, $loopEnd); ?>
                     <?php echo t("Loop video") ?>
                 </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <?php echo $form->checkbox('startTimeEnabled', 1, $startTimeEnabled); ?>
+                    <?php echo t("Start video at:") ?>
+                </label>
+            </div>
+            <div class="form-group">
+                <?php echo $form->text('startTime', $startTime);?>
             </div>
 
         </div>

@@ -5,8 +5,8 @@ $pk = PermissionKey::getByHandle('customize_themes');
 
 
 <section id="ccm-panel-page-design-customize">
-    <form data-form="panel-page-design-customize" target="ccm-page-preview-frame" method="post" action="<?php echo $controller->action("preview", $theme->getThemeID())?>">
-    <header><a href="" data-panel-navigation="back" class="ccm-panel-back"><span class="fa fa-chevron-left"></span></a> <a href="" data-panel-navigation="back"><?php echo t('Customize Theme')?></a></header>
+    <form data-form="panel-page-design-customize" target="ccm-page-preview-frame" method="post" action="<?=$controller->action("preview", $theme->getThemeID())?>">
+    <header><a href="" data-panel-navigation="back" class="ccm-panel-back"><span class="fa fa-chevron-left"></span></a> <a href="" data-panel-navigation="back"><?=t('Customize Theme')?></a></header>
 
     <?php if (count($presets) > 1) {
     ?>
@@ -14,7 +14,7 @@ $pk = PermissionKey::getByHandle('customize_themes');
     <div class="ccm-panel-content-inner">
 
     <div class="list-group" data-panel-menu-id="page-design-presets"  data-panel-menu="collapsible-list-group">
-        <div class="list-group-item list-group-item-header"><?php echo t('Preset')?></div>
+        <div class="list-group-item list-group-item-header"><?=t('Preset')?></div>
         <?php
         $i = 0;
     foreach ($presets as $preset) {
@@ -23,11 +23,11 @@ $pk = PermissionKey::getByHandle('customize_themes');
             $selected = true;
         }
         ?>
-            <label class="list-group-item clearfix"><input type="radio" class="ccm-flat-radio" value="<?php echo $preset->getPresetHandle()?>" name="handle" <?php if ($selected) {
+            <label class="list-group-item clearfix"><input type="radio" class="ccm-flat-radio" value="<?=$preset->getPresetHandle()?>" name="handle" <?php if ($selected) {
     ?>checked="checked"<?php 
 }
-        ?> /> <?php echo $preset->getPresetDisplayName()?>
-                <?php echo $preset->getPresetIconHTML()?>
+        ?> /> <?=$preset->getPresetDisplayName()?>
+                <?=$preset->getPresetIconHTML()?>
             </label>
             <?php if ($i == 0) {
     ?>
@@ -41,7 +41,7 @@ $pk = PermissionKey::getByHandle('customize_themes');
 
             </div>
 
-        <a class="list-group-item list-group-item-collapse" href="#"><span><?php echo t('Expand')?></span></a>
+        <a class="list-group-item list-group-item-collapse" href="#"><span><?=t('Expand')?></span></a>
     </div>
 
     </div>
@@ -55,7 +55,7 @@ $pk = PermissionKey::getByHandle('customize_themes');
     foreach ($valueList->getValues() as $value) {
         if ($value instanceof \Concrete\Core\StyleCustomizer\Style\Value\BasicValue) {
             ?>
-           <input type="hidden" name="<?php echo $value->getVariable()?>" value="<?php echo $value->getValue()?>" />
+           <input type="hidden" name="<?=$value->getVariable()?>" value="<?=$value->getValue()?>" />
         <?php 
         }
     }
@@ -64,15 +64,15 @@ $pk = PermissionKey::getByHandle('customize_themes');
     <?php foreach ($styleSets as $set) {
     ?>
         <div class="ccm-panel-page-design-customize-style-set">
-            <h5 class="ccm-panel-page-design-customize-style-set-collapse"><?php echo $set->getDisplayName()?></h5>
+            <h5 class="ccm-panel-page-design-customize-style-set-collapse"><?=$set->getDisplayName()?></h5>
             <ul class="list-unstyled">
             <?php foreach ($set->getStyles() as $style) {
     ?>
-                <li><?php echo $style->getDisplayName()?>
+                <li><?=$style->getDisplayName()?>
                 <?php
                 $value = $style->getValueFromList($valueList);
     ?>
-                <?php echo $style->render($value)?>
+                <?=$style->render($value)?>
                 </li>
             <?php 
 }
@@ -82,11 +82,11 @@ $pk = PermissionKey::getByHandle('customize_themes');
     <?php 
 } ?>
     <div class="ccm-panel-page-design-customize-style-set">
-        <h5 class="ccm-panel-page-design-customize-style-set-collapse"><?php echo t('Advanced')?></h5>
+        <h5 class="ccm-panel-page-design-customize-style-set-collapse"><?=t('Advanced')?></h5>
         <ul class="list-unstyled">
             <li>
-                <?php echo t('Custom CSS')?>
-                <input type="hidden" name="sccRecordID" value="<?php echo $sccRecordID?>" />
+                <?=t('Custom CSS')?>
+                <input type="hidden" name="sccRecordID" value="<?=$sccRecordID?>" />
                 <span class="ccm-style-customizer-display-swatch-wrapper" data-custom-css-selector="custom"><span class="ccm-style-customizer-display-swatch"><i class="fa fa-cog"></i></span></span>
             </li>
         </ul>
@@ -95,7 +95,7 @@ $pk = PermissionKey::getByHandle('customize_themes');
 
     <div style="text-align: center">
         <br/>
-       <button class="btn-danger btn" data-panel-detail-action="reset"><?php echo t('Reset Customizations')?></button>
+       <button class="btn-danger btn" data-panel-detail-action="reset"><?=t('Reset Customizations')?></button>
         <br/><br/>
    </div>
 
@@ -103,7 +103,7 @@ $pk = PermissionKey::getByHandle('customize_themes');
 </section>
 
 <div class="ccm-panel-detail-form-actions">
-    <button class="pull-right btn btn-success" type="button" data-panel-detail-action="customize-design-submit"><?php echo t('Save Changes')?></button>
+    <button class="pull-right btn btn-success" type="button" data-panel-detail-action="customize-design-submit"><?=t('Save Changes')?></button>
 </div>
 
 
@@ -116,7 +116,7 @@ $pk = PermissionKey::getByHandle('customize_themes');
                 panel = ConcretePanelManager.getByIdentifier('page');
 
             $form.prop('target', null);
-            $form.attr('action', '<?php echo $controller->action("apply_to_page", $theme->getThemeID())?>');
+            $form.attr('action', '<?=$controller->action("apply_to_page", $theme->getThemeID())?>');
             $form.concreteAjaxForm();
             $form.submit();
         },
@@ -126,7 +126,7 @@ $pk = PermissionKey::getByHandle('customize_themes');
                 panel = ConcretePanelManager.getByIdentifier('page');
 
             $form.prop('target', null);
-            $form.attr('action', '<?php echo $controller->action("apply_to_site", $theme->getThemeID())?>');
+            $form.attr('action', '<?=$controller->action("apply_to_site", $theme->getThemeID())?>');
             $form.concreteAjaxForm();
             $form.submit();
         },
@@ -136,7 +136,7 @@ $pk = PermissionKey::getByHandle('customize_themes');
                 panel = ConcretePanelManager.getByIdentifier('page');
 
             $form.prop('target', null);
-            $form.attr('action', '<?php echo $controller->action("reset_page_customizations")?>');
+            $form.attr('action', '<?=$controller->action("reset_page_customizations")?>');
             $form.concreteAjaxForm();
             $form.submit();
         },
@@ -146,7 +146,7 @@ $pk = PermissionKey::getByHandle('customize_themes');
                 panel = ConcretePanelManager.getByIdentifier('page');
 
             $form.prop('target', null);
-            $form.attr('action', '<?php echo $controller->action("reset_site_customizations", $theme->getThemeID())?>');
+            $form.attr('action', '<?=$controller->action("reset_site_customizations", $theme->getThemeID())?>');
             $form.concreteAjaxForm();
             $form.submit();
         }
@@ -159,9 +159,9 @@ $pk = PermissionKey::getByHandle('customize_themes');
         $('button[data-panel-detail-action=customize-design-submit]').on('click', function() {
             <?php if ($pk->can()) {
     ?>
-                panel.showPanelConfirmationMessage('page-design-customize-apply', "<?php echo t('Apply this design to just this page, or your entire site?')?>", [
-                    {'class': 'btn btn-primary pull-right', 'onclick': 'ConcretePageDesignPanel.applyDesignToSite()', 'style': 'margin-left: 10px', 'text': '<?php echo t("Entire Site")?>'},
-                    {'class': 'btn btn-default pull-right', 'onclick': 'ConcretePageDesignPanel.applyDesignToPage()', 'text': '<?php echo t("This Page")?>'}
+                panel.showPanelConfirmationMessage('page-design-customize-apply', "<?=t('Apply this design to just this page, or your entire site?')?>", [
+                    {'class': 'btn btn-primary pull-right', 'onclick': 'ConcretePageDesignPanel.applyDesignToSite()', 'style': 'margin-left: 10px', 'text': '<?=t("Entire Site")?>'},
+                    {'class': 'btn btn-default pull-right', 'onclick': 'ConcretePageDesignPanel.applyDesignToPage()', 'text': '<?=t("This Page")?>'}
                 ]);
             <?php 
 } else {
@@ -176,7 +176,7 @@ $pk = PermissionKey::getByHandle('customize_themes');
             if (selectedpreset.length) {
                 var panel = ConcretePanelManager.getByIdentifier('page');
                 var $panel = $('#' + panel.getDOMID());
-                var url = "<?php echo URL::to('/ccm/system/panels/page/design/customize', $theme->getThemeID())?>?cID=<?php echo $c->getCollectionID()?>";
+                var url = "<?=URL::to('/ccm/system/panels/page/design/customize', $theme->getThemeID())?>?cID=<?=$c->getCollectionID()?>";
                 var content = $(this).closest('div.ccm-panel-content');
                 $.concreteAjax({
                     url: url,
@@ -229,8 +229,8 @@ $pk = PermissionKey::getByHandle('customize_themes');
         $('span[data-custom-css-selector=custom]').on('click', function() {
             var sccRecordID = $('form[data-form=panel-page-design-customize] input[name=sccRecordID]').val();
             jQuery.fn.dialog.open({
-                title: '<?php echo t('Custom CSS')?>',
-                href: '<?php echo URL::to('/ccm/system/dialogs/page/design/css')?>?cID=<?php echo $c->getCollectionID()?>&sccRecordID=' + sccRecordID,
+                title: '<?=t('Custom CSS')?>',
+                href: '<?=URL::to('/ccm/system/dialogs/page/design/css')?>?cID=<?=$c->getCollectionID()?>&sccRecordID=' + sccRecordID,
                 modal: false,
                 width: 640,
                 height: 500
@@ -240,9 +240,9 @@ $pk = PermissionKey::getByHandle('customize_themes');
         $('button[data-panel-detail-action=reset]').unbind().on('click', function() {
             <?php if ($pk->can()) {
     ?>
-                panel.showPanelConfirmationMessage('page-design-customize-apply', "<?php echo t('Reset the theme customizations for just this page, or your entire site?')?>", [
-                    {'class': 'btn btn-sm btn-primary pull-right', 'onclick': 'ConcretePageDesignPanel.resetSiteDesign()', 'style': 'margin-left: 10px', 'text': '<?php echo t("Entire Site")?>'},
-                    {'class': 'btn btn-sm btn-default pull-right', 'onclick': 'ConcretePageDesignPanel.resetPageDesign()', 'text': '<?php echo t("This Page")?>'}
+                panel.showPanelConfirmationMessage('page-design-customize-apply', "<?=t('Reset the theme customizations for just this page, or your entire site?')?>", [
+                    {'class': 'btn btn-sm btn-primary pull-right', 'onclick': 'ConcretePageDesignPanel.resetSiteDesign()', 'style': 'margin-left: 10px', 'text': '<?=t("Entire Site")?>'},
+                    {'class': 'btn btn-sm btn-default pull-right', 'onclick': 'ConcretePageDesignPanel.resetPageDesign()', 'text': '<?=t("This Page")?>'}
                 ]);
             <?php 
 } else {

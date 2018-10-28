@@ -17,27 +17,27 @@ if (!isset($width)) {
 ?>
 
 <fieldset>
-    <legend><?php echo t('Video Files'); ?></legend>
+    <legend><?= t('Video Files'); ?></legend>
     <div class="form-group">
-        <label class="control-label"><?php echo t('Video Placeholder Image (Optional)'); ?></label>
-        <?php echo $al->image('ccm-b-poster-file', 'posterfID', t('Choose Video Placeholder Image'), $poster); ?>
+        <label class="control-label"><?= t('Video Placeholder Image (Optional)'); ?></label>
+        <?= $al->image('ccm-b-poster-file', 'posterfID', t('Choose Video Placeholder Image'), $poster); ?>
     </div>
     <div class="form-group">
-        <label class="control-label"><?php echo t('WebM'); ?></label>
-        <?php echo $al->video('ccm-b-webm-file', 'webmfID', t('Choose WebM Video File'), $webm); ?>
+        <label class="control-label"><?= t('WebM'); ?></label>
+        <?= $al->video('ccm-b-webm-file', 'webmfID', t('Choose WebM Video File'), $webm); ?>
     </div>
     <div class="form-group">
-        <label class="control-label"><?php echo t('Ogg'); ?></label>
-        <?php echo $al->video('ccm-b-ogg-file', 'oggfID', t('Choose Ogg Video File'), $ogg); ?>
+        <label class="control-label"><?= t('Ogg'); ?></label>
+        <?= $al->video('ccm-b-ogg-file', 'oggfID', t('Choose Ogg Video File'), $ogg); ?>
     </div>
     <div class="form-group">
-        <label class="control-label"><?php echo t('MP4'); ?></label>
-        <?php echo $al->video('ccm-b-mp4-file', 'mp4fID', t('Choose MP4 Video File'), $mp4); ?>
+        <label class="control-label"><?= t('MP4'); ?></label>
+        <?= $al->video('ccm-b-mp4-file', 'mp4fID', t('Choose MP4 Video File'), $mp4); ?>
     </div>
 </fieldset>
 
 <fieldset>
-    <legend><?php echo t('Video Size'); ?></legend>
+    <legend><?= t('Video Size'); ?></legend>
     <div class="form-group">
         <div class="radio">
             <label>
@@ -56,10 +56,10 @@ if (!isset($width)) {
         </div>
     </div>
     <div id="video-width" class="form-group" style="display: none;">
-        <?php echo $form->label('width', t('Max Width')); ?>
+        <?= $form->label('width', t('Max Width')); ?>
         <div class="input-group">
-            <?php echo $form->number('width', $width, array('min' => 1)); ?>
-            <div class="input-group-addon"><?php echo t('px'); ?></div>
+            <?= $form->number('width', $width ?: '', array('min' => 1)); ?>
+            <div class="input-group-addon"><?= t('px'); ?></div>
         </div>
     </div>
 </fieldset>

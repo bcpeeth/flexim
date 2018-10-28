@@ -3,14 +3,14 @@
 <div class="row">
 <div class="span10 offset1">
 
-<div class="page-header"><h1><?php echo t('Members')?></div>
+<div class="page-header"><h1><?=t('Members')?></div>
 
 <div class="navbar">
 <div class="navbar-inner">
 
-<form method="get" action="<?php echo $view->action('search_members')?>" class="navbar-form">
-	<input name="keywords" type="text" value="<?php echo $keywords?>" size="20" class="" placeholder="<?php echo t('Search')?>" />
-	<input name="submit" type="submit" value="<?php echo t('Search')?>" class="btn btn-default" />
+<form method="get" action="<?=$view->action('search_members')?>" class="navbar-form">
+	<input name="keywords" type="text" value="<?=$keywords?>" size="20" class="" placeholder="<?=t('Search')?>" />
+	<input name="submit" type="submit" value="<?=t('Search')?>" class="btn btn-default" />
 </form>
 
 </div>
@@ -19,7 +19,7 @@
 <?php if ($total == 0) {
     ?>
 
-		<div><?php echo t('No users found.')?></div>
+		<div><?=t('No users found.')?></div>
 
 	<?php 
 } else {
@@ -36,13 +36,13 @@
         ?>
 
 		<tr>
-			<td class="ccm-members-directory-avatar"><a href="<?php echo $user->getUserPublicProfileURL()?>"><?php echo $user->getUserAvatar()->output()?></a></td>
-			<td class="ccm-members-directory-name"><a href="<?php echo $user->getUserPublicProfileURL()?>"><?php echo ucfirst($user->getUserName())?></a></td>
+			<td class="ccm-members-directory-avatar"><a href="<?=$user->getUserPublicProfileURL()?>"><?=$user->getUserAvatar()->output()?></a></td>
+			<td class="ccm-members-directory-name"><a href="<?=$user->getUserPublicProfileURL()?>"><?=ucfirst($user->getUserName())?></a></td>
 			<?php
             foreach ($attribs as $ak) {
                 ?>
 				<td>
-					<?php echo $user->getAttribute($ak, 'displaySanitized', 'display');
+					<?=$user->getAttribute($ak, 'displaySanitized', 'display');
                 ?>
 				</td>
 			<?php 
@@ -59,7 +59,7 @@
         <?php if ($pagination->haveToPaginate()) {
     ?>
 
-            <?php echo $pagination->renderView('dashboard');
+            <?=$pagination->renderView('dashboard');
     ?>
 
         <?php 

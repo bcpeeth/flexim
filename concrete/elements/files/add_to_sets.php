@@ -6,7 +6,7 @@ $sets = FileSet::getMySets();
 
 <div class="form-group" id="ccm-file-set-search">
 	<form class="form-inline">
-		<input type="search" class="form-control" data-field="file-set-search" autocomplete="off" placeholder="<?php echo t('Filter Sets')?>" />
+		<input type="search" class="form-control" data-field="file-set-search" autocomplete="off" placeholder="<?=t('Filter Sets')?>" />
 	</form>
 </div>
 
@@ -21,7 +21,7 @@ $sets = FileSet::getMySets();
 				<label>
 				<?php echo $getCheckbox($fs);
         ?>
-				<span data-label="file-set-name"><?php echo $fs->getFileSetDisplayName()?></span>
+				<span data-label="file-set-name"><?=$fs->getFileSetDisplayName()?></span>
 				</label>
 			</div>
 			<?php
@@ -34,13 +34,13 @@ $sets = FileSet::getMySets();
 } ?>
 </div>
 
-<button type="button" class="btn-sm btn btn-default" data-action="add-file-set"><?php echo t('Add Set')?> <i class="fa fa-plus-circle"></i></button>
+<button type="button" class="btn-sm btn btn-default" data-action="add-file-set"><?=t('Add Set')?> <i class="fa fa-plus-circle"></i></button>
 
 <script type="text/template" class="ccm-template-file-set-checkbox">
 	<div class="input-group">
-		<input type="text" placeholder="<?php echo t('Set Name')?>" class="form-control" name="fsNew[]">
+		<input type="text" placeholder="<?=t('Set Name')?>" class="form-control" name="fsNew[]">
 		<div class="input-group-addon">
-			<label class="checkbox-inline" ><input type="checkbox" name="fsNewShare[]" value="1" checked /> <span class="small"><?php echo t('Public Set.')?></span></label>
+			<label class="checkbox-inline" ><input type="checkbox" name="fsNewShare[]" value="1" checked /> <span class="small"><?=t('Public Set.')?></span></label>
 			&nbsp;
 			<a href="#" class="icon-link"><i class="fa fa-minus-circle"></i></a>
 		</div>

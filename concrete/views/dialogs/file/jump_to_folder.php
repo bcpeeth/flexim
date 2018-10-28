@@ -12,10 +12,10 @@
             ajaxData: {
                 displayOnly: 'file_folder'
             },
-            treeNodeParentID: <?php echo $rootTreeNodeID?>,
+            treeNodeParentID: <?=$rootTreeNodeID?>,
             onClick : function(node) {
                 jQuery.fn.dialog.closeTop();
-                ConcreteEvent.publish('FileManagerJumpToFolder', {'node': node});
+                ConcreteEvent.publish('FileManagerJumpToFolder', {'folderID': node.key});
 
             },
         });

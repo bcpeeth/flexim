@@ -10,5 +10,5 @@ $pk->setPermissionObject($b);
 
 
 <script type="text/javascript">
-var ccm_permissionDialogURL = '<?php echo URL::to('/ccm/system/dialogs/block/permissions/detail')?>?bID=<?php echo $b->getBlockID()?>&arHandle=<?php echo urlencode($b->getAreaHandle())?>&cvID=<?php echo $c->getVersionID()?>&bID=<?php echo $b->getBlockID()?>&cID=<?php echo $c->getCollectionID()?>';
+var ccm_permissionDialogURL = '<?=URL::to('/ccm/system/dialogs/block/permissions/detail')?>?bID=<?=$b->getBlockID()?>&arHandle=<?=urlencode($b->getAreaHandle())?>&cvID=<?=$c->getVersionID()?>&bID=<?=$b->getBlockID()?>&cID=<?=$c->getCollectionID()?>';
 </script>

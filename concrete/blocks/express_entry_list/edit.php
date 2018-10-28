@@ -14,16 +14,16 @@ echo Core::make('helper/concrete/ui')->tabs(array(
 <div class="ccm-tab-content" id="ccm-tab-content-search">
 
     <div class="form-group">
-        <?php echo $form->label('exEntityID', t('Entity'))?>
-        <?php echo $form->select('exEntityID', $entities, $exEntityID, [
+        <?=$form->label('exEntityID', t('Entity'))?>
+        <?=$form->select('exEntityID', $entities, $exEntityID, [
             'data-action' => $view->action('load_entity_data')
         ]);?>
     </div>
 
     <div class="form-group">
         <div class="checkbox"><label>
-                <?php echo $form->checkbox('enableSearch', 1, $enableSearch, array('data-options-toggle' => 'search'))?>
-                <?php echo t('Enable Search')?>
+                <?=$form->checkbox('enableSearch', 1, $enableSearch, array('data-options-toggle' => 'search'))?>
+                <?=t('Enable Search')?>
             </label>
         </div>
     </div>
@@ -31,16 +31,16 @@ echo Core::make('helper/concrete/ui')->tabs(array(
     <fieldset data-options="search">
 
         <div class="form-group">
-            <label class="control-label"><?php echo t("Keyword Search")?></label>
+            <label class="control-label"><?=t("Keyword Search")?></label>
             <div class="checkbox"><label>
-                    <?php echo $form->checkbox('enableKeywordSearch', 1, $enableKeywordSearch)?>
-                    <?php echo t('Search by Keywords')?>
+                    <?=$form->checkbox('enableKeywordSearch', 1, $enableKeywordSearch)?>
+                    <?=t('Search by Keywords')?>
                 </label>
             </div>
         </div>
 
         <div class="form-group">
-            <label class="control-label"><?php echo t("Enable Searching by Attributes")?></label>
+            <label class="control-label"><?=t("Enable Searching by Attributes")?></label>
 
             <div data-container="advanced-search">
 
@@ -53,13 +53,13 @@ echo Core::make('helper/concrete/ui')->tabs(array(
 <div class="ccm-tab-content" id="ccm-tab-content-results">
 
     <div class="form-group">
-        <?php echo $form->label('displayLimit', t('Items Per Page'))?>
-        <?php echo $form->text('displayLimit', $displayLimit)?>
+        <?=$form->label('displayLimit', t('Items Per Page'))?>
+        <?=$form->text('displayLimit', $displayLimit)?>
     </div>
 
     <div class="form-group">
-        <label class="control-label" for="detailPage"><?php echo t("Link to Detail Page")?></label>
-        <?php echo Core::make('helper/form/page_selector')->selectPage('detailPage', $detailPage)?>
+        <label class="control-label" for="detailPage"><?=t("Link to Detail Page")?></label>
+        <?=Core::make('helper/form/page_selector')->selectPage('detailPage', $detailPage)?>
 
         <div data-container="linked-attributes">
 
@@ -71,7 +71,7 @@ echo Core::make('helper/concrete/ui')->tabs(array(
         <?php if ($customizeElement) { ?>
             <?php $customizeElement->render() ?>
         <?php } else {  ?>
-            <?php echo t('You must choose an entity before you can customize its search results.') ?>
+            <?=t('You must choose an entity before you can customize its search results.') ?>
         <?php } ?>
     </div>
 </div>
@@ -80,55 +80,55 @@ echo Core::make('helper/concrete/ui')->tabs(array(
 
     <fieldset>
         <div class="form-group">
-            <?php echo $form->label('tableName', t('Name'))?>
-            <?php echo $form->text('tableName', $tableName, array('maxlength' => '128'))?>
+            <?=$form->label('tableName', t('Name'))?>
+            <?=$form->text('tableName', $tableName, array('maxlength' => '128'))?>
         </div>
         <div class="form-group">
-            <?php echo $form->label('tableDescription', t('Description'))?>
-            <?php echo $form->text('tableDescription', $tableDescription, array('maxlength' => '128'))?>
+            <?=$form->label('tableDescription', t('Description'))?>
+            <?=$form->text('tableDescription', $tableDescription, array('maxlength' => '128'))?>
         </div>
     </fieldset>
 
     <fieldset>
-        <legend><?php echo t('Design')?></legend>
+        <legend><?=t('Design')?></legend>
         <div class="form-group">
-            <?php echo $form->label('headerBackgroundColor', t('Header Background'))?>
+            <?=$form->label('headerBackgroundColor', t('Header Background'))?>
             <div>
-                <?php echo $color->output('headerBackgroundColor', $headerBackgroundColor)?>
+                <?=$color->output('headerBackgroundColor', $headerBackgroundColor)?>
             </div>
         </div>
         <div class="form-group">
-            <?php echo $form->label('headerBackgroundColorActiveSort', t('Header Background (Active Sort)'))?>
+            <?=$form->label('headerBackgroundColorActiveSort', t('Header Background (Active Sort)'))?>
             <div>
-                <?php echo $color->output('headerBackgroundColorActiveSort', $headerBackgroundColorActiveSort)?>
+                <?=$color->output('headerBackgroundColorActiveSort', $headerBackgroundColorActiveSort)?>
             </div>
         </div>
         <div class="form-group">
-            <?php echo $form->label('headerTextColor', t('Header Text Color'))?>
+            <?=$form->label('headerTextColor', t('Header Text Color'))?>
             <div>
-                <?php echo $color->output('headerTextColor', $headerTextColor)?>
+                <?=$color->output('headerTextColor', $headerTextColor)?>
             </div>
         </div>
         <div class="form-group">
-            <?php echo $form->label('', t('Table Striping'))?>
+            <?=$form->label('', t('Table Striping'))?>
             <div class="radio">
                 <label>
-                    <?php echo $form->radio('tableStriped', 0, $tableStriped)?>
-                    <?php echo t('Off (all rows the same color)')?>
+                    <?=$form->radio('tableStriped', 0, $tableStriped)?>
+                    <?=t('Off (all rows the same color)')?>
                 </label>
             </div>
             <div class="radio">
                 <label>
-                    <?php echo $form->radio('tableStriped', 1, $tableStriped)?>
-                    <?php echo t('On (change color of alternate rows)')?>
+                    <?=$form->radio('tableStriped', 1, $tableStriped)?>
+                    <?=t('On (change color of alternate rows)')?>
                 </label>
             </div>
         </div>
 
         <div class="form-group" data-options="table-striped" style="margin-bottom: 150px;">
-            <?php echo $form->label('rowBackgroundColorAlternate', t('Alternate Row Background Color'))?>
+            <?=$form->label('rowBackgroundColorAlternate', t('Alternate Row Background Color'))?>
             <div>
-                <?php echo $color->output('rowBackgroundColorAlternate', $rowBackgroundColorAlternate)?>
+                <?=$color->output('rowBackgroundColorAlternate', $rowBackgroundColorAlternate)?>
             </div>
         </div>
     </fieldset>
@@ -162,8 +162,8 @@ echo Core::make('helper/concrete/ui')->tabs(array(
 
 <script type="application/javascript">
     Concrete.event.publish('block.express_entry_list.open', {
-        'searchProperties': <?php echo json_encode($searchProperties)?>,
-        'searchPropertiesSelected': <?php echo json_encode($searchPropertiesSelected)?>,
-        'linkedPropertiesSelected': <?php echo json_encode($linkedPropertiesSelected)?>
+        'searchProperties': <?=json_encode($searchProperties)?>,
+        'searchPropertiesSelected': <?=json_encode($searchPropertiesSelected)?>,
+        'linkedPropertiesSelected': <?=json_encode($linkedPropertiesSelected)?>
     });
 </script>

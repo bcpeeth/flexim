@@ -10,24 +10,24 @@ $form = $app->make('helper/form');
 
 <?php if (count($included) > 0 || count($excluded) > 0) { ?>
     <?php if (count($included) > 0) { ?>
-        <h3><?php echo t('Who can edit what?')?></h3>
+        <h3><?=t('Who can edit what?')?></h3>
 
         <?php foreach ($included as $assignment) {
             $entity = $assignment->getAccessEntityObject();
         ?>
             <div class="clearfix">
-            	<label class="control-label"><?php echo $entity->getAccessEntityLabel()?></label>
+            	<label class="control-label"><?=$entity->getAccessEntityLabel()?></label>
             	<div class="input">
-            	    <?php echo $form->select('propertiesIncluded[' . $entity->getAccessEntityID() . ']', array('A' => t('All Attributes'), 'C' => t('Custom')), $assignment->getAttributesAllowedPermission())?>
+            	    <?=$form->select('propertiesIncluded[' . $entity->getAccessEntityID() . ']', array('A' => t('All Attributes'), 'C' => t('Custom')), $assignment->getAttributesAllowedPermission())?>
                     <br>
                 	<ul class="attribute-list inputs-list" <?php if ($assignment->getAttributesAllowedPermission() != 'C') { ?>style="display: none"<?php } ?>>
             		<?php foreach ($attributes as $ak) { ?>
             			<li>
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" name="akIDInclude[<?php echo $entity->getAccessEntityID()?>][]" value="<?php echo $ak->getAttributeKeyID()?>" <?php
+                                    <input type="checkbox" name="akIDInclude[<?=$entity->getAccessEntityID()?>][]" value="<?=$ak->getAttributeKeyID()?>" <?php
                                     if ($assignment->getAttributesAllowedPermission() == 'A' || in_array($ak->getAttributeKeyID(), $assignment->getAttributesAllowedArray())) { ?> checked="checked" <?php } ?>>
-                                    <span><?php echo $ak->getAttributeKeyDisplayName()?></span>
+                                    <span><?=$ak->getAttributeKeyDisplayName()?></span>
                                 </label>
                             </div>
                         </li>
@@ -40,48 +40,48 @@ $form = $app->make('helper/form');
                 		<li>
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" name="allowEditUName[<?php echo $entity->getAccessEntityID()?>]" value="1" <?php if ($assignment->allowEditUserName()) { ?>checked="checked" <?php } ?>>
-                                    <span><?php echo t('Username')?></span>
+                                    <input type="checkbox" name="allowEditUName[<?=$entity->getAccessEntityID()?>]" value="1" <?php if ($assignment->allowEditUserName()) { ?>checked="checked" <?php } ?>>
+                                    <span><?=t('Username')?></span>
                                 </label>
                             </div>
                         </li>
                 		<li>
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" name="allowEditUEmail[<?php echo $entity->getAccessEntityID()?>]" value="1" <?php if ($assignment->allowEditEmail()) { ?>checked="checked" <?php } ?>>
-                                    <span><?php echo t('Email Address')?></span>
+                                    <input type="checkbox" name="allowEditUEmail[<?=$entity->getAccessEntityID()?>]" value="1" <?php if ($assignment->allowEditEmail()) { ?>checked="checked" <?php } ?>>
+                                    <span><?=t('Email Address')?></span>
                                 </label>
                             </div>
                         </li>
                 		<li>
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" name="allowEditUPassword[<?php echo $entity->getAccessEntityID()?>]" value="1" <?php if ($assignment->allowEditPassword()) { ?>checked="checked" <?php } ?>>
-                                    <span><?php echo t('Password')?></span>
+                                    <input type="checkbox" name="allowEditUPassword[<?=$entity->getAccessEntityID()?>]" value="1" <?php if ($assignment->allowEditPassword()) { ?>checked="checked" <?php } ?>>
+                                    <span><?=t('Password')?></span>
                                 </label>
                             </div>
                         </li>
                 		<li>
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" name="allowEditUAvatar[<?php echo $entity->getAccessEntityID()?>]" value="1" <?php if ($assignment->allowEditAvatar()) { ?>checked="checked" <?php } ?>>
-                                    <span><?php echo t('Avatar')?></span>
+                                    <input type="checkbox" name="allowEditUAvatar[<?=$entity->getAccessEntityID()?>]" value="1" <?php if ($assignment->allowEditAvatar()) { ?>checked="checked" <?php } ?>>
+                                    <span><?=t('Avatar')?></span>
                                 </label>
                             </div>
                         </li>
                 		<li>
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" name="allowEditUTimezone[<?php echo $entity->getAccessEntityID()?>]" value="1" <?php if ($assignment->allowEditTimezone()) { ?>checked="checked" <?php } ?>>
-                                    <span><?php echo t('Timezone')?></span>
+                                    <input type="checkbox" name="allowEditUTimezone[<?=$entity->getAccessEntityID()?>]" value="1" <?php if ($assignment->allowEditTimezone()) { ?>checked="checked" <?php } ?>>
+                                    <span><?=t('Timezone')?></span>
                                 </label>
                             </div>
                         </li>
                 		<li>
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" name="allowEditUDefaultLanguage[<?php echo $entity->getAccessEntityID()?>]" value="1" <?php if ($assignment->allowEditDefaultLanguage()) { ?>checked="checked" <?php } ?>>
-                                    <span><?php echo t('Default Language')?></span>
+                                    <input type="checkbox" name="allowEditUDefaultLanguage[<?=$entity->getAccessEntityID()?>]" value="1" <?php if ($assignment->allowEditDefaultLanguage()) { ?>checked="checked" <?php } ?>>
+                                    <span><?=t('Default Language')?></span>
                                 </label>
                             </div>
                         </li>
@@ -94,23 +94,23 @@ $form = $app->make('helper/form');
     ?>
 
     <?php if (count($excluded) > 0) { ?>
-        <h3><?php echo t('Who can\'t edit what?')?></h3>
+        <h3><?=t('Who can\'t edit what?')?></h3>
         <?php foreach ($excluded as $assignment) {
             $entity = $assignment->getAccessEntityObject();
         ?>
             <div class="clearfix">
-            	<label class="control-label"><?php echo $entity->getAccessEntityLabel()?></label>
+            	<label class="control-label"><?=$entity->getAccessEntityLabel()?></label>
             	<div class="input">
-                	<?php echo $form->select('propertiesExcluded[' . $entity->getAccessEntityID() . ']', array('N' => t('No Attributes'), 'C' => t('Custom')), $assignment->getAttributesAllowedPermission())?>
+                	<?=$form->select('propertiesExcluded[' . $entity->getAccessEntityID() . ']', array('N' => t('No Attributes'), 'C' => t('Custom')), $assignment->getAttributesAllowedPermission())?>
                     <br>
                 	<ul class="attribute-list inputs-list" <?php if ($assignment->getAttributesAllowedPermission() != 'C') { ?>style="display: none"<?php } ?>>
                 		<?php foreach ($attributes as $ak) { ?>
                 			<li>
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" name="akIDExclude[<?php echo $entity->getAccessEntityID()?>][]" value="<?php echo $ak->getAttributeKeyID()?>" <?php
+                                        <input type="checkbox" name="akIDExclude[<?=$entity->getAccessEntityID()?>][]" value="<?=$ak->getAttributeKeyID()?>" <?php
                                         if (in_array($ak->getAttributeKeyID(), $assignment->getAttributesAllowedArray())) { ?> checked="checked" <?php } ?>>
-                                        <span><?php echo $ak->getAttributeKeyDisplayName()?></span>
+                                        <span><?=$ak->getAttributeKeyDisplayName()?></span>
                                     </label>
                                 </div>
                             </li>
@@ -123,48 +123,48 @@ $form = $app->make('helper/form');
                 		<li>
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" name="allowEditUNameExcluded[<?php echo $entity->getAccessEntityID()?>]" value="1" <?php if ($assignment->allowEditUserName()) { ?>checked="checked" <?php } ?>>
-                                    <span><?php echo t('Username')?></span>
+                                    <input type="checkbox" name="allowEditUNameExcluded[<?=$entity->getAccessEntityID()?>]" value="1" <?php if ($assignment->allowEditUserName()) { ?>checked="checked" <?php } ?>>
+                                    <span><?=t('Username')?></span>
                                 </label>
                             </div>
                         </li>
                 		<li>
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" name="allowEditUEmailExcluded[<?php echo $entity->getAccessEntityID()?>]" value="1" <?php if ($assignment->allowEditEmail()) { ?>checked="checked" <?php } ?>>
-                                    <span><?php echo t('Email Address')?></span>
+                                    <input type="checkbox" name="allowEditUEmailExcluded[<?=$entity->getAccessEntityID()?>]" value="1" <?php if ($assignment->allowEditEmail()) { ?>checked="checked" <?php } ?>>
+                                    <span><?=t('Email Address')?></span>
                                 </label>
                             </div>
                         </li>
                 		<li>
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" name="allowEditUPasswordExcluded[<?php echo $entity->getAccessEntityID()?>]" value="1" <?php if ($assignment->allowEditPassword()) { ?>checked="checked" <?php } ?>>
-                                    <span><?php echo t('Password')?></span>
+                                    <input type="checkbox" name="allowEditUPasswordExcluded[<?=$entity->getAccessEntityID()?>]" value="1" <?php if ($assignment->allowEditPassword()) { ?>checked="checked" <?php } ?>>
+                                    <span><?=t('Password')?></span>
                                 </label>
                             </div>
                         </li>
                 		<li>
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" name="allowEditUAvatarExcluded[<?php echo $entity->getAccessEntityID()?>]" value="1" <?php if ($assignment->allowEditAvatar()) { ?>checked="checked" <?php } ?>>
-                                    <span><?php echo t('Avatar')?></span>
+                                    <input type="checkbox" name="allowEditUAvatarExcluded[<?=$entity->getAccessEntityID()?>]" value="1" <?php if ($assignment->allowEditAvatar()) { ?>checked="checked" <?php } ?>>
+                                    <span><?=t('Avatar')?></span>
                                 </label>
                             </div>
                         </li>
                 		<li>
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" name="allowEditUTimezoneExcluded[<?php echo $entity->getAccessEntityID()?>]" value="1" <?php if ($assignment->allowEditTimezone()) { ?>checked="checked" <?php } ?>>
-                                    <span><?php echo t('Timezone')?></span>
+                                    <input type="checkbox" name="allowEditUTimezoneExcluded[<?=$entity->getAccessEntityID()?>]" value="1" <?php if ($assignment->allowEditTimezone()) { ?>checked="checked" <?php } ?>>
+                                    <span><?=t('Timezone')?></span>
                                 </label>
                             </div>
                         </li>
                 		<li>
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" name="allowEditUDefaultLanguageExcluded[<?php echo $entity->getAccessEntityID()?>]" value="1" <?php if ($assignment->allowEditDefaultLanguage()) { ?>checked="checked" <?php } ?>>
-                                    <span><?php echo t('Default Language')?></span>
+                                    <input type="checkbox" name="allowEditUDefaultLanguageExcluded[<?=$entity->getAccessEntityID()?>]" value="1" <?php if ($assignment->allowEditDefaultLanguage()) { ?>checked="checked" <?php } ?>>
+                                    <span><?=t('Default Language')?></span>
                                 </label>
                             </div>
                         </li>
@@ -178,7 +178,7 @@ $form = $app->make('helper/form');
 
 <?php
 } else { ?>
-	<p><?php echo t('No users or groups selected.')?></p>
+	<p><?=t('No users or groups selected.')?></p>
 <?php
 }
 ?>
