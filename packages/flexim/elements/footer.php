@@ -1,7 +1,7 @@
     </div>
   </div>
 
-<section class="footer bg-red">
+<section class="footer bg-blue">
   <div class="grid__container padding--top-2-steps padding--bottom-2-steps">
   </div>
 

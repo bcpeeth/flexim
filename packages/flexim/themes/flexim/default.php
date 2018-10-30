@@ -1,36 +1,39 @@
 <?php Loader::packageElement('header', 'flexim'); ?>
 
 <section class="hero">
-  <img class="path" src="<?php echo $view->getThemePath(); ?>/assets/images/hero.jpg">
+    <img class="path" src="<?php echo $view->getThemePath(); ?>/assets/images/hero.jpg">
 </section>
 
-<section class="intro padding--top-3-steps padding--bottom-3-steps">
-  <div class="grid__container">
+<section class="intro">
+    <div class="grid__container padding--top-3-steps padding--bottom-3-steps ">
 
-    <div class="grid__col--6 grid__col--sm-12">
+        <div class="grid__col--6 grid__col--sm-12">
+            <div class="intro-text">
+                <!-- <?php 
+                    $a = new Area('Oprichting');
+                    $a->display();
+                ?> -->
 
-    <!-- <?php 
-      $a = new Area('Oprichting');
-      $a->display();
-    ?> -->
+                <h3 class="padding--bottom-step">Oprichting</h3>
+                <p>De Flexim Foundation is opgericht op 3 juli 2018 in Dordrecht op initiatief van een aantal medewerkers van Flexim Netherlands.
+                <br />
+                <br />
+                De Flexim Foundation zet zich in voor diverse kwetsbare groepen binnen en buiten de Nederlandse samenleving. Deze kwetsbare groepen worden geholpen om hun levenscondities te verbeteren en toekomstperspectief te vergroten.
+                </p>
+            </div>
+        </div>
 
-      <h3 class="padding--bottom-step">Oprichting</h3>
-      <p>De Flexim Foundation is opgericht op … in Dordrecht op initiatief van een aantal medewerkers van Flexim Netherlands.
-      <br />
-      <br />
-      De Flexim Foundation zet zich in voor diverse kwetsbare groepen binnen en buiten de Nederlandse samenleving. Deze kwetsbare groepen worden geholpen om hun levenscondities te verbeteren en toekomstperspectief te vergroten. 
-      </p>
+        <div class="grid__col--6 grid__col--sm-12">
+            <div class="intro-image">
+                <!-- <?php 
+                $a = new Area('Oprichting Image');
+                $a->display();
+                ?> -->
+                <img class="" src="<?php echo $view->getThemePath(); ?>/assets/images/Tekengebied.png">
+            </div>
+        </div>
+
     </div>
-
-    <div class="grid__col--4 grid__push--2 grid__col--sm-12">
-      <!-- <?php 
-        $a = new Area('Oprichting Image');
-        $a->display();
-      ?> -->
-      <img class="" src="<?php echo $view->getThemePath(); ?>/assets/images/Tekengebied-1.png">
-    </div>
-
-  </div>
 </section>
 
 <!-- <section class="goal">
@@ -62,54 +65,54 @@
   </div>
 </section> -->
 
-<section class="goal bg-blue white clearfix">
-  <div class="grid__container padding--top-3-steps padding--bottom-3-steps text--align-center">
-    
-    <div class="grid__col--8 grid__push--2 grid__col--sm-12">
+<section class="goal bg-blue white">
+    <div class="grid__container padding--top-3-steps padding--bottom-3-steps text--align-center">
 
-    <?php 
-      $a = new Area('Doelstelling');
-      $a->display();
-    ?>
-      <!-- <h3 class="padding--bottom-step">Doelstelling</h3>
-      <p>“De Flexim Foundation stelt zich ten doel de levenscondities en toekomstmogelijkheden van kwetsbare groepen (in de Nederlandse samenleving en daarbuiten) te verbeteren. De Flexim Foundation tracht dit doel te bereiken door financiële ondersteuning van en actieve bijdrage aan de uitvoering van projecten conform het gestelde doel.”</p> -->
+        <div class="grid__col--8 grid__push--2 grid__col--sm-12">
+
+            <!-- <?php 
+                $a = new Area('Doelstelling');
+                $a->display();
+            ?> -->
+
+            <h3 class="padding--bottom-step">Doelstelling</h3>
+            <p>“De Flexim Foundation stelt zich ten doel de levenscondities en toekomstmogelijkheden van kwetsbare groepen (in de Nederlandse samenleving en daarbuiten) te verbeteren. De Flexim Foundation tracht dit doel te bereiken door financiële ondersteuning van en actieve bijdrage aan de uitvoering van projecten conform het gestelde doel.”</p>
+        </div>
     </div>
-  </div>
 </section>
 
 <section class="method">
-  <div class="grid__container padding--top-3-steps padding--bottom-3-steps">
+    <div class="grid__container padding--top-3-steps padding--bottom-3-steps">
 
+        <div class="image grid__col--6 grid__col--sm-12">
+            <!-- <?php 
+            $a = new Area('Method Image');
+            $a->display();
+            ?> -->
 
-    <div class="image grid__col--3 grid__push--2 grid__col--sm-12">
-      <?php 
-        $a = new Area('Method Image');
-        $a->display();
-      ?>
+            <img class="" src="<?php echo $view->getThemePath(); ?>/assets/images/twirl_team.png">
+        </div>
 
-      <!-- <img class="" src="<?php echo $view->getThemePath(); ?>/assets/images/twirl_team.png"> -->
+        <div class="list grid__col--6 grid__col--sm-12">
+
+            <!-- <?php 
+            $a = new Area('Bereikt Door');
+            $a->display();
+            ?> -->
+            <h3 class="padding--bottom-step">Dit wordt bereikt door</h3>
+            <div class="list-horizontal">
+                <ul>
+                    <li>financiële middelen te werven via sponsoring en giften</li>
+                    <li>continuïteit te waarborgen vanuit Flexim Netherlands</li>
+                    <li>werkgevers te motiveren om tijd/arbeid en kennis beschikbaar te stellen door vrijwilligerswerk van hun werknemers</li>
+                    <li>particulieren alsmede instanties in te zetten voor het verwerven van de middelen alsmede beschikbaar stellen van arbeid</li>
+                    <li>medewerkers en klanten van Flexim aan te sporen zich in te zetten bij de activiteiten van de foundation</li>
+                
+                </ul>
+            </div>
+        </div>
+
     </div>
-
-    <div class="grid__col--6 grid__push--1 grid__collapse grid__col--sm-12">
-
-    <?php 
-      $a = new Area('Bereikt Door');
-      $a->display();
-    ?>
-      <!-- <h3 class="padding--bottom-step">Dit wordt bereikt door</h3>
-      <div class="list-horizontal">
-        <ul>
-          <li>financiële middelen te werven via sponsoring en giften</li>
-          <li>continuïteit te waarborgen vanuit Flexim Netherlands</li>
-          <li>werkgevers te motiveren om tijd/arbeid en kennis beschikbaar te stellen door vrijwilligerswerk van hun werknemers</li>
-          <li>particulieren alsmede instanties in te zetten voor het verwerven van de middelen alsmede beschikbaar stellen van arbeid</li>
-          <li>medewerkers en klanten van Flexim aan te sporen zich in te zetten bij de activiteiten van de foundation</li>
-        
-        </ul>
-      </div> -->
-    </div>
-   
-  </div>
 </section>
 
 <section class="target bg-lightgrey">

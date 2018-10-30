@@ -1712,13 +1712,19 @@ mark, .mark {
 .intro {
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center; }
-  .intro img {
-    width: 178px;
-    height: 100%; }
+  display: flex; }
+  .intro-image {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center; }
+    .intro-image img {
+      width: 181px; }
   @media screen and (max-width: 767px) {
     .intro img {
       display: block; } }
@@ -1747,11 +1753,11 @@ mark, .mark {
   display: inline-block;
   content: '';
   border-radius: 100%;
-  margin-right: 7px;
+  margin-right: 5px;
   height: 15px;
   width: 15px;
-  background-color: #d1271b;
-  margin-top: 4px; }
+  background-color: #00A3AD;
+  margin-top: 2px; }
 
 .list-vertical ul {
   list-style-type: none; }
@@ -1766,8 +1772,7 @@ mark, .mark {
   margin-right: 7px;
   height: 25px;
   width: 25px;
-  background-color: #d1271b;
-  background-image: url(/flexim/packages/flexim/themes/flexim/dist/images/5cddb0484e0cd0f0d18c8b01a7caa2b1.png); }
+  background-color: #00A3AD; }
 
 @media screen and (max-width: 767px) {
   .list-horizontal li {
@@ -1779,11 +1784,29 @@ mark, .mark {
     height: 20px;
     width: 20px; } }
 
-.method img {
-  width: 105px;
-  height: 100%;
-  margin-top: auto;
-  margin-bottom: auto; }
+.method {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center; }
+  .method .image {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    background-color: green; }
+    .method .image img {
+      width: 105px;
+      height: 100%; }
+  .method .list {
+    background-color: yellow; }
 
 .target {
   display: -webkit-box;

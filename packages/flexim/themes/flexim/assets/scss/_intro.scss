@@ -1,11 +1,21 @@
 .intro {
   display: flex;
-  align-items: center;
+  // align-items: center;
 
-  img {
-    width: 178px;
-    height: 100%;
+  &-text {
+    // background-color: blue; 
   }
+  &-image {
+    // background-color: pink;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      width: 181px;
+    }
+  }
+
 
   @media screen and (max-width: $breakpoint-max-sm) {
     img {
