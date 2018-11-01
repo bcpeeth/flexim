@@ -25,6 +25,9 @@
                 <div class="topnav" id="myTopnav">
                     <a href="#home" class="active">De Stichting</a>
                     <a href="#news">Nieuws</a>
+                    <a class="" href="">
+                        <img class="" src="/packages/flexim/themes/flexim/assets/images/logo-white-bg.png">
+                    </a>    
                     <a href="#contact">Projecten</a>
                     <a href="#about">Informatie</a>
                     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
