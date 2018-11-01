@@ -1,0 +1,21 @@
+.method {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+  
+   .image {
+      display: flex;
+      justify-content: center;
+
+      img {
+         width: 105px;
+         height: 100%;
+      }
+   }
+
+   @media screen and (max-width: $breakpoint-max-sm) {
+      img {
+         display: none;
+      }
+   }
+}

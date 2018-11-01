@@ -1,0 +1,36 @@
+.intro {
+    display: flex;
+    // align-items: center;
+
+
+    &-image {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        img {
+            width: 181px;
+        }
+    }
+
+
+    @media screen and (max-width: $breakpoint-max-sm) {
+
+        &-image {
+            margin-top: 30px;
+            img {
+            width: 150px;
+            }
+        }
+    }
+}
+
+.goal {
+
+    @media screen and (max-width: $breakpoint-max-sm) {
+        .text--align-center {
+            text-align: left;
+        }
+    }
+
+}

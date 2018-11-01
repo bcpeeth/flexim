@@ -1,0 +1,35 @@
+.team {
+
+    .photos {
+        width: 100%;
+
+        .col-5 {
+            margin: 0 5px;
+            display: block;
+            width: 18%;
+            float: left;
+            padding: 0 6px;
+
+            h5 {
+                font-size: 15px;
+                text-align: center;
+            }
+
+            p {
+                font-size: 13px;
+            }
+        }
+    }
+
+    img {
+        display:block;
+        margin:auto;
+        width: 100px;
+    }
+
+    @media screen and (max-width: $breakpoint-max-sm) {
+        .text--align-center {
+            text-align: left;
+        }
+    }
+}

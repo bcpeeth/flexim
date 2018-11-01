@@ -7,11 +7,6 @@
   flex-grow: 1;
 }
 
-.flex__vertical-align{
-  align-items: center;
-  height: 100%;
-}
-
 .no-border{
   border: 0 none !important;
 }
@@ -20,58 +15,16 @@
   padding: 0;
 }
 
-.block{
-  display: block;
-}
-
-.inline-block{
-  display: inline-block;
-}
-
 .space-between{
   justify-content: space-between;
 }
 
-.align-right{
-  text-align: right;
-}
-
-.align-left{
-  text-align: left;
-  @media screen and (max-width: $breakpoint-max-sm) {
-  &--sm{
-    text-align: left;
-  }
-  }
-}
-
-.overlay{
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  opacity: 0;
-  transition: .2s ease;
-  &--black{
-    background: rgba(0,0,0,0.2);
-  }
-}
-
-.align-center{
-  text-align: center;
-}
-
-.text-with-bg{
-  color: $color-black;
-  display: inline;
-  background-color: $color-white;
-  padding: 0 15px;
-  line-height: 1.2;
-}
+// small: 30px, medium: 37.5px, large: 60px
 
 $directions: (top, right, bottom, left);
-$sizes: (none: 0, x-nano: 8px, nano: 10px, half-step: 12.5px, step: 25px, 2-steps: 50px, 3-steps: 75px, 4-steps: 150px);
+$sizes: (none: 0, x-nano: 8px, nano: 10px, half-step: 12.5px, step: 25px, 2-steps: 50px, 3-steps: 75px, );
+$mdSizes: (none: 0, x-nano: 8px, nano: 10px, half-step: 12.5px, step: 25px, 2-steps: 25px, 3-steps: 50px, );
+$smSizes: (none: 0, x-nano: 8px, nano: 10px, half-step: 12.5px, step: 25px, 2-steps: 30px, 3-steps: 25px, );
 
 @mixin createSizeHelperOf($property,
   $sizes: $sizes,
@@ -84,11 +37,53 @@ $sizes: (none: 0, x-nano: 8px, nano: 10px, half-step: 12.5px, step: 25px, 2-step
       }
     }
   }
+
+  @each $direction in $directions {
+    @each $sizeId, $size in $sizes {
+      @media screen and (max-width: $breakpoint-max-lg) {
+        .#{$property}--lg-#{$direction}-#{$sizeId} {
+          #{$property}-#{$direction}: $size;
+        }
+      }
+
+      @media screen and (max-width: $breakpoint-max-md) {
+        .#{$property}--md-#{$direction}-#{$sizeId} {
+          #{$property}-#{$direction}: $size;
+        }
+      }
+
+      @media screen and (max-width: $breakpoint-max-sm) {
+        .#{$property}--sm-#{$direction}-#{$sizeId} {
+          #{$property}-#{$direction}: $size;
+        }
+      }
+
+      @media screen and (max-width: $breakpoint-max-xs) {
+        .#{$property}--xs-#{$direction}-#{$sizeId} {
+          #{$property}-#{$direction}: $size;
+        }
+      }
+    }
+  }
 }
 
 @include createSizeHelperOf(padding);
 @include createSizeHelperOf(margin);
 
+@media screen and (max-width: $breakpoint-max-md) {
+  @include createSizeHelperOf(padding, $mdSizes);
+  @include createSizeHelperOf(margin, $mdSizes);
+}
+
+@media screen and (max-width: $breakpoint-max-sm) {
+  @include createSizeHelperOf(padding, $smSizes);
+  @include createSizeHelperOf(margin, $smSizes);
+}
+
+.iframe-wrapper{
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
 
 .table {
   display: table;
@@ -107,6 +102,7 @@ $sizes: (none: 0, x-nano: 8px, nano: 10px, half-step: 12.5px, step: 25px, 2-step
 }
 
 .display {
+
   &--none {
     display: none;
   }
@@ -115,8 +111,17 @@ $sizes: (none: 0, x-nano: 8px, nano: 10px, half-step: 12.5px, step: 25px, 2-step
     display: none !important;
   }
 
+  &--block {
+    display: block;
+  }
+
   &--flex {
     display: flex;
+
+    &__vertical-align{
+      align-items: center;
+      height: 100%;
+    }
   }
 
   &--inline-block {
@@ -148,6 +153,12 @@ $sizes: (none: 0, x-nano: 8px, nano: 10px, half-step: 12.5px, step: 25px, 2-step
   }
 
   @media screen and (max-width: $breakpoint-max-md) {
+
+    &--md-flex{
+      display: flex;
+      flex-wrap: wrap;
+    }
+
     &--md-none {
       display: none;
     }
@@ -155,6 +166,26 @@ $sizes: (none: 0, x-nano: 8px, nano: 10px, half-step: 12.5px, step: 25px, 2-step
     &--md-block {
       display: block;
     }
+  }
+}
+
+.width {
+  &--stretch {
+    width: 100%;
+  }
+}
+
+.text {
+  &--align-left {
+    text-align: left;
+  }
+
+  &--align-center {
+    text-align: center;
+  }
+
+  &--align-right {
+    text-align: right;
   }
 }
 
@@ -176,10 +207,37 @@ $sizes: (none: 0, x-nano: 8px, nano: 10px, half-step: 12.5px, step: 25px, 2-step
   }
 }
 
-.position--relative {
-  position: relative;
+.order{
+  @media screen and (max-width: $breakpoint-max-md) {
+    &--md--1{
+      order: -1;
+    }
+  }
+
 }
 
-.position--absolute {
-  position: absolute;
+.position {
+
+  &--relative {
+    position: relative;
+  }
+
+  &--absolute {
+    position: absolute;
+  }
 }
+
+.pull-up {
+  z-index: 10;
+}
+
+.push-down {
+  z-index: -99999;
+}
+
+.object-fit_fill { object-fit: fill }
+.object-fit_contain { object-fit: contain }
+.object-fit_cover { object-fit: cover }
+.object-fit_none { object-fit: none }
+.object-fit_scale-down { object-fit: scale-down }
+

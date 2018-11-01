@@ -16,56 +16,21 @@
 
 <body>
 
-  <div class="<?= $c->getPageWrapperClass() ?>">
-    <div class="page__wrap">
+    <div class="<?= $c->getPageWrapperClass() ?>">
+        <div class="page__wrap">
 
-      <section class="header" id="header">
-        <div class="grid__container display--flex space-between">
+        <section class="header" id="header">
+            <div class="grid__container">
 
-            <div class="logo">
-              <!-- <a class= "" href="<?php echo View::url('/'); ?>"><img class="no-margin" src="<?php echo $view->getThemePath(); ?>/assets/images/header_logo.svg"></a> -->
+                <div class="topnav" id="myTopnav">
+                    <a href="#home" class="active">De Stichting</a>
+                    <a href="#news">Nieuws</a>
+                    <a href="#contact">Projecten</a>
+                    <a href="#about">Informatie</a>
+                    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                        <i class="fa fa-bars"></i>
+                    </a>
+                </div>
+                
             </div>
-
-
-            <nav class="navbar text--align-center">
-
-            
-              <div class="display--none">
-                <input type="checkbox" name="toggle" class="navbar-toggle" id="toggle"/>
-              </div>
-
-              <label class="red display--none display--sm-block" for="toggle"><span></span></label>
-
-                <!-- <?php
-                  $a = new GlobalArea('Menu');
-                  $a->display();
-                ?> -->
-
-              <ul>
-                <li>
-                  <a class= "" href="<?php echo View::url('/'); ?>">De Stichting</a>
-                  
-                </li>
-
-                <li>
-                  <a class= "" href="<?php echo View::url('/nieuws'); ?>">Nieuws</a>
-                </li>
-
-                <li>
-                  <a class= "logo" href="<?php echo View::url('/'); ?>"><img class="" src="<?php echo $view->getThemePath(); ?>/assets/images/logo-white-bg.png"></a>    
-                </li> 
-
-                <li>
-                  <a class= "" href="<?php echo View::url('/projecten'); ?>">Projecten</a>
-                </li>         
-
-                <li>
-                  <a class= "" href="<?php echo View::url('/informatie'); ?>">Informatie</a>
-                </li>
-
-              </ul>
-
-            </nav>
-
-        </div>
-      </section>
+        </section>

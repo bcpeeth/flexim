@@ -1,0 +1,24 @@
+.target {
+    display: flex;
+    align-items: center;
+
+    &-text {
+
+        height: 100%;
+    }
+
+    &-image {
+        display: flex;
+        justify-content: center;
+        img {
+            width: 180px;
+            height: 100%;
+        }
+    }
+
+    @media screen and (max-width: $breakpoint-max-sm) {
+        img {
+            margin-top: 30px;
+        }
+    }
+}
