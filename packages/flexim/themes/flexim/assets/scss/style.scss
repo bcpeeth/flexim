@@ -40,7 +40,10 @@ $breakpoint-max-xl: 1499px;
 @import "footer";
 @import "hero";
 @import "intro";
-
+@import "method";
+@import "lists";
+@import "target";
+@import "team";
 
 .bg-yellow {
     background-color: $color-yellow;

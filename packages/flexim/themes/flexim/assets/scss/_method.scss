@@ -1,25 +1,27 @@
 .method {
-   display: flex;
-   align-items: center;
-   justify-content: center;
-  
-   &-image {
-      display: flex;
-      justify-content: center;
+    // display: flex;
+    // flex: 1 1 0;
+    // align-items: center;
+    // justify-content: center;
+    
+    &-image {
+        // background-color: violet;
+        display: flex;
+        justify-content: center;
 
-      img {
-         width: 105px;
-         height: 100%;
-      }
-   }
+        img {
+            width: 98px;
+            height: 100%;
+        }
+    }
 
-   &-text {
+    &-text {
+        // background-color: blue;
+    }
 
-   }
-
-   @media screen and (max-width: $breakpoint-max-sm) {
-      img {
-         display: none;
-      }
-   }
+    @media screen and (max-width: $breakpoint-max-sm) {
+        img {
+            display: none;
+        }
+    }
 }

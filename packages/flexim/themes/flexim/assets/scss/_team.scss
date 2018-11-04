@@ -1,0 +1,22 @@
+.team {
+    
+    &-members {
+        display: flex;
+        // flex-flow: row nowrap;
+    }
+
+    &-members-col {
+        display: flex;
+        flex-flow: column nowrap;
+        align-items: center;
+        justify-content: space-between;
+        align-self: flex-start;
+        width: 100%;
+        padding: 0 10px;
+
+    }
+
+    &-members-col-image {
+        width: 150px;
+    }
+}

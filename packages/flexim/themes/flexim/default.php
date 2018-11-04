@@ -31,8 +31,8 @@
 <section class="goal bg-blue">
     <div class="grid__container padding--top-3-steps padding--bottom-3-steps text--align-center">
         
-        <div class="goal-text white">
-            <div class="grid__col--8 grid__push--2 grid__col--sm-12">
+        <div class="grid__col--8 grid__push--2 grid__col--sm-12">
+            <div class="goal-text white">
                 <h3 class="padding--bottom-step">Doelstelling</h3>
                 <p>“De Flexim Foundation stelt zich ten doel de levenscondities en toekomstmogelijkheden van kwetsbare groepen (in de Nederlandse samenleving en daarbuiten) te verbeteren. 
                 <br />
@@ -44,18 +44,18 @@
 </section>
 
 <section class="method">
-    <div class="grid__container padding--bottom-3-steps padding--bottom-3-steps">
+    <div class="grid__container padding--top-3-steps padding--bottom-3-steps">
 
         <div class="grid__col--6 grid__col--sm-12">
             <div class="method-image">
-                <img class="" src="<?php echo $view->getThemePath(); ?>/assets/images/Tekengebied.png">
+                <img class="" src="<?php echo $view->getThemePath(); ?>/assets/images/method-image.png">
             </div>
         </div>
 
         <div class="grid__col--6 grid__col--sm-12">
             <div class="method-text">
                 <h3 class="padding--bottom-step">Dit wordt bereikt door</h3>
-                <div class="list-horizontal">
+                <div class="list-vertical">
                     <ul>
                         <li>financiële middelen te werven via sponsoring en giften</li>
                         <li>continuïteit te waarborgen vanuit Flexim Netherlands</li>
@@ -70,5 +70,110 @@
     </div>
 </section>
 
+<section class="target bg-lightgrey">
+    <div class="grid__container padding--top-3-steps padding--bottom-3-steps">
 
+        <div class="grid__col--6 grid__col--sm-12">
+            <div class="target-text">
+                <h3 class="padding--bottom-step padding--top-step">Doelgroep</h3>
+                <p>De doelgroep van de Flexim Foundation is een groep mensen in de samenleving die niet zelfredzaam is, eenzaam is, een lichamelijke of psychische handicap heeft of op of onder de armoedegrens leeft.</p>
+            </div>
+        </div>
+        <div class="grid__col--6 grid__col--sm-12">
+            <div class="target-image">
+                <img class="" src="<?php echo $view->getThemePath(); ?>/assets/images/au2.png">
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<section class="team">
+    <div class="grid__container padding--top-3-steps padding--bottom-3-steps">
+
+        <div class="grid__col--8 grid__push--2 grid__col--sm-12 padding--bottom-2-steps text--align-center">
+            <div class="team-text">
+                <h3 class="padding--bottom-step">Bestuur</h3>
+                <p>Het Dagelijks Bestuur van de stichting wordt gevormd door dhr. Q.A.J.M. Tak, voorzitter, dhr. R.G. Bruins, secretaris en mw P. Veldhuizen, penningmeester. De Bestuursleden en adviseur werken geheel onbezoldigd.
+                </p>
+            </div>
+        </div>
+
+        <div class="grid__col--12">
+            <div class="team-members text--align-center">
+
+                <div class="team-members-col">
+                    <div class="team-members-col-image">
+                        <img class="" src="<?php echo $view->getThemePath(); ?>/assets/images/picture3.png">
+                    </div>
+                    <div class="team-members-col-text">
+                        <h5>Rini Tak</h5>               
+                        <p><em>Voorzitter</em></p>
+                        <br />
+                        Vanuit zijn passie al jarenlang betrokken bij diverse stichtingen.
+                        <br />
+                    </div>
+                </div>
+
+                <div class="team-members-col">
+                    <div class="team-members-col-image">
+                        <img class="" src="<?php echo $view->getThemePath(); ?>/assets/images/picture2.png">
+                    </div>
+                    <div class="team-members-col-text">
+                        <h5>Patty van Veldhuizen</h5>
+
+                        <p><em>Penningmeester</em></p>
+                        <br />
+                        Als fiscalist altijd de focus op financieel beheer.
+                        <br /> 
+                    </div>
+                </div>                
+                
+                <div class="team-members-col">
+                    <div class="team-members-col-image">
+                        <img class="" src="<?php echo $view->getThemePath(); ?>/assets/images/picture4.png">
+                    </div>
+                    <div class="team-members-col-text">
+                        <h5>Richard Bruins</h5>
+
+                        <p><em>Secretaris</em></p>
+                        <br />
+                        Als Directeur Flexim Netherlands de initiatiefnemer en direct betrokken bij diverse goede doelen.
+                        <br />
+                    </div>
+                </div>    
+
+                <div class="team-members-col">
+                    <div class="team-members-col-image">
+                        <img class="" src="<?php echo $view->getThemePath(); ?>/assets/images/picture5.png">
+                    </div>
+                    <div class="team-members-col-text">
+                        <h5>Célie Verstelle</h5>
+
+                        <p><em>Algemeen Bestuurslid</em></p>
+                        <br />
+                        Als Legal advisor en haar juridische achtergrond gedreven de juiste support te geven.
+                        <br />
+                    </div>
+                </div>                
+
+                <div class="team-members-col">
+                    <div class="team-members-col-image">
+                        <img class="" src="<?php echo $view->getThemePath(); ?>/assets/images/picture1.png">
+                    </div>
+                    <div class="team-members-col-text">
+                        <h5>Remko Overdam</h5>
+
+                        <p><em>Algemeen Bestuurslid</em></p>
+                        <br />
+                        Als Directeur bij een ontwikkelaar als visionair betrokken bij diverse (maatschappelijke) ontwikkelingen.
+                        <br />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</section>
 <?php Loader::packageElement('footer', 'flexim'); ?>
