@@ -38,6 +38,8 @@ $breakpoint-max-xl: 1499px;
 @import "owl";
 @import "header";
 @import "footer";
+@import "hero";
+@import "intro";
 
 
 .bg-yellow {
@@ -55,6 +57,10 @@ $breakpoint-max-xl: 1499px;
 .bg-black {
     background-color: $color-black;
     z-index: -1;
+}
+
+.bg-blue {
+    background-color: $color-blue;
 }
 
 

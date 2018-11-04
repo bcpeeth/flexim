@@ -26,7 +26,7 @@
                     <a href="#home" class="active">De Stichting</a>
                     <a href="#news">Nieuws</a>
                     <a class="" href="">
-                        <img class="" src="/packages/flexim/themes/flexim/assets/images/logo-white-bg.png">
+                        <img class="logo" src="<?php echo $view->getThemePath(); ?>/assets/images/logo-white-bg.png">
                     </a>    
                     <a href="#contact">Projecten</a>
                     <a href="#about">Informatie</a>

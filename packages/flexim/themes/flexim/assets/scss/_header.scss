@@ -1,14 +1,15 @@
 .header {
-    height: 80px;
-    background-color: $color-blue;
-    color: $color-white;
 
     .topnav {
         height: 80px;
-        // background-color: violet;
         display: flex;
         justify-content: space-between;
         align-items: center;
+        margin: 0 10px;
+    }
+
+    .topnav .logo {
+        max-width: 150px;
     }
 
     .topnav .icon {

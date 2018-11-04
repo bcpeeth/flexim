@@ -1,0 +1,16 @@
+.intro {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &-text {
+        padding-right: 50px;
+    }
+
+    &-image {
+        max-width: 200px;
+        width: 50%;
+        margin: auto;
+        // margin: auto 0;
+    }
+}
