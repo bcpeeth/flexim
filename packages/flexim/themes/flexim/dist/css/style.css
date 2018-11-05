@@ -4328,6 +4328,9 @@ mark, .mark {
     height: 70vh;
     -o-object-fit: cover;
        object-fit: cover; }
+  .hero img.top {
+    -o-object-position: 20% 6%;
+       object-position: 20% 6%; }
 
 .intro {
   display: -webkit-box;

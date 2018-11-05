@@ -23,8 +23,8 @@
             <div class="grid__container">
 
                 <div class="topnav" id="myTopnav">
-                    <a href="#home" class="active">De Stichting</a>
-                    <a href="#news">Nieuws</a>
+                    <a href="<?php echo View::url('/'); ?>" class="active">De Stichting</a>
+                    <a href="<?php echo View::url('nieuws'); ?>">Nieuws</a>
                     <a class="" href="">
                         <img class="logo" src="<?php echo $view->getThemePath(); ?>/assets/images/logo-white-bg.png">
                     </a>    
