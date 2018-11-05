@@ -1,0 +1,41 @@
+.nieuws {
+    
+    &-block {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        // height: 360px;
+    }
+
+    &-block-text {
+        // border-bottom: solid 1px black;
+        height: 308px;
+        overflow-y: auto;
+        background: white;
+        // padding: 15px;
+        position: relative;
+        // line-height: 1.2;
+
+
+        &--left {
+            padding-right: 25px;
+        }
+        &--right {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+    }
+
+    // &-block-text::after {
+    //     content: '';
+    //     position: absolute;
+    //     bottom: 0;
+    //     width: 240px;
+    //     height: 25px;
+    //     background: linear-gradient(
+    //       rgba(255, 255, 255, 0.001),
+    //       black
+    //     ); /* transparent keyword is broken in Safari */
+    //     pointer-events: none;
+    //   }
+}

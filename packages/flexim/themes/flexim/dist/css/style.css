@@ -4329,8 +4329,8 @@ mark, .mark {
     -o-object-fit: cover;
        object-fit: cover; }
   .hero img.top {
-    -o-object-position: 20% 6%;
-       object-position: 20% 6%; }
+    -o-object-position: 0 50%;
+       object-position: 0 50%; }
 
 .intro {
   display: -webkit-box;
@@ -4472,6 +4472,28 @@ mark, .mark {
 
 .team-members-col-image {
   width: 150px; }
+
+.nieuws-block {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center; }
+
+.nieuws-block-text {
+  height: 308px;
+  overflow-y: auto;
+  background: white;
+  position: relative; }
+  .nieuws-block-text--left {
+    padding-right: 25px; }
+  .nieuws-block-text--right {
+    padding-left: 20px;
+    padding-right: 20px; }
 
 .bg-yellow {
   background-color: #F6A800; }
