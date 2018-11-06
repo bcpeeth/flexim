@@ -4485,15 +4485,43 @@ mark, .mark {
           justify-content: center; }
 
 .nieuws-block-text {
-  height: 308px;
-  overflow-y: auto;
-  background: white;
   position: relative; }
   .nieuws-block-text--left {
     padding-right: 25px; }
   .nieuws-block-text--right {
     padding-left: 20px;
     padding-right: 20px; }
+
+.read-more-state {
+  display: none; }
+
+.read-more-target {
+  opacity: 0;
+  max-height: 0;
+  font-size: 0;
+  -webkit-transition: .25s ease;
+  transition: .25s ease; }
+
+.read-more-state:checked ~ .read-more-wrap .read-more-target {
+  opacity: 1;
+  font-size: inherit;
+  max-height: 999em; }
+
+.read-more-state ~ .read-more-trigger:before {
+  content: 'Show more'; }
+
+.read-more-state:checked ~ .read-more-trigger:before {
+  content: 'Show less'; }
+
+.read-more-trigger {
+  cursor: pointer;
+  display: inline-block;
+  padding: 0 .5em;
+  color: #666;
+  font-size: .9em;
+  line-height: 2;
+  border: 1px solid #ddd;
+  border-radius: .25em; }
 
 .bg-yellow {
   background-color: #F6A800; }

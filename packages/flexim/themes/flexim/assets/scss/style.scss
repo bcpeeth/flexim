@@ -45,6 +45,7 @@ $breakpoint-max-xl: 1499px;
 @import "target";
 @import "team";
 @import "news";
+@import "readmore-toggle";
 
 .bg-yellow {
     background-color: $color-yellow;
@@ -79,4 +80,5 @@ $breakpoint-max-xl: 1499px;
     top: 0;
     pointer-events: none;
 }
+
 
