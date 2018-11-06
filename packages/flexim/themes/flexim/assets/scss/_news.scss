@@ -7,6 +7,7 @@
     }
 
     &-block-text {
+        // background-color: yellow;
         // height: 308px;
         // overflow-y: auto;
         // background: white;
@@ -21,17 +22,4 @@
             padding-right: 20px;
         }
     }
-
-    // &-block-text::after {
-    //     content: '';
-    //     position: absolute;
-    //     bottom: 0;
-    //     width: 240px;
-    //     height: 25px;
-    //     background: linear-gradient(
-    //       rgba(255, 255, 255, 0.001),
-    //       black
-    //     ); /* transparent keyword is broken in Safari */
-    //     pointer-events: none;
-    //   }
 }

@@ -54,16 +54,22 @@
 
             <div class="grid__col--6 grid__col--sm-12">
                 <div class="nieuws-block-text nieuws-block-text--right">
-                    <h4 class="padding--bottom-half-step">Kick-off evenement Flexim Foundation</h4>
-                    <p>Het team bestaat uit 10 wielrenners en 8 begeleiders. Er wordt gefietst in duo’s, dat wil zeggen dat er per duo ongeveer 180 km wordt afgelegd in etappes. Daarnaast bestaat de begeleiding uit chauffeurs, verzorgers, cateraars, een masseuse en mensen voor de fotografie.</p>
-                    <br />
-                    <p>Met dit kick-off evenement van de Flexim Foundation wordt geld ingezameld voor twee projecten:
-                    <br />
-                    1. Het organiseren van een kerstdiner voor 10 gezinnen in Nederland, die onder de armoedegrens leven.
-                    <br />
-                    2. Het inrichten van een kindertehuis in Oekraïne; dit in samenwerking met de Stichting Breath.</p>
-                    <br />
-                    <p> De tour is gestart op donderdag 30 augustus a.s. om 16.00 uur vanaf het hoofdkantoor van Flexim in Lausanne. Vanuit Zwitserland fietst de groep via het noordoosten van Frankrijk, dwars door België en West-Brabant (o.a. door Breda) om uiteindelijk zaterdagmiddag om 16.00 uur te finishen in Hoek van Holland. Wilt u de fietsers live volgen? Neem dan contact op via de website.</p>
+                   
+                    <input type="checkbox" class="read-more-state" id="post-1" />
+                        <h4 class="padding--bottom-half-step">Kick-off evenement Flexim Foundation</h4>
+                        <ul class="read-more-wrap">
+                            <li>LAUSANNE  -  Op 30 augustus is een groep van medewerkers en partners van de Flexim Group de uitdaging aan gegaan om binnen 48 uur te fietsen van het Flexim hoofdkantoor in Lausanne (Zwitserland) naar Hoek van Holland om geld in te zamelen voor twee projecten. In totaal zal de groep een afstand van 900 km afleggen</li>
+                            <li>Het team bestaat uit 10 wielrenners en 8 begeleiders. Er wordt gefietst in duo’s, dat wil zeggen dat er per duo ongeveer 180 km wordt afgelegd in etappes. Daarnaast bestaat de begeleiding uit chauffeurs, verzorgers, cateraars, een masseuse en mensen voor de fotografie.</li>
+                            <li class="read-more-target">Met dit kick-off evenement van de Flexim Foundation wordt geld ingezameld voor twee projecten:
+                            <br />
+                            1. Het organiseren van een kerstdiner voor 10 gezinnen in Nederland, die onder de armoedegrens leven.
+                            <br />2. Het inrichten van een kindertehuis in Oekraïne; dit in samenwerking met de Stichting Breath.
+                            </li>
+                            <li class="read-more-target">De tour is gestart op donderdag 30 augustus a.s. om 16.00 uur vanaf het hoofdkantoor van Flexim in Lausanne. Vanuit Zwitserland fietst de groep via het noordoosten van Frankrijk, dwars door België en West-Brabant (o.a. door Breda) om uiteindelijk zaterdagmiddag om 16.00 uur te finishen in Hoek van Holland. Wilt u de fietsers live volgen? Neem dan contact op via de website.
+                            </li>
+                        </ul>                 
+                    <label for="post-1" class="read-more-trigger"></label>
+                                                
                 </div>
             </div>
 
@@ -98,58 +104,30 @@
 
             <div class="grid__col--6 grid__col--sm-12">
                 <div class="nieuws-block-image nieuws-block__image--right">
-                    <img class="" src="<?php echo $view->getThemePath(); ?>/assets/images/tourdeflexim.jpg">
+                    <img class="" src="<?php echo $view->getThemePath(); ?>/assets/images/tour.png">
                 </div>
             </div>
 
             <div class="grid__col--6 grid__col--sm-12">
                 <div class="nieuws-block-text nieuws-block-text--right">
-                    <h4 class="padding--bottom-half-step">Kick-off evenement Flexim Foundation</h4>
-                    <p>Ter ere van de oprichting van de Flexim Foundation organiseren wij een Kick-Off event waarmee we deze stichting op de kaart willen zetten en geld in willen zamelen voor diverse projecten, waar we op diverse vlakken, kwetsbare groepen helpen.</p> 
-
-                    <p>Van 30 augustus tot 1 september 2018 gaan medewerkers van Flexim en bekenden gaan fietsen van het hoofdkantoor van Flexim in Zwitserland naar de jaarlijkse Flexim BBQ in Nederland binnen 48 uur.</p> 
-
-                    Tour de Flexim zamelt met deze actie concreet geld in voor de volgende twee projecten:                    
-                    1. Een kerstdiner organiseren voor 10 arme gezinnen in Nederland, die dit zelf niet kunnen bekostigen.
-
-                    2. Het inrichten van een kindertehuis in Oekraïne. Dit in samenwerking met Stichting Breath
-
-                    
-                    Wil jij ook een bijdrage leveren aan dit kick-off evenement of
-
-                    meer informatie over de Flexim Foundation  en de verschillende projecten, neem dan contact op met Hosoon Tak op 06-30898473 hosoon.tak@fleximfoundation.com
                    
-                    Flexim Netherlands zal het ingezamelde bedrag verdubbelen!</p>
+                    <input type="checkbox" class="read-more-state" id="post-2" />
+                        <h4 class="padding--bottom-half-step">Kick-off evenement Flexim Foundation</h4>
+                        <ul class="read-more-wrap">
+                            <li>Ter ere van de oprichting van de Flexim Foundation organiseren wij een Kick-Off event waarmee we deze stichting op de kaart willen zetten en geld in willen zamelen voor diverse projecten, waar we op diverse vlakken, kwetsbare groepen helpen.</li>
+                            <li>Van 30 augustus tot 1 september 2018 gaan medewerkers van Flexim en bekenden gaan fietsen van het hoofdkantoor van Flexim in Zwitserland naar de jaarlijkse Flexim BBQ in Nederland binnen 48 uur.</li>
+                            <li class="read-more-target">Tour de Flexim zamelt met deze actie concreet geld in voor de volgende twee projecten:</li>                           
+                            <li class="read-more-target">1. Het organiseren van een kerstdiner voor 10 gezinnen in Nederland, die onder de armoedegrens leven.</li>
+                            <li class="read-more-target">2. Het inrichten van een kindertehuis in Oekraïne; dit in samenwerking met de Stichting Breath.
+                            </li>
+                            <li class="read-more-target">De tour is gestart op donderdag 30 augustus a.s. om 16.00 uur vanaf het hoofdkantoor van Flexim in Lausanne. Vanuit Zwitserland fietst de groep via het noordoosten van Frankrijk, dwars door België en West-Brabant (o.a. door Breda) om uiteindelijk zaterdagmiddag om 16.00 uur te finishen in Hoek van Holland. Wilt u de fietsers live volgen? Neem dan contact op via de website.
+                            </li>
+                        </ul>                 
+                    <label for="post-2" class="read-more-trigger"></label>
+                                                
                 </div>
             </div>
 
-        </div>
-    </div>
-
-
-    <div class="nieuws-block">
-        <div class="grid__container padding--top-2-steps padding--bottom-2-steps">
-
-            <div class="grid__col--6 grid__col--sm-12">
-            <div class="nieuws-block-text nieuws-block-text--left">
-                <input type="checkbox" class="read-more-state" id="post-1" />
-
-                <h4 class="padding--bottom-half-step">Kick-off evenement Flexim Foundation</h4>
-                <p class="read-more-wrap">Het team bestaat uit 10 wielrenners en 8 begeleiders. Er wordt gefietst in duo’s, dat wil zeggen dat er per duo ongeveer 180 km wordt afgelegd in etappes. Daarnaast bestaat de begeleiding uit chauffeurs, verzorgers, cateraars, een masseuse en mensen voor de fotografie.
-                <br />
-                Met dit kick-off evenement van de Flexim Foundation wordt geld ingezameld voor twee projecten:
-                <br />
-                <br />
-                1. Het organiseren van een kerstdiner voor 10 gezinnen in Nederland, die onder de armoedegrens leven.
-                <br />
-                <span class="read-more-target">
-                2. Het inrichten van een kindertehuis in Oekraïne; dit in samenwerking met de Stichting Breath.
-                <br />
-                De tour is gestart op donderdag 30 augustus a.s. om 16.00 uur vanaf het hoofdkantoor van Flexim in Lausanne. Vanuit Zwitserland fietst de groep via het noordoosten van Frankrijk, dwars door België en West-Brabant (o.a. door Breda) om uiteindelijk zaterdagmiddag om 16.00 uur te finishen in Hoek van Holland. Wilt u de fietsers live volgen? Neem dan contact op via de website.</span></p>
-                
-                <label for="post-1" class="read-more-trigger"></label>
-                </div>
-            </div>
         </div>
     </div>
 

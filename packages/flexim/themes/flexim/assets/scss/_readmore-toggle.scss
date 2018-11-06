@@ -15,6 +15,13 @@
     max-height: 999em;
 }
 
+ul {
+    list-style: none;
+    li {
+        padding-bottom: 10px;
+    }
+}
+
 .read-more-state ~ .read-more-trigger:before {
     content: 'Show more';
 }
@@ -32,4 +39,5 @@
     line-height: 2;
     border: 1px solid #ddd;
     border-radius: .25em;
+    // margin-top: 15px;
 }
