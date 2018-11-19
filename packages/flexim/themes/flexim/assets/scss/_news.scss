@@ -22,4 +22,31 @@
             padding-right: 20px;
         }
     }
+
+    iframe {
+        max-width: 100%;
+    }
+
+    @media screen and (max-width: $breakpoint-max-sm) {
+
+        &-block-text {
+    
+    
+            &--left {
+                padding-right: 0;
+            }
+            &--right {
+                padding-left: 0;
+                padding-right: 0;
+            }
+        }
+
+        .nieuws-block__image--right img {
+            margin-top: 25px;
+        }
+
+        iframe {
+            margin-top: 25px;
+        }
+    }
 }

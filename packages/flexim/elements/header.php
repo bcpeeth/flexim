@@ -19,10 +19,10 @@
     <div class="<?= $c->getPageWrapperClass() ?>">
         <div class="page__wrap">
 
-        <section class="header" id="header">
+        <header class="header" id="header">
             <div class="grid__container">
 
-                <div class="topnav" id="myTopnav">
+                <nav class="topnav" id="myTopnav">
                     <a href="<?php echo View::url('/'); ?>" class="active">De Stichting</a>
                     <a href="<?php echo View::url('nieuws'); ?>">Nieuws</a>
                     <a class="" href="">
@@ -33,7 +33,7 @@
                     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
                         <i class="fa fa-bars"></i>
                     </a>
-                </div>
+                </nav>
                 
             </div>
-        </section>
+        </header>

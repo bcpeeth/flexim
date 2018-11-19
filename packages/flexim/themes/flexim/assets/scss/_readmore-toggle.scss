@@ -23,11 +23,11 @@ ul {
 }
 
 .read-more-state ~ .read-more-trigger:before {
-    content: 'Show more';
+    content: 'Meer';
 }
 
 .read-more-state:checked ~ .read-more-trigger:before {
-    content: 'Show less';
+    content: 'Minder';
 }
 
 .read-more-trigger {
@@ -40,4 +40,8 @@ ul {
     border: 1px solid #ddd;
     border-radius: .25em;
     // margin-top: 15px;
+    &:hover {
+        background-color: darken(#ddd, 10%);
+        color: white;
+    }
 }

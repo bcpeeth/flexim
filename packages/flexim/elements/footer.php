@@ -1,7 +1,7 @@
     </div>
   </div>
 
-<section class="footer bg-blue white">
+<footer class="footer bg-blue white">
     <div class="grid__container padding--top-2-steps padding--bottom-2-steps">
         
         <div class="footer-cols">
@@ -44,7 +44,7 @@
 
         </div>
     </div>
-</section>
+</footer>
 
     <script src="<?php echo $view->getThemePath(); ?>/dist/js/vendor.js"></script>
     <script async src="<?php echo $view->getThemePath(); ?>/dist/js/app.js"></script>

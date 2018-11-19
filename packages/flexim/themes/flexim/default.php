@@ -106,10 +106,11 @@
                     <div class="team-members-col-image">
                         <img class="" src="<?php echo $view->getThemePath(); ?>/assets/images/picture3.png">
                     </div>
-                    <div class="team-members-col-text">
-                        <h5>Rini Tak</h5>               
-                        <p><em>Voorzitter</em></p>
+                    <div class="team-members-col-text text--align-center">
+                        <h5 class="padding--bottom-half-step">Rini Tak
                         <br />
+                        <span>Voorzitter</span>
+                        </h5>               
                         Vanuit zijn passie al jarenlang betrokken bij diverse stichtingen.
                         <br />
                     </div>
@@ -119,11 +120,11 @@
                     <div class="team-members-col-image">
                         <img class="" src="<?php echo $view->getThemePath(); ?>/assets/images/picture2.png">
                     </div>
-                    <div class="team-members-col-text">
-                        <h5>Patty van Veldhuizen</h5>
-
-                        <p><em>Penningmeester</em></p>
+                    <div class="team-members-col-text text--align-center">
+                        <h5 class="padding--bottom-half-step">Patty van Veldhuizen
                         <br />
+                        <span>Penningmeester</span>
+                        </h5>               
                         Als fiscalist altijd de focus op financieel beheer.
                         <br /> 
                     </div>
@@ -133,11 +134,12 @@
                     <div class="team-members-col-image">
                         <img class="" src="<?php echo $view->getThemePath(); ?>/assets/images/picture4.png">
                     </div>
-                    <div class="team-members-col-text">
-                        <h5>Richard Bruins</h5>
-
-                        <p><em>Secretaris</em></p>
+                    <div class="team-members-col-text text--align-center">
+                    <h5 class="padding--bottom-half-step">Richard Bruins
                         <br />
+                        <span>Secretaris</span>
+                        </h5>
+                        
                         Als Directeur Flexim Netherlands de initiatiefnemer en direct betrokken bij diverse goede doelen.
                         <br />
                     </div>
@@ -147,11 +149,11 @@
                     <div class="team-members-col-image">
                         <img class="" src="<?php echo $view->getThemePath(); ?>/assets/images/picture5.png">
                     </div>
-                    <div class="team-members-col-text">
-                        <h5>Célie Verstelle</h5>
-
-                        <p><em>Algemeen Bestuurslid</em></p>
+                    <div class="team-members-col-text text--align-center">
+                        <h5 class="padding--bottom-half-step">Célie Verstelle
                         <br />
+                        <span>Algemeen Bestuurslid</span></p>
+                        </h5>
                         Als Legal advisor en haar juridische achtergrond gedreven de juiste support te geven.
                         <br />
                     </div>
@@ -161,11 +163,11 @@
                     <div class="team-members-col-image">
                         <img class="" src="<?php echo $view->getThemePath(); ?>/assets/images/picture1.png">
                     </div>
-                    <div class="team-members-col-text">
-                        <h5>Remko Overdam</h5>
-
-                        <p><em>Algemeen Bestuurslid</em></p>
+                    <div class="team-members-col-text text--align-center">
+                        <h5 class="padding--bottom-half-step">Remko Overdam
                         <br />
+                        <span>Algemeen Bestuurslid</span>
+                        </h5>
                         Als Directeur bij een ontwikkelaar als visionair betrokken bij diverse (maatschappelijke) ontwikkelingen.
                         <br />
                     </div>

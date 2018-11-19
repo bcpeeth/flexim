@@ -6,20 +6,20 @@
 
 <section class="nieuws">
     
-    <div class="nieuws-intro bg-blue text--align-center white">
+    <div class="nieuws-intro text--align-center">
         <div class="grid__container padding--top-3-steps padding--bottom-3-steps">
 
-            <div class="grid__col--10 grid__push--1">
+            <div class="grid__col--10 grid__push--1 grid__col--sm-12">
                 <h3 class=" text--align-center padding--bottom-nano">Flexim Foundation is continu in ontwikkeling.</h3>
             </div>
-            <div class="grid__col--8 grid__push--2">
+            <div class="grid__col--8 grid__push--2 grid__col--sm-12">
                 <p>Daarbij zijn de medewerkers, klanten en relaties van Flexim intensief betrokken om samen een bijdrage te leveren aan aan diverse maatschappelijke doelen in binnen en buitenland. Volg hieronder onze laatste ontwikkelingen: </p>
             </div>
 
         </div>
     </div>
 
-    <div class="nieuws-block">
+    <div class="nieuws-block bg-lightgrey">
         <div class="grid__container padding--top-2-steps padding--bottom-2-steps">
 
             <div class="grid__col--6 grid__col--sm-12">
@@ -43,10 +43,10 @@
         </div>
     </div>
 
-    <div class="nieuws-block bg-lightgrey">
+    <div class="nieuws-block">
         <div class="grid__container padding--top-2-steps padding--bottom-2-steps">
 
-            <div class="grid__col--6 grid__col--sm-12">
+            <div class="grid__col--6 grid__col--sm-12 display--block display--sm-none">
                 <div class="nieuws-block-image nieuws-block__image--right">
                     <img class="" src="<?php echo $view->getThemePath(); ?>/assets/images/tourdeflexim.jpg">
                 </div>
@@ -57,6 +57,7 @@
                    
                     <input type="checkbox" class="read-more-state" id="post-1" />
                         <h4 class="padding--bottom-half-step">Kick-off evenement Flexim Foundation</h4>
+                        
                         <ul class="read-more-wrap">
                             <li>LAUSANNE  -  Op 30 augustus is een groep van medewerkers en partners van de Flexim Group de uitdaging aan gegaan om binnen 48 uur te fietsen van het Flexim hoofdkantoor in Lausanne (Zwitserland) naar Hoek van Holland om geld in te zamelen voor twee projecten. In totaal zal de groep een afstand van 900 km afleggen</li>
                             <li>Het team bestaat uit 10 wielrenners en 8 begeleiders. Er wordt gefietst in duo’s, dat wil zeggen dat er per duo ongeveer 180 km wordt afgelegd in etappes. Daarnaast bestaat de begeleiding uit chauffeurs, verzorgers, cateraars, een masseuse en mensen voor de fotografie.</li>
@@ -73,10 +74,16 @@
                 </div>
             </div>
 
+            <div class="grid__col--6 grid__col--sm-12 display--none display--sm-block">
+                <div class="nieuws-block-image nieuws-block__image--right">
+                    <img class="" src="<?php echo $view->getThemePath(); ?>/assets/images/tourdeflexim.jpg">
+                </div>
+            </div>
+
         </div>
     </div>
 
-    <div class="nieuws-block">
+    <div class="nieuws-block bg-lightgrey">
         <div class="grid__container padding--top-2-steps padding--bottom-2-steps">
 
             <div class="grid__col--6 grid__col--sm-12">
@@ -92,17 +99,17 @@
 
             <div class="grid__col--6 grid__col--sm-12">
                 <div class="nieuws-block-image nieuws-block__image--right">
-                    <img class="" src="<?php echo $view->getThemePath(); ?>/assets/images/tourdeflexim.jpg">
+                    <img class="" src="<?php echo $view->getThemePath(); ?>/assets/images/website-mockup.png">
                 </div>
             </div>
 
         </div>
     </div>
 
-    <div class="nieuws-block bg-lightgrey">
+    <div class="nieuws-block">
         <div class="grid__container padding--top-2-steps padding--bottom-2-steps">
 
-            <div class="grid__col--6 grid__col--sm-12">
+            <div class="grid__col--6 grid__col--sm-12 display--block display--sm-none">
                 <div class="nieuws-block-image nieuws-block__image--right">
                     <img class="" src="<?php echo $view->getThemePath(); ?>/assets/images/tour.png">
                 </div>
@@ -125,6 +132,12 @@
                         </ul>                 
                     <label for="post-2" class="read-more-trigger"></label>
                                                 
+                </div>
+            </div>
+
+            <div class="grid__col--6 grid__col--sm-12 display--sm-block display--none">
+                <div class="nieuws-block-image nieuws-block__image--right">
+                    <img class="" src="<?php echo $view->getThemePath(); ?>/assets/images/tour.png">
                 </div>
             </div>
 

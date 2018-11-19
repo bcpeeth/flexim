@@ -3,6 +3,7 @@
     &-members {
         display: flex;
         // flex-flow: row nowrap;
+        // flex-wrap:
     }
 
     &-members-col {
@@ -13,10 +14,33 @@
         align-self: flex-start;
         width: 100%;
         padding: 0 10px;
+        h5{
+            span {
+                font-size: 14px;
+                font-style: italic;
+                font-weight: 400; 
+            }
+        }
 
     }
 
     &-members-col-image {
-        width: 150px;
+        img {
+            width: 150px;
+            height: 150px;
+            // border-radius: 100%;
+            // border: solid 1px rgba(139, 139, 139, 0.521);
+        }
+
+    }
+
+    @media screen and (max-width: $breakpoint-max-md) {
+        &-members {
+            flex-wrap: wrap;
+        }
+
+        &-members-col {
+            padding-bottom: 50px;
+        }
     }
 }
