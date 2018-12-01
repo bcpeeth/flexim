@@ -1,13 +1,16 @@
 import '../scss/style.scss';
+import './vision-slider.js';
+import './css3-animate-it.js';
+
 //import 'owl.carousel/dist/assets/owl.carousel.css';
 //import 'owl.carousel';
 //import 'owl.carousel2.thumbs';
 
-import ScrollReveal from 'scrollreveal';
-import InfiniteScroll from 'infinite-scroll';
-import GMaps from 'gmaps';
-import { iframeResizer } from 'iframe-resizer';
-import VanillaTilt from 'vanilla-tilt'
+// import ScrollReveal from 'scrollreveal';
+// import InfiniteScroll from 'infinite-scroll';
+// import GMaps from 'gmaps';
+// import { iframeResizer } from 'iframe-resizer';
+// import VanillaTilt from 'vanilla-tilt'
 
 
 $('.header form input').on('focus', function(){

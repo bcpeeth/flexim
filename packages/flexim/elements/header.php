@@ -28,7 +28,7 @@
                     <a class="" href="">
                         <img class="logo" src="<?php echo $view->getThemePath(); ?>/assets/images/logo-white-bg.png">
                     </a>    
-                    <a href="#contact">Projecten</a>
+                    <a href="<?php echo View::url('projecten'); ?>">Projecten</a>
                     <a href="#about">Informatie</a>
                     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
                         <i class="fa fa-bars"></i>

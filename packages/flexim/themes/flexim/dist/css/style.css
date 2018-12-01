@@ -4291,24 +4291,27 @@ mark, .mark {
   height: 100%;
   width: 100%; }
 
-.header .topnav {
-  height: 80px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  margin: 0 10px; }
-
-.header .topnav .logo {
-  max-width: 150px; }
-
-.header .topnav .icon {
-  display: none; }
+.header {
+  z-index: 99;
+  position: relative;
+  -webkit-box-shadow: 0px 1px 15px 1px rgba(0, 0, 0, 0.1);
+          box-shadow: 0px 1px 15px 1px rgba(0, 0, 0, 0.1); }
+  .header .topnav {
+    height: 60px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    margin: 0 10px; }
+  .header .topnav .logo {
+    max-width: 130px; }
+  .header .topnav .icon {
+    display: none; }
 
 .footer-cols {
   display: -webkit-box;
@@ -4336,9 +4339,9 @@ mark, .mark {
        object-fit: cover; }
   @media screen and (max-width: 767px) {
     .hero {
-      height: 50vh; }
+      height: 40vh; }
       .hero img {
-        height: 50vh; } }
+        height: 40vh; } }
 
 .intro {
   display: -webkit-box;
@@ -4569,6 +4572,398 @@ ul {
   .read-more-trigger:hover {
     background-color: #c4c4c4;
     color: white; }
+
+/* -------------------------------- 
+  Images block
+	-------------------------------- */
+.cd-image-block {
+  position: relative; }
+
+.cd-image-block::before {
+  /* this is the layer used to cover the .cd-image-block when the content block becomes visible - mobile only */
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(52, 54, 66, 0.6);
+  opacity: 0;
+  visibility: hidden;
+  -webkit-transition: opacity 0.3s 0s, visibility 0s 0.3s;
+  transition: opacity 0.3s 0s, visibility 0s 0.3s; }
+
+.cd-image-block.content-block-is-visible::before {
+  opacity: 1;
+  visibility: visible;
+  -webkit-transition: opacity 0.3s 0s, visibility 0s 0s;
+  transition: opacity 0.3s 0s, visibility 0s 0s; }
+
+.cd-image-block::before {
+  display: none; }
+
+.cd-images-list::before {
+  /* never visible - this is used in jQuery to check the current MQ */
+  content: 'mobile';
+  display: none; }
+
+.cd-images-list > li {
+  list-style-type: none;
+  background: url(/flexim/packages/flexim/themes/flexim/dist/images/a490fbc4dfefc7f7de7f014fe6d5e3b4.jpg) no-repeat center center;
+  background-size: cover;
+  position: relative; }
+  .cd-images-list > li img {
+    position: absolute;
+    -o-object-fit: cover;
+       object-fit: cover;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0.0;
+    -webkit-transition: 400ms opacity ease-out;
+    transition: 400ms opacity ease-out; }
+
+.cd-images-list > li:nth-of-type(2) {
+  background-size: cover; }
+
+.cd-images-list > li:nth-of-type(3) {
+  background-size: cover; }
+
+.cd-images-list > li:nth-of-type(4) {
+  background-size: cover; }
+
+.cd-images-list > li:nth-of-type(5) {
+  background-size: cover; }
+
+.cd-images-list > li:nth-of-type(6) {
+  background-size: cover; }
+
+.cd-images-list > li > a {
+  /* used to vertically align the h2 child -  mobile version only */
+  display: table;
+  height: 100%;
+  width: 100%; }
+
+.cd-images-list h2 {
+  /* used to vertically align h2 -  mobile version only */
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  font-size: 3rem;
+  color: #ffffff;
+  font-weight: 700;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; }
+
+@media only screen and (min-width: 768px) {
+  .cd-images-list::before {
+    /* never visible - this is used in jQuery to check the current MQ */
+    content: 'desktop'; }
+  .cd-images-list > li > a {
+    display: block;
+    padding: 4em 3em;
+    cursor: default;
+    pointer-events: none; }
+  .cd-images-list h2 {
+    font-size: 5.5rem;
+    text-align: left; } }
+
+/* -------------------------------- 
+  Content block
+	-------------------------------- */
+.cd-content-block {
+  /* move the block outside the viewport (to the right) - mobile only */
+  position: fixed;
+  top: 0;
+  left: 0;
+  -webkit-transform: translateX(100%);
+  transform: translateX(100%);
+  -webkit-transition: -webkit-transform 0.3s;
+  transition: -webkit-transform 0.3s;
+  transition: transform 0.3s;
+  transition: transform 0.3s, -webkit-transform 0.3s; }
+
+.cd-content-block.is-visible {
+  -webkit-transform: translateX(0);
+  transform: translateX(0); }
+
+.cd-content-block > ul > li {
+  position: absolute;
+  padding: 2em;
+  overflow-y: auto;
+  background-color: #ffffff;
+  opacity: 0;
+  visibility: hidden; }
+
+.cd-content-block > ul > li.is-selected {
+  /* this is the selected content */
+  position: relative;
+  opacity: 1;
+  visibility: visible;
+  -webkit-overflow-scrolling: touch; }
+
+.cd-content-block h2 {
+  line-height: 1.2;
+  font-size: 2.3rem;
+  margin-bottom: 1em;
+  text-transform: none;
+  color: #00A3AD; }
+
+.cd-content-block p {
+  line-height: 1.6;
+  color: #85868d;
+  text-transform: none; }
+
+.cd-content-block .cd-close {
+  /* 'X' icon to close the content block -  mobile only */
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 44px;
+  width: 44px;
+  /* image replacement */
+  overflow: hidden;
+  text-indent: 100%;
+  white-space: nowrap;
+  color: transparent;
+  -webkit-transform: scale(0);
+  transform: scale(0);
+  -webkit-transition: -webkit-transform 0.2s;
+  transition: -webkit-transform 0.2s;
+  transition: transform 0.2s;
+  transition: transform 0.2s, -webkit-transform 0.2s; }
+
+.cd-content-block .cd-close::after, .cd-content-block .cd-close::before {
+  /* these are the 2 lines of the 'X' icon */
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 2px;
+  height: 24px;
+  background-color: #343642;
+  /* Force Hardware Acceleration */
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0); }
+
+.cd-content-block .cd-close::after {
+  -webkit-transform: translateX(-50%) translateY(-50%) rotate(45deg);
+  transform: translateX(-50%) translateY(-50%) rotate(45deg); }
+
+.cd-content-block .cd-close::before {
+  -webkit-transform: translateX(-50%) translateY(-50%) rotate(-45deg);
+  transform: translateX(-50%) translateY(-50%) rotate(-45deg); }
+
+.cd-content-block .cd-close.is-scaled-up {
+  -webkit-transform: scale(1);
+  transform: scale(1); }
+
+.no-touch .cd-content-block .cd-close.is-scaled-up:hover {
+  -webkit-transform: scale(1.2);
+  transform: scale(1.2); }
+
+.cd-content-block {
+  /* reset style */
+  position: static;
+  -webkit-transform: translateX(0);
+  transform: translateX(0); }
+
+.cd-content-block > ul > li {
+  /* reset style */
+  opacity: 1;
+  visibility: visible;
+  padding: 4em 3em; }
+
+.cd-content-block > ul > li.overflow-hidden {
+  /* this class is used during the animation (slider change) to hide the scrolling bar */
+  overflow: hidden; }
+
+.cd-content-block h2 {
+  font-size: 3rem; }
+
+.cd-content-block .cd-close {
+  display: none; }
+
+/* ---------------------------------------------- 
+Desktop slider - both image and content blocks
+---------------------------------------------- */
+.cd-image-block,
+.cd-content-block {
+  /* slider style - desktop version only */
+  float: left;
+  height: calc( 100vh - 60px);
+  overflow: hidden; }
+
+.cd-image-block {
+  width: 60%; }
+
+.cd-content-block {
+  width: 40%; }
+
+.cd-image-block > ul,
+.cd-content-block > ul {
+  position: relative;
+  height: 100%; }
+
+.cd-image-block > ul > li,
+.cd-content-block > ul > li {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  /* Force Hardware Acceleration */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  will-change: transform;
+  /* by default, the items are moved to the right - relative to their parent elements */
+  -webkit-transform: translateX(100%);
+  transform: translateX(100%);
+  -webkit-transition: -webkit-transform 0.5s;
+  transition: -webkit-transform 0.5s;
+  transition: transform 0.5s;
+  transition: transform 0.5s, -webkit-transform 0.5s; }
+
+.cd-image-block > ul > li.is-selected,
+.cd-content-block > ul > li.is-selected {
+  /* this is the visible item */
+  position: absolute;
+  -webkit-transform: translateX(0);
+  transform: translateX(0); }
+
+.cd-image-block > ul > li.move-left,
+.cd-content-block > ul > li.move-left {
+  /* this is the item hidden on the left */
+  -webkit-transform: translateX(-100%);
+  transform: translateX(-100%); }
+
+/* --------------------------------  
+Slider pagination
+-------------------------------- */
+.block-navigation {
+  /* this is the slider navigation - desktop version only */
+  display: block;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 60%; }
+  .block-navigation li {
+    width: 50%;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    cursor: pointer; }
+    .block-navigation li:hover {
+      background-color: rgba(0, 0, 0, 0.7); }
+    .block-navigation li a {
+      color: whitesmoke; }
+  .block-navigation li:first-of-type {
+    float: left; }
+  .block-navigation li:last-of-type {
+    float: right; }
+  .block-navigation a {
+    display: block;
+    height: 100%;
+    width: 100%; }
+    .block-navigation a.inactive {
+      opacity: .3;
+      cursor: not-allowed; }
+
+/* --------------------------------  
+RESPONSIVE
+-------------------------------- */
+@media screen and (max-width: 991px) {
+  .cd-image-block {
+    width: 100%;
+    height: 60vh; }
+  .pagination {
+    width: 100%;
+    right: 0;
+    bottom: 10%; }
+    .pagination .cta {
+      padding-right: 0; }
+    .pagination .block-navigation {
+      text-align: center;
+      position: relative; }
+      .pagination .block-navigation li.block-navigation__item--type-line {
+        background-color: rgba(237, 173, 63, 0.473);
+        height: 1px;
+        width: 60%;
+        left: 20%;
+        top: 10px; }
+      .pagination .block-navigation li.block-navigation__item--type-arrow {
+        left: -2px; }
+        .pagination .block-navigation li.block-navigation__item--type-arrow a {
+          position: absolute; }
+          .pagination .block-navigation li.block-navigation__item--type-arrow a span {
+            margin-left: 65%; }
+      .pagination .block-navigation li.block-navigation__item--type-arrow:hover a {
+        background-color: rgba(237, 173, 63, 0);
+        -webkit-transition-duration: 0.3s;
+                transition-duration: 0.3s;
+        border-radius: 0; }
+  .cd-content-block {
+    width: 100%;
+    height: 30vh; }
+    .cd-content-block ul li {
+      margin-top: -1%;
+      position: relative; }
+    .cd-content-block h2 {
+      margin-bottom: 0.5em; } }
+
+@media screen and (max-width: 767px) {
+  .cd-image-block {
+    width: 100%;
+    height: 50vh; }
+  .pagination {
+    left: 0;
+    top: 60%; }
+    .pagination .cta {
+      position: absolute;
+      top: -45%;
+      left: 33%; }
+      .pagination .cta .button {
+        padding: 11px 10px; }
+      .pagination .cta a {
+        font-size: 11px; }
+    .pagination .block-navigation {
+      margin-top: 23%; }
+      .pagination .block-navigation li.block-navigation__item--type-arrow {
+        width: 7%;
+        left: -8px; }
+      .pagination .block-navigation li.block-navigation__item--type-line {
+        width: 70%;
+        left: 15%;
+        top: 55%; }
+      .pagination .block-navigation li.block-navigation__item--type-dot.active a {
+        background-color: rgba(236, 165, 33, 0.26);
+        width: 30px;
+        height: 30px;
+        top: -12.5px;
+        left: -12.5px;
+        border-radius: 100%;
+        z-index: 2; }
+      .pagination .block-navigation li.block-navigation__item--type-dot a {
+        bottom: -12.5px;
+        right: -12.5px;
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        border-radius: 100%; }
+  .cd-content-block h2 {
+    font-size: 22px; }
+  .cd-content-block p {
+    font-size: 12px; }
+  .cd-content-block ul li {
+    margin-top: 5%;
+    position: relative; }
+  .cd-content-block > ul > li {
+    padding: 0 3%; } }
 
 .bg-yellow {
   background-color: #F6A800; }
